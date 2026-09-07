@@ -57,7 +57,46 @@ textarea{
     font-size:14px;
 }
 
-/* 卡片 */
+/* =========================
+   旅行心法
+========================= */
+
+.travel-quote{
+    background:#ffffff;
+    border:1px solid #e1e5eb;
+    border-radius:18px;
+    padding:20px 18px;
+    margin:0 0 12px;
+    box-shadow:0 3px 14px rgba(0,0,0,.04);
+    text-align:center;
+}
+
+.travel-quote-icon{
+    font-size:28px;
+    margin-bottom:8px;
+}
+
+.travel-quote-title{
+    font-size:16px;
+    font-weight:800;
+    margin-bottom:10px;
+}
+
+.travel-quote-text{
+    color:#555d68;
+    font-size:15px;
+    line-height:1.9;
+}
+
+.travel-quote-highlight{
+    margin-top:10px;
+    font-weight:800;
+    color:#3975d3;
+}
+
+/* =========================
+   卡片
+========================= */
 
 .card{
     background:#ffffff;
@@ -73,7 +112,9 @@ textarea{
     font-size:20px;
 }
 
-/* 表單 */
+/* =========================
+   表單
+========================= */
 
 .grid{
     display:grid;
@@ -115,7 +156,9 @@ textarea:focus{
     box-shadow:0 0 0 3px rgba(57,117,211,.10);
 }
 
-/* 天氣 */
+/* =========================
+   天氣
+========================= */
 
 .weather{
     display:flex;
@@ -143,7 +186,9 @@ textarea:focus{
     font-size:13px;
 }
 
-/* 按鈕 */
+/* =========================
+   按鈕
+========================= */
 
 .button-row{
     display:flex;
@@ -159,6 +204,7 @@ button{
     font-size:15px;
     font-weight:800;
     cursor:pointer;
+    -webkit-tap-highlight-color:transparent;
 }
 
 button:active{
@@ -180,7 +226,9 @@ button:active{
     color:#fff;
 }
 
-/* 心情 */
+/* =========================
+   心情
+========================= */
 
 .mood-list{
     display:flex;
@@ -198,7 +246,9 @@ button:active{
     color:#fff;
 }
 
-/* 金錢 */
+/* =========================
+   金錢
+========================= */
 
 .money-grid{
     display:grid;
@@ -223,7 +273,9 @@ button:active{
     font-weight:800;
 }
 
-/* 統計 */
+/* =========================
+   統計
+========================= */
 
 .stats{
     display:grid;
@@ -249,7 +301,84 @@ button:active{
     font-weight:800;
 }
 
-/* 出遊 */
+/* =========================
+   行事曆
+========================= */
+
+.calendar-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:8px;
+    margin-bottom:10px;
+}
+
+.calendar-title{
+    font-size:19px;
+    font-weight:800;
+}
+
+.calendar-grid{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:5px;
+}
+
+.cal-week{
+    text-align:center;
+    color:#747c87;
+    font-size:12px;
+    font-weight:700;
+    padding:4px 0;
+}
+
+.cal-day{
+    min-height:54px;
+    border:1px solid #e0e4ea;
+    background:#fff;
+    border-radius:10px;
+    padding:6px;
+    text-align:left;
+    cursor:pointer;
+    position:relative;
+}
+
+.cal-day.empty{
+    border:0;
+    background:transparent;
+    cursor:default;
+}
+
+.cal-day.today{
+    border:2px solid #3975d3;
+}
+
+.cal-day.selected{
+    background:#edf3ff;
+}
+
+.cal-day.tripday{
+    background:#fff8e8;
+    border-color:#ead9a7;
+}
+
+.cal-num{
+    font-weight:800;
+}
+
+.cal-dot{
+    display:block;
+    font-size:11px;
+    color:#3975d3;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    margin-top:4px;
+}
+
+/* =========================
+   出遊
+========================= */
 
 .trip{
     border:1px solid #dfe4eb;
@@ -286,30 +415,33 @@ button:active{
     color:#3975d3;
 }
 
+/* =========================
+   狀態
+========================= */
+
+.status{
+    min-height:20px;
+    margin-top:9px;
+    color:#2f6b39;
+    font-size:13px;
+}
+
+.section-note{
+    margin:-5px 0 10px;
+    color:#747c87;
+    font-size:13px;
+    line-height:1.6;
+}
+
 .muted{
     color:#747c87;
     font-size:13px;
     line-height:1.6;
 }
 
-/* 狀態 */
-
-.status{
-    min-height:20px;
-    margin-top:9px;
-    color:#5e6875;
-    font-size:13px;
-}
-
-/* 小標題 */
-
-.section-note{
-    margin:-5px 0 10px;
-    color:#747c87;
-    font-size:13px;
-}
-
-/* 響應式 */
+/* =========================
+   手機
+========================= */
 
 @media(max-width:560px){
 
@@ -329,6 +461,23 @@ button:active{
     button{
         flex:0 0 auto;
     }
+
+    .cal-day{
+        min-height:50px;
+        padding:5px;
+    }
+
+    .cal-dot{
+        font-size:10px;
+    }
+
+    .travel-quote{
+        padding:18px 14px;
+    }
+
+    .travel-quote-text{
+        font-size:14px;
+    }
 }
 </style>
 </head>
@@ -338,39 +487,185 @@ button:active{
 
 <div class="main">
 
-    <!-- 標題 -->
+    <!-- =========================
+         標題
+    ========================== -->
 
     <header class="header">
-        <h1>📔 思諦與秀甄・生活日記</h1>
+
+        <h1>
+            📔 思諦與秀甄・生活日記
+        </h1>
+
         <p>
             每天記錄生活、心情、天氣、出遊、消費與存款 ❤️
         </p>
+
     </header>
 
 
-    <!-- 每日資料 -->
+    <!-- =========================
+         旅行的意義
+    ========================== -->
+
+    <section class="travel-quote">
+
+        <div class="travel-quote-icon">
+            🌿
+        </div>
+
+        <div class="travel-quote-title">
+            旅行的意義
+        </div>
+
+        <div class="travel-quote-text">
+
+            旅行的意義，不只是去過多少地方，
+            <br>
+
+            而是讓自己慢下來。
+
+            <br>
+
+            當腳步慢了，心才有更多空間，
+            <br>
+
+            去看見沿途的風景，
+            <br>
+
+            感受當下簡單而真實的美好。
+
+        </div>
+
+        <div class="travel-quote-highlight">
+
+            放慢腳步，靜下心來，才能真正感受當下的美好。 ❤️
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         行事曆
+    ========================== -->
 
     <section class="card">
 
-        <h2>📅 每日資料</h2>
+        <h2>
+            📅 行事曆
+        </h2>
+
+        <div class="calendar-head">
+
+            <button
+                type="button"
+                class="btn-gray"
+                onclick="changeMonth(-1)"
+            >
+                ‹ 上月
+            </button>
+
+            <div
+                class="calendar-title"
+                id="calendarTitle"
+            >
+            </div>
+
+            <button
+                type="button"
+                class="btn-gray"
+                onclick="changeMonth(1)"
+            >
+                下月 ›
+            </button>
+
+        </div>
+
+
+        <div
+            class="calendar-grid"
+            id="calendarWeek"
+        >
+        </div>
+
+
+        <div
+            class="calendar-grid"
+            id="calendarDays"
+        >
+        </div>
+
+
+        <div class="button-row">
+
+            <button
+                type="button"
+                class="btn-blue"
+                onclick="goToday()"
+            >
+                📍 今天
+            </button>
+
+            <button
+                type="button"
+                class="btn-gray"
+                onclick="addTrip()"
+            >
+                ＋新增旅遊
+            </button>
+
+        </div>
+
+
+        <div
+            class="status"
+            id="calendarStatus"
+        >
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         每日資料
+    ========================== -->
+
+    <section class="card">
+
+        <h2>
+            📅 每日資料
+        </h2>
+
 
         <div class="grid">
 
             <div class="field">
-                <label>年月日</label>
+
+                <label>
+                    年月日
+                </label>
+
                 <input
                     id="date"
                     type="date"
                 >
+
             </div>
 
+
             <div class="field">
-                <label>星期</label>
+
+                <label>
+                    星期
+                </label>
+
                 <input
                     id="weekday"
                     type="text"
                     readonly
                 >
+
             </div>
 
         </div>
@@ -378,7 +673,9 @@ button:active{
 
         <div class="field">
 
-            <label>城市／地區</label>
+            <label>
+                城市／地區
+            </label>
 
             <input
                 id="city"
@@ -399,6 +696,7 @@ button:active{
                 🌤️
             </div>
 
+
             <div>
 
                 <div
@@ -407,6 +705,7 @@ button:active{
                 >
                     尚未取得天氣
                 </div>
+
 
                 <div
                     class="weather-detail"
@@ -423,13 +722,16 @@ button:active{
         <div class="button-row">
 
             <button
+                type="button"
                 class="btn-blue"
                 onclick="updateWeather()"
             >
                 🌤️ 更新天氣
             </button>
 
+
             <button
+                type="button"
                 class="btn-gray"
                 onclick="goToday()"
             >
@@ -441,61 +743,75 @@ button:active{
     </section>
 
 
-
-    <!-- 心情 -->
+    <!-- =========================
+         心情
+    ========================== -->
 
     <section class="card">
 
-        <h2>❤️ 今日心情</h2>
+        <h2>
+            ❤️ 今日心情
+        </h2>
 
-        <div
-            class="mood-list"
-            id="moodList"
-        >
+
+        <div class="mood-list">
 
             <button
+                type="button"
                 class="mood-btn"
                 onclick="chooseMood(this,'😊 開心')"
             >
                 😊 開心
             </button>
 
+
             <button
+                type="button"
                 class="mood-btn"
                 onclick="chooseMood(this,'🥰 幸福')"
             >
                 🥰 幸福
             </button>
 
+
             <button
+                type="button"
                 class="mood-btn"
                 onclick="chooseMood(this,'😍 甜蜜')"
             >
                 😍 甜蜜
             </button>
 
+
             <button
+                type="button"
                 class="mood-btn"
                 onclick="chooseMood(this,'😌 平靜')"
             >
                 😌 平靜
             </button>
 
+
             <button
+                type="button"
                 class="mood-btn"
                 onclick="chooseMood(this,'😴 很累')"
             >
                 😴 很累
             </button>
 
+
             <button
+                type="button"
                 class="mood-btn"
                 onclick="chooseMood(this,'😢 難過')"
             >
                 😢 難過
             </button>
 
+
             <button
+                type="button"
                 class="mood-btn"
                 onclick="chooseMood(this,'😡 生氣')"
             >
@@ -505,9 +821,14 @@ button:active{
         </div>
 
 
-        <div class="field" style="margin-top:10px">
+        <div
+            class="field"
+            style="margin-top:10px"
+        >
 
-            <label>自訂心情</label>
+            <label>
+                自訂心情
+            </label>
 
             <input
                 id="mood"
@@ -520,22 +841,27 @@ button:active{
     </section>
 
 
-
-    <!-- 日記 -->
+    <!-- =========================
+         建立日記
+    ========================== -->
 
     <section class="card">
 
-        <h2>✍️ 建立日記</h2>
+        <h2>
+            ✍️ 建立日記
+        </h2>
+
 
         <div class="field">
 
-            <label>日記標題</label>
+            <label>
+                日記標題
+            </label>
 
             <input
                 id="title"
                 type="text"
                 value="思諦與秀甄 出遊玩"
-                placeholder="例如：思諦與秀甄 出遊玩"
             >
 
         </div>
@@ -543,7 +869,9 @@ button:active{
 
         <div class="field">
 
-            <label>今日一句話</label>
+            <label>
+                今日一句話
+            </label>
 
             <input
                 id="oneLine"
@@ -556,7 +884,9 @@ button:active{
 
         <div class="field">
 
-            <label>今天的日記</label>
+            <label>
+                今天的日記
+            </label>
 
             <textarea
                 id="diary"
@@ -568,7 +898,9 @@ button:active{
 
         <div class="field">
 
-            <label>備註</label>
+            <label>
+                備註
+            </label>
 
             <textarea
                 id="note"
@@ -580,26 +912,37 @@ button:active{
     </section>
 
 
-
-    <!-- 每月出遊 -->
+    <!-- =========================
+         每月出遊
+    ========================== -->
 
     <section class="card">
 
-        <h2>🧳 每月出遊 2～3 次｜2天1夜</h2>
+        <h2>
+            🧳 每月出遊 2～3 次｜自由修改
+        </h2>
+
 
         <div class="section-note">
-            每個月可安排 2～3 次，也可以依實際情況自由增加、修改或刪除。
+
+            每個月可以安排 2～3 次，
+            也可以依實際情況自由增加、修改或刪除。
+
         </div>
 
-        <div id="tripList"></div>
+
+        <div id="tripList">
+        </div>
+
 
         <div class="button-row">
 
             <button
+                type="button"
                 class="btn-blue"
                 onclick="addTrip()"
             >
-                ＋新增 2天1夜
+                ＋新增旅遊
             </button>
 
         </div>
@@ -607,18 +950,24 @@ button:active{
     </section>
 
 
-
-    <!-- 每日金錢 -->
+    <!-- =========================
+         每日消費／存款
+    ========================== -->
 
     <section class="card">
 
-        <h2>💰 每日消費／存款</h2>
+        <h2>
+            💰 每日消費／存款
+        </h2>
+
 
         <div class="grid">
 
             <div class="field">
 
-                <label>今日消費</label>
+                <label>
+                    今日消費
+                </label>
 
                 <input
                     id="spend"
@@ -633,7 +982,9 @@ button:active{
 
             <div class="field">
 
-                <label>今日存款</label>
+                <label>
+                    今日存款
+                </label>
 
                 <input
                     id="deposit"
@@ -686,12 +1037,16 @@ button:active{
     </section>
 
 
-
-    <!-- 每月統計 -->
+    <!-- =========================
+         本月統計
+    ========================== -->
 
     <section class="card">
 
-        <h2>📊 本月統計</h2>
+        <h2>
+            📊 本月統計
+        </h2>
+
 
         <div class="stats">
 
@@ -705,7 +1060,7 @@ button:active{
                     class="stat-value"
                     id="statDiary"
                 >
-                    1 天
+                    0 天
                 </span>
 
             </div>
@@ -763,30 +1118,39 @@ button:active{
     </section>
 
 
-
-    <!-- 儲存 -->
+    <!-- =========================
+         儲存
+    ========================== -->
 
     <section class="card">
 
-        <h2>💾 儲存／查看</h2>
+        <h2>
+            💾 儲存／查看
+        </h2>
+
 
         <div class="button-row">
 
             <button
+                type="button"
                 class="btn-blue"
-                onclick="saveData()"
+                id="saveBtn"
             >
                 💾 儲存
             </button>
 
+
             <button
+                type="button"
                 class="btn-gray"
                 onclick="viewData()"
             >
                 👀 查看
             </button>
 
+
             <button
+                type="button"
                 class="btn-gray"
                 onclick="copyDetails()"
             >
@@ -795,28 +1159,38 @@ button:active{
 
         </div>
 
+
         <div
             class="status"
             id="status"
-        ></div>
+        >
+        </div>
 
     </section>
 
 
-
-    <!-- 清除 -->
+    <!-- =========================
+         清除
+    ========================== -->
 
     <section class="card">
 
-        <h2>🗑️ 手動清除</h2>
+        <h2>
+            🗑️ 手動清除
+        </h2>
+
 
         <div class="muted">
+
             清除資料需要確認兩次，避免誤刪。
+
         </div>
+
 
         <div class="button-row">
 
             <button
+                type="button"
                 class="btn-red"
                 onclick="clearAllData()"
             >
@@ -830,44 +1204,70 @@ button:active{
 </div>
 
 
-
 <script>
 
 /* =========================================================
-   基本設定
+   儲存設定
 ========================================================= */
 
-const STORAGE_KEY =
-    "siti-xiuzhen-diary-v3";
+const DAILY_KEY =
+    "siti-xiuzhen-diary-v5";
 
-const TRIP_STORAGE_KEY =
-    "siti-xiuzhen-trips-v3";
+const TRIP_KEY =
+    "siti-xiuzhen-trips-v5";
 
-const $ = id =>
-    document.getElementById(id);
+const $ =
+    id => document.getElementById(id);
 
+let currentCalendar =
+    new Date(
+        new Date().getFullYear(),
+        new Date().getMonth(),
+        1
+    );
+
+let saveTimer =
+    null;
 
 
 /* =========================================================
-   今天日期
+   日期
 ========================================================= */
 
-function getTodayISO(){
-
-    const d = new Date();
-
-    const z = n =>
-        String(n).padStart(2,"0");
+function iso(date){
 
     return (
-        d.getFullYear() +
+        date.getFullYear() +
         "-" +
-        z(d.getMonth()+1) +
+        String(
+            date.getMonth()+1
+        ).padStart(2,"0") +
         "-" +
-        z(d.getDate())
+        String(
+            date.getDate()
+        ).padStart(2,"0")
     );
+
 }
 
+
+function today(){
+
+    return iso(
+        new Date()
+    );
+
+}
+
+
+function parseDate(value){
+
+    return new Date(
+        value +
+        "T12:00:00"
+    );
+
+}
 
 
 /* =========================================================
@@ -881,19 +1281,8 @@ function updateWeekday(){
 
     if(!value){
 
-        $("weekday").value = "";
-
-        return;
-    }
-
-    const d =
-        new Date(
-            value + "T12:00:00"
-        );
-
-    if(isNaN(d.getTime())){
-
-        $("weekday").value = "";
+        $("weekday").value =
+            "";
 
         return;
     }
@@ -904,56 +1293,66 @@ function updateWeekday(){
             {
                 weekday:"long"
             }
-        ).format(d);
-}
-
-
-
-/* =========================================================
-   回到今天
-========================================================= */
-
-function goToday(){
-
-    $("date").value =
-        getTodayISO();
-
-    updateWeekday();
-
-    updateWeather();
-
-    autoSave();
-}
-
-
-
-/* =========================================================
-   心情
-========================================================= */
-
-function chooseMood(button,text){
-
-    document
-        .querySelectorAll(".mood-btn")
-        .forEach(btn =>
-            btn.classList.remove("active")
+        ).format(
+            parseDate(value)
         );
 
-    button.classList.add("active");
-
-    $("mood").value =
-        text;
-
-    autoSave();
 }
 
 
-
 /* =========================================================
-   取得目前表單資料
+   讀取所有日記
 ========================================================= */
 
-function getFormData(){
+function getDays(){
+
+    try{
+
+        return JSON.parse(
+            localStorage.getItem(
+                DAILY_KEY
+            ) ||
+            "{}"
+        );
+
+    }catch(error){
+
+        return {};
+
+    }
+
+}
+
+
+/* =========================================================
+   讀取所有旅遊
+========================================================= */
+
+function getTrips(){
+
+    try{
+
+        return JSON.parse(
+            localStorage.getItem(
+                TRIP_KEY
+            ) ||
+            "[]"
+        );
+
+    }catch(error){
+
+        return [];
+
+    }
+
+}
+
+
+/* =========================================================
+   目前表單
+========================================================= */
+
+function currentData(){
 
     return {
 
@@ -992,93 +1391,291 @@ function getFormData(){
 
         spend:
             Number(
-                $("spend").value || 0
+                $("spend").value ||
+                0
             ),
 
         deposit:
             Number(
-                $("deposit").value || 0
+                $("deposit").value ||
+                0
             ),
 
         savedAt:
             new Date().toLocaleString(
                 "zh-TW"
             )
+
     };
+
 }
 
 
-
 /* =========================================================
-   手動儲存
+   儲存
 ========================================================= */
 
-function saveData(){
+function saveData(show=true){
+
+    const data =
+        currentData();
+
+    if(!data.date){
+
+        alert(
+            "請先選擇日期"
+        );
+
+        return;
+    }
+
+
+    const all =
+        getDays();
+
+
+    all[data.date] =
+        data;
+
 
     localStorage.setItem(
-        STORAGE_KEY,
-        JSON.stringify(
-            getFormData()
-        )
+        DAILY_KEY,
+        JSON.stringify(all)
     );
+
 
     updateMoney();
 
     updateStatistics();
 
-    $("status").textContent =
-        "✅ 已儲存：" +
-        new Date().toLocaleString(
-            "zh-TW"
-        );
-}
+    renderCalendar();
 
+
+    if(show){
+
+        $("status").textContent =
+            "✅ 已儲存 " +
+            data.date +
+            "｜" +
+            new Date().toLocaleString(
+                "zh-TW"
+            );
+
+    }
+
+}
 
 
 /* =========================================================
    自動儲存
 ========================================================= */
 
-let autoSaveTimer = null;
-
 function autoSave(){
 
     clearTimeout(
-        autoSaveTimer
+        saveTimer
     );
 
-    autoSaveTimer =
+    saveTimer =
         setTimeout(
-            saveData,
+            () => {
+
+                saveData(false);
+
+            },
             300
         );
+
 }
 
 
-
 /* =========================================================
-   所有輸入自動儲存
+   載入指定日期
 ========================================================= */
 
-document
-    .querySelectorAll(
-        "input,textarea"
-    )
-    .forEach(element => {
+function loadDate(
+    date,
+    weather=true
+){
 
-        element.addEventListener(
-            "input",
-            () => {
+    const all =
+        getDays();
 
-                updateMoney();
+    const data =
+        all[date];
 
-                autoSave();
+
+    $("date").value =
+        date;
+
+
+    $("city").value =
+        data?.city ||
+        "台北市";
+
+
+    $("mood").value =
+        data?.mood ||
+        "";
+
+
+    $("title").value =
+        data?.title ||
+        "思諦與秀甄 出遊玩";
+
+
+    $("oneLine").value =
+        data?.oneLine ||
+        "";
+
+
+    $("diary").value =
+        data?.diary ||
+        "";
+
+
+    $("note").value =
+        data?.note ||
+        "";
+
+
+    $("spend").value =
+        data?.spend ??
+        "";
+
+
+    $("deposit").value =
+        data?.deposit ??
+        "";
+
+
+    $("weatherText").textContent =
+        data?.weather ||
+        "尚未取得天氣";
+
+
+    $("weatherDetail").textContent =
+        data?.weatherDetail ||
+        "按「更新天氣」即可自動取得";
+
+
+    $("weatherIcon").textContent =
+        data?.weatherIcon ||
+        "🌤️";
+
+
+    updateWeekday();
+
+    updateMoney();
+
+    restoreMood();
+
+    updateStatistics();
+
+    renderCalendar();
+
+    renderTrips();
+
+
+    if(
+        weather &&
+        !data?.weather
+    ){
+
+        updateWeather();
+
+    }
+
+}
+
+
+/* =========================================================
+   今天
+========================================================= */
+
+function goToday(){
+
+    const d =
+        today();
+
+    currentCalendar =
+        new Date(
+            parseDate(d).getFullYear(),
+            parseDate(d).getMonth(),
+            1
+        );
+
+    loadDate(
+        d,
+        true
+    );
+
+}
+
+
+/* =========================================================
+   心情
+========================================================= */
+
+function chooseMood(
+    button,
+    text
+){
+
+    document
+        .querySelectorAll(
+            ".mood-btn"
+        )
+        .forEach(
+            btn =>
+                btn.classList.remove(
+                    "active"
+                )
+        );
+
+
+    button.classList.add(
+        "active"
+    );
+
+
+    $("mood").value =
+        text;
+
+
+    autoSave();
+
+}
+
+
+/* =========================================================
+   恢復心情
+========================================================= */
+
+function restoreMood(){
+
+    const current =
+        $("mood").value;
+
+
+    document
+        .querySelectorAll(
+            ".mood-btn"
+        )
+        .forEach(
+            button => {
+
+                button.classList.toggle(
+                    "active",
+                    button.textContent.trim()
+                    ===
+                    current
+                );
 
             }
         );
 
-    });
-
+}
 
 
 /* =========================================================
@@ -1089,288 +1686,362 @@ function updateMoney(){
 
     const spend =
         Number(
-            $("spend").value || 0
+            $("spend").value ||
+            0
         );
+
 
     const deposit =
         Number(
-            $("deposit").value || 0
+            $("deposit").value ||
+            0
         );
+
 
     $("spendShow").textContent =
         "＄" +
         spend.toLocaleString();
 
+
     $("depositShow").textContent =
         "＄" +
         deposit.toLocaleString();
+
 }
 
 
-
 /* =========================================================
-   天氣
-   Open-Meteo 不需要 API Key
+   行事曆
 ========================================================= */
 
-async function updateWeather(){
+function renderCalendar(){
 
-    const city =
-        $("city").value.trim()
-        || "台北市";
+    const year =
+        currentCalendar.getFullYear();
 
-    $("weatherText").textContent =
-        "取得中…";
+    const month =
+        currentCalendar.getMonth();
 
-    $("weatherDetail").textContent =
-        "正在查詢目前天氣";
 
-    try{
+    $("calendarTitle").textContent =
+        year +
+        "年 " +
+        (month + 1) +
+        "月";
 
-        const geoURL =
-            "https://geocoding-api.open-meteo.com/v1/search" +
-            "?name=" +
-            encodeURIComponent(city) +
-            "&count=1" +
-            "&language=zh" +
-            "&format=json";
 
-        const geo =
-            await fetch(
-                geoURL
-            ).then(
-                response =>
-                    response.json()
+    const weekNames =
+        [
+            "日",
+            "一",
+            "二",
+            "三",
+            "四",
+            "五",
+            "六"
+        ];
+
+
+    $("calendarWeek").innerHTML =
+        weekNames
+            .map(
+                name =>
+                    `<div class="cal-week">${name}</div>`
+            )
+            .join("");
+
+
+    const firstDay =
+        new Date(
+            year,
+            month,
+            1
+        ).getDay();
+
+
+    const lastDate =
+        new Date(
+            year,
+            month + 1,
+            0
+        ).getDate();
+
+
+    const todayDate =
+        today();
+
+
+    const selectedDate =
+        $("date").value;
+
+
+    const trips =
+        getTrips();
+
+
+    let html =
+        "";
+
+
+    for(
+        let i=0;
+        i<firstDay;
+        i++
+    ){
+
+        html +=
+            '<div class="cal-day empty"></div>';
+
+    }
+
+
+    for(
+        let day=1;
+        day<=lastDate;
+        day++
+    ){
+
+        const dateString =
+            iso(
+                new Date(
+                    year,
+                    month,
+                    day
+                )
             );
+
+
+        const dayTrips =
+            trips.filter(
+                trip =>
+                    inTrip(
+                        dateString,
+                        trip
+                    )
+            );
+
+
+        let className =
+            "cal-day";
+
 
         if(
-            !geo.results ||
-            !geo.results.length
+            dateString ===
+            todayDate
         ){
 
-            throw new Error(
-                "找不到地點"
-            );
+            className +=
+                " today";
+
         }
 
-        const place =
-            geo.results[0];
 
-        const weatherURL =
-            "https://api.open-meteo.com/v1/forecast" +
-            "?latitude=" +
-            place.latitude +
-            "&longitude=" +
-            place.longitude +
-            "&current=" +
-            "temperature_2m," +
-            "apparent_temperature," +
-            "weather_code," +
-            "wind_speed_10m" +
-            "&timezone=auto";
+        if(
+            dateString ===
+            selectedDate
+        ){
 
-        const weather =
-            await fetch(
-                weatherURL
-            ).then(
-                response =>
-                    response.json()
-            );
+            className +=
+                " selected";
 
-        const current =
-            weather.current;
+        }
 
-        const info =
-            getWeatherInfo(
-                current.weather_code
-            );
 
-        $("weatherIcon").textContent =
-            info.icon;
+        if(
+            dayTrips.length
+        ){
 
-        $("weatherText").textContent =
-            info.text +
-            "・" +
-            Math.round(
-                current.temperature_2m
-            ) +
-            "°C";
+            className +=
+                " tripday";
 
-        $("weatherDetail").textContent =
-            "體感 " +
-            Math.round(
-                current.apparent_temperature
-            ) +
-            "°C｜風速 " +
-            Math.round(
-                current.wind_speed_10m
-            ) +
-            " km/h｜" +
-            place.name;
+        }
 
-        autoSave();
 
-    }catch(error){
+        let tripText =
+            "";
 
-        $("weatherIcon").textContent =
-            "❓";
 
-        $("weatherText").textContent =
-            "天氣取得失敗";
+        if(
+            dayTrips.length
+        ){
 
-        $("weatherDetail").textContent =
-            "可以手動修改城市，稍後再更新";
+            tripText =
+                dayTrips
+                    .map(
+                        trip =>
+                            "🧳 " +
+                            (
+                                trip.place ||
+                                "旅遊"
+                            )
+                    )
+                    .join("、");
 
-        autoSave();
+        }
+
+
+        html += `
+
+            <button
+                type="button"
+                class="${className}"
+                onclick="selectCalendarDate('${dateString}')"
+            >
+
+                <span class="cal-num">
+                    ${day}
+                </span>
+
+                ${
+                    tripText
+                    ?
+                    `
+                    <span class="cal-dot">
+                        ${escapeHTML(tripText)}
+                    </span>
+                    `
+                    :
+                    ""
+                }
+
+            </button>
+
+        `;
+
     }
-}
 
+
+    $("calendarDays").innerHTML =
+        html;
+
+}
 
 
 /* =========================================================
-   天氣文字
+   判斷旅遊日期
 ========================================================= */
 
-function getWeatherInfo(code){
-
-    if(code === 0){
-
-        return {
-            icon:"☀️",
-            text:"晴天"
-        };
-
-    }
+function inTrip(
+    date,
+    trip
+){
 
     if(
-        [1,2,3].includes(code)
+        !trip.start ||
+        !trip.end
     ){
 
-        return {
-            icon:"🌤️",
-            text:"多雲"
-        };
+        return false;
 
     }
 
-    if(
-        [45,48].includes(code)
-    ){
 
-        return {
-            icon:"🌫️",
-            text:"霧"
-        };
-
-    }
-
-    if(
-        [51,53,55,56,57]
-            .includes(code)
-    ){
-
-        return {
-            icon:"🌦️",
-            text:"毛毛雨"
-        };
-
-    }
-
-    if(
-        [61,63,65,66,67]
-            .includes(code)
-    ){
-
-        return {
-            icon:"🌧️",
-            text:"下雨"
-        };
-
-    }
-
-    if(
-        [71,73,75,77]
-            .includes(code)
-    ){
-
-        return {
-            icon:"❄️",
-            text:"下雪"
-        };
-
-    }
-
-    if(
-        [80,81,82]
-            .includes(code)
-    ){
-
-        return {
-            icon:"🌦️",
-            text:"陣雨"
-        };
-
-    }
-
-    if(
-        [95,96,99]
-            .includes(code)
-    ){
-
-        return {
-            icon:"⛈️",
-            text:"雷雨"
-        };
-
-    }
-
-    return {
-        icon:"🌤️",
-        text:"天氣"
-    };
-}
-
-
-
-/* =========================================================
-   出遊資料
-========================================================= */
-
-function getTrips(){
-
-    try{
-
-        return JSON.parse(
-            localStorage.getItem(
-                TRIP_STORAGE_KEY
-            ) || "[]"
-        );
-
-    }catch(error){
-
-        return [];
-
-    }
-}
-
-
-
-function saveTrips(list){
-
-    localStorage.setItem(
-        TRIP_STORAGE_KEY,
-        JSON.stringify(list)
+    return (
+        date >= trip.start &&
+        date <= trip.end
     );
 
-    renderTrips();
-
-    updateStatistics();
 }
 
 
+/* =========================================================
+   選擇行事曆日期
+========================================================= */
+
+function selectCalendarDate(
+    date
+){
+
+    currentCalendar =
+        new Date(
+            parseDate(date).getFullYear(),
+            parseDate(date).getMonth(),
+            1
+        );
+
+
+    loadDate(
+        date,
+        true
+    );
+
+
+    $("calendarStatus").textContent =
+        "📅 已選擇 " +
+        date;
+
+}
+
 
 /* =========================================================
-   新增出遊
+   上下月份
+========================================================= */
+
+function changeMonth(
+    amount
+){
+
+    currentCalendar =
+        new Date(
+            currentCalendar.getFullYear(),
+            currentCalendar.getMonth() +
+            amount,
+            1
+        );
+
+
+    renderCalendar();
+
+}
+
+
+/* =========================================================
+   HTML 安全
+========================================================= */
+
+function escapeHTML(
+    value
+){
+
+    return String(
+        value ?? ""
+    )
+    .replace(
+        /[&<>"']/g,
+        character => {
+
+            const map = {
+
+                "&":
+                    "&amp;",
+
+                "<":
+                    "&lt;",
+
+                ">":
+                    "&gt;",
+
+                '"':
+                    "&quot;",
+
+                "'":
+                    "&#39;"
+
+            };
+
+
+            return map[
+                character
+            ];
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   新增旅遊
 ========================================================= */
 
 function addTrip(){
@@ -1378,14 +2049,12 @@ function addTrip(){
     const list =
         getTrips();
 
-    const startDate =
-        $("date").value
-        || getTodayISO();
 
-    list.push({
+    const newTrip = {
 
         start:
-            startDate,
+            $("date").value ||
+            today(),
 
         end:
             "",
@@ -1405,51 +2074,132 @@ function addTrip(){
         note:
             ""
 
-    });
+    };
 
-    saveTrips(list);
 
-    autoSave();
+    list.push(
+        newTrip
+    );
+
+
+    localStorage.setItem(
+        TRIP_KEY,
+        JSON.stringify(list)
+    );
+
+
+    renderTrips();
+
+    renderCalendar();
+
+    updateStatistics();
+
+
+    const trips =
+        document.querySelectorAll(
+            ".trip"
+        );
+
+
+    if(
+        trips.length
+    ){
+
+        trips[
+            trips.length - 1
+        ]
+        .scrollIntoView({
+            behavior:"smooth",
+            block:"center"
+        });
+
+    }
 
 }
 
 
-
 /* =========================================================
-   安全 HTML
+   計算旅遊天數
 ========================================================= */
 
-function escapeHTML(value){
+function tripDays(
+    trip
+){
 
-    return String(
-        value || ""
-    )
-    .replace(
-        /[&<>"']/g,
-        character => {
+    if(
+        !trip.start ||
+        !trip.end
+    ){
 
-            const map = {
+        return null;
 
-                "&":"&amp;",
-                "<":"&lt;",
-                ">":"&gt;",
-                '"':"&quot;",
-                "'":"&#39;"
+    }
 
-            };
 
-            return map[
-                character
-            ];
+    const start =
+        parseDate(
+            trip.start
+        );
 
-        }
+
+    const end =
+        parseDate(
+            trip.end
+        );
+
+
+    const days =
+        Math.round(
+            (
+                end -
+                start
+            ) /
+            86400000
+        ) + 1;
+
+
+    return Math.max(
+        1,
+        days
     );
+
 }
 
 
+/* =========================================================
+   顯示天數
+========================================================= */
+
+function tripBadge(
+    trip
+){
+
+    const days =
+        tripDays(trip);
+
+
+    if(!days){
+
+        return "尚未設定";
+
+    }
+
+
+    return (
+        days +
+        "天" +
+        Math.max(
+            0,
+            days - 1
+        ) +
+        "夜"
+    );
+
+}
+
 
 /* =========================================================
-   顯示出遊
+   顯示旅遊
 ========================================================= */
 
 function renderTrips(){
@@ -1457,31 +2207,46 @@ function renderTrips(){
     const box =
         $("tripList");
 
+
     const list =
         getTrips();
 
-    box.innerHTML = "";
 
-    if(!list.length){
+    box.innerHTML =
+        "";
+
+
+    if(
+        !list.length
+    ){
 
         box.innerHTML =
-            '<div class="muted">' +
-            '目前還沒有出遊記錄。' +
-            '</div>';
+            `
+            <div class="muted">
+                目前沒有出遊記錄。
+            </div>
+            `;
 
         return;
+
     }
 
+
     list.forEach(
-        (trip,index) => {
+        (
+            trip,
+            index
+        ) => {
 
             const wrapper =
                 document.createElement(
                     "div"
                 );
 
+
             wrapper.className =
                 "trip";
+
 
             wrapper.innerHTML = `
 
@@ -1490,16 +2255,14 @@ function renderTrips(){
                     <div class="trip-title">
 
                         🧳
-                        <span class="trip-number">
-                            第 ${index+1} 次
-                        </span>
-
-                        出遊
+                        第 ${index + 1} 次出遊
 
                     </div>
 
                     <span class="badge">
-                        2天1夜
+
+                        ${tripBadge(trip)}
+
                     </span>
 
                 </div>
@@ -1554,7 +2317,7 @@ function renderTrips(){
                             data-trip-index="${index}"
                             data-trip-key="place"
                             value="${escapeHTML(trip.place)}"
-                            placeholder="例如：宜蘭、台中、花蓮"
+                            placeholder="例如：沖繩、清境農場、台南"
                         >
 
                     </div>
@@ -1627,13 +2390,15 @@ function renderTrips(){
 
 
                 <button
+                    type="button"
                     class="btn-red"
                     onclick="deleteTrip(${index})"
                 >
-                    刪除這次出遊
+                    🗑️ 刪除這次旅遊
                 </button>
 
             `;
+
 
             box.appendChild(
                 wrapper
@@ -1657,69 +2422,118 @@ function renderTrips(){
                         const list =
                             getTrips();
 
+
                         const index =
                             Number(
                                 element.dataset.tripIndex
                             );
 
+
                         const key =
                             element.dataset.tripKey;
 
-                        list[index][key] =
-                            element.value;
 
-                        saveTrips(list);
+                        if(
+                            key ===
+                            "cost"
+                        ){
 
-                        autoSave();
+                            list[index][key] =
+                                Number(
+                                    element.value ||
+                                    0
+                                );
+
+                        }else{
+
+                            list[index][key] =
+                                element.value;
+
+                        }
+
+
+                        localStorage.setItem(
+                            TRIP_KEY,
+                            JSON.stringify(list)
+                        );
+
+
+                        renderCalendar();
+
+                        updateStatistics();
+
+
+                        /* 
+                           不重新 renderTrips，
+                           避免使用者輸入文字時游標跳掉
+                        */
 
                     }
                 );
 
             }
         );
+
 }
 
 
-
 /* =========================================================
-   刪除單次出遊
+   刪除旅遊
 ========================================================= */
 
-function deleteTrip(index){
+function deleteTrip(
+    index
+){
 
     const first =
         confirm(
-            "⚠️ 第一次確認：確定要刪除這次 2天1夜出遊嗎？"
+            "⚠️ 第一次確認\n\n確定要刪除這次旅遊嗎？"
         );
+
 
     if(!first){
 
         return;
+
     }
+
 
     const second =
         confirm(
-            "🚨 第二次確認：真的要刪除這次出遊記錄嗎？"
+            "🚨 第二次確認\n\n資料刪除後無法從本頁恢復。\n\n真的要刪除嗎？"
         );
+
 
     if(!second){
 
         return;
+
     }
+
 
     const list =
         getTrips();
+
 
     list.splice(
         index,
         1
     );
 
-    saveTrips(list);
 
-    autoSave();
+    localStorage.setItem(
+        TRIP_KEY,
+        JSON.stringify(list)
+    );
+
+
+    renderTrips();
+
+    renderCalendar();
+
+    updateStatistics();
+
 }
-
 
 
 /* =========================================================
@@ -1728,165 +2542,569 @@ function deleteTrip(index){
 
 function updateStatistics(){
 
-    const data =
-        getFormData();
-
     const month =
         (
-            data.date ||
-            getTodayISO()
-        ).slice(0,7);
-
-    const list =
-        getTrips();
-
-    const monthTrips =
-        list.filter(
-            trip =>
-                (
-                    trip.start || ""
-                ).slice(0,7)
-                === month
+            $("date").value ||
+            today()
+        ).slice(
+            0,
+            7
         );
 
-    $("statTrips").textContent =
-        monthTrips.length +
-        " 次";
+
+    const all =
+        getDays();
+
+
+    const entries =
+        Object.values(
+            all
+        );
+
+
+    let spend =
+        0;
+
+
+    let deposit =
+        0;
+
+
+    let diaryCount =
+        0;
+
+
+    entries.forEach(
+        data => {
+
+            if(
+                (
+                    data.date ||
+                    ""
+                ).slice(
+                    0,
+                    7
+                )
+                ===
+                month
+            ){
+
+                spend +=
+                    Number(
+                        data.spend ||
+                        0
+                    );
+
+
+                deposit +=
+                    Number(
+                        data.deposit ||
+                        0
+                    );
+
+
+                if(
+                    (
+                        data.diary ||
+                        ""
+                    ).trim()
+                    ||
+                    (
+                        data.oneLine ||
+                        ""
+                    ).trim()
+                ){
+
+                    diaryCount++;
+
+                }
+
+            }
+
+        }
+    );
+
+
+    const trips =
+        getTrips()
+        .filter(
+            trip =>
+                tripOverlapsMonth(
+                    trip,
+                    month
+                )
+        );
+
+
+    $("statDiary").textContent =
+        diaryCount +
+        " 天";
+
 
     $("statSpend").textContent =
         "＄" +
-        Number(
-            data.spend || 0
-        ).toLocaleString();
+        spend.toLocaleString();
+
 
     $("statDeposit").textContent =
         "＄" +
-        Number(
-            data.deposit || 0
-        ).toLocaleString();
+        deposit.toLocaleString();
 
-    $("statDiary").textContent =
-        "1 天";
+
+    $("statTrips").textContent =
+        trips.length +
+        " 次";
+
 }
 
 
+/* =========================================================
+   判斷旅遊是否屬於月份
+========================================================= */
+
+function tripOverlapsMonth(
+    trip,
+    month
+){
+
+    return (
+
+        (
+            trip.start ||
+            ""
+        ).slice(
+            0,
+            7
+        )
+        ===
+        month
+
+        ||
+
+        (
+            trip.end ||
+            ""
+        ).slice(
+            0,
+            7
+        )
+        ===
+        month
+
+    );
+
+}
+
 
 /* =========================================================
-   查看已儲存
+   天氣
+========================================================= */
+
+async function updateWeather(){
+
+    const city =
+        $("city").value.trim()
+        ||
+        "台北市";
+
+
+    $("weatherText").textContent =
+        "取得中…";
+
+
+    $("weatherDetail").textContent =
+        "正在查詢目前天氣";
+
+
+    try{
+
+        const geoURL =
+            "https://geocoding-api.open-meteo.com/v1/search" +
+            "?name=" +
+            encodeURIComponent(
+                city
+            ) +
+            "&count=1" +
+            "&language=zh" +
+            "&format=json";
+
+
+        const geo =
+            await fetch(
+                geoURL
+            )
+            .then(
+                response =>
+                    response.json()
+            );
+
+
+        if(
+            !geo.results ||
+            !geo.results.length
+        ){
+
+            throw new Error(
+                "找不到地點"
+            );
+
+        }
+
+
+        const place =
+            geo.results[0];
+
+
+        const weatherURL =
+            "https://api.open-meteo.com/v1/forecast" +
+            "?latitude=" +
+            place.latitude +
+            "&longitude=" +
+            place.longitude +
+            "&current=" +
+            "temperature_2m," +
+            "apparent_temperature," +
+            "weather_code," +
+            "wind_speed_10m" +
+            "&timezone=auto";
+
+
+        const weather =
+            await fetch(
+                weatherURL
+            )
+            .then(
+                response =>
+                    response.json()
+            );
+
+
+        const current =
+            weather.current;
+
+
+        const info =
+            getWeatherInfo(
+                current.weather_code
+            );
+
+
+        $("weatherIcon").textContent =
+            info.icon;
+
+
+        $("weatherText").textContent =
+            info.text +
+            "・" +
+            Math.round(
+                current.temperature_2m
+            ) +
+            "°C";
+
+
+        $("weatherDetail").textContent =
+            "體感 " +
+            Math.round(
+                current.apparent_temperature
+            ) +
+            "°C｜風速 " +
+            Math.round(
+                current.wind_speed_10m
+            ) +
+            " km/h｜" +
+            place.name;
+
+
+        autoSave();
+
+    }
+    catch(error){
+
+        $("weatherIcon").textContent =
+            "❓";
+
+
+        $("weatherText").textContent =
+            "天氣取得失敗";
+
+
+        $("weatherDetail").textContent =
+            "可以手動修改城市，稍後再更新";
+
+
+        autoSave();
+
+    }
+
+}
+
+
+/* =========================================================
+   天氣文字
+========================================================= */
+
+function getWeatherInfo(
+    code
+){
+
+    if(
+        code === 0
+    ){
+
+        return {
+            icon:"☀️",
+            text:"晴天"
+        };
+
+    }
+
+
+    if(
+        [1,2,3].includes(
+            code
+        )
+    ){
+
+        return {
+            icon:"🌤️",
+            text:"多雲"
+        };
+
+    }
+
+
+    if(
+        [45,48].includes(
+            code
+        )
+    ){
+
+        return {
+            icon:"🌫️",
+            text:"霧"
+        };
+
+    }
+
+
+    if(
+        [51,53,55,56,57].includes(
+            code
+        )
+    ){
+
+        return {
+            icon:"🌦️",
+            text:"毛毛雨"
+        };
+
+    }
+
+
+    if(
+        [61,63,65,66,67].includes(
+            code
+        )
+    ){
+
+        return {
+            icon:"🌧️",
+            text:"下雨"
+        };
+
+    }
+
+
+    if(
+        [71,73,75,77].includes(
+            code
+        )
+    ){
+
+        return {
+            icon:"❄️",
+            text:"下雪"
+        };
+
+    }
+
+
+    if(
+        [80,81,82].includes(
+            code
+        )
+    ){
+
+        return {
+            icon:"🌦️",
+            text:"陣雨"
+        };
+
+    }
+
+
+    if(
+        [95,96,99].includes(
+            code
+        )
+    ){
+
+        return {
+            icon:"⛈️",
+            text:"雷雨"
+        };
+
+    }
+
+
+    return {
+        icon:"🌤️",
+        text:"天氣"
+    };
+
+}
+
+
+/* =========================================================
+   查看資料
 ========================================================= */
 
 function viewData(){
 
-    const raw =
-        localStorage.getItem(
-            STORAGE_KEY
-        );
+    saveData(false);
 
-    if(!raw){
-
-        alert(
-            "目前沒有已儲存的日記。"
-        );
-
-        return;
-    }
 
     const data =
-        JSON.parse(raw);
+        currentData();
 
-    const list =
+
+    const trips =
         getTrips();
+
 
     let tripText =
         "";
 
-    if(list.length){
+
+    if(
+        trips.length
+    ){
 
         tripText =
-            list
-            .map(
-                (trip,index) => {
+            trips
+                .map(
+                    (
+                        trip,
+                        index
+                    ) => {
 
-                    return (
-                        "\n" +
-                        (index+1) +
-                        ". " +
-                        (trip.start || "") +
-                        " ～ " +
-                        (trip.end || "") +
-                        "\n" +
-                        "地點：" +
-                        (trip.place || "") +
-                        "\n" +
-                        "同行：" +
-                        (trip.people || "") +
-                        "\n" +
-                        "花費：＄" +
-                        Number(
-                            trip.cost || 0
-                        ).toLocaleString()
-                    );
+                        return (
 
-                }
-            )
-            .join("\n");
+                            "\n" +
 
-    }else{
+                            (
+                                index +
+                                1
+                            ) +
+
+                            ". " +
+
+                            (
+                                trip.start ||
+                                ""
+                            ) +
+
+                            " ～ " +
+
+                            (
+                                trip.end ||
+                                ""
+                            ) +
+
+                            "\n地點：" +
+
+                            (
+                                trip.place ||
+                                ""
+                            ) +
+
+                            "\n同行：" +
+
+                            (
+                                trip.people ||
+                                ""
+                            ) +
+
+                            "\n花費：＄" +
+
+                            Number(
+                                trip.cost ||
+                                0
+                            ).toLocaleString()
+
+                        );
+
+                    }
+                )
+                .join(
+                    "\n"
+                );
+
+    }
+    else{
 
         tripText =
-            "目前沒有出遊記錄";
+            "\n目前沒有旅遊記錄";
+
     }
 
 
     alert(
 
         "📔 " +
-        (data.title ||
-            "思諦與秀甄生活日記") +
+        (
+            data.title ||
+            "思諦與秀甄生活日記"
+        ) +
 
-        "\n\n" +
-
-        "日期：" +
-        (data.date || "") +
+        "\n\n日期：" +
+        data.date +
         " " +
-        (data.weekday || "") +
+        data.weekday +
 
         "\n地點：" +
-        (data.city || "") +
+        data.city +
 
         "\n天氣：" +
-        (data.weather || "") +
+        data.weather +
 
         "\n心情：" +
-        (data.mood || "") +
+        data.mood +
 
         "\n\n今日一句話：\n" +
-        (data.oneLine || "") +
+        data.oneLine +
 
         "\n\n日記：\n" +
-        (data.diary || "") +
+        data.diary +
 
         "\n\n備註：\n" +
-        (data.note || "") +
+        data.note +
 
         "\n\n今日消費：＄" +
-        Number(
-            data.spend || 0
-        ).toLocaleString() +
+        data.spend.toLocaleString() +
 
         "\n今日存款：＄" +
-        Number(
-            data.deposit || 0
-        ).toLocaleString() +
+        data.deposit.toLocaleString() +
 
         "\n\n🧳 出遊記錄" +
         tripText +
 
         "\n\n最後儲存：" +
-        (data.savedAt || "")
-    );
-}
+        data.savedAt
 
+    );
+
+}
 
 
 /* =========================================================
@@ -1895,75 +3113,115 @@ function viewData(){
 
 function copyDetails(){
 
-    const data =
-        getFormData();
+    saveData(false);
 
-    const list =
+
+    const data =
+        currentData();
+
+
+    const trips =
         getTrips();
+
 
     let tripsText =
         "";
 
-    if(list.length){
+
+    if(
+        trips.length
+    ){
 
         tripsText =
-            list
-            .map(
-                (trip,index) => {
+            trips
+                .map(
+                    (
+                        trip,
+                        index
+                    ) => {
 
-                    return (
+                        return (
 
-                        "第 " +
-                        (index+1) +
-                        " 次｜2天1夜\n" +
+                            "第 " +
+                            (
+                                index +
+                                1
+                            ) +
+                            " 次旅遊\n" +
 
-                        "出發：" +
-                        (trip.start || "") +
-                        "\n" +
+                            "日期：" +
+                            (
+                                trip.start ||
+                                ""
+                            ) +
+                            " ～ " +
+                            (
+                                trip.end ||
+                                ""
+                            ) +
 
-                        "回程：" +
-                        (trip.end || "") +
-                        "\n" +
+                            "\n地點：" +
+                            (
+                                trip.place ||
+                                ""
+                            ) +
 
-                        "地點：" +
-                        (trip.place || "") +
-                        "\n" +
+                            "\n同行：" +
+                            (
+                                trip.people ||
+                                ""
+                            ) +
 
-                        "同行：" +
-                        (trip.people || "") +
-                        "\n" +
+                            "\n花費：＄" +
+                            Number(
+                                trip.cost ||
+                                0
+                            ).toLocaleString() +
 
-                        "花費：＄" +
-                        Number(
-                            trip.cost || 0
-                        ).toLocaleString() +
-                        "\n" +
+                            "\n內容：\n" +
+                            (
+                                trip.content ||
+                                ""
+                            ) +
 
-                        "內容：\n" +
-                        (trip.content || "") +
-                        "\n" +
+                            "\n備註：\n" +
+                            (
+                                trip.note ||
+                                ""
+                            )
 
-                        "備註：\n" +
-                        (trip.note || "")
+                        );
 
-                    );
+                    }
+                )
+                .join(
+                    "\n\n--------------------\n\n"
+                );
 
-                }
-            )
-            .join(
-                "\n\n--------------------\n\n"
-            );
-
-    }else{
+    }
+    else{
 
         tripsText =
-            "目前沒有出遊記錄";
+            "目前沒有旅遊記錄";
+
     }
 
 
     const text =
 
         "📔 思諦與秀甄・生活日記\n\n" +
+
+        "🌿 旅行的意義\n" +
+
+        "旅行的意義，不只是去過多少地方，\n" +
+
+        "而是讓自己慢下來。\n" +
+
+        "當腳步慢了，心才有更多空間，\n" +
+
+        "去看見沿途的風景，\n" +
+
+        "感受當下簡單而真實的美好。\n\n" +
 
         "日期：" +
         data.date +
@@ -2006,7 +3264,7 @@ function copyDetails(){
         data.deposit.toLocaleString() +
         "\n\n" +
 
-        "🧳 每月出遊 2～3 次／2天1夜\n\n" +
+        "🧳 每月出遊 2～3 次\n\n" +
 
         tripsText;
 
@@ -2017,7 +3275,9 @@ function copyDetails(){
     ){
 
         navigator.clipboard
-            .writeText(text)
+            .writeText(
+                text
+            )
             .then(
                 () => {
 
@@ -2030,139 +3290,27 @@ function copyDetails(){
             .catch(
                 () => {
 
-                    alert(text);
-
-                }
-            );
-
-    }else{
-
-        alert(text);
-
-    }
-}
-
-
-
-/* =========================================================
-   載入資料
-========================================================= */
-
-function loadData(){
-
-    try{
-
-        const raw =
-            localStorage.getItem(
-                STORAGE_KEY
-            );
-
-        if(raw){
-
-            const data =
-                JSON.parse(raw);
-
-            $("date").value =
-                data.date ||
-                getTodayISO();
-
-            $("city").value =
-                data.city ||
-                "台北市";
-
-            $("mood").value =
-                data.mood ||
-                "";
-
-            $("title").value =
-                data.title ||
-                "思諦與秀甄 出遊玩";
-
-            $("oneLine").value =
-                data.oneLine ||
-                "";
-
-            $("diary").value =
-                data.diary ||
-                "";
-
-            $("note").value =
-                data.note ||
-                "";
-
-            $("spend").value =
-                data.spend ??
-                "";
-
-            $("deposit").value =
-                data.deposit ??
-                "";
-
-            $("weatherText").textContent =
-                data.weather ||
-                "尚未取得天氣";
-
-            $("weatherDetail").textContent =
-                data.weatherDetail ||
-                "按「更新天氣」即可自動取得";
-
-            $("weatherIcon").textContent =
-                data.weatherIcon ||
-                "🌤️";
-
-        }else{
-
-            $("date").value =
-                getTodayISO();
-
-        }
-
-    }catch(error){
-
-        $("date").value =
-            getTodayISO();
-
-    }
-
-
-    updateWeekday();
-
-    updateMoney();
-
-    renderTrips();
-
-    updateStatistics();
-
-
-    /* 恢復心情按鈕 */
-
-    const currentMood =
-        $("mood").value;
-
-    document
-        .querySelectorAll(".mood-btn")
-        .forEach(
-            button => {
-
-                if(
-                    button.textContent.trim()
-                    === currentMood
-                ){
-
-                    button.classList.add(
-                        "active"
+                    alert(
+                        text
                     );
 
                 }
+            );
 
-            }
+    }
+    else{
+
+        alert(
+            text
         );
+
+    }
+
 }
 
 
-
 /* =========================================================
-   清除全部資料
+   清除全部
 ========================================================= */
 
 function clearAllData(){
@@ -2173,13 +3321,16 @@ function clearAllData(){
             "⚠️ 第一次確認\n\n" +
 
             "確定要清除所有「思諦與秀甄」" +
-            "生活日記、消費、存款與出遊資料嗎？"
+
+            "生活日記、消費、存款與旅遊資料嗎？"
 
         );
+
 
     if(!first){
 
         return;
+
     }
 
 
@@ -2194,18 +3345,21 @@ function clearAllData(){
 
         );
 
+
     if(!second){
 
         return;
+
     }
 
 
     localStorage.removeItem(
-        STORAGE_KEY
+        DAILY_KEY
     );
 
+
     localStorage.removeItem(
-        TRIP_STORAGE_KEY
+        TRIP_KEY
     );
 
 
@@ -2215,34 +3369,269 @@ function clearAllData(){
 
 
     location.reload();
+
 }
 
+
+/* =========================================================
+   預設三趟旅遊
+========================================================= */
+
+function seedTrips(){
+
+    if(
+        localStorage.getItem(
+            TRIP_KEY
+        )
+    ){
+
+        return;
+
+    }
+
+
+    /*
+       使用目前年份。
+       例如今年是 2026，
+       就會建立 2026 年行程。
+    */
+
+    const year =
+        new Date().getFullYear();
+
+
+    const list = [
+
+        {
+            start:
+                year +
+                "-11-11",
+
+            end:
+                year +
+                "-11-13",
+
+            place:
+                "日本沖繩｜搭郵輪",
+
+            people:
+                "思諦與秀甄",
+
+            cost:
+                0,
+
+            content:
+                "搭郵輪去日本沖繩，3天2夜。",
+
+            note:
+                "日期可以自由修改"
+
+        },
+
+
+        {
+            start:
+                year +
+                "-10-07",
+
+            end:
+                year +
+                "-10-08",
+
+            place:
+                "清境農場",
+
+            people:
+                "思諦與秀甄",
+
+            cost:
+                0,
+
+            content:
+                "清境農場，2天1夜。",
+
+            note:
+                "日期可以自由修改"
+
+        },
+
+
+        {
+            start:
+                year +
+                "-09-15",
+
+            end:
+                year +
+                "-09-16",
+
+            place:
+                "台南",
+
+            people:
+                "思諦與秀甄",
+
+            cost:
+                0,
+
+            content:
+                "台南，2天1夜。",
+
+            note:
+                "日期可以自由修改"
+
+        }
+
+    ];
+
+
+    localStorage.setItem(
+        TRIP_KEY,
+        JSON.stringify(list)
+    );
+
+}
+
+
+/* =========================================================
+   所有輸入自動儲存
+========================================================= */
+
+function bindAutoSave(){
+
+    document
+        .querySelectorAll(
+            "input, textarea"
+        )
+        .forEach(
+            element => {
+
+                element.addEventListener(
+                    "input",
+                    () => {
+
+                        updateMoney();
+
+                        autoSave();
+
+                    }
+                );
+
+            }
+        );
+
+}
 
 
 /* =========================================================
    日期變更
 ========================================================= */
 
-$("date").addEventListener(
-    "change",
-    () => {
+function bindDate(){
 
-        updateWeekday();
+    $("date")
+        .addEventListener(
+            "change",
+            () => {
 
-        updateWeather();
+                saveData(false);
 
-        autoSave();
+                const newDate =
+                    $("date").value;
 
-    }
-);
 
+                currentCalendar =
+                    new Date(
+                        parseDate(
+                            newDate
+                        ).getFullYear(),
+                        parseDate(
+                            newDate
+                        ).getMonth(),
+                        1
+                    );
+
+
+                loadDate(
+                    newDate,
+                    true
+                );
+
+            }
+        );
+
+}
 
 
 /* =========================================================
    啟動
 ========================================================= */
 
-loadData();
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        /*
+           先建立三趟預設旅遊
+        */
+
+        seedTrips();
+
+
+        /*
+           儲存按鈕使用 addEventListener
+           確保手機也能正常點擊
+        */
+
+        $("saveBtn")
+            .addEventListener(
+                "click",
+                () => {
+
+                    saveData(true);
+
+                }
+            );
+
+
+        bindAutoSave();
+
+        bindDate();
+
+
+        /*
+           城市修改後更新天氣
+        */
+
+        $("city")
+            .addEventListener(
+                "change",
+                () => {
+
+                    updateWeather();
+
+                }
+            );
+
+
+        /*
+           開啟今天
+        */
+
+        loadDate(
+            today(),
+            true
+        );
+
+
+        /*
+           行事曆
+        */
+
+        renderCalendar();
+
+    }
+);
 
 </script>
 
