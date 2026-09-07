@@ -1,0 +1,2108 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#080a0c">
+<title>股票資產管理｜新光＋國泰</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html,
+body{
+    margin:0;
+    padding:0;
+    min-height:100%;
+}
+
+body{
+    background:#080a0c;
+    color:#f5f5f5;
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "SF Pro Display",
+        "PingFang TC",
+        "Noto Sans TC",
+        "Microsoft JhengHei",
+        sans-serif;
+}
+
+button,
+input{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.app{
+    width:min(900px,94%);
+    margin:0 auto;
+    padding:
+        calc(18px + env(safe-area-inset-top))
+        0
+        calc(45px + env(safe-area-inset-bottom));
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.header{
+    padding:12px 0 20px;
+}
+
+.header h1{
+    margin:0;
+    font-size:28px;
+    font-weight:900;
+    letter-spacing:.5px;
+}
+
+.header p{
+    margin:8px 0 0;
+    color:#929ba4;
+    font-size:13px;
+    line-height:1.6;
+}
+
+/* =========================
+   TOTAL CARD
+========================= */
+
+.total-card{
+    background:
+        linear-gradient(
+            145deg,
+            #151a1f,
+            #0d1013
+        );
+    border:1px solid #30363d;
+    border-radius:22px;
+    padding:22px;
+    margin-bottom:16px;
+    box-shadow:
+        0 18px 45px rgba(0,0,0,.28);
+}
+
+.total-label{
+    color:#8f98a1;
+    font-size:13px;
+    font-weight:700;
+}
+
+.total-value{
+    margin-top:5px;
+    font-size:38px;
+    line-height:1.15;
+    font-weight:1000;
+    letter-spacing:.5px;
+}
+
+.total-sub{
+    margin-top:9px;
+    color:#747e87;
+    font-size:12px;
+}
+
+/* =========================
+   BROKER BUTTONS
+========================= */
+
+.broker-buttons{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-bottom:16px;
+}
+
+.broker-button{
+    border:1px solid #30363d;
+    background:#11151a;
+    color:#f5f5f5;
+    border-radius:15px;
+    padding:15px;
+    font-weight:900;
+    font-size:16px;
+    transition:.18s;
+}
+
+.broker-button:hover{
+    background:#181d22;
+}
+
+.broker-button.active{
+    border-color:#777;
+    background:#1a1f24;
+}
+
+/* =========================
+   BROKER CARD
+========================= */
+
+.broker-card{
+    display:none;
+    background:#0e1115;
+    border:1px solid #272d33;
+    border-radius:20px;
+    padding:18px;
+    margin-bottom:16px;
+}
+
+.broker-card.active{
+    display:block;
+}
+
+.broker-title{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:18px;
+}
+
+.broker-icon{
+    width:42px;
+    height:42px;
+    border-radius:13px;
+    display:grid;
+    place-items:center;
+    font-size:21px;
+    background:#171c21;
+    border:1px solid #30363a;
+}
+
+.broker-name{
+    font-size:21px;
+    font-weight:1000;
+}
+
+.broker-desc{
+    color:#747d85;
+    font-size:11px;
+    margin-top:2px;
+}
+
+/* =========================
+   INPUT
+========================= */
+
+.money-field{
+    margin-bottom:13px;
+}
+
+.money-label{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:7px;
+}
+
+.money-label span:first-child{
+    color:#aeb5bd;
+    font-size:13px;
+    font-weight:800;
+}
+
+.money-label span:last-child{
+    color:#555e66;
+    font-size:11px;
+}
+
+.money-input-wrap{
+    position:relative;
+}
+
+.money-input{
+    width:100%;
+    height:58px;
+    border-radius:13px;
+    border:1px solid #30363d;
+    background:#080b0e;
+    color:#fff;
+    padding:
+        0
+        48px
+        0
+        15px;
+    font-size:22px;
+    font-weight:900;
+    outline:none;
+    text-align:right;
+}
+
+.money-input:focus{
+    border-color:#69737d;
+    box-shadow:
+        0 0 0 3px rgba(255,255,255,.04);
+}
+
+.money-unit{
+    position:absolute;
+    right:15px;
+    top:50%;
+    transform:translateY(-50%);
+    color:#68727b;
+    font-size:12px;
+    font-weight:700;
+    pointer-events:none;
+}
+
+/* =========================
+   TOTAL INSIDE BROKER
+========================= */
+
+.broker-total{
+    margin-top:18px;
+    padding-top:17px;
+    border-top:1px solid #292f35;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:10px;
+}
+
+.broker-total-label{
+    color:#858e97;
+    font-size:13px;
+    font-weight:700;
+}
+
+.broker-total-value{
+    font-size:27px;
+    font-weight:1000;
+}
+
+/* =========================
+   DETAIL
+========================= */
+
+.detail-card{
+    background:#0e1115;
+    border:1px solid #272d33;
+    border-radius:20px;
+    padding:18px;
+    margin-bottom:16px;
+}
+
+.detail-card h2{
+    margin:0 0 15px;
+    font-size:18px;
+}
+
+.detail-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:11px 0;
+    border-bottom:1px solid #20262b;
+    gap:15px;
+}
+
+.detail-row:last-child{
+    border-bottom:0;
+}
+
+.detail-row .label{
+    color:#858e97;
+    font-size:13px;
+}
+
+.detail-row .value{
+    font-size:16px;
+    font-weight:900;
+    text-align:right;
+}
+
+/* =========================
+   ACTIONS
+========================= */
+
+.actions{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-top:14px;
+}
+
+.action-button{
+    min-height:50px;
+    border:0;
+    border-radius:13px;
+    font-weight:900;
+    color:#fff;
+    background:#252b31;
+}
+
+.action-button.primary{
+    background:#fff;
+    color:#070809;
+}
+
+.action-button.copy{
+    background:#275c91;
+}
+
+.action-button.delete{
+    background:#8b3030;
+}
+
+.action-button:active{
+    transform:scale(.98);
+}
+
+/* =========================
+   SAVE STATUS
+========================= */
+
+.save-status{
+    text-align:center;
+    color:#626c75;
+    font-size:11px;
+    margin-top:12px;
+    min-height:18px;
+}
+
+/* =========================
+   MESSAGE
+========================= */
+
+.message{
+    display:none;
+    position:fixed;
+    left:50%;
+    bottom:
+        calc(22px + env(safe-area-inset-bottom));
+    transform:translateX(-50%);
+    width:min(90%,420px);
+    padding:13px 16px;
+    border-radius:13px;
+    background:#171c21;
+    border:1px solid #394149;
+    box-shadow:0 12px 35px rgba(0,0,0,.35);
+    z-index:9999;
+    text-align:center;
+    font-size:13px;
+    font-weight:800;
+}
+
+.message.show{
+    display:block;
+}
+
+.message.good{
+    border-color:#326e49;
+}
+
+.message.warn{
+    border-color:#80652a;
+}
+
+.message.error{
+    border-color:#773636;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer{
+    padding:15px 0;
+    text-align:center;
+    color:#4f5860;
+    font-size:11px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:600px){
+
+    .app{
+        width:94%;
+    }
+
+    .header h1{
+        font-size:24px;
+    }
+
+    .total-value{
+        font-size:32px;
+    }
+
+    .broker-buttons{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .broker-button{
+        padding:13px 8px;
+        font-size:14px;
+    }
+
+    .money-input{
+        height:56px;
+        font-size:20px;
+    }
+
+    .actions{
+        grid-template-columns:1fr 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- HEADER -->
+    <header class="header">
+        <h1>💰 股票資產管理</h1>
+        <p>新光＋國泰｜本金、現金餘額、股票庫存價值</p>
+    </header>
+
+
+    <!-- TOTAL -->
+    <section class="total-card">
+
+        <div class="total-label">
+            💰 全部股票資產
+        </div>
+
+        <div
+            id="allTotal"
+            class="total-value">
+            $0
+        </div>
+
+        <div
+            id="allSub"
+            class="total-sub">
+            新光＋國泰總資產
+        </div>
+
+    </section>
+
+
+    <!-- BROKER BUTTONS -->
+    <div class="broker-buttons">
+
+        <button
+            id="btnShinko"
+            class="broker-button active"
+            type="button">
+            🟠 新光
+        </button>
+
+        <button
+            id="btnCathay"
+            class="broker-button"
+            type="button">
+            🔵 國泰
+        </button>
+
+    </div>
+
+
+    <!-- SHINKO -->
+    <section
+        id="shinkoCard"
+        class="broker-card active">
+
+        <div class="broker-title">
+
+            <div class="broker-icon">
+                🟠
+            </div>
+
+            <div>
+                <div class="broker-name">
+                    新光
+                </div>
+
+                <div class="broker-desc">
+                    股票資產資料
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- CAPITAL -->
+        <div class="money-field">
+
+            <div class="money-label">
+                <span>股票本金</span>
+                <span>可自由修改</span>
+            </div>
+
+            <div class="money-input-wrap">
+
+                <input
+                    id="shinkoCapital"
+                    class="money-input"
+                    type="text"
+                    inputmode="decimal"
+                    autocomplete="off"
+                    value="0"
+                    aria-label="新光股票本金">
+
+                <span class="money-unit">
+                    元
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- CASH -->
+        <div class="money-field">
+
+            <div class="money-label">
+                <span>現金餘額</span>
+                <span>可自由修改</span>
+            </div>
+
+            <div class="money-input-wrap">
+
+                <input
+                    id="shinkoCash"
+                    class="money-input"
+                    type="text"
+                    inputmode="decimal"
+                    autocomplete="off"
+                    value="0"
+                    aria-label="新光現金餘額">
+
+                <span class="money-unit">
+                    元
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- STOCK VALUE -->
+        <div class="money-field">
+
+            <div class="money-label">
+                <span>股票庫存價值</span>
+                <span>可自由修改</span>
+            </div>
+
+            <div class="money-input-wrap">
+
+                <input
+                    id="shinkoStock"
+                    class="money-input"
+                    type="text"
+                    inputmode="decimal"
+                    autocomplete="off"
+                    value="0"
+                    aria-label="新光股票庫存價值">
+
+                <span class="money-unit">
+                    元
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- TOTAL -->
+        <div class="broker-total">
+
+            <div class="broker-total-label">
+                新光總資產
+            </div>
+
+            <div
+                id="shinkoTotal"
+                class="broker-total-value">
+                $0
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- CATHAY -->
+    <section
+        id="cathayCard"
+        class="broker-card">
+
+        <div class="broker-title">
+
+            <div class="broker-icon">
+                🔵
+            </div>
+
+            <div>
+                <div class="broker-name">
+                    國泰
+                </div>
+
+                <div class="broker-desc">
+                    股票資產資料
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- CAPITAL -->
+        <div class="money-field">
+
+            <div class="money-label">
+                <span>股票本金</span>
+                <span>可自由修改</span>
+            </div>
+
+            <div class="money-input-wrap">
+
+                <input
+                    id="cathayCapital"
+                    class="money-input"
+                    type="text"
+                    inputmode="decimal"
+                    autocomplete="off"
+                    value="0"
+                    aria-label="國泰股票本金">
+
+                <span class="money-unit">
+                    元
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- CASH -->
+        <div class="money-field">
+
+            <div class="money-label">
+                <span>現金餘額</span>
+                <span>可自由修改</span>
+            </div>
+
+            <div class="money-input-wrap">
+
+                <input
+                    id="cathayCash"
+                    class="money-input"
+                    type="text"
+                    inputmode="decimal"
+                    autocomplete="off"
+                    value="0"
+                    aria-label="國泰現金餘額">
+
+                <span class="money-unit">
+                    元
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- STOCK VALUE -->
+        <div class="money-field">
+
+            <div class="money-label">
+                <span>股票庫存價值</span>
+                <span>可自由修改</span>
+            </div>
+
+            <div class="money-input-wrap">
+
+                <input
+                    id="cathayStock"
+                    class="money-input"
+                    type="text"
+                    inputmode="decimal"
+                    autocomplete="off"
+                    value="0"
+                    aria-label="國泰股票庫存價值">
+
+                <span class="money-unit">
+                    元
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- TOTAL -->
+        <div class="broker-total">
+
+            <div class="broker-total-label">
+                國泰總資產
+            </div>
+
+            <div
+                id="cathayTotal"
+                class="broker-total-value">
+                $0
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- DETAIL -->
+    <section class="detail-card">
+
+        <h2>
+            📊 詳細資產明細
+        </h2>
+
+
+        <div class="detail-row">
+
+            <div class="label">
+                新光本金
+            </div>
+
+            <div
+                id="detailShinkoCapital"
+                class="value">
+                $0
+            </div>
+
+        </div>
+
+
+        <div class="detail-row">
+
+            <div class="label">
+                新光現金餘額
+            </div>
+
+            <div
+                id="detailShinkoCash"
+                class="value">
+                $0
+            </div>
+
+        </div>
+
+
+        <div class="detail-row">
+
+            <div class="label">
+                新光股票庫存
+            </div>
+
+            <div
+                id="detailShinkoStock"
+                class="value">
+                $0
+            </div>
+
+        </div>
+
+
+        <div class="detail-row">
+
+            <div class="label">
+                新光總資產
+            </div>
+
+            <div
+                id="detailShinkoTotal"
+                class="value">
+                $0
+            </div>
+
+        </div>
+
+
+        <div class="detail-row">
+
+            <div class="label">
+                國泰本金
+            </div>
+
+            <div
+                id="detailCathayCapital"
+                class="value">
+                $0
+            </div>
+
+        </div>
+
+
+        <div class="detail-row">
+
+            <div class="label">
+                國泰現金餘額
+            </div>
+
+            <div
+                id="detailCathayCash"
+                class="value">
+                $0
+            </div>
+
+        </div>
+
+
+        <div class="detail-row">
+
+            <div class="label">
+                國泰股票庫存
+            </div>
+
+            <div
+                id="detailCathayStock"
+                class="value">
+                $0
+            </div>
+
+        </div>
+
+
+        <div class="detail-row">
+
+            <div class="label">
+                國泰總資產
+            </div>
+
+            <div
+                id="detailCathayTotal"
+                class="value">
+                $0
+            </div>
+
+        </div>
+
+
+        <div class="detail-row">
+
+            <div class="label">
+                全部本金
+            </div>
+
+            <div
+                id="detailAllCapital"
+                class="value">
+                $0
+            </div>
+
+        </div>
+
+
+        <div class="detail-row">
+
+            <div class="label">
+                全部現金餘額
+            </div>
+
+            <div
+                id="detailAllCash"
+                class="value">
+                $0
+            </div>
+
+        </div>
+
+
+        <div class="detail-row">
+
+            <div class="label">
+                全部股票庫存價值
+            </div>
+
+            <div
+                id="detailAllStock"
+                class="value">
+                $0
+            </div>
+
+        </div>
+
+
+        <div class="detail-row">
+
+            <div class="label">
+                💰 全部總資產
+            </div>
+
+            <div
+                id="detailAllTotal"
+                class="value">
+                $0
+            </div>
+
+        </div>
+
+
+        <!-- ACTIONS -->
+        <div class="actions">
+
+            <button
+                id="copyButton"
+                class="action-button copy"
+                type="button">
+                📋 複製詳細明細
+            </button>
+
+            <button
+                id="saveButton"
+                class="action-button primary"
+                type="button">
+                💾 立即儲存
+            </button>
+
+            <button
+                id="deleteButton"
+                class="action-button delete"
+                type="button">
+                🗑️ 清除資料
+            </button>
+
+            <button
+                id="resetButton"
+                class="action-button"
+                type="button">
+                🔄 重設顯示
+            </button>
+
+        </div>
+
+
+        <div
+            id="saveStatus"
+            class="save-status">
+            資料已自動儲存
+        </div>
+
+    </section>
+
+
+    <footer class="footer">
+        股票資產管理｜資料只儲存在目前瀏覽器
+    </footer>
+
+</div>
+
+
+<!-- MESSAGE -->
+<div
+    id="message"
+    class="message">
+</div>
+
+
+<script>
+"use strict";
+
+/* =========================================================
+   STORAGE
+========================================================= */
+
+const STORAGE_KEY =
+    "stock_asset_manager_shinko_cathay_v1";
+
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const elements = {
+
+    allTotal:
+        document.getElementById("allTotal"),
+
+    allSub:
+        document.getElementById("allSub"),
+
+    btnShinko:
+        document.getElementById("btnShinko"),
+
+    btnCathay:
+        document.getElementById("btnCathay"),
+
+    shinkoCard:
+        document.getElementById("shinkoCard"),
+
+    cathayCard:
+        document.getElementById("cathayCard"),
+
+    shinkoCapital:
+        document.getElementById("shinkoCapital"),
+
+    shinkoCash:
+        document.getElementById("shinkoCash"),
+
+    shinkoStock:
+        document.getElementById("shinkoStock"),
+
+    cathayCapital:
+        document.getElementById("cathayCapital"),
+
+    cathayCash:
+        document.getElementById("cathayCash"),
+
+    cathayStock:
+        document.getElementById("cathayStock"),
+
+    shinkoTotal:
+        document.getElementById("shinkoTotal"),
+
+    cathayTotal:
+        document.getElementById("cathayTotal"),
+
+    detailShinkoCapital:
+        document.getElementById("detailShinkoCapital"),
+
+    detailShinkoCash:
+        document.getElementById("detailShinkoCash"),
+
+    detailShinkoStock:
+        document.getElementById("detailShinkoStock"),
+
+    detailShinkoTotal:
+        document.getElementById("detailShinkoTotal"),
+
+    detailCathayCapital:
+        document.getElementById("detailCathayCapital"),
+
+    detailCathayCash:
+        document.getElementById("detailCathayCash"),
+
+    detailCathayStock:
+        document.getElementById("detailCathayStock"),
+
+    detailCathayTotal:
+        document.getElementById("detailCathayTotal"),
+
+    detailAllCapital:
+        document.getElementById("detailAllCapital"),
+
+    detailAllCash:
+        document.getElementById("detailAllCash"),
+
+    detailAllStock:
+        document.getElementById("detailAllStock"),
+
+    detailAllTotal:
+        document.getElementById("detailAllTotal"),
+
+    copyButton:
+        document.getElementById("copyButton"),
+
+    saveButton:
+        document.getElementById("saveButton"),
+
+    deleteButton:
+        document.getElementById("deleteButton"),
+
+    resetButton:
+        document.getElementById("resetButton"),
+
+    saveStatus:
+        document.getElementById("saveStatus"),
+
+    message:
+        document.getElementById("message")
+};
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function parseMoney(value){
+
+    if(
+        value === null ||
+        value === undefined
+    ){
+        return 0;
+    }
+
+    let text =
+        String(value)
+        .replace(/,/g,"")
+        .replace(/[^\d.-]/g,"");
+
+    if(text === "" || text === "-"){
+        return 0;
+    }
+
+    const number =
+        Number(text);
+
+    if(!Number.isFinite(number)){
+        return 0;
+    }
+
+    return number;
+}
+
+
+function formatMoney(value){
+
+    const number =
+        Number(value) || 0;
+
+    return "$" +
+        number.toLocaleString(
+            "zh-TW",
+            {
+                minimumFractionDigits:
+                    Number.isInteger(number) ? 0 : 2,
+                maximumFractionDigits:2
+            }
+        );
+}
+
+
+function inputNumber(element){
+
+    return parseMoney(
+        element.value
+    );
+}
+
+
+function showMessage(
+    text,
+    type="good"
+){
+
+    elements.message.textContent =
+        text;
+
+    elements.message.className =
+        "message show " + type;
+
+    clearTimeout(
+        showMessage.timer
+    );
+
+    showMessage.timer =
+        setTimeout(()=>{
+            elements.message.className =
+                "message";
+        },2200);
+}
+
+
+/* =========================================================
+   GET DATA
+========================================================= */
+
+function getData(){
+
+    return {
+
+        shinko:{
+            capital:
+                inputNumber(
+                    elements.shinkoCapital
+                ),
+
+            cash:
+                inputNumber(
+                    elements.shinkoCash
+                ),
+
+            stock:
+                inputNumber(
+                    elements.shinkoStock
+                )
+        },
+
+        cathay:{
+            capital:
+                inputNumber(
+                    elements.cathayCapital
+                ),
+
+            cash:
+                inputNumber(
+                    elements.cathayCash
+                ),
+
+            stock:
+                inputNumber(
+                    elements.cathayStock
+                )
+        }
+
+    };
+}
+
+
+/* =========================================================
+   CALCULATION
+========================================================= */
+
+function calculate(){
+
+    const data =
+        getData();
+
+
+    const shinkoTotal =
+        data.shinko.cash +
+        data.shinko.stock;
+
+
+    const cathayTotal =
+        data.cathay.cash +
+        data.cathay.stock;
+
+
+    const allCapital =
+        data.shinko.capital +
+        data.cathay.capital;
+
+
+    const allCash =
+        data.shinko.cash +
+        data.cathay.cash;
+
+
+    const allStock =
+        data.shinko.stock +
+        data.cathay.stock;
+
+
+    const allTotal =
+        shinkoTotal +
+        cathayTotal;
+
+
+    /* Broker total */
+
+    elements.shinkoTotal.textContent =
+        formatMoney(
+            shinkoTotal
+        );
+
+    elements.cathayTotal.textContent =
+        formatMoney(
+            cathayTotal
+        );
+
+
+    /* Main total */
+
+    elements.allTotal.textContent =
+        formatMoney(
+            allTotal
+        );
+
+
+    elements.allSub.textContent =
+        "新光 " +
+        formatMoney(shinkoTotal) +
+        " ＋ 國泰 " +
+        formatMoney(cathayTotal);
+
+
+    /* Detail */
+
+    elements.detailShinkoCapital.textContent =
+        formatMoney(
+            data.shinko.capital
+        );
+
+    elements.detailShinkoCash.textContent =
+        formatMoney(
+            data.shinko.cash
+        );
+
+    elements.detailShinkoStock.textContent =
+        formatMoney(
+            data.shinko.stock
+        );
+
+    elements.detailShinkoTotal.textContent =
+        formatMoney(
+            shinkoTotal
+        );
+
+
+    elements.detailCathayCapital.textContent =
+        formatMoney(
+            data.cathay.capital
+        );
+
+    elements.detailCathayCash.textContent =
+        formatMoney(
+            data.cathay.cash
+        );
+
+    elements.detailCathayStock.textContent =
+        formatMoney(
+            data.cathay.stock
+        );
+
+    elements.detailCathayTotal.textContent =
+        formatMoney(
+            cathayTotal
+        );
+
+
+    elements.detailAllCapital.textContent =
+        formatMoney(
+            allCapital
+        );
+
+    elements.detailAllCash.textContent =
+        formatMoney(
+            allCash
+        );
+
+    elements.detailAllStock.textContent =
+        formatMoney(
+            allStock
+        );
+
+    elements.detailAllTotal.textContent =
+        formatMoney(
+            allTotal
+        );
+
+
+    return {
+        data,
+        shinkoTotal,
+        cathayTotal,
+        allCapital,
+        allCash,
+        allStock,
+        allTotal
+    };
+}
+
+
+/* =========================================================
+   FORMAT INPUT
+========================================================= */
+
+function formatInputValue(element){
+
+    const number =
+        parseMoney(
+            element.value
+        );
+
+    if(
+        element.value.trim() === ""
+    ){
+        element.value = "";
+        return;
+    }
+
+    element.value =
+        number.toLocaleString(
+            "zh-TW",
+            {
+                maximumFractionDigits:2
+            }
+        );
+}
+
+
+/* =========================================================
+   SAVE
+========================================================= */
+
+function saveData(
+    showMessageFlag=false
+){
+
+    const result =
+        calculate();
+
+    const payload = {
+
+        version:"1.0",
+
+        shinko:{
+            capital:
+                result.data.shinko.capital,
+
+            cash:
+                result.data.shinko.cash,
+
+            stock:
+                result.data.shinko.stock
+        },
+
+        cathay:{
+            capital:
+                result.data.cathay.capital,
+
+            cash:
+                result.data.cathay.cash,
+
+            stock:
+                result.data.cathay.stock
+        },
+
+        savedAt:
+            new Date().toISOString()
+    };
+
+
+    try{
+
+        localStorage.setItem(
+            STORAGE_KEY,
+            JSON.stringify(payload)
+        );
+
+        elements.saveStatus.textContent =
+            "✓ 資料已自動儲存｜" +
+            new Date().toLocaleTimeString(
+                "zh-TW",
+                {
+                    hour:"2-digit",
+                    minute:"2-digit",
+                    second:"2-digit"
+                }
+            );
+
+        if(showMessageFlag){
+
+            showMessage(
+                "💾 資料已儲存",
+                "good"
+            );
+        }
+
+    }catch(error){
+
+        console.error(
+            "Save failed:",
+            error
+        );
+
+        elements.saveStatus.textContent =
+            "⚠️ 無法儲存資料";
+
+        showMessage(
+            "儲存失敗",
+            "error"
+        );
+    }
+}
+
+
+/* =========================================================
+   LOAD
+========================================================= */
+
+function loadData(){
+
+    try{
+
+        const raw =
+            localStorage.getItem(
+                STORAGE_KEY
+            );
+
+        if(!raw){
+
+            calculate();
+
+            return;
+        }
+
+
+        const payload =
+            JSON.parse(raw);
+
+
+        if(payload.shinko){
+
+            elements.shinkoCapital.value =
+                formatRawInput(
+                    payload.shinko.capital
+                );
+
+            elements.shinkoCash.value =
+                formatRawInput(
+                    payload.shinko.cash
+                );
+
+            elements.shinkoStock.value =
+                formatRawInput(
+                    payload.shinko.stock
+                );
+        }
+
+
+        if(payload.cathay){
+
+            elements.cathayCapital.value =
+                formatRawInput(
+                    payload.cathay.capital
+                );
+
+            elements.cathayCash.value =
+                formatRawInput(
+                    payload.cathay.cash
+                );
+
+            elements.cathayStock.value =
+                formatRawInput(
+                    payload.cathay.stock
+                );
+        }
+
+
+        calculate();
+
+
+        elements.saveStatus.textContent =
+            "✓ 已載入上次儲存資料";
+
+
+    }catch(error){
+
+        console.error(
+            "Load failed:",
+            error
+        );
+
+        calculate();
+
+        showMessage(
+            "讀取資料失敗",
+            "error"
+        );
+    }
+}
+
+
+function formatRawInput(value){
+
+    const number =
+        Number(value) || 0;
+
+    return number.toLocaleString(
+        "zh-TW",
+        {
+            maximumFractionDigits:2
+        }
+    );
+}
+
+
+/* =========================================================
+   BROKER TAB
+========================================================= */
+
+function showBroker(
+    broker
+){
+
+    if(broker === "shinko"){
+
+        elements.btnShinko.classList.add(
+            "active"
+        );
+
+        elements.btnCathay.classList.remove(
+            "active"
+        );
+
+        elements.shinkoCard.classList.add(
+            "active"
+        );
+
+        elements.cathayCard.classList.remove(
+            "active"
+        );
+
+    }else{
+
+        elements.btnShinko.classList.remove(
+            "active"
+        );
+
+        elements.btnCathay.classList.add(
+            "active"
+        );
+
+        elements.shinkoCard.classList.remove(
+            "active"
+        );
+
+        elements.cathayCard.classList.add(
+            "active"
+        );
+    }
+}
+
+
+elements.btnShinko.addEventListener(
+    "click",
+    ()=>{
+        showBroker("shinko");
+    }
+);
+
+
+elements.btnCathay.addEventListener(
+    "click",
+    ()=>{
+        showBroker("cathay");
+    }
+);
+
+
+/* =========================================================
+   INPUT EVENTS
+========================================================= */
+
+const moneyInputs = [
+
+    elements.shinkoCapital,
+    elements.shinkoCash,
+    elements.shinkoStock,
+
+    elements.cathayCapital,
+    elements.cathayCash,
+    elements.cathayStock
+];
+
+
+moneyInputs.forEach(
+    input=>{
+
+        input.addEventListener(
+            "input",
+            ()=>{
+
+                calculate();
+
+                saveData(false);
+
+            }
+        );
+
+
+        input.addEventListener(
+            "blur",
+            ()=>{
+
+                formatInputValue(
+                    input
+                );
+
+                calculate();
+
+                saveData(false);
+
+            }
+        );
+
+
+        input.addEventListener(
+            "focus",
+            ()=>{
+
+                const number =
+                    parseMoney(
+                        input.value
+                    );
+
+                if(number === 0){
+
+                    input.select();
+
+                }
+
+            }
+        );
+
+
+        input.addEventListener(
+            "keydown",
+            event=>{
+
+                if(event.key === "Enter"){
+
+                    event.preventDefault();
+
+                    input.blur();
+
+                }
+
+            }
+        );
+    }
+);
+
+
+/* =========================================================
+   MANUAL SAVE
+========================================================= */
+
+elements.saveButton.addEventListener(
+    "click",
+    ()=>{
+
+        saveData(true);
+
+    }
+);
+
+
+/* =========================================================
+   COPY DETAIL
+========================================================= */
+
+function buildCopyText(){
+
+    const result =
+        calculate();
+
+    const data =
+        result.data;
+
+    const now =
+        new Date();
+
+
+    const dateText =
+        now.toLocaleDateString(
+            "zh-TW",
+            {
+                year:"numeric",
+                month:"2-digit",
+                day:"2-digit"
+            }
+        );
+
+
+    const timeText =
+        now.toLocaleTimeString(
+            "zh-TW",
+            {
+                hour:"2-digit",
+                minute:"2-digit"
+            }
+        );
+
+
+    const text =
+`━━━━━━━━━━━━━━━━
+💰 股票資產詳細明細
+━━━━━━━━━━━━━━━━
+
+📅 日期：${dateText}
+🕐 時間：${timeText}
+
+🟠 新光
+━━━━━━━━━━━━━━━━
+股票本金：${formatMoney(data.shinko.capital)}
+現金餘額：${formatMoney(data.shinko.cash)}
+股票庫存價值：${formatMoney(data.shinko.stock)}
+新光總資產：${formatMoney(result.shinkoTotal)}
+
+🔵 國泰
+━━━━━━━━━━━━━━━━
+股票本金：${formatMoney(data.cathay.capital)}
+現金餘額：${formatMoney(data.cathay.cash)}
+股票庫存價值：${formatMoney(data.cathay.stock)}
+國泰總資產：${formatMoney(result.cathayTotal)}
+
+💰 全部合計
+━━━━━━━━━━━━━━━━
+全部股票本金：${formatMoney(result.allCapital)}
+全部現金餘額：${formatMoney(result.allCash)}
+全部股票庫存價值：${formatMoney(result.allStock)}
+全部總資產：${formatMoney(result.allTotal)}
+
+━━━━━━━━━━━━━━━━
+資料由股票資產管理自動整理
+━━━━━━━━━━━━━━━━`;
+
+
+    return text;
+}
+
+
+elements.copyButton.addEventListener(
+    "click",
+    async()=>{
+
+        const text =
+            buildCopyText();
+
+
+        try{
+
+            await navigator.clipboard.writeText(
+                text
+            );
+
+            showMessage(
+                "📋 詳細明細已複製",
+                "good"
+            );
+
+        }catch(error){
+
+            /* Fallback */
+
+            const textarea =
+                document.createElement("textarea");
+
+            textarea.value =
+                text;
+
+            textarea.style.position =
+                "fixed";
+
+            textarea.style.left =
+                "-9999px";
+
+            document.body.appendChild(
+                textarea
+            );
+
+            textarea.focus();
+            textarea.select();
+
+            try{
+
+                document.execCommand(
+                    "copy"
+                );
+
+                showMessage(
+                    "📋 詳細明細已複製",
+                    "good"
+                );
+
+            }catch(e){
+
+                showMessage(
+                    "無法複製，請手動選取",
+                    "warn"
+                );
+            }
+
+            textarea.remove();
+        }
+    }
+);
+
+
+/* =========================================================
+   DELETE - TWO CONFIRMATIONS
+========================================================= */
+
+elements.deleteButton.addEventListener(
+    "click",
+    ()=>{
+
+        /* FIRST CONFIRMATION */
+
+        const first =
+            confirm(
+                "⚠️ 第一次確認\n\n" +
+                "確定要清除目前的新光與國泰資產資料嗎？"
+            );
+
+
+        if(!first){
+            return;
+        }
+
+
+        /* SECOND CONFIRMATION */
+
+        const second =
+            confirm(
+                "🚨 第二次確認\n\n" +
+                "這個動作會刪除：\n\n" +
+                "🟠 新光股票本金\n" +
+                "🟠 新光現金餘額\n" +
+                "🟠 新光股票庫存價值\n\n" +
+                "🔵 國泰股票本金\n" +
+                "🔵 國泰現金餘額\n" +
+                "🔵 國泰股票庫存價值\n\n" +
+                "確定要永久清除嗎？"
+            );
+
+
+        if(!second){
+            return;
+        }
+
+
+        /* DELETE */
+
+        localStorage.removeItem(
+            STORAGE_KEY
+        );
+
+
+        moneyInputs.forEach(
+            input=>{
+                input.value = "0";
+            }
+        );
+
+
+        calculate();
+
+
+        elements.saveStatus.textContent =
+            "資料已清除";
+
+
+        showMessage(
+            "🗑️ 所有資產資料已清除",
+            "good"
+        );
+    }
+);
+
+
+/* =========================================================
+   RESET DISPLAY
+========================================================= */
+
+elements.resetButton.addEventListener(
+    "click",
+    ()=>{
+
+        showBroker("shinko");
+
+        window.scrollTo({
+            top:0,
+            behavior:"smooth"
+        });
+
+        showMessage(
+            "🔄 已回到新光頁面",
+            "good"
+        );
+    }
+);
+
+
+/* =========================================================
+   PREVENT INVALID CHARACTERS
+========================================================= */
+
+moneyInputs.forEach(
+    input=>{
+
+        input.addEventListener(
+            "paste",
+            event=>{
+
+                setTimeout(
+                    ()=>{
+                        const value =
+                            parseMoney(
+                                input.value
+                            );
+
+                        if(
+                            input.value.trim() !== ""
+                        ){
+
+                            input.value =
+                                value.toLocaleString(
+                                    "zh-TW",
+                                    {
+                                        maximumFractionDigits:2
+                                    }
+                                );
+                        }
+
+                        calculate();
+
+                        saveData(false);
+
+                    },
+                    0
+                );
+            }
+        );
+    }
+);
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+loadData();
+
+calculate();
+
+showBroker("shinko");
+
+
+/* =========================================================
+   AUTO SAVE BEFORE LEAVING
+========================================================= */
+
+window.addEventListener(
+    "beforeunload",
+    ()=>{
+        saveData(false);
+    }
+);
+
+
+/* =========================================================
+   VISIBILITY SAVE
+========================================================= */
+
+document.addEventListener(
+    "visibilitychange",
+    ()=>{
+
+        if(
+            document.visibilityState ===
+            "hidden"
+        ){
+
+            saveData(false);
+        }
+
+    }
+);
+
+
+/* =========================================================
+   CONSOLE
+========================================================= */
+
+console.log(
+    "Stock Asset Manager loaded."
+);
+
+</script>
+
+</body>
+</html>
