@@ -1,0 +1,2250 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f5f6f8">
+<title>思諦與秀甄｜生活日記</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    margin:0;
+    background:#f5f6f8;
+    color:#20242b;
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "PingFang TC",
+        "Noto Sans TC",
+        "Microsoft JhengHei",
+        sans-serif;
+}
+
+button,
+input,
+textarea{
+    font-family:inherit;
+}
+
+.main{
+    width:100%;
+    max-width:760px;
+    margin:0 auto;
+    padding:16px 12px 60px;
+}
+
+.header{
+    padding:8px 4px 18px;
+}
+
+.header h1{
+    margin:0 0 5px;
+    font-size:29px;
+    line-height:1.25;
+}
+
+.header p{
+    margin:0;
+    color:#707783;
+    font-size:14px;
+}
+
+/* 卡片 */
+
+.card{
+    background:#ffffff;
+    border:1px solid #e1e5eb;
+    border-radius:18px;
+    padding:16px;
+    margin:12px 0;
+    box-shadow:0 3px 14px rgba(0,0,0,.04);
+}
+
+.card h2{
+    margin:0 0 14px;
+    font-size:20px;
+}
+
+/* 表單 */
+
+.grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+
+.field{
+    margin-bottom:10px;
+}
+
+label{
+    display:block;
+    margin-bottom:5px;
+    font-size:14px;
+    font-weight:700;
+}
+
+input,
+textarea{
+    width:100%;
+    border:1px solid #d5dae2;
+    border-radius:11px;
+    padding:11px 12px;
+    font-size:16px;
+    background:#ffffff;
+    color:#20242b;
+    outline:none;
+}
+
+textarea{
+    min-height:105px;
+    resize:vertical;
+}
+
+input:focus,
+textarea:focus{
+    border-color:#3975d3;
+    box-shadow:0 0 0 3px rgba(57,117,211,.10);
+}
+
+/* 天氣 */
+
+.weather{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    background:#f3f7ff;
+    padding:13px;
+    border-radius:14px;
+    margin-top:4px;
+}
+
+.weather-icon{
+    font-size:38px;
+    line-height:1;
+}
+
+.weather-title{
+    font-size:17px;
+    font-weight:800;
+}
+
+.weather-detail{
+    margin-top:3px;
+    color:#6e7783;
+    font-size:13px;
+}
+
+/* 按鈕 */
+
+.button-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:10px;
+}
+
+button{
+    border:0;
+    border-radius:11px;
+    padding:11px 15px;
+    font-size:15px;
+    font-weight:800;
+    cursor:pointer;
+}
+
+button:active{
+    transform:scale(.98);
+}
+
+.btn-blue{
+    background:#3975d3;
+    color:#fff;
+}
+
+.btn-gray{
+    background:#edf0f4;
+    color:#252a31;
+}
+
+.btn-red{
+    background:#d74a4a;
+    color:#fff;
+}
+
+/* 心情 */
+
+.mood-list{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+}
+
+.mood-btn{
+    background:#f0f2f5;
+    color:#303640;
+}
+
+.mood-btn.active{
+    background:#3975d3;
+    color:#fff;
+}
+
+/* 金錢 */
+
+.money-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+
+.money-box{
+    background:#f7f8fa;
+    border-radius:13px;
+    padding:14px;
+}
+
+.money-label{
+    font-size:13px;
+    color:#6f7782;
+}
+
+.money-value{
+    margin-top:4px;
+    font-size:23px;
+    font-weight:800;
+}
+
+/* 統計 */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:8px;
+}
+
+.stat-box{
+    background:#f7f8fa;
+    border-radius:13px;
+    padding:12px;
+}
+
+.stat-label{
+    color:#707783;
+    font-size:13px;
+}
+
+.stat-value{
+    display:block;
+    margin-top:4px;
+    font-size:19px;
+    font-weight:800;
+}
+
+/* 出遊 */
+
+.trip{
+    border:1px solid #dfe4eb;
+    border-radius:14px;
+    padding:13px;
+    margin-top:10px;
+    background:#fcfcfd;
+}
+
+.trip-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:8px;
+    margin-bottom:10px;
+}
+
+.trip-title{
+    font-size:17px;
+    font-weight:800;
+}
+
+.badge{
+    display:inline-block;
+    padding:4px 8px;
+    border-radius:99px;
+    background:#edf3ff;
+    color:#3765b2;
+    font-size:12px;
+    font-weight:800;
+}
+
+.trip-number{
+    color:#3975d3;
+}
+
+.muted{
+    color:#747c87;
+    font-size:13px;
+    line-height:1.6;
+}
+
+/* 狀態 */
+
+.status{
+    min-height:20px;
+    margin-top:9px;
+    color:#5e6875;
+    font-size:13px;
+}
+
+/* 小標題 */
+
+.section-note{
+    margin:-5px 0 10px;
+    color:#747c87;
+    font-size:13px;
+}
+
+/* 響應式 */
+
+@media(max-width:560px){
+
+    .grid,
+    .money-grid{
+        grid-template-columns:1fr;
+    }
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .header h1{
+        font-size:26px;
+    }
+
+    button{
+        flex:0 0 auto;
+    }
+}
+</style>
+</head>
+
+
+<body>
+
+<div class="main">
+
+    <!-- 標題 -->
+
+    <header class="header">
+        <h1>📔 思諦與秀甄・生活日記</h1>
+        <p>
+            每天記錄生活、心情、天氣、出遊、消費與存款 ❤️
+        </p>
+    </header>
+
+
+    <!-- 每日資料 -->
+
+    <section class="card">
+
+        <h2>📅 每日資料</h2>
+
+        <div class="grid">
+
+            <div class="field">
+                <label>年月日</label>
+                <input
+                    id="date"
+                    type="date"
+                >
+            </div>
+
+            <div class="field">
+                <label>星期</label>
+                <input
+                    id="weekday"
+                    type="text"
+                    readonly
+                >
+            </div>
+
+        </div>
+
+
+        <div class="field">
+
+            <label>城市／地區</label>
+
+            <input
+                id="city"
+                type="text"
+                value="台北市"
+                placeholder="例如：台北市"
+            >
+
+        </div>
+
+
+        <div class="weather">
+
+            <div
+                class="weather-icon"
+                id="weatherIcon"
+            >
+                🌤️
+            </div>
+
+            <div>
+
+                <div
+                    class="weather-title"
+                    id="weatherText"
+                >
+                    尚未取得天氣
+                </div>
+
+                <div
+                    class="weather-detail"
+                    id="weatherDetail"
+                >
+                    按「更新天氣」即可自動取得
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="button-row">
+
+            <button
+                class="btn-blue"
+                onclick="updateWeather()"
+            >
+                🌤️ 更新天氣
+            </button>
+
+            <button
+                class="btn-gray"
+                onclick="goToday()"
+            >
+                回到今天
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- 心情 -->
+
+    <section class="card">
+
+        <h2>❤️ 今日心情</h2>
+
+        <div
+            class="mood-list"
+            id="moodList"
+        >
+
+            <button
+                class="mood-btn"
+                onclick="chooseMood(this,'😊 開心')"
+            >
+                😊 開心
+            </button>
+
+            <button
+                class="mood-btn"
+                onclick="chooseMood(this,'🥰 幸福')"
+            >
+                🥰 幸福
+            </button>
+
+            <button
+                class="mood-btn"
+                onclick="chooseMood(this,'😍 甜蜜')"
+            >
+                😍 甜蜜
+            </button>
+
+            <button
+                class="mood-btn"
+                onclick="chooseMood(this,'😌 平靜')"
+            >
+                😌 平靜
+            </button>
+
+            <button
+                class="mood-btn"
+                onclick="chooseMood(this,'😴 很累')"
+            >
+                😴 很累
+            </button>
+
+            <button
+                class="mood-btn"
+                onclick="chooseMood(this,'😢 難過')"
+            >
+                😢 難過
+            </button>
+
+            <button
+                class="mood-btn"
+                onclick="chooseMood(this,'😡 生氣')"
+            >
+                😡 生氣
+            </button>
+
+        </div>
+
+
+        <div class="field" style="margin-top:10px">
+
+            <label>自訂心情</label>
+
+            <input
+                id="mood"
+                type="text"
+                placeholder="也可以自己填寫"
+            >
+
+        </div>
+
+    </section>
+
+
+
+    <!-- 日記 -->
+
+    <section class="card">
+
+        <h2>✍️ 建立日記</h2>
+
+        <div class="field">
+
+            <label>日記標題</label>
+
+            <input
+                id="title"
+                type="text"
+                value="思諦與秀甄 出遊玩"
+                placeholder="例如：思諦與秀甄 出遊玩"
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label>今日一句話</label>
+
+            <input
+                id="oneLine"
+                type="text"
+                placeholder="例如：今天和秀甄一起出遊，很開心 ❤️"
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label>今天的日記</label>
+
+            <textarea
+                id="diary"
+                placeholder="寫下今天發生的事情、心情、回憶……"
+            ></textarea>
+
+        </div>
+
+
+        <div class="field">
+
+            <label>備註</label>
+
+            <textarea
+                id="note"
+                placeholder="其他備註"
+            ></textarea>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- 每月出遊 -->
+
+    <section class="card">
+
+        <h2>🧳 每月出遊 2～3 次｜2天1夜</h2>
+
+        <div class="section-note">
+            每個月可安排 2～3 次，也可以依實際情況自由增加、修改或刪除。
+        </div>
+
+        <div id="tripList"></div>
+
+        <div class="button-row">
+
+            <button
+                class="btn-blue"
+                onclick="addTrip()"
+            >
+                ＋新增 2天1夜
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- 每日金錢 -->
+
+    <section class="card">
+
+        <h2>💰 每日消費／存款</h2>
+
+        <div class="grid">
+
+            <div class="field">
+
+                <label>今日消費</label>
+
+                <input
+                    id="spend"
+                    type="number"
+                    min="0"
+                    step="1"
+                    placeholder="0"
+                >
+
+            </div>
+
+
+            <div class="field">
+
+                <label>今日存款</label>
+
+                <input
+                    id="deposit"
+                    type="number"
+                    min="0"
+                    step="1"
+                    placeholder="0"
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="money-grid">
+
+            <div class="money-box">
+
+                <div class="money-label">
+                    今日消費
+                </div>
+
+                <div
+                    class="money-value"
+                    id="spendShow"
+                >
+                    ＄0
+                </div>
+
+            </div>
+
+
+            <div class="money-box">
+
+                <div class="money-label">
+                    今日存款
+                </div>
+
+                <div
+                    class="money-value"
+                    id="depositShow"
+                >
+                    ＄0
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- 每月統計 -->
+
+    <section class="card">
+
+        <h2>📊 本月統計</h2>
+
+        <div class="stats">
+
+            <div class="stat-box">
+
+                <div class="stat-label">
+                    日記
+                </div>
+
+                <span
+                    class="stat-value"
+                    id="statDiary"
+                >
+                    1 天
+                </span>
+
+            </div>
+
+
+            <div class="stat-box">
+
+                <div class="stat-label">
+                    消費
+                </div>
+
+                <span
+                    class="stat-value"
+                    id="statSpend"
+                >
+                    ＄0
+                </span>
+
+            </div>
+
+
+            <div class="stat-box">
+
+                <div class="stat-label">
+                    存款
+                </div>
+
+                <span
+                    class="stat-value"
+                    id="statDeposit"
+                >
+                    ＄0
+                </span>
+
+            </div>
+
+
+            <div class="stat-box">
+
+                <div class="stat-label">
+                    出遊
+                </div>
+
+                <span
+                    class="stat-value"
+                    id="statTrips"
+                >
+                    0 次
+                </span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- 儲存 -->
+
+    <section class="card">
+
+        <h2>💾 儲存／查看</h2>
+
+        <div class="button-row">
+
+            <button
+                class="btn-blue"
+                onclick="saveData()"
+            >
+                💾 儲存
+            </button>
+
+            <button
+                class="btn-gray"
+                onclick="viewData()"
+            >
+                👀 查看
+            </button>
+
+            <button
+                class="btn-gray"
+                onclick="copyDetails()"
+            >
+                📋 複製詳細資料
+            </button>
+
+        </div>
+
+        <div
+            class="status"
+            id="status"
+        ></div>
+
+    </section>
+
+
+
+    <!-- 清除 -->
+
+    <section class="card">
+
+        <h2>🗑️ 手動清除</h2>
+
+        <div class="muted">
+            清除資料需要確認兩次，避免誤刪。
+        </div>
+
+        <div class="button-row">
+
+            <button
+                class="btn-red"
+                onclick="clearAllData()"
+            >
+                第一次清除
+            </button>
+
+        </div>
+
+    </section>
+
+</div>
+
+
+
+<script>
+
+/* =========================================================
+   基本設定
+========================================================= */
+
+const STORAGE_KEY =
+    "siti-xiuzhen-diary-v3";
+
+const TRIP_STORAGE_KEY =
+    "siti-xiuzhen-trips-v3";
+
+const $ = id =>
+    document.getElementById(id);
+
+
+
+/* =========================================================
+   今天日期
+========================================================= */
+
+function getTodayISO(){
+
+    const d = new Date();
+
+    const z = n =>
+        String(n).padStart(2,"0");
+
+    return (
+        d.getFullYear() +
+        "-" +
+        z(d.getMonth()+1) +
+        "-" +
+        z(d.getDate())
+    );
+}
+
+
+
+/* =========================================================
+   星期
+========================================================= */
+
+function updateWeekday(){
+
+    const value =
+        $("date").value;
+
+    if(!value){
+
+        $("weekday").value = "";
+
+        return;
+    }
+
+    const d =
+        new Date(
+            value + "T12:00:00"
+        );
+
+    if(isNaN(d.getTime())){
+
+        $("weekday").value = "";
+
+        return;
+    }
+
+    $("weekday").value =
+        new Intl.DateTimeFormat(
+            "zh-TW",
+            {
+                weekday:"long"
+            }
+        ).format(d);
+}
+
+
+
+/* =========================================================
+   回到今天
+========================================================= */
+
+function goToday(){
+
+    $("date").value =
+        getTodayISO();
+
+    updateWeekday();
+
+    updateWeather();
+
+    autoSave();
+}
+
+
+
+/* =========================================================
+   心情
+========================================================= */
+
+function chooseMood(button,text){
+
+    document
+        .querySelectorAll(".mood-btn")
+        .forEach(btn =>
+            btn.classList.remove("active")
+        );
+
+    button.classList.add("active");
+
+    $("mood").value =
+        text;
+
+    autoSave();
+}
+
+
+
+/* =========================================================
+   取得目前表單資料
+========================================================= */
+
+function getFormData(){
+
+    return {
+
+        date:
+            $("date").value,
+
+        weekday:
+            $("weekday").value,
+
+        city:
+            $("city").value,
+
+        weather:
+            $("weatherText").textContent,
+
+        weatherDetail:
+            $("weatherDetail").textContent,
+
+        weatherIcon:
+            $("weatherIcon").textContent,
+
+        mood:
+            $("mood").value,
+
+        title:
+            $("title").value,
+
+        oneLine:
+            $("oneLine").value,
+
+        diary:
+            $("diary").value,
+
+        note:
+            $("note").value,
+
+        spend:
+            Number(
+                $("spend").value || 0
+            ),
+
+        deposit:
+            Number(
+                $("deposit").value || 0
+            ),
+
+        savedAt:
+            new Date().toLocaleString(
+                "zh-TW"
+            )
+    };
+}
+
+
+
+/* =========================================================
+   手動儲存
+========================================================= */
+
+function saveData(){
+
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(
+            getFormData()
+        )
+    );
+
+    updateMoney();
+
+    updateStatistics();
+
+    $("status").textContent =
+        "✅ 已儲存：" +
+        new Date().toLocaleString(
+            "zh-TW"
+        );
+}
+
+
+
+/* =========================================================
+   自動儲存
+========================================================= */
+
+let autoSaveTimer = null;
+
+function autoSave(){
+
+    clearTimeout(
+        autoSaveTimer
+    );
+
+    autoSaveTimer =
+        setTimeout(
+            saveData,
+            300
+        );
+}
+
+
+
+/* =========================================================
+   所有輸入自動儲存
+========================================================= */
+
+document
+    .querySelectorAll(
+        "input,textarea"
+    )
+    .forEach(element => {
+
+        element.addEventListener(
+            "input",
+            () => {
+
+                updateMoney();
+
+                autoSave();
+
+            }
+        );
+
+    });
+
+
+
+/* =========================================================
+   金錢
+========================================================= */
+
+function updateMoney(){
+
+    const spend =
+        Number(
+            $("spend").value || 0
+        );
+
+    const deposit =
+        Number(
+            $("deposit").value || 0
+        );
+
+    $("spendShow").textContent =
+        "＄" +
+        spend.toLocaleString();
+
+    $("depositShow").textContent =
+        "＄" +
+        deposit.toLocaleString();
+}
+
+
+
+/* =========================================================
+   天氣
+   Open-Meteo 不需要 API Key
+========================================================= */
+
+async function updateWeather(){
+
+    const city =
+        $("city").value.trim()
+        || "台北市";
+
+    $("weatherText").textContent =
+        "取得中…";
+
+    $("weatherDetail").textContent =
+        "正在查詢目前天氣";
+
+    try{
+
+        const geoURL =
+            "https://geocoding-api.open-meteo.com/v1/search" +
+            "?name=" +
+            encodeURIComponent(city) +
+            "&count=1" +
+            "&language=zh" +
+            "&format=json";
+
+        const geo =
+            await fetch(
+                geoURL
+            ).then(
+                response =>
+                    response.json()
+            );
+
+        if(
+            !geo.results ||
+            !geo.results.length
+        ){
+
+            throw new Error(
+                "找不到地點"
+            );
+        }
+
+        const place =
+            geo.results[0];
+
+        const weatherURL =
+            "https://api.open-meteo.com/v1/forecast" +
+            "?latitude=" +
+            place.latitude +
+            "&longitude=" +
+            place.longitude +
+            "&current=" +
+            "temperature_2m," +
+            "apparent_temperature," +
+            "weather_code," +
+            "wind_speed_10m" +
+            "&timezone=auto";
+
+        const weather =
+            await fetch(
+                weatherURL
+            ).then(
+                response =>
+                    response.json()
+            );
+
+        const current =
+            weather.current;
+
+        const info =
+            getWeatherInfo(
+                current.weather_code
+            );
+
+        $("weatherIcon").textContent =
+            info.icon;
+
+        $("weatherText").textContent =
+            info.text +
+            "・" +
+            Math.round(
+                current.temperature_2m
+            ) +
+            "°C";
+
+        $("weatherDetail").textContent =
+            "體感 " +
+            Math.round(
+                current.apparent_temperature
+            ) +
+            "°C｜風速 " +
+            Math.round(
+                current.wind_speed_10m
+            ) +
+            " km/h｜" +
+            place.name;
+
+        autoSave();
+
+    }catch(error){
+
+        $("weatherIcon").textContent =
+            "❓";
+
+        $("weatherText").textContent =
+            "天氣取得失敗";
+
+        $("weatherDetail").textContent =
+            "可以手動修改城市，稍後再更新";
+
+        autoSave();
+    }
+}
+
+
+
+/* =========================================================
+   天氣文字
+========================================================= */
+
+function getWeatherInfo(code){
+
+    if(code === 0){
+
+        return {
+            icon:"☀️",
+            text:"晴天"
+        };
+
+    }
+
+    if(
+        [1,2,3].includes(code)
+    ){
+
+        return {
+            icon:"🌤️",
+            text:"多雲"
+        };
+
+    }
+
+    if(
+        [45,48].includes(code)
+    ){
+
+        return {
+            icon:"🌫️",
+            text:"霧"
+        };
+
+    }
+
+    if(
+        [51,53,55,56,57]
+            .includes(code)
+    ){
+
+        return {
+            icon:"🌦️",
+            text:"毛毛雨"
+        };
+
+    }
+
+    if(
+        [61,63,65,66,67]
+            .includes(code)
+    ){
+
+        return {
+            icon:"🌧️",
+            text:"下雨"
+        };
+
+    }
+
+    if(
+        [71,73,75,77]
+            .includes(code)
+    ){
+
+        return {
+            icon:"❄️",
+            text:"下雪"
+        };
+
+    }
+
+    if(
+        [80,81,82]
+            .includes(code)
+    ){
+
+        return {
+            icon:"🌦️",
+            text:"陣雨"
+        };
+
+    }
+
+    if(
+        [95,96,99]
+            .includes(code)
+    ){
+
+        return {
+            icon:"⛈️",
+            text:"雷雨"
+        };
+
+    }
+
+    return {
+        icon:"🌤️",
+        text:"天氣"
+    };
+}
+
+
+
+/* =========================================================
+   出遊資料
+========================================================= */
+
+function getTrips(){
+
+    try{
+
+        return JSON.parse(
+            localStorage.getItem(
+                TRIP_STORAGE_KEY
+            ) || "[]"
+        );
+
+    }catch(error){
+
+        return [];
+
+    }
+}
+
+
+
+function saveTrips(list){
+
+    localStorage.setItem(
+        TRIP_STORAGE_KEY,
+        JSON.stringify(list)
+    );
+
+    renderTrips();
+
+    updateStatistics();
+}
+
+
+
+/* =========================================================
+   新增出遊
+========================================================= */
+
+function addTrip(){
+
+    const list =
+        getTrips();
+
+    const startDate =
+        $("date").value
+        || getTodayISO();
+
+    list.push({
+
+        start:
+            startDate,
+
+        end:
+            "",
+
+        place:
+            "",
+
+        people:
+            "思諦與秀甄",
+
+        cost:
+            0,
+
+        content:
+            "",
+
+        note:
+            ""
+
+    });
+
+    saveTrips(list);
+
+    autoSave();
+
+}
+
+
+
+/* =========================================================
+   安全 HTML
+========================================================= */
+
+function escapeHTML(value){
+
+    return String(
+        value || ""
+    )
+    .replace(
+        /[&<>"']/g,
+        character => {
+
+            const map = {
+
+                "&":"&amp;",
+                "<":"&lt;",
+                ">":"&gt;",
+                '"':"&quot;",
+                "'":"&#39;"
+
+            };
+
+            return map[
+                character
+            ];
+
+        }
+    );
+}
+
+
+
+/* =========================================================
+   顯示出遊
+========================================================= */
+
+function renderTrips(){
+
+    const box =
+        $("tripList");
+
+    const list =
+        getTrips();
+
+    box.innerHTML = "";
+
+    if(!list.length){
+
+        box.innerHTML =
+            '<div class="muted">' +
+            '目前還沒有出遊記錄。' +
+            '</div>';
+
+        return;
+    }
+
+    list.forEach(
+        (trip,index) => {
+
+            const wrapper =
+                document.createElement(
+                    "div"
+                );
+
+            wrapper.className =
+                "trip";
+
+            wrapper.innerHTML = `
+
+                <div class="trip-header">
+
+                    <div class="trip-title">
+
+                        🧳
+                        <span class="trip-number">
+                            第 ${index+1} 次
+                        </span>
+
+                        出遊
+
+                    </div>
+
+                    <span class="badge">
+                        2天1夜
+                    </span>
+
+                </div>
+
+
+                <div class="grid">
+
+                    <div class="field">
+
+                        <label>
+                            出發日期
+                        </label>
+
+                        <input
+                            type="date"
+                            data-trip-index="${index}"
+                            data-trip-key="start"
+                            value="${escapeHTML(trip.start)}"
+                        >
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>
+                            回程日期
+                        </label>
+
+                        <input
+                            type="date"
+                            data-trip-index="${index}"
+                            data-trip-key="end"
+                            value="${escapeHTML(trip.end)}"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="grid">
+
+                    <div class="field">
+
+                        <label>
+                            地點
+                        </label>
+
+                        <input
+                            type="text"
+                            data-trip-index="${index}"
+                            data-trip-key="place"
+                            value="${escapeHTML(trip.place)}"
+                            placeholder="例如：宜蘭、台中、花蓮"
+                        >
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label>
+                            同行人
+                        </label>
+
+                        <input
+                            type="text"
+                            data-trip-index="${index}"
+                            data-trip-key="people"
+                            value="${escapeHTML(trip.people)}"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        出遊花費
+                    </label>
+
+                    <input
+                        type="number"
+                        min="0"
+                        step="1"
+                        data-trip-index="${index}"
+                        data-trip-key="cost"
+                        value="${Number(trip.cost || 0)}"
+                    >
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        出遊內容
+                    </label>
+
+                    <textarea
+                        data-trip-index="${index}"
+                        data-trip-key="content"
+                        placeholder="去了哪裡、吃了什麼、做了什麼……"
+                    >${escapeHTML(trip.content)}</textarea>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>
+                        備註
+                    </label>
+
+                    <textarea
+                        data-trip-index="${index}"
+                        data-trip-key="note"
+                        placeholder="其他備註"
+                    >${escapeHTML(trip.note)}</textarea>
+
+                </div>
+
+
+                <button
+                    class="btn-red"
+                    onclick="deleteTrip(${index})"
+                >
+                    刪除這次出遊
+                </button>
+
+            `;
+
+            box.appendChild(
+                wrapper
+            );
+
+        }
+    );
+
+
+    box
+        .querySelectorAll(
+            "[data-trip-index]"
+        )
+        .forEach(
+            element => {
+
+                element.addEventListener(
+                    "input",
+                    () => {
+
+                        const list =
+                            getTrips();
+
+                        const index =
+                            Number(
+                                element.dataset.tripIndex
+                            );
+
+                        const key =
+                            element.dataset.tripKey;
+
+                        list[index][key] =
+                            element.value;
+
+                        saveTrips(list);
+
+                        autoSave();
+
+                    }
+                );
+
+            }
+        );
+}
+
+
+
+/* =========================================================
+   刪除單次出遊
+========================================================= */
+
+function deleteTrip(index){
+
+    const first =
+        confirm(
+            "⚠️ 第一次確認：確定要刪除這次 2天1夜出遊嗎？"
+        );
+
+    if(!first){
+
+        return;
+    }
+
+    const second =
+        confirm(
+            "🚨 第二次確認：真的要刪除這次出遊記錄嗎？"
+        );
+
+    if(!second){
+
+        return;
+    }
+
+    const list =
+        getTrips();
+
+    list.splice(
+        index,
+        1
+    );
+
+    saveTrips(list);
+
+    autoSave();
+}
+
+
+
+/* =========================================================
+   本月統計
+========================================================= */
+
+function updateStatistics(){
+
+    const data =
+        getFormData();
+
+    const month =
+        (
+            data.date ||
+            getTodayISO()
+        ).slice(0,7);
+
+    const list =
+        getTrips();
+
+    const monthTrips =
+        list.filter(
+            trip =>
+                (
+                    trip.start || ""
+                ).slice(0,7)
+                === month
+        );
+
+    $("statTrips").textContent =
+        monthTrips.length +
+        " 次";
+
+    $("statSpend").textContent =
+        "＄" +
+        Number(
+            data.spend || 0
+        ).toLocaleString();
+
+    $("statDeposit").textContent =
+        "＄" +
+        Number(
+            data.deposit || 0
+        ).toLocaleString();
+
+    $("statDiary").textContent =
+        "1 天";
+}
+
+
+
+/* =========================================================
+   查看已儲存
+========================================================= */
+
+function viewData(){
+
+    const raw =
+        localStorage.getItem(
+            STORAGE_KEY
+        );
+
+    if(!raw){
+
+        alert(
+            "目前沒有已儲存的日記。"
+        );
+
+        return;
+    }
+
+    const data =
+        JSON.parse(raw);
+
+    const list =
+        getTrips();
+
+    let tripText =
+        "";
+
+    if(list.length){
+
+        tripText =
+            list
+            .map(
+                (trip,index) => {
+
+                    return (
+                        "\n" +
+                        (index+1) +
+                        ". " +
+                        (trip.start || "") +
+                        " ～ " +
+                        (trip.end || "") +
+                        "\n" +
+                        "地點：" +
+                        (trip.place || "") +
+                        "\n" +
+                        "同行：" +
+                        (trip.people || "") +
+                        "\n" +
+                        "花費：＄" +
+                        Number(
+                            trip.cost || 0
+                        ).toLocaleString()
+                    );
+
+                }
+            )
+            .join("\n");
+
+    }else{
+
+        tripText =
+            "目前沒有出遊記錄";
+    }
+
+
+    alert(
+
+        "📔 " +
+        (data.title ||
+            "思諦與秀甄生活日記") +
+
+        "\n\n" +
+
+        "日期：" +
+        (data.date || "") +
+        " " +
+        (data.weekday || "") +
+
+        "\n地點：" +
+        (data.city || "") +
+
+        "\n天氣：" +
+        (data.weather || "") +
+
+        "\n心情：" +
+        (data.mood || "") +
+
+        "\n\n今日一句話：\n" +
+        (data.oneLine || "") +
+
+        "\n\n日記：\n" +
+        (data.diary || "") +
+
+        "\n\n備註：\n" +
+        (data.note || "") +
+
+        "\n\n今日消費：＄" +
+        Number(
+            data.spend || 0
+        ).toLocaleString() +
+
+        "\n今日存款：＄" +
+        Number(
+            data.deposit || 0
+        ).toLocaleString() +
+
+        "\n\n🧳 出遊記錄" +
+        tripText +
+
+        "\n\n最後儲存：" +
+        (data.savedAt || "")
+    );
+}
+
+
+
+/* =========================================================
+   複製詳細資料
+========================================================= */
+
+function copyDetails(){
+
+    const data =
+        getFormData();
+
+    const list =
+        getTrips();
+
+    let tripsText =
+        "";
+
+    if(list.length){
+
+        tripsText =
+            list
+            .map(
+                (trip,index) => {
+
+                    return (
+
+                        "第 " +
+                        (index+1) +
+                        " 次｜2天1夜\n" +
+
+                        "出發：" +
+                        (trip.start || "") +
+                        "\n" +
+
+                        "回程：" +
+                        (trip.end || "") +
+                        "\n" +
+
+                        "地點：" +
+                        (trip.place || "") +
+                        "\n" +
+
+                        "同行：" +
+                        (trip.people || "") +
+                        "\n" +
+
+                        "花費：＄" +
+                        Number(
+                            trip.cost || 0
+                        ).toLocaleString() +
+                        "\n" +
+
+                        "內容：\n" +
+                        (trip.content || "") +
+                        "\n" +
+
+                        "備註：\n" +
+                        (trip.note || "")
+
+                    );
+
+                }
+            )
+            .join(
+                "\n\n--------------------\n\n"
+            );
+
+    }else{
+
+        tripsText =
+            "目前沒有出遊記錄";
+    }
+
+
+    const text =
+
+        "📔 思諦與秀甄・生活日記\n\n" +
+
+        "日期：" +
+        data.date +
+        " " +
+        data.weekday +
+        "\n" +
+
+        "地點：" +
+        data.city +
+        "\n" +
+
+        "天氣：" +
+        data.weather +
+        "\n" +
+
+        data.weatherDetail +
+        "\n" +
+
+        "心情：" +
+        data.mood +
+        "\n\n" +
+
+        "今日一句話：\n" +
+        data.oneLine +
+        "\n\n" +
+
+        "日記：\n" +
+        data.diary +
+        "\n\n" +
+
+        "備註：\n" +
+        data.note +
+        "\n\n" +
+
+        "今日消費：＄" +
+        data.spend.toLocaleString() +
+        "\n" +
+
+        "今日存款：＄" +
+        data.deposit.toLocaleString() +
+        "\n\n" +
+
+        "🧳 每月出遊 2～3 次／2天1夜\n\n" +
+
+        tripsText;
+
+
+    if(
+        navigator.clipboard &&
+        navigator.clipboard.writeText
+    ){
+
+        navigator.clipboard
+            .writeText(text)
+            .then(
+                () => {
+
+                    alert(
+                        "✅ 詳細資料已複製"
+                    );
+
+                }
+            )
+            .catch(
+                () => {
+
+                    alert(text);
+
+                }
+            );
+
+    }else{
+
+        alert(text);
+
+    }
+}
+
+
+
+/* =========================================================
+   載入資料
+========================================================= */
+
+function loadData(){
+
+    try{
+
+        const raw =
+            localStorage.getItem(
+                STORAGE_KEY
+            );
+
+        if(raw){
+
+            const data =
+                JSON.parse(raw);
+
+            $("date").value =
+                data.date ||
+                getTodayISO();
+
+            $("city").value =
+                data.city ||
+                "台北市";
+
+            $("mood").value =
+                data.mood ||
+                "";
+
+            $("title").value =
+                data.title ||
+                "思諦與秀甄 出遊玩";
+
+            $("oneLine").value =
+                data.oneLine ||
+                "";
+
+            $("diary").value =
+                data.diary ||
+                "";
+
+            $("note").value =
+                data.note ||
+                "";
+
+            $("spend").value =
+                data.spend ??
+                "";
+
+            $("deposit").value =
+                data.deposit ??
+                "";
+
+            $("weatherText").textContent =
+                data.weather ||
+                "尚未取得天氣";
+
+            $("weatherDetail").textContent =
+                data.weatherDetail ||
+                "按「更新天氣」即可自動取得";
+
+            $("weatherIcon").textContent =
+                data.weatherIcon ||
+                "🌤️";
+
+        }else{
+
+            $("date").value =
+                getTodayISO();
+
+        }
+
+    }catch(error){
+
+        $("date").value =
+            getTodayISO();
+
+    }
+
+
+    updateWeekday();
+
+    updateMoney();
+
+    renderTrips();
+
+    updateStatistics();
+
+
+    /* 恢復心情按鈕 */
+
+    const currentMood =
+        $("mood").value;
+
+    document
+        .querySelectorAll(".mood-btn")
+        .forEach(
+            button => {
+
+                if(
+                    button.textContent.trim()
+                    === currentMood
+                ){
+
+                    button.classList.add(
+                        "active"
+                    );
+
+                }
+
+            }
+        );
+}
+
+
+
+/* =========================================================
+   清除全部資料
+========================================================= */
+
+function clearAllData(){
+
+    const first =
+        confirm(
+
+            "⚠️ 第一次確認\n\n" +
+
+            "確定要清除所有「思諦與秀甄」" +
+            "生活日記、消費、存款與出遊資料嗎？"
+
+        );
+
+    if(!first){
+
+        return;
+    }
+
+
+    const second =
+        confirm(
+
+            "🚨 第二次確認\n\n" +
+
+            "資料清除後無法從本頁恢復。\n\n" +
+
+            "真的要全部刪除嗎？"
+
+        );
+
+    if(!second){
+
+        return;
+    }
+
+
+    localStorage.removeItem(
+        STORAGE_KEY
+    );
+
+    localStorage.removeItem(
+        TRIP_STORAGE_KEY
+    );
+
+
+    alert(
+        "✅ 所有資料已清除"
+    );
+
+
+    location.reload();
+}
+
+
+
+/* =========================================================
+   日期變更
+========================================================= */
+
+$("date").addEventListener(
+    "change",
+    () => {
+
+        updateWeekday();
+
+        updateWeather();
+
+        autoSave();
+
+    }
+);
+
+
+
+/* =========================================================
+   啟動
+========================================================= */
+
+loadData();
+
+</script>
+
+</body>
+</html>
