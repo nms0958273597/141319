@@ -1587,4 +1587,322 @@ ma60
 
 if(
 ma5>ma20 &&
-ma20>ma
+ma20>ma60 &&
+slope(closes,20)>0
+){
+
+trend =
+"Strong Bull";
+
+}
+
+else if(
+price>ma20 &&
+slope(closes,20)>=0
+){
+
+trend =
+"Bullish";
+
+}
+
+else if(
+price<ma20 &&
+slope(closes,20)<0
+){
+
+trend =
+"Bearish";
+
+}
+
+else{
+
+trend =
+"Neutral";
+
+}
+
+}
+
+
+return {
+
+ma5,
+ma20,
+ma60,
+ma120,
+ma240,
+
+slope5:
+slope(closes,5),
+
+slope20:
+slope(closes,20),
+
+slope60:
+slope(closes,60),
+
+recentHigh,
+recentLow,
+
+nearHigh,
+breakout,
+breakdown,
+
+maTurnStrong,
+longBull,
+
+consolidation:
+consolidationRange!==null &&
+consolidationRange<=15,
+
+consolidationRange,
+
+avgRange,
+
+trend
+
+};
+
+}
+
+
+/* ============================================================
+   V1391 ADVANCED BREAKOUT MODEL
+============================================================ */
+
+function breakoutModel(
+tech,
+inst20,
+rt,
+rows=[]
+){
+
+const data =
+Array.isArray(rows)
+?
+rows.filter(
+row =>
+Number.isFinite(Number(row.close)) &&
+Number.isFinite(Number(row.high)) &&
+Number.isFinite(Number(row.low))
+)
+:
+[];
+
+
+if(data.length<25){
+
+return {
+
+score:0,
+
+state:
+"Insufficient Data",
+
+stage:
+"⚪ Insufficient Data",
+
+reasons:[
+"At least 25 daily candles are required."
+],
+
+warnings:[],
+
+breakout:false,
+
+earlyBuy:false,
+
+confirmed:false,
+
+falseBreakout:false,
+
+volumeRatio:null,
+
+closeLocation:null,
+
+extension:null,
+
+resistance:
+tech?.recentHigh ?? null,
+
+support:
+tech?.recentLow ?? null,
+
+distanceToResistance:null,
+
+consolidationRange:null,
+
+contraction:null,
+
+riskLevel:
+"Unknown",
+
+entryLow:null,
+
+entryHigh:null
+
+};
+
+}
+
+
+/* ------------------------------------------------------------
+   CURRENT AND PREVIOUS CANDLE
+------------------------------------------------------------ */
+
+const n =
+data.length;
+
+const last =
+data[n-1];
+
+const previous =
+data[n-2];
+
+
+/* ------------------------------------------------------------
+   PRIOR 20-DAY RESISTANCE
+   IMPORTANT:
+   CURRENT DAY IS EXCLUDED
+------------------------------------------------------------ */
+
+const prior20 =
+data.slice(
+Math.max(0,n-21),
+n-1
+);
+
+
+const resistance =
+max(
+prior20
+.map(
+row=>Number(row.high)
+)
+.filter(Number.isFinite)
+);
+
+
+const support =
+min(
+prior20
+.map(
+row=>Number(row.low)
+)
+.filter(Number.isFinite)
+);
+
+
+const price =
+Number(last.close);
+
+const high =
+Number(last.high);
+
+const low =
+Number(last.low);
+
+const volume =
+Number(last.volume) || 0;
+
+
+/* ------------------------------------------------------------
+   VOLUME RATIO
+------------------------------------------------------------ */
+
+const priorVolumes =
+prior20
+.map(
+row=>Number(row.volume)||0
+)
+.filter(
+value=>value>0
+);
+
+
+const averageVolume =
+avg(priorVolumes);
+
+
+const volumeRatio =
+averageVolume &&
+volume>0
+?
+volume/averageVolume
+:
+null;
+
+
+/* ------------------------------------------------------------
+   CLOSE LOCATION
+   0 = LOW
+   1 = HIGH
+------------------------------------------------------------ */
+
+const closeLocation =
+high>low
+?
+(price-low)/(high-low)
+:
+0.5;
+
+
+/* ------------------------------------------------------------
+   DISTANCE TO RESISTANCE
+------------------------------------------------------------ */
+
+const distanceToResistance =
+resistance!==null
+?
+(
+(resistance-price) /
+resistance *
+100
+)
+:
+null;
+
+
+/* ------------------------------------------------------------
+   MA20 EXTENSION
+------------------------------------------------------------ */
+
+const extension =
+tech?.ma20
+?
+(
+(price-tech.ma20) /
+tech.ma20 *
+100
+)
+:
+null;
+
+
+/* ------------------------------------------------------------
+   RANGE FUNCTION
+------------------------------------------------------------ */
+
+function rangePct(array){
+
+const highs =
+array
+.map(row=>Number(row.high))
+.filter(Number.isFinite);
+
+const lows =
+array
+.map(row=>Number(row.low))
+.filter(Number.isFinite);
+
+if(
+!highs.length ||
+!lows.length ||
+min(lows)<=0
+){
+
+return null;
+
+}
