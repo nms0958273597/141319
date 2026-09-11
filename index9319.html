@@ -1,0 +1,1590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#2563eb">
+<title>Taiwan Stock Institutional & Breakout Analyzer V1391</title>
+
+<style>
+:root{
+--bg:#f4f7fb;
+--card:#ffffff;
+--text:#172033;
+--muted:#687386;
+--line:#dfe5ee;
+--primary:#2563eb;
+--green:#059669;
+--red:#dc2626;
+--orange:#ea580c;
+--yellow:#ca8a04;
+--purple:#7c3aed;
+--shadow:0 8px 25px rgba(20,35,60,.08);
+}
+
+*{
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+margin:0;
+padding:0;
+font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+background:var(--bg);
+color:var(--text);
+}
+
+.container{
+width:100%;
+max-width:1450px;
+margin:0 auto;
+padding:18px;
+}
+
+header{
+background:linear-gradient(135deg,#172554,#2563eb);
+color:white;
+border-radius:18px;
+padding:24px;
+box-shadow:var(--shadow);
+margin-bottom:16px;
+}
+
+header h1{
+margin:0 0 8px 0;
+font-size:26px;
+font-weight:800;
+}
+
+.subtitle{
+font-size:13px;
+line-height:1.7;
+opacity:.92;
+}
+
+.card{
+background:var(--card);
+border:1px solid var(--line);
+border-radius:16px;
+padding:16px;
+margin-bottom:15px;
+box-shadow:var(--shadow);
+}
+
+.card h2,
+.card h3{
+margin:0 0 13px 0;
+}
+
+.toolbar{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+margin-bottom:12px;
+}
+
+input,
+select{
+font:inherit;
+border:1px solid var(--line);
+border-radius:10px;
+padding:11px 13px;
+background:white;
+color:var(--text);
+outline:none;
+}
+
+input:focus,
+select:focus{
+border-color:var(--primary);
+box-shadow:0 0 0 3px rgba(37,99,235,.1);
+}
+
+button{
+font:inherit;
+border:0;
+border-radius:10px;
+padding:11px 16px;
+background:var(--primary);
+color:white;
+font-weight:800;
+cursor:pointer;
+transition:.15s;
+}
+
+button:hover{
+transform:translateY(-1px);
+opacity:.95;
+}
+
+button.secondary{
+background:#475569;
+}
+
+button.green{
+background:var(--green);
+}
+
+button.orange{
+background:var(--orange);
+}
+
+button.red{
+background:var(--red);
+}
+
+button.purple{
+background:var(--purple);
+}
+
+button:disabled{
+opacity:.5;
+cursor:not-allowed;
+}
+
+#searchInput{
+flex:1;
+min-width:230px;
+}
+
+#status{
+font-size:13px;
+color:var(--muted);
+margin:8px 0;
+}
+
+.progress{
+height:10px;
+background:#e5e7eb;
+border-radius:999px;
+overflow:hidden;
+}
+
+.progress > div{
+height:100%;
+width:0%;
+background:var(--primary);
+transition:.25s;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(4,minmax(0,1fr));
+gap:10px;
+}
+
+.metric{
+background:#f8fafc;
+border:1px solid var(--line);
+border-radius:12px;
+padding:12px;
+min-height:78px;
+}
+
+.metric .label{
+font-size:12px;
+color:var(--muted);
+}
+
+.metric .value{
+font-size:20px;
+font-weight:800;
+margin-top:5px;
+}
+
+.twoCol{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:15px;
+}
+
+.badge{
+display:inline-block;
+padding:5px 9px;
+border-radius:999px;
+font-size:12px;
+font-weight:800;
+}
+
+.badge.green{
+background:#dcfce7;
+color:#166534;
+}
+
+.badge.red{
+background:#fee2e2;
+color:#991b1b;
+}
+
+.badge.yellow{
+background:#fef3c7;
+color:#92400e;
+}
+
+.badge.blue{
+background:#dbeafe;
+color:#1e40af;
+}
+
+.badge.purple{
+background:#ede9fe;
+color:#5b21b6;
+}
+
+.badge.gray{
+background:#e5e7eb;
+color:#374151;
+}
+
+.notice{
+background:#eff6ff;
+border:1px solid #bfdbfe;
+padding:12px;
+border-radius:10px;
+font-size:13px;
+line-height:1.7;
+}
+
+.warning{
+padding:9px 11px;
+border-left:4px solid var(--red);
+background:#fff7f7;
+margin:6px 0;
+border-radius:7px;
+color:#991b1b;
+font-size:13px;
+}
+
+.reason{
+padding:9px 11px;
+border-left:4px solid var(--primary);
+background:#f8fafc;
+margin:6px 0;
+border-radius:7px;
+font-size:13px;
+}
+
+.small{
+font-size:12px;
+color:var(--muted);
+line-height:1.6;
+}
+
+.sectionTitle{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:10px;
+flex-wrap:wrap;
+}
+
+.tableWrap{
+overflow:auto;
+max-height:680px;
+border:1px solid var(--line);
+border-radius:12px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+font-size:13px;
+}
+
+th,
+td{
+padding:9px 8px;
+border-bottom:1px solid var(--line);
+text-align:left;
+white-space:nowrap;
+}
+
+th{
+background:#f8fafc;
+position:sticky;
+top:0;
+z-index:2;
+font-weight:800;
+}
+
+tr:hover td{
+background:#f8fafc;
+}
+
+.greenText{
+color:var(--green);
+}
+
+.redText{
+color:var(--red);
+}
+
+.orangeText{
+color:var(--orange);
+}
+
+.blueText{
+color:var(--primary);
+}
+
+.purpleText{
+color:var(--purple);
+}
+
+.scoreBox{
+display:flex;
+align-items:center;
+gap:12px;
+}
+
+.scoreCircle{
+width:65px;
+height:65px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:19px;
+font-weight:900;
+background:#eff6ff;
+color:var(--primary);
+border:4px solid #bfdbfe;
+}
+
+@media(max-width:1000px){
+
+.grid{
+grid-template-columns:repeat(2,minmax(0,1fr));
+}
+
+.twoCol{
+grid-template-columns:1fr;
+}
+
+}
+
+@media(max-width:600px){
+
+.container{
+padding:10px;
+}
+
+header{
+padding:18px;
+}
+
+header h1{
+font-size:21px;
+}
+
+.grid{
+grid-template-columns:1fr 1fr;
+}
+
+.metric .value{
+font-size:17px;
+}
+
+button{
+padding:10px 12px;
+}
+
+input,
+select{
+padding:10px;
+}
+
+th,
+td{
+padding:7px 6px;
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<header>
+
+<h1>
+📈 Taiwan Stock Institutional & Breakout Analyzer V1391
+</h1>
+
+<div class="subtitle">
+
+Advanced Taiwan stock analysis system featuring realtime price,
+MA5 / MA20 / MA60 / MA120 / MA240,
+institutional buying and selling,
+volume expansion,
+volatility contraction,
+resistance detection,
+early-entry detection,
+breakout confirmation,
+false-breakout warning,
+pressure analysis,
+and automated stock scanning.
+
+</div>
+
+</header>
+
+
+<div class="card">
+
+<div class="toolbar">
+
+<input
+id="searchInput"
+placeholder="Enter stock code or name, e.g. 2330, TSMC, 0050"
+autocomplete="off"
+>
+
+<button onclick="searchStock()">
+Search
+</button>
+
+<button class="secondary" onclick="clearResult()">
+Clear
+</button>
+
+<button class="green" onclick="scanBreakout()">
+Scan Breakout
+</button>
+
+<button class="orange" onclick="scanPressure()">
+Scan Pressure
+</button>
+
+</div>
+
+
+<div class="toolbar">
+
+<select id="category">
+
+<option value="popular">
+Popular Stocks
+</option>
+
+<option value="etf">
+Taiwan ETFs
+</option>
+
+<option value="semiconductor">
+Semiconductor
+</option>
+
+<option value="finance">
+Financial
+</option>
+
+<option value="shipping">
+Shipping
+</option>
+
+<option value="ai">
+AI / Electronics
+</option>
+
+</select>
+
+<button onclick="scanCategory()">
+Scan Category
+</button>
+
+<button class="secondary" onclick="toggleAuto()">
+Auto Refresh:
+<span id="autoText">ON</span>
+</button>
+
+</div>
+
+
+<div id="status">
+Ready.
+</div>
+
+
+<div class="progress">
+<div id="progressBar"></div>
+</div>
+
+</div>
+
+
+
+<div id="result"></div>
+
+
+
+<div class="card">
+
+<div class="sectionTitle">
+
+<h2>
+🔥 V1391 Breakout Candidates
+</h2>
+
+<div class="small">
+Resistance uses previous 20 trading sessions and excludes the current candle.
+</div>
+
+</div>
+
+
+<div class="tableWrap">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>
+Code
+</th>
+
+<th>
+Name
+</th>
+
+<th>
+Price
+</th>
+
+<th>
+Stage
+</th>
+
+<th>
+Score
+</th>
+
+<th>
+Resistance
+</th>
+
+<th>
+Distance
+</th>
+
+<th>
+Volume Ratio
+</th>
+
+<th>
+Trend
+</th>
+
+<th>
+Risk
+</th>
+
+</tr>
+
+</thead>
+
+
+<tbody id="breakoutBody">
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+
+<div class="card">
+
+<div class="sectionTitle">
+
+<h2>
+⚠️ Pressure / False Breakout Candidates
+</h2>
+
+<div class="small">
+Use this section as a risk filter, not as a guaranteed prediction.
+</div>
+
+</div>
+
+
+<div class="tableWrap">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>
+Code
+</th>
+
+<th>
+Name
+</th>
+
+<th>
+Price
+</th>
+
+<th>
+Pressure
+</th>
+
+<th>
+20D Institutional Net
+</th>
+
+<th>
+MA20
+</th>
+
+<th>
+Trend
+</th>
+
+</tr>
+
+</thead>
+
+
+<tbody id="pressureBody">
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+
+<div class="card">
+
+<h2>
+📌 V1391 Trading Logic
+</h2>
+
+<div class="notice">
+
+<b>🐰 Early Entry:</b>
+The stock is consolidating, volatility is contracting,
+moving-average structure is improving,
+and price is approaching resistance without excessive extension.
+
+<br><br>
+
+<b>🔥 Near Breakout:</b>
+The stock is close to the previous resistance level
+with improving technical structure.
+
+<br><br>
+
+<b>🚀 Breakout Confirmed:</b>
+Price moves above the previous 20-session resistance,
+volume expands,
+the candle closes strongly,
+and MA20 extension remains within the model's acceptable range.
+
+<br><br>
+
+<b>⚠️ False Breakout Warning:</b>
+Price breaks resistance but volume is weak,
+the close is weak,
+the stock is excessively extended,
+or the following candle falls back below resistance.
+
+<br><br>
+
+<b>🛑 Risk Control:</b>
+A high score does not guarantee profit.
+Use position sizing,
+support levels,
+stop-loss rules,
+and personal risk tolerance.
+
+</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+"use strict";
+
+
+/* ============================================================
+   V1391 CONFIGURATION
+============================================================ */
+
+const CONFIG = {
+
+finmind:
+"https://api.finmindtrade.com/api/v4/data",
+
+twse:
+"https://mis.twse.com.tw/stock/api/getStockInfo.jsp",
+
+refreshMs:
+10000,
+
+historyDays:
+380
+
+};
+
+
+/* ============================================================
+   STOCK SCAN LIST
+============================================================ */
+
+const SCAN_CODES = [
+
+"2330",
+"2317",
+"2303",
+"2308",
+"1326",
+"1301",
+"1303",
+"2002",
+"2313",
+"3481",
+"3711",
+"5425",
+"6244",
+"3324",
+"6770",
+"2618",
+"2367",
+"8046",
+"0050",
+"0056",
+"00891",
+"00919",
+"00981",
+"00631L",
+"00685L",
+"2489",
+"6939",
+"6949",
+"4977"
+
+];
+
+
+const CATEGORY_CODES = {
+
+popular:[
+"2330",
+"2317",
+"2308",
+"2303",
+"1326",
+"1301",
+"1303",
+"2002",
+"3711",
+"2489"
+],
+
+etf:[
+"0050",
+"0056",
+"00891",
+"00919",
+"00981",
+"00631L",
+"00685L"
+],
+
+semiconductor:[
+"2330",
+"2303",
+"6770",
+"5425",
+"3324",
+"8046"
+],
+
+finance:[
+"2881",
+"2882",
+"2886",
+"2891",
+"2892",
+"5880"
+],
+
+shipping:[
+"2603",
+"2609",
+"2615",
+"2618"
+],
+
+ai:[
+"2330",
+"2308",
+"2317",
+"3324",
+"8046",
+"2313",
+"2367"
+]
+
+};
+
+
+/* ============================================================
+   GLOBAL STATE
+============================================================ */
+
+let autoRefresh = true;
+
+let timer = null;
+
+let lastSearchCode = "";
+
+let stockInfoCache = null;
+
+
+/* ============================================================
+   DOM HELPERS
+============================================================ */
+
+function $(id){
+
+return document.getElementById(id);
+
+}
+
+
+function num(value){
+
+const n = Number(
+String(value ?? "")
+.replace(/,/g,"")
+);
+
+return Number.isFinite(n) ? n : null;
+
+}
+
+
+function avg(array){
+
+return array.length
+? array.reduce((a,b)=>a+b,0)/array.length
+: null;
+
+}
+
+
+function max(array){
+
+return array.length
+? Math.max(...array)
+: null;
+
+}
+
+
+function min(array){
+
+return array.length
+? Math.min(...array)
+: null;
+
+}
+
+
+function fmt(value,digits=2){
+
+if(
+value===null ||
+value===undefined ||
+!Number.isFinite(Number(value))
+){
+
+return "—";
+
+}
+
+return Number(value).toFixed(digits);
+
+}
+
+
+function fmtInt(value){
+
+if(
+value===null ||
+value===undefined ||
+!Number.isFinite(Number(value))
+){
+
+return "—";
+
+}
+
+return Math.round(Number(value)).toLocaleString();
+
+}
+
+
+function setStatus(text){
+
+$("status").textContent = text;
+
+}
+
+
+function setProgress(value){
+
+$("progressBar").style.width =
+Math.max(0,Math.min(100,value))+"%";
+
+}
+
+
+function esc(value){
+
+return String(value ?? "")
+.replace(/[&<>"']/g,function(match){
+
+return {
+
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#39;"
+
+}[match];
+
+});
+
+}
+
+
+function badge(text,type="gray"){
+
+return `
+<span class="badge ${type}">
+${esc(text)}
+</span>
+`;
+
+}
+
+
+/* ============================================================
+   API REQUEST
+============================================================ */
+
+async function fetchJSON(url,options={}){
+
+const response =
+await fetch(
+url,
+{
+cache:"no-store",
+...options
+}
+);
+
+if(!response.ok){
+
+throw new Error(
+"HTTP "+response.status
+);
+
+}
+
+return await response.json();
+
+}
+
+
+/* ============================================================
+   FINMIND API
+============================================================ */
+
+async function fetchFinMind(dataset,params={}){
+
+const url =
+new URL(CONFIG.finmind);
+
+url.searchParams.set(
+"dataset",
+dataset
+);
+
+Object.entries(params).forEach(
+([key,value])=>{
+
+if(
+value!==undefined &&
+value!==null &&
+value!==""
+){
+
+url.searchParams.set(
+key,
+value
+);
+
+}
+
+});
+
+const json =
+await fetchJSON(
+url.toString()
+);
+
+if(
+!json.data ||
+!Array.isArray(json.data)
+){
+
+throw new Error(
+"FinMind returned no data."
+);
+
+}
+
+return json.data;
+
+}
+
+
+/* ============================================================
+   TWSE REALTIME API
+============================================================ */
+
+async function fetchStockInfo(){
+
+if(stockInfoCache){
+
+return stockInfoCache;
+
+}
+
+const json =
+await fetchJSON(
+CONFIG.twse
+);
+
+stockInfoCache =
+json;
+
+return json;
+
+}
+
+
+/* ============================================================
+   NORMALIZE DAILY DATA
+============================================================ */
+
+function normalizeRows(rows){
+
+return (rows || [])
+.map(function(row){
+
+return {
+
+date:
+row.date ||
+row.Date ||
+row.trade_date ||
+row.Trading_Date ||
+"",
+
+close:
+num(
+row.close ??
+row.Close ??
+row.ClosePrice ??
+row.closing_price
+),
+
+open:
+num(
+row.open ??
+row.Open ??
+row.OpenPrice
+),
+
+high:
+num(
+row.max ??
+row.high ??
+row.High ??
+row.HighPrice
+),
+
+low:
+num(
+row.min ??
+row.low ??
+row.Low ??
+row.LowPrice
+),
+
+volume:
+num(
+row.Trading_Volume ??
+row.trading_volume ??
+row.volume ??
+row.Volume ??
+row.TradingVolume
+) || 0
+
+};
+
+})
+.filter(
+row =>
+row.close!==null
+)
+.sort(
+(a,b)=>
+String(a.date)
+.localeCompare(
+String(b.date)
+)
+);
+
+}
+
+
+/* ============================================================
+   GET DAILY HISTORY
+============================================================ */
+
+async function getHistory(code){
+
+const today =
+new Date();
+
+const startDate =
+new Date(
+today.getTime()
+-
+CONFIG.historyDays *
+86400000
+)
+.toISOString()
+.slice(0,10);
+
+const rows =
+await fetchFinMind(
+"TaiwanStockPrice",
+{
+data_id:code,
+start_date:startDate,
+end_date:today.toISOString().slice(0,10)
+}
+);
+
+return normalizeRows(rows);
+
+}
+
+
+/* ============================================================
+   INSTITUTIONAL INVESTOR DATA
+============================================================ */
+
+async function getInstitutional(code){
+
+try{
+
+const today =
+new Date();
+
+const startDate =
+new Date(
+today.getTime()
+-
+70 *
+86400000
+)
+.toISOString()
+.slice(0,10);
+
+const rows =
+await fetchFinMind(
+"TaiwanStockInstitutionalInvestorsBuySell",
+{
+data_id:code,
+start_date:startDate,
+end_date:today.toISOString().slice(0,10)
+}
+);
+
+const daily = {};
+
+for(const row of rows){
+
+const date =
+row.date ||
+row.Date;
+
+if(!date){
+
+continue;
+
+}
+
+if(!daily[date]){
+
+daily[date]={
+foreign:0,
+trust:0,
+dealer:0,
+total:0
+};
+
+}
+
+const buy =
+num(
+row.buy ??
+row.Buy ??
+row.buy_volume ??
+row.Buy_Volume
+) || 0;
+
+const sell =
+num(
+row.sell ??
+row.Sell ??
+row.sell_volume ??
+row.Sell_Volume
+) || 0;
+
+const net =
+buy - sell;
+
+const investorName =
+String(
+row.name ??
+row.Institutional_Investor ??
+row.institutional_investor ??
+""
+).toLowerCase();
+
+
+if(
+investorName.includes("foreign") ||
+investorName.includes("外資")
+){
+
+daily[date].foreign += net;
+
+}
+
+else if(
+investorName.includes("investment") ||
+investorName.includes("trust") ||
+investorName.includes("投信")
+){
+
+daily[date].trust += net;
+
+}
+
+else{
+
+daily[date].dealer += net;
+
+}
+
+daily[date].total += net;
+
+}
+
+
+const dates =
+Object.keys(daily)
+.sort();
+
+
+function sumLast(days,key){
+
+return dates
+.slice(-days)
+.reduce(
+(sum,date)=>
+sum + (daily[date]?.[key] || 0),
+0
+);
+
+}
+
+
+return {
+
+periods:{
+
+1:{
+foreign:sumLast(1,"foreign"),
+trust:sumLast(1,"trust"),
+dealer:sumLast(1,"dealer"),
+total:{
+net:sumLast(1,"total")
+}
+},
+
+5:{
+foreign:sumLast(5,"foreign"),
+trust:sumLast(5,"trust"),
+dealer:sumLast(5,"dealer"),
+total:{
+net:sumLast(5,"total")
+}
+},
+
+20:{
+foreign:sumLast(20,"foreign"),
+trust:sumLast(20,"trust"),
+dealer:sumLast(20,"dealer"),
+total:{
+net:sumLast(20,"total")
+}
+}
+
+}
+
+};
+
+}
+
+catch(error){
+
+console.warn(
+"Institutional data unavailable:",
+code,
+error
+);
+
+return {
+periods:{}
+};
+
+}
+
+}
+
+
+/* ============================================================
+   MOVING AVERAGE
+============================================================ */
+
+function sma(values,period){
+
+if(values.length < period){
+
+return null;
+
+}
+
+return avg(
+values.slice(-period)
+);
+
+}
+
+
+/* ============================================================
+   MOVING AVERAGE SLOPE
+============================================================ */
+
+function slope(values,period){
+
+if(values.length < period + 3){
+
+return 0;
+
+}
+
+const sample =
+values.slice(
+-(period+3)
+);
+
+const first =
+avg(sample.slice(0,3));
+
+const last =
+avg(sample.slice(-3));
+
+if(!first){
+
+return 0;
+
+}
+
+return (
+(last-first) /
+first *
+100
+);
+
+}
+
+
+/* ============================================================
+   TECHNICAL ANALYSIS
+============================================================ */
+
+function technical(rows,price){
+
+const closes =
+rows
+.map(row=>row.close)
+.filter(Number.isFinite);
+
+
+const ma5 =
+sma(closes,5);
+
+const ma20 =
+sma(closes,20);
+
+const ma60 =
+sma(closes,60);
+
+const ma120 =
+sma(closes,120);
+
+const ma240 =
+sma(closes,240);
+
+
+const recent =
+rows.slice(-21);
+
+
+const recentHigh =
+max(
+recent
+.map(row=>row.high)
+.filter(Number.isFinite)
+);
+
+
+const recentLow =
+min(
+recent
+.map(row=>row.low)
+.filter(Number.isFinite)
+);
+
+
+const rangeValues =
+rows
+.slice(-5)
+.map(row=>{
+
+if(row.low>0){
+
+return (
+(row.high-row.low) /
+row.low *
+100
+);
+
+}
+
+return null;
+
+})
+.filter(Number.isFinite);
+
+
+const avgRange =
+avg(rangeValues);
+
+
+const consolidationRange =
+recentLow>0 &&
+recentHigh!==null
+?
+(
+(recentHigh-recentLow) /
+recentLow *
+100
+)
+:
+null;
+
+
+const nearHigh =
+recentHigh!==null &&
+price>=recentHigh*.96 &&
+price<=recentHigh*1.02;
+
+
+const breakout =
+recentHigh!==null &&
+price>recentHigh;
+
+
+const breakdown =
+recentLow!==null &&
+price<recentLow;
+
+
+const maTurnStrong =
+!!(
+ma5 &&
+ma20 &&
+ma60 &&
+ma5>ma20 &&
+ma20>=ma60 &&
+slope(closes,20)>0
+);
+
+
+const longBull =
+!!(
+ma60 &&
+ma120 &&
+ma60>ma120 &&
+slope(closes,60)>0
+);
+
+
+let trend =
+"Neutral";
+
+
+if(
+ma5 &&
+ma20 &&
+ma60
+){
+
+if(
+ma5>ma20 &&
+ma20>ma
