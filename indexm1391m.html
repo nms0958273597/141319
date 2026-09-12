@@ -2,6 +2,1128 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width,initial-scale=1,viewport-fit=cover">
+
+<meta name="theme-color" content="#080a0c">
+
+<title>m1491｜台股動態選股・法人籌碼・突破分析</title>
+
+<style>
+
+*{
+box-sizing:border-box;
+-webkit-tap-highlight-color:transparent
+}
+
+:root{
+--bg:#080a0c;
+--card:#191b1f;
+--card2:#121416;
+--line:#41444a;
+--text:#f5f5f5;
+--muted:#96999f;
+
+--green:#35e56b;
+--red:#ff5966;
+--orange:#ff9f1c;
+--yellow:#ffd447;
+--blue:#36b9ff;
+--purple:#bd83ff;
+}
+
+html{
+scroll-behavior:smooth
+}
+
+body{
+margin:0;
+background:var(--bg);
+color:var(--text);
+font-family:
+-apple-system,
+BlinkMacSystemFont,
+"PingFang TC",
+"Microsoft JhengHei",
+Arial,
+sans-serif;
+padding-bottom:100px
+}
+
+.wrap{
+max-width:920px;
+margin:auto;
+padding:8px 12px 120px
+}
+
+/* =========================
+   搜尋
+========================= */
+
+.search{
+position:sticky;
+top:0;
+z-index:50;
+display:flex;
+gap:9px;
+padding:8px 0 10px;
+background:rgba(8,10,12,.96);
+backdrop-filter:blur(14px)
+}
+
+input{
+width:100%;
+height:60px;
+border:2px solid #55585e;
+border-radius:21px;
+background:#191b1f;
+color:#fff;
+padding:0 17px;
+font-size:20px;
+outline:0
+}
+
+input:focus{
+border-color:var(--orange)
+}
+
+button{
+font:inherit;
+cursor:pointer
+}
+
+.search button{
+width:112px;
+border:0;
+border-radius:21px;
+background:var(--orange);
+color:#111;
+font-size:21px;
+font-weight:900
+}
+
+.hint{
+font-size:13px;
+color:var(--muted);
+line-height:1.7;
+padding:0 5px 8px
+}
+
+/* =========================
+   狀態
+========================= */
+
+.status{
+display:none;
+padding:11px 13px;
+border:1px solid var(--line);
+border-radius:14px;
+background:#17191c;
+margin-bottom:10px;
+line-height:1.7
+}
+
+.status.show{
+display:block
+}
+
+.status.ok{
+color:#8affaa;
+border-color:#28653b
+}
+
+.status.loading{
+color:var(--yellow);
+border-color:#66531f
+}
+
+.status.error{
+color:#ff9da6;
+border-color:#74333c
+}
+
+/* =========================
+   基礎
+========================= */
+
+.card{
+background:var(--card);
+border:1px solid var(--line);
+border-radius:21px;
+padding:16px;
+margin-top:12px
+}
+
+.title{
+font-size:24px;
+font-weight:900;
+margin-bottom:12px
+}
+
+.intro{
+color:#a1a4aa;
+font-size:15px;
+line-height:1.8
+}
+
+.notice{
+font-size:13px;
+line-height:1.8;
+color:#91949a;
+margin-top:9px
+}
+
+.hidden{
+display:none!important
+}
+
+/* =========================
+   Hero
+========================= */
+
+.hero{
+background:#181a1e;
+border:1px solid #45484e;
+border-radius:20px;
+padding:15px
+}
+
+.heroTop{
+display:flex;
+align-items:center;
+gap:10px
+}
+
+.icon{
+font-size:35px
+}
+
+.stockTitle{
+font-size:28px;
+font-weight:900
+}
+
+.stockSub{
+font-size:14px;
+color:#aaa;
+margin-top:4px
+}
+
+.update{
+margin-left:auto;
+font-size:12px;
+color:#999;
+text-align:right;
+white-space:nowrap
+}
+
+/* =========================
+   Grid
+========================= */
+
+.grid3{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:8px;
+margin-top:13px
+}
+
+.box{
+background:#141619;
+border:1px solid #41444a;
+border-radius:15px;
+padding:10px;
+text-align:center
+}
+
+.boxMain{
+font-size:19px;
+font-weight:900
+}
+
+.boxSub{
+font-size:12px;
+color:#999;
+margin-top:3px
+}
+
+.sectionGrid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:9px
+}
+
+.levelGrid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:8px
+}
+
+.metric{
+background:#141619;
+border:1px solid #41444a;
+border-radius:15px;
+padding:12px
+}
+
+.metricLabel{
+font-size:13px;
+color:#92959a
+}
+
+.metricValue{
+font-size:23px;
+font-weight:900;
+margin-top:4px
+}
+
+.metricSub{
+font-size:12px;
+color:#777;
+margin-top:3px
+}
+
+.level{
+background:#141619;
+border:1px solid #3e4146;
+border-radius:15px;
+padding:11px
+}
+
+.levelLabel{
+font-size:13px;
+color:#999
+}
+
+.levelValue{
+font-size:21px;
+font-weight:900;
+margin-top:4px
+}
+
+/* =========================
+   顏色
+========================= */
+
+.green{
+color:var(--green)!important
+}
+
+.red{
+color:var(--red)!important
+}
+
+.orange{
+color:var(--orange)!important
+}
+
+.yellow{
+color:var(--yellow)!important
+}
+
+.blue{
+color:var(--blue)!important
+}
+
+.purple{
+color:var(--purple)!important
+}
+
+/*
+台股介面：
+紅＝上漲／買超
+綠＝下跌／賣超
+*/
+
+.positive{
+color:var(--red)!important
+}
+
+.negative{
+color:var(--green)!important
+}
+
+/* =========================
+   價格
+========================= */
+
+.priceStrip{
+display:grid;
+grid-template-columns:repeat(5,1fr);
+margin-top:12px;
+background:#101214;
+border-radius:14px;
+padding:9px 2px
+}
+
+.priceCell{
+text-align:center;
+border-right:1px solid #36393e
+}
+
+.priceCell:last-child{
+border-right:0
+}
+
+.priceLabel{
+font-size:12px;
+color:#999
+}
+
+.priceValue{
+font-size:18px;
+font-weight:900;
+margin-top:4px;
+white-space:nowrap
+}
+
+/* =========================
+   Break
+========================= */
+
+.break{
+background:#181a1e;
+border:1px solid #41444a;
+border-radius:20px;
+padding:15px
+}
+
+.breakTitle{
+font-size:21px;
+font-weight:900;
+color:var(--green);
+margin-bottom:11px
+}
+
+.breakGrid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:6px 15px
+}
+
+.checkRow{
+display:flex;
+align-items:center;
+gap:7px;
+font-size:15px;
+line-height:1.9;
+color:#aaa
+}
+
+.check{
+width:20px;
+height:20px;
+border-radius:50%;
+background:#35d96b;
+color:#09200f;
+display:inline-flex;
+align-items:center;
+justify-content:center;
+font-weight:900;
+flex:0 0 20px
+}
+
+.check.no{
+background:#444;
+color:#aaa
+}
+
+.data{
+border-left:1px solid #383b40;
+padding-left:14px
+}
+
+.dataRow{
+display:flex;
+justify-content:space-between;
+gap:8px;
+font-size:14px;
+line-height:2;
+color:#aaa
+}
+
+.dataRow b{
+color:#eee
+}
+
+/* =========================
+   Feature
+========================= */
+
+.featureGrid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:8px
+}
+
+.feature{
+min-height:105px;
+background:#141619;
+border:1px solid #41444a;
+border-radius:17px;
+color:#fff;
+padding:10px 5px;
+text-align:center
+}
+
+.feature:active,
+.action:active,
+.row:active,
+.navBtn:active{
+transform:scale(.97)
+}
+
+.featureIcon{
+font-size:27px
+}
+
+.featureName{
+font-size:16px;
+font-weight:900;
+margin-top:3px
+}
+
+.featureDesc{
+font-size:11px;
+color:#888;
+margin-top:4px
+}
+
+.count{
+display:inline-block;
+margin-top:6px;
+padding:3px 8px;
+border-radius:999px;
+background:#25282d;
+color:var(--yellow);
+font-size:12px;
+font-weight:900
+}
+
+/* =========================
+   Button
+========================= */
+
+.action{
+width:100%;
+padding:14px;
+border-radius:16px;
+background:#111315;
+border:1px solid #55585d;
+color:#fff;
+font-weight:900;
+font-size:16px;
+margin-top:9px
+}
+
+.action.primary{
+border-color:var(--orange)
+}
+
+.action:disabled{
+opacity:.55;
+cursor:not-allowed
+}
+
+/* =========================
+   Signal
+========================= */
+
+.signal{
+background:#111315;
+border:1px solid #41444a;
+border-radius:17px;
+padding:15px
+}
+
+.signalState{
+font-size:29px;
+font-weight:900
+}
+
+.scoreBar{
+height:10px;
+background:#303237;
+border-radius:999px;
+overflow:hidden;
+margin-top:10px
+}
+
+.scoreBar span{
+display:block;
+height:100%;
+background:var(--orange);
+transition:.2s
+}
+
+/* =========================
+   Table
+========================= */
+
+.tableWrap{
+overflow:auto;
+-webkit-overflow-scrolling:touch
+}
+
+table{
+width:100%;
+min-width:560px;
+border-collapse:collapse
+}
+
+th,
+td{
+padding:9px 6px;
+border-bottom:1px solid #36393e;
+text-align:center
+}
+
+th{
+color:#92959a;
+font-weight:500
+}
+
+.recTable{
+overflow:hidden;
+border:1px solid #3c3f44;
+border-radius:17px
+}
+
+.recHead,
+.row{
+display:grid;
+grid-template-columns:
+1.5fr
+.75fr
+.75fr
+1fr
+.75fr
+.25fr;
+gap:5px;
+align-items:center;
+padding:10px 8px
+}
+
+.recHead{
+font-size:12px;
+color:#999;
+background:#141619
+}
+
+.row{
+border-top:1px solid #34373c;
+background:#181a1d;
+cursor:pointer
+}
+
+.recName{
+font-size:15px;
+font-weight:900
+}
+
+.recSmall{
+font-size:13px;
+font-weight:700
+}
+
+.arrow{
+text-align:right;
+font-size:21px;
+color:#aaa
+}
+
+/* =========================
+   搜尋結果
+========================= */
+
+.searchResults{
+margin-top:8px
+}
+
+.searchResult{
+background:#141619;
+border:1px solid #3e4146;
+border-radius:14px;
+padding:12px;
+margin-top:7px;
+cursor:pointer
+}
+
+.searchResult b{
+font-size:16px
+}
+
+.searchResult small{
+display:block;
+color:#92959a;
+margin-top:3px
+}
+
+/* =========================
+   Loading
+========================= */
+
+.empty{
+padding:18px;
+text-align:center;
+color:#888;
+line-height:1.8
+}
+
+.loadingBox{
+text-align:center;
+padding:18px;
+color:var(--yellow);
+line-height:1.8
+}
+
+.progress{
+height:8px;
+background:#303237;
+border-radius:999px;
+overflow:hidden;
+margin-top:9px
+}
+
+.progress span{
+display:block;
+height:100%;
+width:0;
+background:var(--yellow);
+transition:.2s
+}
+
+/* =========================
+   Footer
+========================= */
+
+.footer{
+text-align:center;
+font-size:12px;
+color:#666;
+line-height:1.7;
+padding:18px 8px
+}
+
+/* =========================
+   Bottom Nav
+========================= */
+
+.bottomNav{
+position:fixed;
+left:0;
+right:0;
+bottom:0;
+z-index:999;
+display:grid;
+grid-template-columns:repeat(5,1fr);
+background:rgba(18,20,23,.98);
+border-top:1px solid #383b40;
+backdrop-filter:blur(15px);
+padding:
+7px
+max(8px,env(safe-area-inset-left))
+calc(7px + env(safe-area-inset-bottom))
+max(8px,env(safe-area-inset-right))
+}
+
+.navBtn{
+border:0;
+background:transparent;
+color:#aaa;
+padding:6px 2px;
+min-height:57px;
+border-radius:12px
+}
+
+.navBtn.active{
+color:var(--orange);
+background:rgba(255,159,28,.06)
+}
+
+.navIcon{
+font-size:24px;
+display:block;
+line-height:1
+}
+
+.navText{
+font-size:12px;
+display:block;
+margin-top:5px
+}
+
+/* =========================
+   Responsive
+========================= */
+
+@media(max-width:650px){
+
+.wrap{
+padding:7px 10px 120px
+}
+
+.search button{
+width:102px
+}
+
+.card{
+padding:14px
+}
+
+.stockTitle{
+font-size:26px
+}
+
+.breakGrid{
+grid-template-columns:1fr
+}
+
+.data{
+border-left:0;
+border-top:1px solid #383b40;
+padding:9px 0 0;
+margin-top:8px
+}
+
+.featureGrid{
+gap:7px
+}
+
+.feature{
+min-height:96px
+}
+
+.featureName{
+font-size:15px
+}
+
+}
+
+@media(max-width:420px){
+
+.grid3{
+grid-template-columns:1fr
+}
+
+.priceValue{
+font-size:15px
+}
+
+.featureDesc{
+display:none
+}
+
+.sectionGrid{
+grid-template-columns:1fr
+}
+
+.levelGrid{
+grid-template-columns:repeat(2,1fr)
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+
+<!-- =========================
+     SEARCH
+========================= -->
+
+<div class="search">
+
+<input
+id="searchInput"
+type="search"
+placeholder="搜尋股票／ETF／代號／關鍵字"
+autocomplete="off"
+autocapitalize="off"
+spellcheck="false">
+
+<button
+id="searchBtn"
+type="button">
+查詢
+</button>
+
+</div>
+
+<div class="hint">
+
+m1491｜動態市場掃描版。
+<br>
+
+不固定股票名單。
+每天重新建立市場股票池。
+
+<br>
+
+紅色＝上漲／買超　
+綠色＝下跌／賣超
+
+</div>
+
+<div id="status" class="status"></div>
+
+<div id="searchResults"
+class="searchResults hidden">
+</div>
+
+<!-- =========================
+     HOME
+========================= -->
+
+<div id="home">
+
+<div class="card">
+
+<div class="title">
+📊 m1491｜動態台股選股系統
+</div>
+
+<div class="intro">
+
+不是固定30檔股票。
+
+<br>
+
+系統流程：
+
+<b>
+全市場資料
+→ 動態初篩
+→ 深度分析
+→ 策略分流
+→ 實際符合數量
+</b>
+
+<br><br>
+
+<span id="systemText">
+m1491 系統初始化中…
+</span>
+
+</div>
+
+</div>
+
+
+<!-- =========================
+     TODAY RADAR
+========================= -->
+
+<div class="card">
+
+<div class="title">
+🎯 今日動態雷達
+</div>
+
+<div class="featureGrid">
+
+<button
+class="feature"
+data-action="daytrade"
+type="button">
+
+<div class="featureIcon">
+⚡
+</div>
+
+<div class="featureName orange">
+當沖推薦
+</div>
+
+<div class="featureDesc">
+盤中短線
+</div>
+
+<div id="countDaytrade"
+class="count">
+未掃描
+</div>
+
+</button>
+
+
+<button
+class="feature"
+data-action="overnight"
+type="button">
+
+<div class="featureIcon">
+🌙
+</div>
+
+<div class="featureName purple">
+隔日衝
+</div>
+
+<div class="featureDesc">
+盤後布局隔日
+</div>
+
+<div id="countOvernight"
+class="count">
+未掃描
+</div>
+
+</button>
+
+
+<button
+class="feature"
+data-action="institution"
+type="button">
+
+<div class="featureIcon">
+🏦
+</div>
+
+<div class="featureName red">
+法人布局
+</div>
+
+<div class="featureDesc">
+三大同步低吸
+</div>
+
+<div id="countInstitution"
+class="count">
+未掃描
+</div>
+
+</button>
+
+
+<button
+class="feature"
+data-action="safe"
+type="button">
+
+<div class="featureIcon">
+🛡️
+</div>
+
+<div class="featureName blue">
+安全買點
+</div>
+
+<div class="featureDesc">
+回踩／不追高
+</div>
+
+<div id="countSafe"
+class="count">
+未掃描
+</div>
+
+</button>
+
+
+<button
+class="feature"
+data-action="cold"
+type="button">
+
+<div class="featureIcon">
+🕵️
+</div>
+
+<div class="featureName yellow">
+冷門異動
+</div>
+
+<div class="featureDesc">
+突然有量
+</div>
+
+<div id="countCold"
+class="count">
+最多82
+</div>
+
+</button>
+
+
+<button
+class="feature"
+data-action="long"
+type="button">
+
+<div class="featureIcon">
+💎
+</div>
+
+<div class="featureName green">
+中長期推薦
+</div>
+
+<div class="featureDesc">
+人氣由高到低
+</div>
+
+<div id="countLong"
+class="count">
+最多93
+</div>
+
+</button>
+
+</div>
+
+
+<button
+id="fullScanBtn"
+class="action primary"
+type="button">
+
+🔄 每日重新掃描全市場
+
+</button>
+
+</div>
+
+
+<!-- =========================
+     BREAKOUT
+========================= -->
+
+<div class="card">
+
+<div class="title">
+🔥 盤整後突破
+</div>
+
+<div class="intro">
+
+尋找：
+
+<b>
+整理
+＋波動收斂
+＋接近前高
+＋均線轉強
+＋法人
+＋量價
+</b>
+
+<br>
+
+不是單純追已經大漲的股票。
+
+</div>
+
+<button
+id="break
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
 <meta name="theme-color" content="#061018">
 <title>M1391 台股獵人 V19｜完整修正版</title>
