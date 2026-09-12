@@ -169,225 +169,233 @@ body{background:radial-gradient(circle at 50% -10%,#123247 0,#061018 34%,#05090d
 .progressBox{margin-top:8px}.progressRow{display:grid;grid-template-columns:100px 1fr 90px;gap:8px;align-items:center;margin:7px 0}.progressLabel{font-size:12px;color:#a8b6bd}.progressBar{height:9px;border-radius:99px;background:#122633;overflow:hidden}.progressBar span{display:block;width:0;height:100%;background:linear-gradient(90deg,#25b9ff,#43ef78);transition:.2s}.progressNum{text-align:right;font-size:11px;color:#8fa2ab}
 .logBox{max-height:180px;overflow:auto;background:#061018;border:1px solid #18313f;border-radius:12px;padding:8px}.logLine{font-size:11px;color:#9fb1ba;padding:3px 0;border-bottom:1px dashed #17303c}.logLine:last-child{border-bottom:0}
 .dbState{padding:11px;border-radius:13px;background:#06161e;border:1px solid #245064;color:#a7c1ca;font-size:12px;line-height:1.7}
-@media(max-width:800px){.dashboard{grid-template-columns:1fr}.sidebar{display:none}.dashGrid{grid-template-columns:1fr}.dashCard.full{grid-column:auto}.dashboardTop{padding:12px}.dbTop{min-width:0;padding:7px 10px}.dbTop strong{font-size:13px}.brandRabbit{font-size:38px}.brandText h1{font-size:22px}}
-/* =========================================================
-V19：手機底部導覽／面板
-========================================================= */
-.pagePanel{display:none}.pagePanel.active{display:block}
+@media(max-width:800px){.dashboard{grid-template-columns:1fr}.sidebar{display:none}.dashGrid{grid-template-columns:1fr}}
+.pad{padding:14px}.dbHeader{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.dbHeader h2{margin:0;font-size:22px}.dbDate{font-size:12px;color:#a8bac3;margin-top:5px;line-height:1.6}.dbActions{display:grid;grid-template-columns:1fr 1fr;gap:8px}.dbAction{min-height:82px;text-align:left;background:#08151e;border:1px solid #2e5265;border-radius:14px;padding:12px}.dbAction b{display:block;font-size:17px}.dbAction small{display:block;color:#8fa3ad;margin-top:5px;line-height:1.5}.dbAction.force{border-color:var(--pink)}.progressPanel{margin-top:12px;background:#07131c;border:1px solid #1f3b49;border-radius:14px;padding:10px}.progressTrack{height:9px;border-radius:99px;background:#102633;overflow:hidden}.progressFill{height:100%;width:0;background:linear-gradient(90deg,#25b9ff,#43ef78);transition:width .3s}.progressFill.blue{background:linear-gradient(90deg,#28aaf2,#63caff)}.progressNum{text-align:right;font-size:12px;color:#d4dfe4}.progressBadge{font-size:11px;color:#53f58b;background:#083d2a;border-radius:9px;padding:5px 7px;text-align:center}.progressBadge.loading{color:#39caff;background:#08354a}.liveBox{height:100%;min-height:345px}.liveBox h3{margin:0 0 8px;font-size:18px}.logBox{height:286px;overflow:auto;background:#071018;border:1px solid #25404e;border-radius:10px;padding:9px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;line-height:1.7;color:#dce6ea}.logLine{white-space:pre-wrap}.apiBox{margin-top:12px;border:1px solid var(--lime);border-radius:14px;padding:12px;background:#061b14}.apiBig{font-size:18px;color:var(--lime);font-weight:900}.apiSub{font-size:12px;color:#c9d7d3;margin-top:4px}.searchDash{margin-top:12px}.searchTitle{display:flex;align-items:center;gap:8px;font-size:18px;font-weight:900;margin-bottom:8px}.searchDash .search{position:static;background:transparent;padding:0}.searchDash .search input{background:#f4f7f9;color:#16212a;border-color:#d7e0e5;height:48px}.searchDash .search button{height:48px}.quickTitle{font-size:20px;font-weight:900;margin:0 0 9px}.quickGrid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}.quickGrid .action{min-height:82px;border-radius:12px;background:#0b171f;padding:9px;border-width:1px}.quickGrid .action b{font-size:13px}.quickGrid .action small{font-size:10px}.dashboard .wrap{max-width:none;margin:0;padding:0}.dashboard .bottomNav{display:none}
+@media(max-width:1050px){.dashGrid{grid-template-columns:1fr}.liveBox{min-height:0}.quickGrid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:800px){.dashboard{display:block}.sidebar{display:none}.dashboardTop{position:static}.dbTop{min-width:0}.mainArea{padding:9px 9px 105px}.brandText h1{font-size:23px}.brandText p{font-size:11px}.brandRabbit{font-size:36px}.dbActions{grid-template-columns:1fr}.progressRow{grid-template-columns:125px 1fr 65px}.quickGrid{grid-template-columns:repeat(2,1fr)}.dashGrid{grid-template-columns:1fr}.liveBox{display:none}}
+@media(min-width:1051px){.mainArea{position:relative;padding-right:410px}.liveBox{position:absolute;right:16px;top:14px;width:380px}.mainArea>.search{margin-top:12px}.mainArea>#home{margin-top:0}.mainArea>#resultSection,.mainArea>#detail{max-width:none}}
+@media(min-width:801px){.mainArea>.search{background:#0b1a26;border:1px solid #284451;border-radius:16px;padding:10px}.mainArea>.search:before{content:"🔎  股票查詢　（上市／上櫃／ETF／代號／名稱）";display:block;font-size:18px;font-weight:900;margin:0 0 8px 2px;color:#f1f5f7}.mainArea>#home>.card:first-child{display:none}.mainArea>#home{margin-top:10px}.mainArea>#home>.card:nth-child(2){background:transparent;border:0;padding:0}.mainArea>#home>.card:nth-child(2) .sectionTitle{font-size:21px}.mainArea>#home>.card:nth-child(2) .actionGrid{grid-template-columns:repeat(6,minmax(0,1fr))}.mainArea>#home>.card:nth-child(2) .action{min-height:76px}.mainArea>#home>.card:nth-child(3),.mainArea>#home>.card:nth-child(4){display:none}}
 </style>
 </head>
 <body>
-
-<div id="status" class="status"></div>
-
-<div class="dashboardTop">
+<header class="dashboardTop">
 <div class="brandRabbit">🐰</div>
-<div class="brandText">
-<h1>M1391 <span>台股獵人 V19</span></h1>
-<p>法人籌碼・突破・關卡・主力成本・快取資料庫</p>
-</div>
-<div class="dbTop">
-<strong id="topDbState">尚未建立</strong>
-<small id="topDbTime">請先抓取今天完整資料</small>
-</div>
-</div>
-
+<div class="brandText"><h1>M1391 台股獵人 <span>V19</span></h1><p>上市＋上櫃完整搜尋、法人、均線、突破、週線／月線、安全買點、爆量、跌深築底與當沖候選。</p></div>
+<div class="dbTop"><strong>🟢 資料庫：<span id="topDbState">未建立</span></strong><small id="topDbTime">等待建立今日資料</small></div>
+</header>
 <div class="dashboard">
 <aside class="sidebar">
-<button class="sideBtn active" data-page="dashboard"><span class="sideIcon">🏠</span>總覽<span class="sideArrow">›</span></button>
-<button class="sideBtn" data-page="searchResults"><span class="sideIcon">🔎</span>股票搜尋<span class="sideArrow">›</span></button>
-<button class="sideBtn" data-page="scan"><span class="sideIcon">🎯</span>突破掃描<span class="sideArrow">›</span></button>
-<button class="sideBtn" data-page="law"><span class="sideIcon">🏦</span>法人籌碼<span class="sideArrow">›</span></button>
-<button class="sideBtn" data-page="levels"><span class="sideIcon">🐰</span>仙兔關卡<span class="sideArrow">›</span></button>
-<button class="sideBtn" data-page="settings"><span class="sideIcon">⚙️</span>設定<span class="sideArrow">›</span></button>
+<button class="sideBtn active" data-nav="home"><span class="sideIcon">🏠</span>首頁<span class="sideArrow">›</span></button>
+<button class="sideBtn" data-nav="search"><span class="sideIcon">🔎</span>個股查詢<span class="sideArrow">›</span></button>
+<button class="sideBtn" data-nav="three"><span class="sideIcon">📊</span>三大法人 TOP19<span class="sideArrow">›</span></button>
+<button class="sideBtn" data-scan="etf"><span class="sideIcon">💰</span>大資金 ETF<span class="sideArrow">›</span></button>
+<button class="sideBtn" data-scan="bank"><span class="sideIcon">🏦</span>金控股票<span class="sideArrow">›</span></button>
+<button class="sideBtn" data-scan="week"><span class="sideIcon">📅</span>週線安全買點<span class="sideArrow">›</span></button>
+<button class="sideBtn" data-scan="month"><span class="sideIcon">📆</span>月線安全買點<span class="sideArrow">›</span></button>
+<button class="sideBtn" data-scan="volume"><span class="sideIcon">📊</span>爆量股<span class="sideArrow">›</span></button>
+<button class="sideBtn" data-scan="breakout"><span class="sideIcon">🚀</span>突破股<span class="sideArrow">›</span></button>
+<button class="sideBtn" data-scan="base"><span class="sideIcon">💎</span>跌深築底<span class="sideArrow">›</span></button>
+<button class="sideBtn" data-scan="daytrade"><span class="sideIcon">⚡</span>當沖候選<span class="sideArrow">›</span></button>
+<button class="sideBtn" data-scan="attention"><span class="sideIcon">🚨</span>今日注意 TOP20<span class="sideArrow">›</span></button>
+<button class="sideBtn" data-nav="home"><span class="sideIcon">⚙️</span>設定<span class="sideArrow">›</span></button>
 </aside>
-
 <main class="mainArea">
-
-<section id="dashboard" class="pagePanel active">
 <div class="dashGrid">
-
-<div class="dashCard full">
-<div class="dashTitle">📥 今日資料庫</div>
-<div id="dashDbDate" class="dbState">🔴 尚未建立今日完整資料</div>
-<div class="dashButtons" style="margin-top:10px">
-<button id="dashFetchBtn" class="dashBtn primary">
-<strong>📥 抓取今天完整資料</strong>
-<small>第一次建立今日股票池＋行情＋必要資料<br>建立後搜尋優先使用本機 Cache</small>
+<div>
+<div class="dashCard pad">
+<div class="dbHeader"><div><h2>📦 M1391 資料庫</h2><div id="dashDbDate" class="dbDate">🟡 今日資料尚未建立｜按右側按鈕開始</div></div></div>
+<div class="dbActions" style="margin-top:10px">
+<button class="dbAction" id="dashFetchBtn" type="button"><b>📥 抓取今日完整資料</b><small>建立上市＋上櫃＋ETF＋今日行情資料庫</small></button>
+<button class="dbAction force" id="dashForceBtn" type="button"><b>🔄 強制更新</b><small>重新抓一次最新資料</small></button>
+</div>
+<div class="progressPanel">
+<div style="color:#48f27d;font-size:16px;font-weight:900;margin-bottom:8px">✓ 資料庫狀態</div>
+<div class="progressRow"><div class="progressLabel">🏛️ 上市股票清單</div><div class="progressTrack"><div id="pTwse" class="progressFill" style="width:0"></div></div><div id="pTwseText" class="progressNum">0 / 0</div></div>
+<div class="progressRow"><div class="progressLabel">🏛️ 上櫃股票清單</div><div class="progressTrack"><div id="pTpex" class="progressFill" style="width:0"></div></div><div id="pTpexText" class="progressNum">0 / 0</div></div>
+<div class="progressRow"><div class="progressLabel">💰 ETF 清單</div><div class="progressTrack"><div id="pEtf" class="progressFill" style="width:0"></div></div><div id="pEtfText" class="progressNum">0 / 0</div></div>
+<div class="progressRow"><div class="progressLabel">📊 今日行情資料</div><div class="progressTrack"><div id="pToday" class="progressFill" style="width:0"></div></div><div id="pTodayText" class="progressNum">0 / 0</div></div>
+<div class="progressRow"><div class="progressLabel">📄 歷史資料（均線）</div><div class="progressTrack"><div id="pHistory" class="progressFill blue" style="width:0"></div></div><div id="pHistoryText" class="progressNum">搜尋時建立</div></div>
+<div class="progressRow"><div class="progressLabel">🧑‍💼 法人資料</div><div class="progressTrack"><div id="pLaw" class="progressFill blue" style="width:0"></div></div><div id="pLawText" class="progressNum">搜尋時建立</div></div>
+</div>
+</div>
+<div class="dataControl card">
+<div class="sectionTitle">📦 市場資料庫</div>
+<div id="dataDbStatus" class="muted">尚未抓取今日完整市場資料</div>
+<div class="dataControlGrid">
+<button class="action primary" id="fetchTodayBtn">📥 抓取今天完整資料</button>
+<button class="action" id="refreshCloseBtn">🔄 強制更新</button>
+</div>
+<div class="muted" style="margin-top:8px">第一次建立後，搜尋與分析優先使用本機 Cache；同一資料不重複請求 API。需要最新資料時再按強制更新。</div>
+</div>
+</div></div>
+<div class="liveBox dashCard pad"><h3>📄 即時訊息</h3><div id="dashboardLog" class="logBox"><div class="logLine">[等待] M1391 V19 已載入，等待建立資料庫…</div></div><div class="apiBox"><div class="apiBig">⚡ 本次真正 API：<span id="dashApiCount">0</span> 次</div><div class="apiSub">Cache 命中：<span id="dashCacheHits">0</span> 次</div><div class="apiSub">資料來源：TWSE / TPEx / FinMind</div></div></div>
+<div class="search">
+<input id="searchInput" type="search"
+placeholder="搜尋股票／ETF／代號／名稱，例如 2330、台積電、0050"
+autocomplete="off">
+<button id="searchBtn">查詢</button>
+</div>
+<div class="hint">
+M1391 V19 完整版｜法人籌碼＋突破＋週線／月線安全買點＋暴跌反彈＋爆量警報＋跌深量縮築底
+</div>
+<div id="status" class="status"></div>
+<div id="searchResults" class="hidden"></div>
+<section id="home">
+<div class="card">
+<div class="title">🐰 M1391 台股獵人</div>
+<div class="muted">
+不是只看「漲很多」，而是把法人、均線、成交量、支撐、壓力與跌深止跌條件一起判斷。
+</div>
+</div>
+<div class="card">
+<div class="sectionTitle quickTitle">🔥 快速分析</div>
+<div class="actionGrid quickGrid">
+<button class="action hot" data-scan="three">
+<b>🏦 三大法人同買 TOP19</b>
+<small>外資＋投信＋自營同時買超</small>
 </button>
-<button id="dashForceBtn" class="dashBtn force">
-<strong>🔄 強制更新</strong>
-<small>重新抓取今天最新市場資料<br>不清除歷史資料與法人快取</small>
+<button class="action blue" data-scan="etf">
+<b>💰 大資金 ETF</b>
+<small>大型市場資金 ETF 排名</small>
+</button>
+<button class="action" data-scan="bank">
+<b>🏦 金控股票</b>
+<small>金控 M1391 綜合排名</small>
+</button>
+<button class="action safe" data-scan="week">
+<b>📅 週線安全買點</b>
+<small>回到週線支撐附近</small>
+</button>
+<button class="action safe" data-scan="month">
+<b>📆 月線安全買點</b>
+<small>中長線月線位置</small>
+</button>
+<button class="action danger" data-scan="rebound">
+<b>🩸 暴跌反彈買點</b>
+<small>超跌＋止跌＋反彈</small>
+</button>
+<button class="action danger" data-scan="volume">
+<b>🚨 爆量注意</b>
+<small>爆量、長上影、殺盤警報</small>
+</button>
+<button class="action safe" data-scan="base">
+<b>🐰 跌深量縮築底</b>
+<small>跌一段＋量縮＋不再破低</small>
+</button>
+<button class="action hot" data-scan="meat">
+<b>🥩 週線有肉 TOP19</b>
+<small>上方空間＋週線趨勢</small>
+</button>
+<button class="action hot" data-scan="breakout">
+<b>🚀 M1391 突破</b>
+<small>20 日壓力＋量價確認</small>
 </button>
 </div>
-<div class="progressBox">
-<div class="progressRow"><div class="progressLabel">上市 TWSE</div><div class="progressBar"><span id="pTwse"></span></div><div id="pTwseText" class="progressNum">—</div></div>
-<div class="progressRow"><div class="progressLabel">上櫃 TPEx</div><div class="progressBar"><span id="pTpex"></span></div><div id="pTpexText" class="progressNum">—</div></div>
-<div class="progressRow"><div class="progressLabel">ETF／指數</div><div class="progressBar"><span id="pEtf"></span></div><div id="pEtfText" class="progressNum">—</div></div>
-<div class="progressRow"><div class="progressLabel">今日行情</div><div class="progressBar"><span id="pToday"></span></div><div id="pTodayText" class="progressNum">—</div></div>
+</div>
+<div class="card">
+<div class="sectionTitle">📌 M1391 V19 核心邏輯</div>
+<div class="checkList">
+<div class="checkRow"><span class="dot on"></span><b>週線安全：</b>接近 W20 支撐</div>
+<div class="checkRow"><span class="dot on"></span><b>月線安全：</b>接近 M20 支撐</div>
+<div class="checkRow"><span class="dot on"></span><b>跌深量縮：</b>跌幅＋量縮＋不再破低</div>
+<div class="checkRow"><span class="dot warn"></span><b>爆量：</b>依量價型態分級警報</div>
+<div class="checkRow"><span class="dot on"></span><b>法人：</b>外資／投信／自營</div>
+<div class="checkRow"><span class="dot on"></span><b>突破：</b>20 日壓力＋量能</div>
 </div>
 </div>
-
-<div class="dashCard">
-<div class="dashTitle">📊 資料庫狀態</div>
-<div class="dashMetric lime" id="dashStockCount">0</div>
-<div class="dashSub">完整股票／ETF 清單</div>
+<div class="card">
+<div class="sectionTitle">🧭 M1391 V19 股票型態雷達</div>
+<div class="actionGrid">
+<button class="action hot" data-v13-scan="breakdown">
+<b>🔻 跌破股票分析</b><small>支撐／均線／爆量跌破</small>
+</button>
+<button class="action" data-v13-scan="consolidation">
+<b>🟡 盤整股票分析</b><small>窄幅整理／蓄勢</small>
+</button>
+<button class="action" data-v13-scan="sideways">
+<b>🐢 盤股股票分析</b><small>低波動／無方向</small>
+</button>
+<button class="action danger" data-v13-scan="daytrade">
+<b>⚡ 當沖股票建議</b><small>波動＋量能＋方向</small>
+</button>
+<button class="action hot" data-v13-scan="attention">
+<b>🚨 今日注意股票 TOP20</b><small>突破／跌破／爆量／築底</small>
+</button>
 </div>
-
-<div class="dashCard">
-<div class="dashTitle">⚡ API 次數</div>
-<div class="dashMetric gold" id="dashApiCount">0</div>
-<div class="dashSub">本次瀏覽器工作階段</div>
+<div class="muted" style="margin-top:9px">
+⚠️ 當沖模組只做「候選」篩選，不代表必漲或必跌；實際進出仍要看即時走勢、VWAP、停損與流動性。
 </div>
-
-<div class="dashCard">
-<div class="dashTitle">💾 Cache 命中</div>
-<div class="dashMetric" id="dashCacheHits">0</div>
-<div class="dashSub">減少重複 API 請求</div>
-</div>
-
-<div class="dashCard">
-<div class="dashTitle">🔎 快速搜尋</div>
-<div class="search" style="position:static;padding:0;background:none;backdrop-filter:none">
-<input id="dashSearchInput" placeholder="2330、台積電、0050、00919">
-<button id="dashSearchBtn">搜尋</button>
-</div>
-</div>
-
-<div class="dashCard full">
-<div class="dashTitle">📝 系統紀錄</div>
-<div id="dashboardLog" class="logBox"></div>
-</div>
-
 </div>
 </section>
-
-<section id="searchResults" class="pagePanel">
+<section id="resultSection" class="hidden">
 <div class="card">
-<div class="title">🔎 股票搜尋</div>
-<div class="search" style="position:static;background:none;backdrop-filter:none">
-<input id="searchInput" placeholder="輸入股票代號或名稱，例如：2330、台積電、0050">
-<button id="searchBtn">搜尋</button>
+<div class="sectionTitle" id="resultTitle">搜尋結果</div>
+<div id="progressText" class="muted"></div>
+<div class="progress"><span id="progressBar"></span></div>
 </div>
-<div class="hint">搜尋會優先使用今天已建立的本機資料庫，不會重抓完整股票清單。</div>
 <div id="resultList"></div>
-</div>
 </section>
-
-<section id="scan" class="pagePanel">
-<div class="card">
-<div class="title">🎯 突破掃描</div>
-<div class="muted">掃描今日資料庫中的股票，找出均線突破、量價強勢與法人偏多標的。</div>
-<div class="dataControlGrid" style="margin-top:10px">
-<button id="scanBtn" class="action hot"><b>🎯 開始掃描</b><small>使用今日 Cache 資料</small></button>
-<button id="scanFastBtn" class="action blue"><b>⚡ 快速掃描</b><small>優先掃描熱門標的</small></button>
+<section id="detail" class="hidden"></section>
+<div class="footer">
+M1391 V19 完整整合版｜上市＋上櫃＋ETF。API 無法取得資料時會標示資料不足；
+「量縮」不等於一定止跌，「爆量」也不等於一定賣出，請搭配價格與支撐確認。
 </div>
-<div id="scanStatus" class="status"></div>
-<div id="scanResult"></div>
-</div>
-</section>
-
-<section id="law" class="pagePanel">
-<div class="card">
-<div class="title">🏦 法人籌碼</div>
-<div class="muted">外資、投信、自營商買賣超與估算成本。</div>
-<div id="lawResult" class="empty">請先搜尋股票。</div>
-</div>
-</section>
-
-<section id="levels" class="pagePanel">
-<div class="card">
-<div class="title">🐰 仙兔關卡</div>
-<div class="grid2">
-<div>
-<label class="muted">成本價格</label>
-<input id="levelCost" type="number" step="0.01" placeholder="例如 100">
-</div>
-<div>
-<label class="muted">關卡間距 %</label>
-<input id="levelStep" type="number" step="0.1" value="3">
-</div>
-</div>
-<div id="levelResult" class="empty">請先搜尋股票。</div>
-</div>
-</section>
-
-<section id="settings" class="pagePanel">
-<div class="card">
-<div class="title">⚙️ V19 設定</div>
-<div class="dbState">
-<b>資料策略</b><br>
-① 第一次按「抓取今天完整資料」建立今日本機資料庫。<br>
-② 後續查詢與分析優先使用本機 Cache。<br>
-③ 只有「強制更新」才重新抓取今日市場快照。<br>
-④ 歷史資料與法人資料不因強制更新而全部清除。
-</div>
-</div>
-</section>
-
-<section id="detail" class="pagePanel">
-<div id="detailContent"></div>
-</section>
-
 </main>
 </div>
-
 <div class="bottomNav">
-<button class="navBtn active" data-page="dashboard"><span class="navIcon">🏠</span><span class="navText">總覽</span></button>
-<button class="navBtn" data-page="searchResults"><span class="navIcon">🔎</span><span class="navText">搜尋</span></button>
-<button class="navBtn" data-page="scan"><span class="navIcon">🎯</span><span class="navText">掃描</span></button>
-<button class="navBtn" data-page="law"><span class="navIcon">🏦</span><span class="navText">法人</span></button>
-<button class="navBtn" data-page="levels"><span class="navIcon">🐰</span><span class="navText">關卡</span></button>
+<button class="navBtn active" data-nav="home"><span class="navIcon">🏠</span><span class="navText">首頁</span></button>
+<button class="navBtn" data-nav="three"><span class="navIcon">🏦</span><span class="navText">法人</span></button>
+<button class="navBtn" data-nav="safe"><span class="navIcon">🐰</span><span class="navText">安全</span></button>
+<button class="navBtn" data-nav="risk"><span class="navIcon">🚨</span><span class="navText">警報</span></button>
+<button class="navBtn" data-nav="bank"><span class="navIcon">📊</span><span class="navText">金控</span></button>
 </div>
-
 <script>
 "use strict";
-/* =========================================================
-M1391 V19
-完整股票池＋今日行情 Cache
-========================================================= */
-const CONFIG={
-finmind:"https://api.finmindtrade.com/api/v4/data",
-twseAll:"https://openapi.twse.com.tw/v1/exchangeReport/STOCK_DAY_ALL",
-tpexAll:"https://www.tpex.org.tw/openapi/v1/tpex_mainboard_quotes",
-allOrigins:"https://api.allorigins.win/raw?url=",
-httpTimeout:15000,
-universeTTL:24*60*60*1000,
-priceTTL:12*60*60*1000,
-lawTTL:6*60*60*1000,
-marketTTL:24*60*60*1000,
-scanCandidates:30
+const M1391_VERSION = "V19";
+const CONFIG = {
+finmind: "https://api.finmindtrade.com/api/v4/data",
+twseAll: "https://openapi.twse.com.tw/v1/exchangeReport/STOCK_DAY_ALL",
+tpexAll: "https://www.tpex.org.tw/openapi/v1/tpex_mainboard_daily_close_quotes",
+allOrigins: "https://api.allorigins.win/raw?url=",
+twseInstitution: "https://www.twse.com.tw/rwd/zh/fund/T86?date={DATE}&selectType=ALL&response=json",
+tpexInstitution: "https://www.tpex.org.tw/openapi/v1/tpex_3insti_daily_trading",
+historyDays: 520,
+lawDays: 140,
+scanDelay: 0,
+universeTTL: 24 * 60 * 60 * 1000,
+priceTTL: 24 * 60 * 60 * 1000,
+lawTTL: 24 * 60 * 60 * 1000,
+httpTimeout: 6000,
+scanCandidates: 30,
+scanConcurrency: 4
 };
-const MARKET_SNAPSHOT_KEY="M1391_V19_MARKET_SNAPSHOT";
-const state={
-info:null,
-universeLoadedAt:0,
-universeSource:"",
-cache:new Map(),
-lawCache:new Map(),
-inflight:new Map(),
-selected:null,
-scanRows:[],
-lastSnapshot:null
+const ETF_POOL = ["0050","0056","00878","00919","006208","00981A","00631L","00685L","00713","00891","00929","00940","00915","00939","00882","00701","00731","00679B"];
+const BANK_POOL = ["2801","2812","2820","2834","2836","2845","2849","2880","2881","2882","2883","2884","2885","2886","2887","2888","2889","2890","2891","2892","5880"];
+window.__m1391ApiCount=Number(localStorage.getItem("M1391_API_COUNT")||0); window.__m1391CacheHits=0;
+const state = {
+info: null,
+current: null,
+cache: new Map(),
+lawCache: new Map(),
+modelCache: new Map(),
+inflight: new Map(),
+universeLoadedAt: 0,
+universeSource: ""
 };
-window.__m1391ApiCount=Number(localStorage.getItem("M1391_API_COUNT")||0);
-window.__m1391CacheHits=0;
-
-function $(id){return document.getElementById(id)}
-function toNumber(v){
-if(v===null||v===undefined||v==="")return NaN;
-if(typeof v==="number")return Number.isFinite(v)?v:NaN;
-const s=String(v).replace(/,/g,"").replace(/%/g,"").trim();
-const n=Number(s);
-return Number.isFinite(n)?n:NaN;
+const $ = id => document.getElementById(id);
+function escapeHTML(value) {
+return String(value ?? "").replace(/[&<>"']/g, ch => ({
+"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;", "'":"&#39;"
+}[ch]));
 }
-function avg(arr){const a=arr.filter(Number.isFinite);return a.length?a.reduce((x,y)=>x+y,0)/a.length:NaN}
-function sma(arr,n){return arr.length>=n?avg(arr.slice(-n)):NaN}
-function min(arr){return arr.length?Math.min(...arr):NaN}
-function max(arr){return arr.length?Math.max(...arr):NaN}
-function sum(arr){return arr.reduce((a,b)=>a+(Number(b)||0),0)}
-function clamp(n,a,b){return Math.max(a,Math.min(b,n))}
-function pct(a,b){return Number.isFinite(a)&&Number.isFinite(b)&&b!==0?(a/b-1)*100:NaN}
+function toNumber(value) {
+const n = Number(String(value ?? "").replace(/,/g,""));
+return Number.isFinite(n) ? n : 0;
+}
+function average(arr) {
+return arr.length ? arr.reduce((a,b)=>a+b,0) / arr.length : 0;
+}
+function sma(arr,n){ return arr.length>=n ? average(arr.slice(-n)) : 0; }
 function slope(arr,n){ return arr.length>n ? arr[arr.length-1]-arr[arr.length-1-n] : 0; }
 function percent(value,digits=1){ return Number.isFinite(value) ? value.toFixed(digits)+"%" : "-"; }
 function signed(value,digits=0){ const n=Number(value)||0; return (n>0?"+":"")+n.toFixed(digits); }
@@ -436,12 +444,11 @@ const p=Promise.resolve().then(loader).finally(()=>state.inflight.delete(key));
 state.inflight.set(key,p);
 return p;
 }
-/* =========================================================
-API
-========================================================= */
 async function fetchJSON(url, options={}, timeoutMs=CONFIG.httpTimeout){
 return once("http:"+url,async()=>{
-window.__m1391ApiCount=(window.__m1391ApiCount||0)+1; try{localStorage.setItem("M1391_API_COUNT",String(window.__m1391ApiCount))}catch(e){} dashApi(); dashLog("API 請求："+url.split("?")[0]);
+window.__m1391ApiCount=(window.__m1391ApiCount||0)+1;
+try{localStorage.setItem("M1391_API_COUNT",String(window.__m1391ApiCount))}catch(e){}
+dashApi(); dashLog("API 請求："+url.split("?")[0]);
 let firstError=null;
 const controller=new AbortController();
 const timer=setTimeout(()=>controller.abort(),timeoutMs);
@@ -452,8 +459,6 @@ return await r.json();
 }catch(e){
 firstError=e.name==="AbortError"?new Error("連線逾時") : e;
 }finally{clearTimeout(timer)}
-/* GitHub Pages / Safari 若被 CORS 擋住，改走公開 JSON proxy；
-proxy 也有 timeout，避免畫面無限等待。 */
 try{
 const proxy=CONFIG.allOrigins+encodeURIComponent(url);
 const controller2=new AbortController();
@@ -475,13 +480,10 @@ const query=new URLSearchParams({dataset,...params});
 const json=await fetchJSON(CONFIG.finmind+"?"+query.toString());
 return Array.isArray(json.data)?json.data:[];
 }
-/* =========================================================
-完整股票池：TWSE + TPEx
-========================================================= */
 function normalizeUniverse(rows,market){
 const out=[];
 for(const x of rows||[]){
-const id=String(x.Code??x.SecuritiesCompanyCode??x.code??x.stock_id??x.SecuritiesCompanyCode??"").trim().toUpperCase();
+const id=String(x.Code??x.SecuritiesCompanyCode??x.code??x.stock_id??"").trim().toUpperCase();
 const name=String(x.Name??x.CompanyName??x.name??x.stock_name??"").trim();
 if(!id || !name)continue;
 if(!/^[0-9]{4,6}[A-Z]?$/.test(id))continue;
@@ -561,7 +563,7 @@ dashLog(`今日行情資料完成：${arr.filter(x=>x.quote?.price>0).length.toL
 state.info=arr; state.universeLoadedAt=Date.now(); state.universeSource="TWSE＋TPEx／FinMind備援";
 cacheWrite("M1391_V11_FULL_UNIVERSE",arr);
 dashDbReady(arr.length,state.universeSource);
-setStatus(`🟢 完整市場資料已建立｜${arr.length.toLocaleString()} 檔｜今日行情已快取｜搜尋不再重抓清單`,`ok`);
+setStatus(`🟢 完整市場資料已建立｜${arr.length.toLocaleString()} 檔｜今日行情已快取｜搜尋不再重抓清單`,"ok");
 try{renderDbStatus(`🟢 今日完整資料已建立｜${arr.length.toLocaleString()} 檔｜後續查詢與分析優先使用本機 Cache`)}catch(e){}
 return arr;
 });
@@ -580,25 +582,20 @@ throw new Error(`找不到「${q}」；目前完整股票池共 ${info.length.to
 function getScanUniverse(){
 return (state.info||[]).map(x=>x.stock_id);
 }
-/* =========================================================
-FIELD NORMALIZATION
-========================================================= */
 function closeValue(row){return toNumber(row.close??row.Close??row.ClosingPrice??row.price);}
 function openValue(row){return toNumber(row.open??row.Open??row.OpeningPrice);}
 function highValue(row){return toNumber(row.max??row.high??row.High??row.HighestPrice);}
 function lowValue(row){return toNumber(row.min??row.low??row.Low??row.LowestPrice);}
 function volumeValue(row){return toNumber(row.Trading_Volume??row.volume??row.Volume??row.trading_volume??row.TradeVolume??row.TradingShares);}
 function sortedRows(rows){return [...rows].sort((a,b)=>String(a.date??a.Date).localeCompare(String(b.date??b.Date)));}
-/* =========================================================
-PRICE / LAW DATA（Cache＋inflight鎖）
-========================================================= */
 async function getPriceRows(stockId,force=false){
 const key="price:"+stockId;
 if(!force){
 if(state.cache.has(stockId))return state.cache.get(stockId);
 const local=cacheRead("M1391_V11_PRICE_"+stockId,CONFIG.priceTTL);
 if(Array.isArray(local)&&local.length){state.cache.set(stockId,local);return local;}
-}return once(key,async()=>{
+}
+return once(key,async()=>{
 const end=new Date(); const start=new Date(end.getTime()-CONFIG.historyDays*86400000);
 const data=await finmind("TaiwanStockPrice",{data_id:stockId,start_date:dateString(start),end_date:dateString(end)});
 const rows=sortedRows(data);
@@ -621,9 +618,6 @@ try{data=await finmind("TaiwanStockInstitutionalInvestorsBuySell",{data_id:stock
 state.lawCache.set(stockId,data); cacheWrite("M1391_V11_LAW_"+stockId,data); return data;
 });
 }
-/* =========================================================
-INSTITUTIONAL MODEL
-========================================================= */
 function aggregateInstitutional(rows) {
 const map = new Map();
 for (const row of rows) {
@@ -687,9 +681,6 @@ trust20 > 0 &&
 dealer20 > 0
 };
 }
-/* =========================================================
-WEEKLY / MONTHLY AGGREGATION
-========================================================= */
 function weeklyRows(rows) {
 const map = new Map();
 for (const row of sortedRows(rows)) {
@@ -747,9 +738,6 @@ return [...map.values()].sort((a,b)=>
 a.date.localeCompare(b.date)
 );
 }
-/* =========================================================
-DAILY TECHNICAL MODEL
-========================================================= */
 function dailyModel(rows) {
 const c = rows.map(closeValue);
 const v = rows.map(volumeValue);
@@ -831,1532 +819,3128 @@ c.length>=21
 last60Change:
 c.length>=61
 ? (price-c[c.length-61])/c[c.length-61]*100
-: 0,
-peak60:
-c.length>1
-? Math.max(...c.slice(-61,-1))
-: price
+: 0
 };
 }
-/* =========================================================
-M1391 BREAKOUT MODEL
-========================================================= */
-function breakoutModel(rows, tech, law) {
-let score = 0;
-const reasons = [];
-const warnings = [];
-const maStructure =
-tech.ma5 > tech.ma20 &&
-tech.ma20 > tech.ma60;
-if (maStructure) {
-score += 20;
-reasons.push("MA5 > MA20 > MA60");
-}
-if (tech.slope20 > 0 && tech.slope60 > 0) {
-score += 10;
-reasons.push("20/60日線向上");
-}
-if (tech.consolidationRange <= 18) {
-score += 10;
-reasons.push("整理區間≤18%");
-}
-if (tech.contraction <= 0.85) {
-score += 10;
-reasons.push("波動收斂");
-}
-if (
-tech.distanceToResistance >= 0 &&
-tech.distanceToResistance <= 5
-) {
-score += 10;
-reasons.push("接近20日壓力");
-}
-if (
-tech.volumeRatio >= .55 &&
-tech.volumeRatio <= .90
-) {
-score += 5;
-reasons.push("突破前量縮");
-}
-const breakoutConfirmed =
-tech.price > tech.resistance &&
-tech.volumeRatio >= 1.20 &&
-tech.closeLocation >= .70;
-if (breakoutConfirmed) {
-score += 20;
-reasons.push("突破＋量能確認");
-}
-if (law.total5 > 0 && law.total20 > 0) {
-score += 15;
-reasons.push("法人5/20日偏多");
-}
-if (tech.extension > 12) {
-score -= 15;
-warnings.push("股價高於MA20過多");
-}
-const falseBreakout =
-tech.price > tech.resistance &&
-!breakoutConfirmed;
-if (falseBreakout) {
-score -= 20;
-warnings.push("疑似假突破");
-}
-score = Math.max(0,Math.min(100,score));
-let stage = "🟡 整理觀察";
-if (falseBreakout) {
-stage = "⚠️ 假突破警戒";
-} else if (breakoutConfirmed) {
-stage = "🚀 突破確認";
-} else if (tech.distanceToResistance <= 2) {
-stage = "🔥 接近突破";
-} else if (score >= 70) {
-stage = "🐰 提前布局";
-} else if (score >= 55) {
-stage = "🔥 突破測試";
-}
+function weeklyModel(rows){
+const w=weeklyRows(rows);
+const closes=w.map(x=>x.close);
+const last=w[w.length-1]||{};
 return {
-score,
-stage,
-reasons,
-warnings,
-breakout:tech.price > tech.resistance,
-earlyBuy:score >= 60,
-confirmed:breakoutConfirmed,
-falseBreakout,
-risk:
-score >= 75 ? "低"
-: score >= 55 ? "中"
-: "高"
+rows:w,
+w5:sma(closes,5),
+w20:sma(closes,20),
+last:last.close||0,
+change5:closes.length>=6?(last.close-closes[closes.length-6])/closes[closes.length-6]*100:0,
+change12:closes.length>=13?(last.close-closes[closes.length-13])/closes[closes.length-13]*100:0
 };
 }
-/* =========================================================
-WEEKLY MEAT MODEL
-========================================================= */
-function weeklyMeatModel(rows, law, price) {
-const weeks = weeklyRows(rows);
-if (weeks.length < 25) {
+function monthlyModel(rows){
+const m=monthlyRows(rows);
+const closes=m.map(x=>x.close);
+const last=m[m.length-1]||{};
 return {
-score:0,
-label:"資料不足",
-weeks
+rows:m,
+m5:sma(closes,5),
+m20:sma(closes,20),
+last:last.close||0,
+change3:closes.length>=4?(last.close-closes[closes.length-4])/closes[closes.length-4]*100:0,
+change6:closes.length>=7?(last.close-closes[closes.length-7])/closes[closes.length-7]*100:0
 };
 }
-const closes = weeks.map(x=>x.close);
-const volumes = weeks.map(x=>x.volume);
-const w5 = sma(closes,5);
-const w20 = sma(closes,20);
-const w40 = sma(closes,40);
-const w60 = sma(closes,60);
-const previous20 = weeks.slice(-21,-1);
-const resistance = Math.max(
-...previous20.map(x=>x.high)
-);
-const support = Math.min(
-...previous20.map(x=>x.low)
-);
-const distance =
-resistance
-? (resistance-price)/resistance*100
-: 0;
-const upside =
-price
-? (resistance-price)/price*100
-: 0;
-const extension =
-w20 ? (price-w20)/w20*100 : 0;
-const volumeRatio =
-volumes.at(-1) /
-(average(volumes.slice(-21,-1)) || 1);
-const trendScore =
-(w5>w20 ? 8 : 0) +
-(w20>w40 ? 7 : 0) +
-(slope(closes,20)>0 ? 10 : 0);
-const maScore =
-price>=w20*.97 &&
-price<=w20*1.05
-? 25
-: price>w20*1.05 &&
-price<=w20*1.12
-? 15
-: 0;
-const lawScore =
-law.total5>0 && law.total20>0 ? 20 : 0;
-const volumeScore =
-volumeRatio>=.70 &&
-volumeRatio<=1.50 ? 15 : 0;
-const distanceScore =
-distance>=0 && distance<=8 ? 10 : 0;
-const spaceScore =
-upside>=12 ? 15 : upside>=8 ? 8 : 0;
-let score =
-trendScore +
-maScore +
-lawScore +
-volumeScore +
-distanceScore +
-spaceScore;
-if (extension > 15) score -= 12;
-score = Math.max(0,Math.min(100,score));
-let label = "⚪ 暫不吃";
-if (score>=85) label="🚀 大肉候選";
-else if (score>=75) label="🥩 有肉可吃";
-else if (score>=65) label="🐰 小肉／提前布局";
-else if (score>=55) label="🟡 觀察";
-const older = weeks.slice(0,-21);
-let secondResistance =
-older.length
-? Math.max(...older.slice(-20).map(x=>x.high))
-: resistance*1.08;
-if (
-!Number.isFinite(secondResistance) ||
-secondResistance <= resistance
-) {
-secondResistance = resistance*1.08;
+function scoreClamp(v,min=0,max=100){return Math.max(min,Math.min(max,v));}
+function makeWeeklySafe(t){
+let score=0;
+if(t.ma20>0){
+const dist=Math.abs(t.price-t.ma20)/t.ma20*100;
+if(dist<=2)score+=35;
+else if(dist<=4)score+=28;
+else if(dist<=7)score+=18;
+else if(dist<=10)score+=8;
 }
+if(t.price>t.ma20)score+=18;
+if(t.ma5>t.ma20)score+=18;
+if(t.volumeRatio<1.2)score+=10;
+if(t.closeLocation>.55)score+=9;
+if(t.last20Change>-15)score+=5;
+score=scoreClamp(score);
+let label=score>=80?"🟢 週線安全":score>=60?"🟡 週線偏安全":"🔴 週線風險";
+return {score,label};
+}
+function makeMonthlySafe(t){
+let score=0;
+if(t.ma60>0){
+const dist=Math.abs(t.price-t.ma60)/t.ma60*100;
+if(dist<=3)score+=35;
+else if(dist<=6)score+=28;
+else if(dist<=10)score+=18;
+else if(dist<=15)score+=8;
+}
+if(t.price>t.ma60)score+=18;
+if(t.ma20>t.ma60)score+=18;
+if(t.volumeRatio<1.2)score+=10;
+if(t.closeLocation>.55)score+=9;
+if(t.last60Change>-20)score+=5;
+score=scoreClamp(score);
+let label=score>=80?"🟢 月線安全":score>=60?"🟡 月線偏安全":"🔴 月線風險";
+return {score,label};
+}
+function makeWeeklyMeat(t,w){
+const resistance=t.resistance||0;
+const upside=resistance&&t.price>0?(resistance-t.price)/t.price*100:0;
+let score=0;
+if(upside>=10)score+=35;
+else if(upside>=7)score+=28;
+else if(upside>=5)score+=20;
+else if(upside>=3)score+=10;
+if(t.price>t.ma20)score+=18;
+if(w.change5>0)score+=18;
+if(t.volumeRatio>=.8&&t.volumeRatio<=1.5)score+=10;
+if(t.closeLocation>.55)score+=9;
+score=scoreClamp(score);
+const label=score>=80?"🔥 有肉":score>=60?"🟡 有空間":"⚪ 肉不多";
+return {score,upside,label};
+}
+function makeBreakout(t){
+let score=0;
+const near=t.resistance>0 ? t.price/t.resistance*100 : 0;
+if(t.resistance>0 && t.price>=t.resistance)score+=45;
+else if(near>=98)score+=34;
+else if(near>=95)score+=24;
+if(t.volumeRatio>=1.5)score+=25;
+else if(t.volumeRatio>=1.2)score+=18;
+else if(t.volumeRatio>=1)score+=10;
+if(t.price>t.ma5)score+=10;
+if(t.ma5>t.ma20)score+=10;
+if(t.closeLocation>.65)score+=10;
+score=scoreClamp(score);
+const stage=score>=80?"🚀 強突破":score>=60?"🟢 接近突破":"🟡 等待突破";
+return {score,stage};
+}
+function makeVolumeWarning(t){
+let score=0;
+if(t.volumeRatio>=3)score+=45;
+else if(t.volumeRatio>=2)score+=35;
+else if(t.volumeRatio>=1.5)score+=25;
+else if(t.volumeRatio>=1.2)score+=15;
+if(t.closeLocation<.3)score+=25;
+else if(t.closeLocation<.45)score+=15;
+if(t.price<t.ma5)score+=15;
+if(t.price<t.ma20)score+=15;
+score=scoreClamp(score);
+const level=score>=75?"🚨 高風險爆量":score>=50?"⚠️ 爆量注意":"🟢 量能正常";
+return {score,level};
+}
+function makeBaseBuilding(t){
+let score=0;
+if(t.last20Change<=-15)score+=30;
+else if(t.last20Change<=-10)score+=24;
+else if(t.last20Change<=-5)score+=14;
+if(t.volumeRatio<.7)score+=25;
+else if(t.volumeRatio<.9)score+=17;
+if(t.closeLocation>.55)score+=15;
+if(t.price>=t.support)score+=15;
+if(t.contraction<.8)score+=15;
+score=scoreClamp(score);
+const label=score>=75?"💎 跌深築底":score>=55?"🟡 可能築底":"⚪ 尚未成底";
+return {score,label};
+}
+function makeRebound(t){
+let score=0;
+if(t.last20Change<=-20)score+=35;
+else if(t.last20Change<=-15)score+=28;
+else if(t.last20Change<=-10)score+=18;
+if(t.closeLocation>.65)score+=25;
+else if(t.closeLocation>.5)score+=15;
+if(t.price>t.ma5)score+=20;
+if(t.volumeRatio>=1.1)score+=10;
+if(t.price>=t.support)score+=10;
+score=scoreClamp(score);
+const label=score>=75?"🔥 超跌反彈":score>=55?"🟡 反彈觀察":"⚪ 反彈不足";
+return {score,label};
+}
+function makeBreakdown(t){
+let score=0;
+if(t.price<t.support)score+=40;
+else if(t.price<t.ma20)score+=25;
+if(t.volumeRatio>=1.5)score+=25;
+if(t.closeLocation<.35)score+=20;
+if(t.ma5<t.ma20)score+=15;
+score=scoreClamp(score);
+const label=score>=75?"🔻 強勢跌破":score>=55?"🟠 跌破觀察":"🟡 支撐測試";
+return {score,label};
+}
+function makeConsolidation(t){
+let score=0;
+if(t.consolidationRange<=8)score+=35;
+else if(t.consolidationRange<=12)score+=25;
+else if(t.consolidationRange<=16)score+=15;
+if(t.contraction<.8)score+=25;
+else if(t.contraction<1)score+=15;
+if(Math.abs(t.slope20)<t.price*.05)score+=20;
+if(t.volumeRatio<1.2)score+=20;
+score=scoreClamp(score);
+const label=score>=75?"🟡 強盤整":score>=55?"🟢 蓄勢盤整":"⚪ 盤整普通";
+return {score,label};
+}
+function makeSideways(t){
+let score=0;
+if(t.consolidationRange<=6)score+=35;
+else if(t.consolidationRange<=10)score+=25;
+if(Math.abs(t.slope20)<t.price*.03)score+=30;
+if(t.volumeRatio<1)score+=20;
+if(Math.abs(t.extension)<=5)score+=15;
+score=scoreClamp(score);
+const label=score>=75?"🐢 低波動盤股":score>=55?"🟡 盤股觀察":"⚪ 方向不明";
+return {score,label};
+}
+function makeDayTrade(t){
+let score=0;
+if(t.volumeRatio>=2)score+=30;
+else if(t.volumeRatio>=1.3)score+=22;
+else if(t.volumeRatio>=1)score+=12;
+const absMove=Math.abs(t.previousDayChange);
+if(absMove>=5)score+=30;
+else if(absMove>=3)score+=24;
+else if(absMove>=2)score+=16;
+if(t.closeLocation>.65||t.closeLocation<.35)score+=20;
+if(t.price>t.ma5)score+=10;
+if(t.ma5>t.ma20)score+=10;
+score=scoreClamp(score);
+const label=score>=75?"⚡ 當沖高波動":score>=55?"🟡 當沖觀察":"⚪ 波動不足";
+return {score,label};
+}
+function makeTotal(t,l){
+let score=0;
+if(t.price>t.ma5)score+=10;
+if(t.price>t.ma20)score+=10;
+if(t.ma5>t.ma20)score+=10;
+if(t.volumeRatio>=1.2)score+=8;
+if(t.closeLocation>.6)score+=8;
+if(l.total5>0)score+=10;
+if(l.allThree5)score+=18;
+if(l.total20>0)score+=8;
+if(t.last20Change>0)score+=8;
+if(t.last60Change>0)score+=8;
+return scoreClamp(score);
+}
+async function buildStock(stockId,force=false){
+const info=(state.info||[]).find(x=>x.stock_id===stockId)||{stock_id:stockId,stock_name:stockId,type:"未知",quote:{}};
+const rows=await getPriceRows(stockId,force);
+let lawRows=[];
+try{lawRows=await getLawRows(stockId,force)}catch(e){lawRows=[]}
+const tech=dailyModel(rows);
+const week=weeklyModel(rows);
+const month=monthlyModel(rows);
+const law=lawModel(lawRows);
+const weeklySafe=makeWeeklySafe(tech);
+const monthlySafe=makeMonthlySafe(tech);
+const weeklyMeat=makeWeeklyMeat(tech,week);
+const breakout=makeBreakout(tech);
+const volumeWarning=makeVolumeWarning(tech);
+const baseBuilding=makeBaseBuilding(tech);
+const rebound=makeRebound(tech);
+const breakdown=makeBreakdown(tech);
+const consolidation=makeConsolidation(tech);
+const sideways=makeSideways(tech);
+const dayTrade=makeDayTrade(tech);
+const total=makeTotal(tech,law);
+const model={id:stockId,name:info.stock_name,market:info.type,tech,week,month,law,weeklySafe,monthlySafe,weeklyMeat,breakout,volumeWarning,baseBuilding,rebound,breakdown,consolidation,sideways,dayTrade,total};
+state.modelCache.set(stockId,model);
+return model;
+}
+function scoreClass(score){
+return score>=75?"green":score>=55?"yellow":"red";
+}
+function renderDetail(data){
+state.current=data;
+$("home").classList.add("hidden");
+$("resultSection").classList.add("hidden");
+$("searchResults").classList.add("hidden");
+const t=data.tech,l=data.law;
+$("detail").classList.remove("hidden");
+$("detail").innerHTML=`
+<div class="hero">
+<div class="heroTop">
+<div class="stockIcon">📈</div>
+<div><div class="stockName">${escapeHTML(data.id)} ${escapeHTML(data.name)}</div>
+<div class="stockSub">${escapeHTML(data.market)}｜M1391 綜合分數 ${data.total}</div></div>
+<div class="stockTime">更新<br>${new Date().toLocaleTimeString("zh-TW",{hour12:false})}</div>
+</div>
+<div class="price">${formatPrice(t.price)}
+<span class="priceChange ${t.previousDayChange>=0?"red":"green"}">${signed(t.previousDayChange,2)}%</span>
+</div>
+<div class="grid4" style="margin-top:10px">
+<div class="metric"><div class="label">開盤</div><div class="value">${formatPrice(t.open)}</div></div>
+<div class="metric"><div class="label">最高</div><div class="value">${formatPrice(t.high)}</div></div>
+<div class="metric"><div class="label">最低</div><div class="value">${formatPrice(t.low)}</div></div>
+<div class="metric"><div class="label">成交量</div><div class="value">${Math.round(t.volume).toLocaleString()}</div></div>
+</div>
+</div>
+<div class="card">
+<div class="sectionTitle">📊 均線位置</div>
+<div class="grid4">
+<div class="metric"><div class="label">MA5</div><div class="value">${formatPrice(t.ma5)}</div></div>
+<div class="metric"><div class="label">MA20</div><div class="value">${formatPrice(t.ma20)}</div></div>
+<div class="metric"><div class="label">MA60</div><div class="value">${formatPrice(t.ma60)}</div></div>
+<div class="metric"><div class="label">MA120</div><div class="value">${formatPrice(t.ma120)}</div></div>
+</div>
+<div style="margin-top:10px">
+<span class="badge ${t.price>=t.ma5?"green":"red"}">MA5 ${t.price>=t.ma5?"站上":"跌破"}</span>
+<span class="badge ${t.price>=t.ma20?"green":"red"}">MA20 ${t.price>=t.ma20?"站上":"跌破"}</span>
+<span class="badge ${t.price>=t.ma60?"green":"red"}">MA60 ${t.price>=t.ma60?"站上":"跌破"}</span>
+</div>
+</div>
+<div class="card">
+<div class="sectionTitle">🏦 三大法人</div>
+<div class="grid4">
+<div class="metric"><div class="label">外資5日</div><div class="value ${l.foreign5>=0?"green":"red"}">${signed(l.foreign5)}</div><div class="sub">張</div></div>
+<div class="metric"><div class="label">投信5日</div><div class="value ${l.trust5>=0?"green":"red"}">${signed(l.trust5)}</div><div class="sub">張</div></div>
+<div class="metric"><div class="label">自營5日</div><div class="value ${l.dealer5>=0?"green":"red"}">${signed(l.dealer5)}</div><div class="sub">張</div></div>
+<div class="metric"><div class="label">合計5日</div><div class="value ${l.total5>=0?"green":"red"}">${signed(l.total5)}</div><div class="sub">張</div></div>
+</div>
+<div style="margin-top:10px">
+<span class="badge ${l.allThree5?"green":"yellow"}">${l.allThree5?"🔥 三方同買":"三方未同買"}</span>
+<span class="badge">20日合計 ${signed(l.total20)} 張</span>
+</div>
+</div>
+<div class="card">
+<div class="sectionTitle">🐰 M1391 關卡分析</div>
+<div class="levelGrid">
+<div class="level"><div class="label">20日壓力</div><div class="value">${formatPrice(t.resistance)}</div></div>
+<div class="level"><div class="label">20日支撐</div><div class="value">${formatPrice(t.support)}</div></div>
+<div class="level"><div class="label">距壓力</div><div class="value">${percent(t.distanceToResistance)}</div></div>
+<div class="level"><div class="label">距支撐</div><div class="value">${percent(t.distanceToSupport)}</div></div>
+</div>
+</div>
+<div class="card">
+<div class="sectionTitle">🟢 安全與突破</div>
+<div class="grid2">
+<div class="alert ${scoreClass(data.weeklySafe.score)}">
+<div class="alertTitle">${data.weeklySafe.label}</div>
+<div class="alertText">週線安全分數：<b>${data.weeklySafe.score}</b><br>MA20：${formatPrice(t.ma20)}</div>
+</div>
+<div class="alert ${scoreClass(data.monthlySafe.score)}">
+<div class="alertTitle">${data.monthlySafe.label}</div>
+<div class="alertText">月線安全分數：<b>${data.monthlySafe.score}</b><br>MA60：${formatPrice(t.ma60)}</div>
+</div>
+<div class="alert ${scoreClass(data.breakout.score)}">
+<div class="alertTitle">${data.breakout.stage}</div>
+<div class="alertText">突破分數：<b>${data.breakout.score}</b><br>量比：${t.volumeRatio.toFixed(2)}x</div>
+</div>
+<div class="alert ${scoreClass(data.volumeWarning.score)}">
+<div class="alertTitle">${data.volumeWarning.level}</div>
+<div class="alertText">爆量分數：<b>${data.volumeWarning.score}</b><br>今日量／20日均量：${t.volumeRatio.toFixed(2)}x</div>
+</div>
+</div>
+</div>
+<div class="card">
+<div class="sectionTitle">🧭 型態雷達</div>
+<div class="v13Grid">
+<div class="v13Card"><h3>🔻 跌破</h3><div class="v13Signal">${data.breakdown.label}</div><div class="v13Explain">分數 ${data.breakdown.score}｜支撐 ${formatPrice(t.support)}｜收盤位置 ${(t.closeLocation*100).toFixed(0)}%</div></div>
+<div class="v13Card"><h3>🟡 盤整</h3><div class="v13Signal">${data.consolidation.label}</div><div class="v13Explain">分數 ${data.consolidation.score}｜30日區間 ${percent(t.consolidationRange)}</div></div>
+<div class="v13Card"><h3>🐢 盤股</h3><div class="v13Signal">${data.sideways.label}</div><div class="v13Explain">分數 ${data.sideways.score}｜20日斜率 ${formatPrice(t.slope20)}</div></div>
+<div class="v13Card"><h3>⚡ 當沖</h3><div class="v13Signal">${data.dayTrade.label}</div><div class="v13Explain">分數 ${data.dayTrade.score}｜今日波動 ${percent(Math.abs(t.previousDayChange))}｜量比 ${t.volumeRatio.toFixed(2)}x</div></div>
+</div>
+</div>
+<div class="card">
+<div class="sectionTitle">🥩 週線有肉</div>
+<div class="grid3">
+<div class="metric"><div class="label">分數</div><div class="value ${scoreClass(data.weeklyMeat.score)}">${data.weeklyMeat.score}</div></div>
+<div class="metric"><div class="label">上方空間</div><div class="value">${percent(data.weeklyMeat.upside)}</div></div>
+<div class="metric"><div class="label">判斷</div><div class="value">${data.weeklyMeat.label}</div></div>
+</div>
+</div>
+<div class="card">
+<div class="sectionTitle">🐰 跌深反彈／築底</div>
+<div class="grid2">
+<div class="alert ${scoreClass(data.rebound.score)}">
+<div class="alertTitle">${data.rebound.label}</div>
+<div class="alertText">反彈分數：<b>${data.rebound.score}</b><br>20日漲跌：${percent(t.last20Change)}</div>
+</div>
+<div class="alert ${scoreClass(data.baseBuilding.score)}">
+<div class="alertTitle">${data.baseBuilding.label}</div>
+<div class="alertText">築底分數：<b>${data.baseBuilding.score}</b><br>量縮比：${t.volumeRatio.toFixed(2)}x</div>
+</div>
+</div>
+</div>
+<div class="card">
+<div class="sectionTitle">⚠️ M1391 綜合判斷</div>
+<div class="score ${scoreClass(data.total)}">${data.total} / 100</div>
+<div class="scoreBar"><span style="width:${data.total}%"></span></div>
+<div class="muted" style="margin-top:8px">
+${data.total>=80?"🔥 條件高度集中，可列入重點觀察。":data.total>=60?"🟡 條件中等，等待價格與法人進一步確認。":"🔴 條件偏弱，避免只因單一訊號進場。"}
+</div>
+</div>
+<div class="card">
+<button type="button" onclick="showHome()" style="width:100%">← 返回首頁</button>
+</div>
+`;
+window.scrollTo({top:0,behavior:"smooth"});
+}
+function signedLaw(v){return `${v>0?"+":""}${Math.round(v).toLocaleString()}`}
+function renderSearchResults(hits){
+$("home").classList.add("hidden");
+$("detail").classList.add("hidden");
+$("resultSection").classList.add("hidden");
+$("searchResults").classList.remove("hidden");
+if(!hits.length){
+$("searchResults").innerHTML=`<div class="card empty">找不到符合條件的股票／ETF。</div>`;
+return;
+}
+$("searchResults").innerHTML=`
+<div class="card">
+<div class="sectionTitle">🔎 搜尋結果</div>
+<div class="muted">共 ${hits.length} 筆</div>
+${hits.slice(0,50).map(x=>`
+<div class="searchResult" data-search-id="${escapeHTML(x.stock_id)}">
+<b>${escapeHTML(x.stock_id)}　${escapeHTML(x.stock_name)}</b>
+<small>${escapeHTML(x.type)}｜${formatPrice(x.quote?.price||0)}</small>
+</div>`).join("")}
+</div>`;
+document.querySelectorAll("[data-search-id]").forEach(el=>{
+el.addEventListener("click",async()=>{
+const id=el.dataset.searchId;
+try{
+setStatus(`⏳ 正在分析 ${id}…`,"loading");
+const data=await buildStock(id);
+renderDetail(data);
+clearStatus();
+}catch(e){setStatus(`❌ ${id} 分析失敗：${e.message}`,"error")}
+});
+});
+}
+async function searchStock(){
+try{
+const q=$("searchInput").value.trim();
+if(!q){setStatus("請輸入股票代號或名稱","error");return}
+setStatus("⏳ 搜尋完整市場資料…","loading");
+const info=await loadFullUniverse(false);
+const upper=q.toUpperCase();
+const hits=info.filter(x=>x.stock_id===upper||x.stock_name.includes(q)||x.stock_id.includes(upper));
+renderSearchResults(hits);
+clearStatus();
+}catch(e){
+setStatus("❌ 搜尋失敗："+e.message,"error");
+}
+const query=$("searchInput").value.trim();
+if(!query){setStatus("請輸入股票代號或名稱","error");return;}
+const snapshot=readMarketSnapshot();
+if(!snapshot){
+setStatus("🟡 今日資料庫尚未建立，請先按「📥 抓取今日完整資料」。搜尋本身不會偷偷消耗 API。","error");
+return;
+}
+try{
+state.info=snapshot.rows||[];
+const q=query.toUpperCase();
+const hits=state.info.filter(x=>
+x.stock_id.toUpperCase().includes(q)||
+x.stock_name.toUpperCase().includes(q)
+);
+if(!hits.length)
+throw new Error(`找不到「${query}」；完整股票池目前 ${state.info.length.toLocaleString()} 檔`);
+
+showOnly("searchResults");
+
+$("searchResults").innerHTML=`
+<div class="card">
+<div class="sectionTitle">
+🔎 搜尋「${escapeHTML(query)}」｜找到 ${hits.length} 檔
+</div>
+
+${hits.slice(0,100).map(x=>`
+<button
+class="searchResult"
+type="button"
+data-search-id="${escapeHTML(x.stock_id)}">
+
+<b>${escapeHTML(x.stock_id)}｜${escapeHTML(x.stock_name)}</b>
+
+<small>
+${escapeHTML(x.type||"")}｜
+點擊查看完整 M1391 分析
+</small>
+
+</button>
+`).join("")}
+
+${hits.length>100?
+`<div class="muted">顯示前100筆，請縮小搜尋條件。</div>`:""}
+
+</div>
+`;
+
+document.querySelectorAll("[data-search-id]").forEach(btn=>{
+btn.onclick=async()=>{
+const id=btn.dataset.searchId;
+
+btn.disabled=true;
+
+setStatus(
+`⏳ 正在分析 ${id}…（首次需要建立歷史／法人 Cache）`,
+"loading"
+);
+
+try{
+
+renderDetail(await buildStock(id));
+
+setStatus(
+`🟢 ${id} 分析完成｜後續再次查看優先使用 Cache`,
+"ok"
+);
+
+}catch(e){
+
+setStatus(
+`❌ ${id} 資料讀取失敗：${e.message}`,
+"error"
+);
+
+}finally{
+
+btn.disabled=false;
+
+}
+};
+});
+
+setStatus(
+`🟢 搜尋完成｜完整股票池 ${state.info.length.toLocaleString()} 檔｜搜尋本身不新增 API`,
+"ok"
+);
+
+}catch(error){
+
+setStatus("❌ "+error.message,"error");
+
+}
+}
+
+/* =========================================================
+SCAN DEFINITIONS
+========================================================= */
+
+function scanConfig(type){
+
+const configs={
+
+three:{
+title:"🏦 三大法人同時買進 TOP19",
+pool:null,
+filter:x=>
+x.law.foreign5>0 &&
+x.law.trust5>0 &&
+x.law.dealer5>0,
+sort:(a,b)=>
+b.law.total5-a.law.total5
+},
+
+etf:{
+title:"💰 大資金 ETF 搜尋",
+pool:null,
+filter:x=>
+/^00/.test(x.id) ||
+/ETF|指數|債券/.test(x.name),
+sort:(a,b)=>b.total-a.total
+},
+
+bank:{
+title:"🏦 金控股票搜尋",
+pool:null,
+filter:x=>
+/銀行|金控|金融/.test(x.name),
+sort:(a,b)=>b.total-a.total
+},
+
+week:{
+title:"📅 週線安全買點",
+pool:null,
+filter:x=>x.weeklySafe.score>=65,
+sort:(a,b)=>
+b.weeklySafe.score-a.weeklySafe.score
+},
+
+month:{
+title:"📆 月線安全買點",
+pool:null,
+filter:x=>x.monthlySafe.score>=65,
+sort:(a,b)=>
+b.monthlySafe.score-a.monthlySafe.score
+},
+
+rebound:{
+title:"🩸 暴跌反彈買點",
+pool:null,
+filter:x=>x.rebound.score>=40,
+sort:(a,b)=>
+b.rebound.score-a.rebound.score
+},
+
+volume:{
+title:"🚨 股票爆量注意",
+pool:null,
+filter:x=>x.volumeWarning.ratio>=1.2,
+sort:(a,b)=>
+b.volumeWarning.ratio-a.volumeWarning.ratio
+},
+
+base:{
+title:"🐰 跌深量縮築底買點",
+pool:null,
+filter:x=>x.baseBuilding.score>=40,
+sort:(a,b)=>
+b.baseBuilding.score-a.baseBuilding.score
+},
+
+meat:{
+title:"🥩 週線有肉 TOP19",
+pool:null,
+filter:x=>x.weeklyMeat.score>=65,
+sort:(a,b)=>
+b.weeklyMeat.score-a.weeklyMeat.score
+},
+
+breakout:{
+title:"🚀 M1391 突破搜尋",
+pool:null,
+filter:x=>x.breakout.score>=55,
+sort:(a,b)=>
+b.breakout.score-a.breakout.score
+}
+
+};
+
+return configs[type];
+
+}
+
+/* =========================================================
+SCAN
+========================================================= */
+
+let scanRunning=false;
+
+function getFastScanPool(type){
+
+const info=Array.isArray(state.info)
+?state.info
+:[];
+
+if(type==="bank")
+return info.filter(x=>
+/銀行|金控|金融/.test(x.stock_name)
+);
+
+if(type==="etf")
+return info.filter(x=>
+/^00/.test(x.stock_id) ||
+/ETF|指數|債券/.test(x.stock_name)
+);
+
+const ranked=[...info].sort((a,b)=>{
+
+const qa=a.quote||{};
+const qb=b.quote||{};
+
+const va=toNumber(qa.volume);
+const vb=toNumber(qb.volume);
+
+const ca=Math.abs(
+toNumber(qa.change)
+);
+
+const cb=Math.abs(
+toNumber(qb.change)
+);
+
+if(type==="volume")
+return vb-va;
+
+if(type==="breakout")
+return
+(toNumber(qb.change)*Math.log10(vb+10))-
+(toNumber(qa.change)*Math.log10(va+10));
+
+if(
+type==="rebound" ||
+type==="base" ||
+type==="breakdown"
+)
+return
+(toNumber(qa.change)-
+toNumber(qb.change));
+
+return vb-va;
+
+});
+
+const cached=[
+...state.modelCache.values()
+].map(x=>x.id);
+
+const ids=new Set();
+const out=[];
+
+for(const id of cached){
+
+const hit=info.find(
+x=>x.stock_id===id
+);
+
+if(
+hit &&
+!ids.has(id)
+){
+
+ids.add(id);
+out.push(hit);
+
+}
+
+}
+
+for(const x of ranked){
+
+if(out.length>=CONFIG.scanCandidates)
+break;
+
+if(!ids.has(x.stock_id)){
+
+ids.add(x.stock_id);
+out.push(x);
+
+}
+
+}
+
+return out.slice(
+0,
+CONFIG.scanCandidates
+);
+
+}
+
+async function runBatch(
+items,
+worker,
+concurrency=4
+){
+
+let cursor=0;
+
+const results=[];
+
+async function runner(){
+
+while(true){
+
+const i=cursor++;
+
+if(i>=items.length)
+return;
+
+try{
+
+const r=await worker(
+items[i],
+i
+);
+
+if(r)
+results.push(r);
+
+}catch(e){}
+
+}
+
+}
+
+await Promise.all(
+Array.from(
+{
+length:Math.min(
+concurrency,
+items.length||1
+)
+},
+runner
+)
+);
+
+return results;
+
+}
+
+async function scan(type){
+
+if(scanRunning){
+
+setStatus(
+"⏳ 已有分析正在進行，請等待目前掃描完成。",
+"loading"
+);
+
+return;
+
+}
+
+const config=scanConfig(type);
+
+if(!config)
+return;
+
+const snapshot=readMarketSnapshot();
+
+if(!snapshot){
+
+setStatus(
+"🟡 今日資料庫尚未建立，請先按「📥 抓取今日完整資料」。這樣分析不會偷偷浪費 API。",
+"error"
+);
+
+return;
+
+}
+
+state.info=snapshot.rows||[];
+
+/* 三大法人 TOP19：
+今日資料庫已包含一次性的法人快照時，
+直接用全市場快照排名，0 額外逐檔 API。
+*/
+
+if(
+type==="three" &&
+Array.isArray(snapshot.lawToday) &&
+snapshot.lawToday.length
+){
+
+const byId=new Map(
+state.info.map(
+x=>[x.stock_id,x]
+)
+);
+
+const quick=snapshot.lawToday
+.map((l,i)=>{
+
+const info=
+byId.get(l.stock_id)||
+{
+stock_id:l.stock_id,
+stock_name:l.stock_id,
+type:l.market,
+quote:{}
+};
+
+const f=toNumber(l.foreign);
+const t=toNumber(l.trust);
+const d=toNumber(l.dealer);
+
+const total=f+t+d;
+
+const q=info.quote||{};
+
+const tech={
+price:toNumber(q.price),
+volume:toNumber(q.volume),
+previousDayChange:0,
+volumeRatio:0,
+extension:0,
+distanceToResistance:0
+};
+
+return {
+quickLawOnly:true,
+id:info.stock_id,
+name:info.stock_name||info.stock_id,
+market:info.type||l.market,
+tech,
+
+law:{
+foreign5:f,
+trust5:t,
+dealer5:d,
+total5:total,
+
+allThree5:
+f>0 &&
+t>0 &&
+d>0,
+
+foreign20:f,
+trust20:t,
+dealer20:d,
+total20:total,
+
+allThree20:
+f>0 &&
+t>0 &&
+d>0,
+
+daily:[l]
+},
+
+total:
+Math.max(
+0,
+Math.min(
+100,
+50+
+(f>0?10:0)+
+(t>0?10:0)+
+(d>0?10:0)
+)
+)
+
+};
+
+})
+.filter(x=>x.law.allThree5)
+.sort(
+(a,b)=>
+b.law.total5-a.law.total5
+)
+.slice(0,19);
+
+state.cacheModel=
+new Map(
+quick.map(x=>[x.id,x])
+);
+
+$("home").classList.add("hidden");
+$("detail").classList.add("hidden");
+$("searchResults").classList.add("hidden");
+$("resultSection").classList.remove("hidden");
+
+$("resultTitle").textContent=
+`${config.title}｜全市場 ${state.info.length.toLocaleString()} 檔｜今日法人快照`;
+
+renderRanking(
+quick,
+"three"
+);
+
+$("progressText").textContent=
+`完成｜全市場法人快照 ${snapshot.lawToday.length.toLocaleString()} 筆｜取前 ${quick.length} 檔｜0 額外 API`;
+
+$("progressBar").style.width="100%";
+
+return;
+
+}
+
+let pool=getFastScanPool(type);
+
+scanRunning=true;
+
+try{
+
+$("home").classList.add("hidden");
+$("detail").classList.add("hidden");
+$("searchResults").classList.add("hidden");
+$("resultSection").classList.remove("hidden");
+
+$("resultTitle").textContent=
+`${config.title}｜全市場 ${state.info.length.toLocaleString()} 檔｜快速深度分析 ${pool.length} 檔`;
+
+$("resultList").innerHTML=`
+<div class="card">
+<div class="empty">
+⏳ 先用今日快照快速篩選，
+再只對候選股建立歷史／法人 Cache，
+避免一次抓 2,000+ 檔。
+</div>
+</div>
+`;
+
+const results=await runBatch(
+pool,
+async(x,i)=>{
+
+$("progressText").textContent=
+`全市場快篩 ${state.info.length.toLocaleString()} 檔 → 深度分析 ${i+1} / ${pool.length}：${x.stock_id}`;
+
+$("progressBar").style.width=
+((i+1)/
+Math.max(pool.length,1)*
+100)+"%";
+
+const data=
+await buildStock(x.stock_id);
+
+return config.filter(data)
+?data
+:null;
+
+},
+CONFIG.scanConcurrency
+);
+
+results.sort(config.sort);
+
+state.cacheModel=
+new Map(
+results.map(x=>[x.id,x])
+);
+
+const finalResults=
+(
+type==="three" ||
+type==="meat" ||
+type==="attention"
+)
+?results.slice(0,20)
+:results.slice(0,50);
+
+renderRanking(
+finalResults,
+type
+);
+
+$("progressText").textContent=
+`完成｜全市場 ${state.info.length.toLocaleString()} 檔｜深度分析 ${pool.length} 檔｜符合 ${results.length.toLocaleString()} 檔｜後續查看共用 Cache`;
+
+}finally{
+
+scanRunning=false;
+
+}
+
+}
+
+/* =========================================================
+RANKING
+========================================================= */
+
+function rowClick(id){
+
+const data=
+state.cacheModel?.get(id);
+
+if(data)
+renderDetail(data);
+
+}
+
+function rankingRow(
+data,
+index,
+type
+){
+
+const t=data.tech;
+const l=data.law;
+
+let primary="";
+let secondary="";
+let label="";
+
+if(type==="three"){
+
+primary=
+signed(l.total5/1000)+"K";
+
+secondary=data.total;
+
+label=
+l.allThree5
+?"🔥三方同買"
+:"";
+
+}
+
+else if(type==="volume"){
+
+primary=
+t.volumeRatio.toFixed(2)+"x";
+
+secondary=data.total;
+
+label=
+data.volumeWarning.level;
+
+}
+
+else if(type==="base"){
+
+primary=
+data.baseBuilding.score;
+
+secondary=data.total;
+
+label=
+data.baseBuilding.label;
+
+}
+
+else if(type==="rebound"){
+
+primary=
+data.rebound.score;
+
+secondary=data.total;
+
+label=
+data.rebound.label;
+
+}
+
+else if(type==="week"){
+
+primary=
+data.weeklySafe.score;
+
+secondary=
+data.weeklyMeat.score;
+
+label=
+data.weeklySafe.label;
+
+}
+
+else if(type==="month"){
+
+primary=
+data.monthlySafe.score;
+
+secondary=
+data.weeklyMeat.score;
+
+label=
+data.monthlySafe.label;
+
+}
+
+else if(type==="meat"){
+
+primary=
+data.weeklyMeat.score;
+
+secondary=
+percent(
+data.weeklyMeat.upside
+);
+
+label=
+data.weeklyMeat.label;
+
+}
+
+else if(type==="breakout"){
+
+primary=
+data.breakout.score;
+
+secondary=
+data.weeklyMeat.score;
+
+label=
+data.breakout.stage;
+
+}
+
+else if(type==="etf"){
+
+primary=data.total;
+
+secondary=
+data.weeklyMeat.score;
+
+label="大型ETF";
+
+}
+
+else if(type==="bank"){
+
+primary=data.total;
+
+secondary=
+data.weeklySafe.score;
+
+label="金控";
+
+}
+
+else if(type==="breakdown"){
+
+primary=
+data.breakdown?.score??0;
+
+secondary=
+data.v13Score??data.total;
+
+label=
+data.breakdown?.label||
+"跌破分析";
+
+}
+
+else if(type==="consolidation"){
+
+primary=
+data.consolidation?.score??0;
+
+secondary=
+data.v13Score??data.total;
+
+label=
+data.consolidation?.label||
+"盤整分析";
+
+}
+
+else if(type==="sideways"){
+
+primary=
+data.sideways?.score??0;
+
+secondary=
+data.v13Score??data.total;
+
+label=
+data.sideways?.label||
+"盤股分析";
+
+}
+
+else if(type==="daytrade"){
+
+primary=
+data.dayTrade?.score??0;
+
+secondary=
+data.v13Score??data.total;
+
+label=
+data.dayTrade?.label||
+"當沖候選";
+
+}
+
+return `
+<div
+class="rankRow"
+data-id="${escapeHTML(data.id)}">
+
+<div class="rankNo">
+${index+1}
+</div>
+
+<div>
+
+<div class="rankStock">
+${escapeHTML(data.id)}
+${escapeHTML(data.name)}
+</div>
+
+<div class="muted">
+${escapeHTML(label)}
+</div>
+
+</div>
+
+<div class="rankSmall">
+${formatPrice(t.price)}
+</div>
+
+<div class="rankSmall">
+${primary}
+</div>
+
+<div class="rankSmall">
+${secondary}
+</div>
+
+<div class="rankSmall ${scoreClass(data.total)}">
+${data.total}
+</div>
+
+<div class="rankSmall">
+›
+</div>
+
+</div>
+`;
+
+}
+
+function renderRanking(
+results,
+type
+){
+
+state.cacheModel=
+new Map(
+results.map(x=>[x.id,x])
+);
+
+if(!results.length){
+
+$("resultList").innerHTML=`
+<div class="card">
+<div class="empty">
+沒有符合目前條件的股票。<br>
+可以放寬條件或換另一個搜尋器。
+</div>
+</div>
+`;
+
+return;
+
+}
+
+$("resultList").innerHTML=`
+
+<div class="card">
+
+<div class="muted">
+
+${
+type==="three"
+
+? "條件：外資5日 > 0＋投信5日 > 0＋自營5日 > 0，取前19檔"
+
+: "依 M1391 模型排序；分數越高代表條件越集中。"
+
+}
+
+</div>
+
+</div>
+
+<div
+class="card"
+style="padding:0;overflow:hidden">
+
+<div class="rankHead">
+
+<div>#</div>
+<div>股票</div>
+<div>價格</div>
+<div>主分數</div>
+<div>副分數</div>
+<div>M1391</div>
+<div></div>
+
+</div>
+
+${results
+.map(
+(x,i)=>rankingRow(x,i,type)
+)
+.join("")}
+
+</div>
+`;
+
+document
+.querySelectorAll(".rankRow")
+.forEach(row=>{
+
+row.addEventListener(
+"click",
+()=>{
+
+const data=
+state.cacheModel.get(
+row.dataset.id
+);
+
+if(!data)
+return;
+
+if(data.quickLawOnly){
+
+setStatus(
+`⏳ 正在建立 ${data.id} 完整分析 Cache…`,
+"loading"
+);
+
+buildStock(data.id)
+.then(renderDetail)
+.catch(e=>
+setStatus(
+`❌ ${data.id} 分析失敗：${e.message}`,
+"error"
+)
+);
+
+}else{
+
+renderDetail(data);
+
+}
+
+}
+);
+
+});
+
+}
+
+/* =========================================================
+HOME / NAV
+========================================================= */
+
+function showHome(){
+
+$("home").classList.remove("hidden");
+$("detail").classList.add("hidden");
+$("resultSection").classList.add("hidden");
+$("searchResults").classList.add("hidden");
+
+clearStatus();
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+}
+
+function navAction(type){
+
+if(type==="home"){
+
+showHome();
+return;
+
+}
+
+if(type==="search"){
+
+showHome();
+
+setTimeout(
+()=>$("searchInput")?.focus(),
+80
+);
+
+return;
+
+}
+
+if(type==="three"){
+
+scan("three");
+return;
+
+}
+
+if(type==="safe"){
+
+scan("week");
+return;
+
+}
+
+if(type==="risk"){
+
+scan("volume");
+return;
+
+}
+
+if(type==="bank"){
+
+scan("bank");
+
+}
+
+}
+
+/* =========================================================
+EVENT BINDINGS
+========================================================= */
+
+$("searchBtn")
+.addEventListener(
+"click",
+searchStock
+);
+
+$("searchInput")
+.addEventListener(
+"keydown",
+event=>{
+
+if(event.key==="Enter")
+searchStock();
+
+}
+);
+
+document
+.querySelectorAll("[data-scan]")
+.forEach(button=>{
+
+button.addEventListener(
+"click",
+()=>{
+
+document
+.querySelectorAll(".sideBtn")
+.forEach(
+x=>x.classList.remove("active")
+);
+
+button.classList.add("active");
+
+scan(
+button.dataset.scan
+);
+
+}
+);
+
+});
+
+document
+.querySelectorAll("[data-v13-scan]")
+.forEach(button=>{
+
+button.addEventListener(
+"click",
+()=>{
+
+scan(
+button.dataset.v13Scan
+);
+
+}
+);
+
+});
+
+document
+.querySelectorAll("[data-nav]")
+.forEach(button=>{
+
+button.addEventListener(
+"click",
+()=>{
+
+document
+.querySelectorAll(".navBtn")
+.forEach(
+btn=>btn.classList.remove("active")
+);
+
+button.classList.add("active");
+
+navAction(
+button.dataset.nav
+);
+
+}
+);
+
+});
+
+/* =========================================================
+V11 資料庫控制：
+今日完整市場快照共用 Cache
+========================================================= */
+
+const MARKET_SNAPSHOT_KEY=
+"M1391_V11_TODAY_SNAPSHOT";
+
+const MARKET_SNAPSHOT_TTL=
+36*60*60*1000;
+
+function todayKey(){
+
+const d=new Date();
+
+return `${d.getFullYear()}-${String(
+d.getMonth()+1
+).padStart(2,"0")}-${String(
+d.getDate()
+).padStart(2,"0")}`;
+
+}
+
+function readMarketSnapshot(){
+
+try{
+
+const raw=
+localStorage.getItem(
+MARKET_SNAPSHOT_KEY
+);
+
+if(!raw)
+return null;
+
+const obj=
+JSON.parse(raw);
+
+/*
+cacheWrite() 會將資料包成
+{time,data}，
+這裡必須讀 data。
+
+同時相容舊版直接儲存
+{date,savedAt,rows,lawToday}。
+*/
+
+const data=
+(
+obj &&
+obj.data &&
+typeof obj.data==="object"
+)
+?obj.data
+:obj;
+
+if(
+!data ||
+data.date!==todayKey() ||
+!data.savedAt ||
+Date.now()-data.savedAt>
+MARKET_SNAPSHOT_TTL
+)
+return null;
+
+return data;
+
+}catch(e){
+
+return null;
+
+}
+
+}
+
+function renderDbStatus(
+text,
+type="ok"
+){
+
+const el=
+$("dataDbStatus");
+
+if(!el)
+return;
+
+el.textContent=text;
+
+el.className=
+"muted "+type;
+
+}
+
+function updateDbStatus(){
+
+const x=
+readMarketSnapshot();
+
+if(x){
+
+const n=
+(x.rows||[]).length;
+
+renderDbStatus(
+`🟢 今日完整資料已儲存｜${n.toLocaleString()} 檔｜${new Date(x.savedAt).toLocaleTimeString("zh-TW",{hour:"2-digit",minute:"2-digit"})}｜後續查詢與分析優先使用本機 Cache`
+);
+
+}else{
+
+renderDbStatus(
+"🟡 今日資料尚未建立，請按「📥 抓取今天完整資料」"
+);
+
+}
+
+}
+
+function lastLikelyTradingDate(){
+
+const d=new Date();
+
+if(d.getDay()===0)
+d.setDate(
+d.getDate()-2
+);
+
+else if(d.getDay()===6)
+d.setDate(
+d.getDate()-1
+);
+
+return dateString(d)
+.replace(/-/g,"");
+
+}
+
+function parseT86(json){
+
+if(
+!json ||
+!Array.isArray(json.fields) ||
+!Array.isArray(json.data)
+)
+return [];
+
+const idx={};
+
+json.fields.forEach(
+(f,i)=>
+idx[String(f).trim()]=i
+);
+
+const codeIdx=
+idx["證券代號"];
+
+const foreignIdx=
+idx[
+"外陸資買賣超股數(不含外資自營商)"
+];
+
+const trustIdx=
+idx[
+"投信買賣超股數"
+];
+
+const dealerIdx=
+idx[
+"自營商買賣超股數"
+];
+
+if(codeIdx==null)
+return [];
+
+return json.data
+.map(r=>({
+
+stock_id:
+String(
+r[codeIdx]||""
+).trim(),
+
+foreign:
+toNumber(
+r[foreignIdx]
+),
+
+trust:
+toNumber(
+r[trustIdx]
+),
+
+dealer:
+toNumber(
+r[dealerIdx]
+)
+
+}))
+.filter(
+x=>x.stock_id
+);
+
+}
+
+async function fetchTodayInstitutional(
+force=false
+){
+
+const key=
+"M1391_V19_TODAY_LAW";
+
+if(!force){
+
+const hit=
+cacheRead(
+key,
+CONFIG.lawTTL
+);
+
+if(
+Array.isArray(hit) &&
+hit.length
+){
+
+window.__m1391CacheHits++;
+
+dashCache();
+
+return hit;
+
+}
+
+}
+
+const date=
+lastLikelyTradingDate();
+
+const out=[];
+
+try{
+
+const twse=
+await fetchJSON(
+CONFIG.twseInstitution.replace(
+"{DATE}",
+date
+),
+{},
+CONFIG.httpTimeout
+);
+
+out.push(
+...parseT86(twse)
+.map(
+x=>({
+
+...x,
+
+market:"上市",
+
+date:
+date.slice(0,4)+"-"+
+date.slice(4,6)+"-"+
+date.slice(6)
+
+})
+)
+);
+
+}catch(e){
+
+dashLog(
+"TWSE 今日法人快照暫時無法取得："+
+e.message
+);
+
+}
+
+try{
+
+const tpex=
+await fetchJSON(
+CONFIG.tpexInstitution,
+{},
+CONFIG.httpTimeout
+);
+
+if(Array.isArray(tpex)){
+
+for(const r of tpex){
+
+const id=
+String(
+r.Code ??
+r["SecuritiesCompanyCode"] ??
+r["SecuritiesCompanyCode"] ??
+""
+).trim();
+
+if(!id)
+continue;
+
+out.push({
+
+stock_id:id,
+
+market:"上櫃",
+
+date:
+date.slice(0,4)+"-"+
+date.slice(4,6)+"-"+
+date.slice(6),
+
+foreign:
+toNumber(
+r[
+"Foreign Investors include Mainland Area Investors (Foreign Dealers excluded)-Difference"
+]
+),
+
+trust:
+toNumber(
+r[
+"SecuritiesInvestmentTrustCompanies-Difference"
+]
+),
+
+dealer:
+toNumber(
+r[
+"Dealers-Difference"
+]
+)
+
+});
+
+}
+
+}
+
+}catch(e){
+
+dashLog(
+"TPEx 今日法人快照暫時無法取得："+
+e.message
+);
+
+}
+
+if(out.length)
+cacheWrite(key,out);
+
+return out;
+
+}
+
+async function fetchTodaySnapshot(
+force=false
+){
+
+/*
+V19：
+非強制模式只讀今天快照；
+已有今天資料就絕不重抓市場清單。
+*/
+
+if(!force){
+
+const hit=
+readMarketSnapshot();
+
+if(hit){
+
+state.info=
+hit.rows||state.info;
+
+state.todayLaw=
+hit.lawToday||[];
+
+state.universeSource=
+"TODAY_CACHE";
+
+updateDbStatus();
+
+setStatus(
+`🟢 今日完整資料已使用 Cache｜${state.info.length.toLocaleString()} 檔｜不新增 API`,
+"ok"
+);
+
+return hit;
+
+}
+
+}
+
+return once(
+"todaySnapshot",
+async()=>{
+
+const rows=
+await loadFullUniverse(
+force
+);
+
+const lawToday=
+await fetchTodayInstitutional(
+force
+).catch(
+()=>[]
+);
+
+const obj={
+
+date:todayKey(),
+
+savedAt:Date.now(),
+
+rows,
+
+lawToday
+
+};
+
+cacheWrite(
+MARKET_SNAPSHOT_KEY,
+obj
+);
+
+state.info=rows;
+
+state.todayLaw=
+lawToday||[];
+
+renderDbStatus(
+`🟢 今日完整資料完成｜${rows.length.toLocaleString()} 檔｜已儲存本機 Cache`
+);
+
+setStatus(
+`🟢 今日完整市場資料已建立｜${rows.length.toLocaleString()} 檔｜後續搜尋與分析共用本機 Cache`,
+"ok"
+);
+
+return obj;
+
+}
+);
+
+}
+
+function bindDataButtons(){
+
+const a=$("fetchTodayBtn");
+const b=$("refreshCloseBtn");
+
+if(a)
+
+a.addEventListener(
+"click",
+async()=>{
+
+if(a.disabled)
+return;
+
+a.disabled=true;
+
+if(b)
+b.disabled=true;
+
+try{
+
+await fetchTodaySnapshot(
+false
+);
+
+}catch(e){
+
+setStatus(
+"❌ 今日完整資料抓取失敗："+e.message,
+"error"
+);
+
+}finally{
+
+a.disabled=false;
+
+if(b)
+b.disabled=false;
+
+}
+
+}
+);
+
+if(b)
+
+b.addEventListener(
+"click",
+async()=>{
+
+if(b.disabled)
+return;
+
+if(
+!confirm(
+"確定要重新抓取最新市場資料嗎？這會增加 API 請求；歷史／法人 Cache 不會被刪除。"
+)
+)
+return;
+
+b.disabled=true;
+
+if(a)
+a.disabled=true;
+
+try{
+
+localStorage.removeItem(
+MARKET_SNAPSHOT_KEY
+);
+
+localStorage.removeItem(
+"M1391_V11_FULL_UNIVERSE"
+);
+
+state.info=null;
+
+await fetchTodaySnapshot(
+true
+);
+
+}catch(e){
+
+setStatus(
+"❌ 強制更新失敗："+e.message,
+"error"
+);
+
+}finally{
+
+b.disabled=false;
+
+if(a)
+a.disabled=false;
+
+}
+
+}
+);
+
+const hit=
+readMarketSnapshot();
+
+if(hit){
+
+state.info=
+hit.rows||[];
+
+state.todayLaw=
+hit.lawToday||[];
+
+state.universeSource=
+"TODAY_CACHE";
+
+dashDbReady(
+state.info.length,
+"本機今日資料庫"
+);
+
+setStatus(
+`🟢 今日資料庫已載入｜${state.info.length.toLocaleString()} 檔｜0 新 API`,
+"ok"
+);
+
+}
+
+updateDbStatus();
+
+}
+
+/* =========================================================
+STARTUP
+========================================================= */
+
+bindDataButtons();
+
+const df=$("dashFetchBtn");
+const dforce=$("dashForceBtn");
+
+if(df)
+
+df.addEventListener(
+"click",
+()=>$("fetchTodayBtn")?.click()
+);
+
+if(dforce)
+
+dforce.addEventListener(
+"click",
+()=>$("refreshCloseBtn")?.click()
+);
+
+dashLog(
+"M1391 V19 Dashboard UI 已啟動｜啟動不自動抓 API"
+);
+
+setStatus(
+"🐰 M1391 已載入：可直接搜尋股票、ETF或使用下方掃描器。",
+"ok"
+);
+
+setTimeout(
+clearStatus,
+3000
+);
+
+/* =========================================================
+M1391 V19：型態雷達＋當沖模型
+========================================================= */
+
+function breakdownModel(
+rows,
+tech,
+law
+){
+
+const price=tech.price;
+
+const prev=tech.previous;
+
+const drop=
+(price-prev)/
+Math.max(prev,1)*
+100;
+
+const supportBreak=
+price < tech.support;
+
+const maBreak=
+price < tech.ma20 &&
+price < tech.ma60;
+
+const volumeBreak=
+tech.volumeRatio>=1.2;
+
+let score=0;
+let reasons=[];
+
+if(supportBreak){
+
+score+=30;
+
+reasons.push(
+"跌破20日支撐"
+);
+
+}
+
+if(maBreak){
+
+score+=25;
+
+reasons.push(
+"MA20/MA60同步偏弱"
+);
+
+}
+
+if(drop<0){
+
+score+=15;
+
+reasons.push(
+"當日下跌"
+);
+
+}
+
+if(
+volumeBreak &&
+drop<0
+){
+
+score+=20;
+
+reasons.push(
+"下跌伴隨放量"
+);
+
+}
+
+if(law.total5<0){
+
+score+=10;
+
+reasons.push(
+"法人5日偏賣"
+);
+
+}
+
+let label="🟢 尚未跌破";
+
+if(score>=75)
+label="🚨 爆量跌破";
+
+else if(score>=55)
+label="🔴 趨勢跌破";
+
+else if(score>=35)
+label="🟠 跌破警戒";
+
 return {
 score,
 label,
-w5,w20,w40,w60,
-resistance,
-secondResistance,
-support,
-distance,
-upside,
-extension,
-volumeRatio,
-trendScore,
-maScore,
-lawScore,
-volumeScore,
-distanceScore,
-spaceScore,
-weeks
+reasons,
+supportBreak,
+maBreak,
+volumeBreak
 };
+
 }
-/* =========================================================
-WEEKLY SAFE ENTRY
-========================================================= */
-function weeklySafeModel(rows, law, price) {
-const weeks = weeklyRows(rows);
-if (weeks.length < 25) {
-return {score:0,label:"資料不足",weeks};
-}
-const closes = weeks.map(x=>x.close);
-const w5 = sma(closes,5);
-const w20 = sma(closes,20);
-const w40 = sma(closes,40);
-const recent20 = weeks.slice(-21,-1);
-const support = Math.min(...recent20.map(x=>x.low));
-const resistance = Math.max(...recent20.map(x=>x.high));
-const supportDistance =
-support
-? Math.abs(price-support)/support*100
-: 999;
-const extension =
-w20 ? (price-w20)/w20*100 : 999;
-let score = 0;
-const reasons = [];
-if (w20 > w40) {
-score += 20;
-reasons.push("W20高於W40");
-}
-if (slope(closes,20)>0) {
-score += 15;
-reasons.push("W20趨勢向上");
-}
-if (price >= w20*.95 && price <= w20*1.05) {
-score += 25;
-reasons.push("接近W20");
-}
-if (price > support && price <= support*1.10) {
-score += 15;
-reasons.push("靠近週線支撐");
-}
-if (law.total5 > 0) {
-score += 10;
-reasons.push("法人5日偏多");
-}
-if (extension <= 10) {
-score += 10;
-}
-if (price < resistance && resistance>price) {
-score += 5;
-}
-score = Math.max(0,Math.min(100,score));
-let label="🔴 不安全";
-if(score>=80) label="🟢 安全買點";
-else if(score>=65) label="🟡 偏安全";
-else if(score>=50) label="🟠 等回測";
-return {
-score,label,reasons,
-w5,w20,w40,
-support,resistance,
-supportDistance,
-extension
-};
-}
-/* =========================================================
-MONTHLY SAFE ENTRY
-========================================================= */
-function monthlySafeModel(rows, price) {
-const months = monthlyRows(rows);
-if (months.length < 20) {
-return {score:0,label:"資料不足",months};
-}
-const closes = months.map(x=>x.close);
-const m5=sma(closes,5);
-const m10=sma(closes,10);
-const m20=sma(closes,20);
-const recent12 = months.slice(-13,-1);
-const support = Math.min(...recent12.map(x=>x.low));
-const extension =
-m20 ? (price-m20)/m20*100 : 999;
-const supportDistance =
-support
-? Math.abs(price-support)/support*100
-: 999;
-let score=0;
-const reasons=[];
-if(m5>m10 && m10>m20){
-score+=30;
-reasons.push("M5>M10>M20");
-}
-if(slope(closes,6)>0){
-score+=20;
-reasons.push("月線趨勢向上");
-}
-if(price>=m20*.95 && price<=m20*1.06){
-score+=25;
-reasons.push("接近M20");
-}
-if(extension<=12){
-score+=15;
-}
-if(price>support && price<=support*1.12){
-score+=10;
-reasons.push("接近月線支撐");
-}
-score=Math.max(0,Math.min(100,score));
-let label="🔴 不安全";
-if(score>=80) label="🟢 安全買點";
-else if(score>=65) label="🟡 偏安全";
-else if(score>=50) label="🟠 等回測";
-return {
-score,label,reasons,
-m5,m10,m20,
-support,
-supportDistance,
-extension
-};
-}
-/* =========================================================
-CRASH / REBOUND MODEL
-========================================================= */
-function reboundModel(rows, law, tech) {
-const price=tech.price;
-const dropFromPeak =
-tech.peak60
-? (price-tech.peak60)/tech.peak60*100
-: 0;
-const last=rows.at(-1);
-const previous=rows.at(-2)||last;
-const closeLocation=tech.closeLocation;
-const recovery =
-price > closeValue(previous) &&
-closeLocation >= .60;
-const sellingPressure =
-tech.volumeRatio >= 1.30 &&
-tech.previousDayChange < 0;
-let score=0;
-const reasons=[];
-if(dropFromPeak<=-15){
-score+=25;
-reasons.push("60日跌深≥15%");
-}else if(dropFromPeak<=-10){
-score+=18;
-reasons.push("60日跌深≥10%");
-}else if(dropFromPeak<=-7){
-score+=10;
-}
-if(tech.extension<=-10){
-score+=20;
-reasons.push("低於MA20");
-}
-if(tech.ma60 && tech.price < tech.ma60*.92){
-score+=15;
-reasons.push("低於MA60");
-}
-if(recovery){
-score+=20;
-reasons.push("收盤開始回收");
-}
-if(law.total5>=0){
-score+=10;
-reasons.push("法人沒有明顯連續倒貨");
-}
-if(!sellingPressure){
-score+=10;
-}
-score=Math.max(0,Math.min(100,score));
-let label="🔴 暫不接刀";
-if(score>=75) label="🟢 反彈買點確認";
-else if(score>=55) label="🟡 反彈觀察";
-else if(score>=40) label="🟠 還在接刀";
-return {
-score,label,
-dropFromPeak,
-recovery,
-sellingPressure,const byId=new Map(state.info.map(x=>[x.stock_id,x]));
-const quick=snapshot.lawToday.map(l=>{
-const info=byId.get(l.stock_id);
-if(!info)return null;
-const foreign=toNumber(l.foreign);
-const trust=toNumber(l.trust);
-const dealer=toNumber(l.dealer);
-return {
-id:l.stock_id,
-name:info.stock_name,
-law:{
-foreign5:foreign,
-trust5:trust,
-dealer5:dealer,
-total5:foreign+trust+dealer,
-foreign20:foreign,
-trust20:trust,
-dealer20:dealer,
-total20:foreign+trust+dealer,
-allThree5:foreign>0&&trust>0&&dealer>0,
-allThree20:false
-},
-total:Math.round(
-clamp(
-50+
-Math.min(25,(foreign+trust+dealer)/1000000*25),
-0,100
-)
-)
-};
-}).filter(Boolean)
-.filter(x=>x.law.foreign5>0&&x.law.trust5>0&&x.law.dealer5>0)
-.sort((a,b)=>b.law.total5-a.law.total5)
-.slice(0,19);
-state.scanRows=quick;
-renderScanResults(config.title,quick,type);
-setStatus(`🟢 ${config.title} 完成｜使用今日法人 Cache｜不新增逐檔 API`,"ok");
-return quick;
-}
-scanRunning=true;
-try{
-setStatus(`⏳ ${config.title} 分析中…`,"loading");
-dashLog(`開始：${config.title}`);
-const pool=
-config.pool ||
-(type==="bank"
-?state.info.filter(x=>/銀行|金控|金融/.test(x.stock_name))
-:type==="etf"
-?state.info.filter(x=>/^00/.test(x.stock_id)||/ETF|指數|債券/.test(x.stock_name))
-:getFastScanPool(type));
-const limited=pool.slice(0,CONFIG.scanCandidates);
-dashLog(`掃描池：${limited.length} 檔`);
-const models=await runBatch(
-limited,
-async(item)=>{
-const model=await buildStock(item.stock_id);
-return model;
-},
-4
-);
-const filtered=models.filter(config.filter).sort(config.sort);
-state.scanRows=filtered;
-renderScanResults(config.title,filtered,type);
-setStatus(`🟢 ${config.title} 完成｜分析 ${models.length} 檔｜結果 ${filtered.length} 檔`,"ok");
-dashLog(`完成：${config.title}｜結果 ${filtered.length} 檔`);
-return filtered;
-}catch(e){
-setStatus(`❌ 掃描失敗：${e.message}`,"error");
-dashLog("掃描失敗："+e.message);
-return [];
-}finally{
-scanRunning=false;
-}
-}
-function renderScanResults(title,rows,type){
-const box=$("scanResult");
-if(!box)return;
-if(!rows.length){
-box.innerHTML=`
-<div class="empty">
-沒有符合目前條件的標的。<br>
-可以改用其他掃描條件，或先重新建立今日資料庫。
-</div>`;
-return;
-}
-box.innerHTML=`
-<div class="card" style="margin-top:10px">
-<div class="sectionTitle">${escapeHTML(title)}</div>
-<div class="muted">共 ${rows.length} 檔｜點擊可查看完整 M1391 分析</div>
-<div style="margin-top:8px">
-${rows.map((x,i)=>{
-const tech=x.tech||{};
-const law=x.law||{};
-const total=x.total??0;
-return `
-<div class="v13Rank" data-scan-id="${escapeHTML(x.id)}" style="cursor:pointer">
-<div class="v13Num">${i+1}</div>
-<div>
-<div class="v13Name">${escapeHTML(x.id)} ${escapeHTML(x.name)}</div>
-<div class="v13Mini">
-${x.market||""}
-${Number.isFinite(tech.price)?`｜${formatPrice(tech.price)}`:""}
-</div>
-</div>
-<div>
-<div class="${scoreClass(total)}">${total}</div>
-<div class="v13Mini">綜合</div>
-</div>
-<div>
-<div class="${(law.total5||0)>0?"v13Good":"v13Bad"}">${signed((law.total5||0)/1000)}K</div>
-<div class="v13Mini">法人5日</div>
-</div>
-<div>
-<div>${x.breakout?.stage||x.weeklySafe?.label||"—"}</div>
-<div class="v13Mini">${x.weeklyMeat?.label||""}</div>
-</div>
-</div>`;
-}).join("")}
-</div>
-</div>`;
-box.querySelectorAll("[data-scan-id]").forEach(el=>{
-el.addEventListener("click",async()=>{
-const id=el.dataset.scanId;
-try{
-setStatus(`⏳ 正在開啟 ${id}…`,"loading");
-renderDetail(await buildStock(id));
-setStatus(`🟢 ${id} 分析完成`,"ok");
-}catch(e){
-setStatus(`❌ ${id} 失敗：${e.message}`,"error");
-}
-});
-});
-}
-/* =========================================================
-MARKET SNAPSHOT
-========================================================= */
-function todayKey(){
-return dateString(new Date());
-}
-function readMarketSnapshot(){
-try{
-const raw=localStorage.getItem(MARKET_SNAPSHOT_KEY);
-if(!raw)return null;
-const obj=JSON.parse(raw);
-/* cacheWrite() 會將資料包成 {time,data}，這裡必須讀 data；
-   同時相容舊版直接儲存 {date,savedAt,rows,lawToday} 的格式。 */
-const data=(obj && obj.data && typeof obj.data==="object") ? obj.data : obj;
-if(!data || data.date!==todayKey() || !data.savedAt || Date.now()-data.savedAt>CONFIG.marketTTL)return null;
-return data;
-}catch(e){return null}
-}
-function writeMarketSnapshot(rows,lawToday=[]){
-const data={
-date:todayKey(),
-savedAt:Date.now(),
+
+function consolidationModel(
 rows,
-lawToday:Array.isArray(lawToday)?lawToday:[]
+tech,
+law
+){
+
+const closes=
+rows.map(closeValue);
+
+const recent=
+closes.slice(-30);
+
+if(recent.length<15)
+
+return {
+score:0,
+label:"資料不足",
+reasons:[]
 };
-cacheWrite(MARKET_SNAPSHOT_KEY,data);
-state.lastSnapshot=data;
-try{renderDbStatus(`🟢 今日完整資料已建立｜${rows.length.toLocaleString()} 檔｜後續查詢與分析優先使用本機 Cache`)}catch(e){}
+
+const hi=
+Math.max(...recent);
+
+const lo=
+Math.min(...recent);
+
+const range=
+(hi-lo)/
+(average(recent)||1)*
+100;
+
+const volumeRatio=
+tech.volumeRatio;
+
+const flat=
+Math.abs(
+tech.slope20
+)/
+(tech.ma20||1)*
+100;
+
+let score=0;
+let reasons=[];
+
+if(range<=12){
+
+score+=35;
+
+reasons.push(
+"30日窄幅盤整"
+);
+
+}
+
+else if(range<=18){
+
+score+=25;
+
+reasons.push(
+"30日區間≤18%"
+);
+
+}
+
+if(volumeRatio<.9){
+
+score+=20;
+
+reasons.push(
+"量能縮小"
+);
+
+}
+
+if(flat<5){
+
+score+=20;
+
+reasons.push(
+"MA20走平"
+);
+
+}
+
+if(
+tech.distanceToResistance>=0 &&
+tech.distanceToResistance<=5
+){
+
+score+=15;
+
+reasons.push(
+"接近盤整上緣"
+);
+
+}
+
+if(law.total5>0){
+
+score+=10;
+
+reasons.push(
+"法人短線偏多"
+);
+
+}
+
+score=Math.min(
+100,
+score
+);
+
+let label=
+score>=75
+?"🐰 盤整蓄勢"
+:score>=55
+?"🟡 盤整觀察"
+:"⚪ 普通盤整";
+
+return {
+score,
+label,
+reasons,
+range,
+hi,
+lo,
+volumeRatio
+};
+
+}
+
+function sidewaysModel(
+rows,
+tech,
+law
+){
+
+const c=
+rows.map(closeValue);
+
+const recent=
+c.slice(-60);
+
+if(recent.length<20)
+
+return {
+score:0,
+label:"資料不足",
+reasons:[]
+};
+
+const hi=
+Math.max(...recent);
+
+const lo=
+Math.min(...recent);
+
+const range=
+(hi-lo)/
+(average(recent)||1)*
+100;
+
+const trend=
+Math.abs(
+tech.slope20
+)/
+(tech.ma20||1)*
+100;
+
+let score=0;
+let reasons=[];
+
+if(range<=15){
+
+score+=35;
+
+reasons.push(
+"60日波動低"
+);
+
+}
+
+if(trend<=4){
+
+score+=25;
+
+reasons.push(
+"趨勢不明顯"
+);
+
+}
+
+if(tech.volumeRatio<1){
+
+score+=20;
+
+reasons.push(
+"量能普通或偏低"
+);
+
+}
+
+if(
+Math.abs(
+tech.ma5-tech.ma20
+)/
+(tech.ma20||1)*
+100<=3
+){
+
+score+=20;
+
+reasons.push(
+"均線糾結"
+);
+
+}
+
+let label=
+score>=75
+?"🐢 低波動盤股"
+:score>=55
+?"🟡 盤股觀察"
+:"🟢 有方向";
+
+return {
+score,
+label,
+reasons,
+range,
+trend
+};
+
+}
+
+function dayTradeModel(
+rows,
+tech,
+law
+){
+
+if(rows.length<25)
+
+return {
+score:0,
+label:"資料不足",
+reasons:[]
+};
+
+const price=tech.price;
+
+const dayRange=
+tech.high-tech.low;
+
+const amplitude=
+price
+?dayRange/price*100
+:0;
+
+const strongClose=
+tech.closeLocation>=.70;
+
+const up=
+tech.previousDayChange>0;
+
+const volume=
+tech.volumeRatio>=1.3;
+
+let longScore=0;
+let shortScore=0;
+let reasons=[];
+
+if(volume){
+
+longScore+=20;
+shortScore+=20;
+
+reasons.push(
+"量能放大"
+);
+
+}
+
+if(amplitude>=3){
+
+longScore+=20;
+shortScore+=20;
+
+reasons.push(
+"日內波動足"
+);
+
+}
+
+if(
+strongClose &&
+up
+){
+
+longScore+=30;
+
+reasons.push(
+"上漲且收盤偏強"
+);
+
+}
+
+if(
+!strongClose &&
+!up
+){
+
+shortScore+=30;
+
+reasons.push(
+"下跌且收盤偏弱"
+);
+
+}
+
+if(price>tech.ma5){
+
+longScore+=15;
+
+reasons.push(
+"站上MA5"
+);
+
+}else{
+
+shortScore+=15;
+
+reasons.push(
+"跌破MA5"
+);
+
+}
+
+if(law.total5>0){
+
+longScore+=15;
+
+}else if(law.total5<0){
+
+shortScore+=15;
+
+}
+
+const best=
+Math.max(
+longScore,
+shortScore
+);
+
+let label="⚪ 當沖不明";
+
+if(best>=75)
+
+label=
+longScore>=shortScore
+?"🟢 當沖做多候選"
+:"🔴 當沖做空候選";
+
+else if(best>=55)
+
+label="🟡 當沖觀察";
+
+return {
+score:best,
+label,
+longScore,
+shortScore,
+amplitude,
+reasons
+};
+
+}
+
+function attachV19(data){
+
+data.breakdown=
+breakdownModel(
+data.rows,
+data.tech,
+data.law
+);
+
+data.consolidation=
+consolidationModel(
+data.rows,
+data.tech,
+data.law
+);
+
+data.sideways=
+sidewaysModel(
+data.rows,
+data.tech,
+data.law
+);
+
+data.dayTrade=
+dayTradeModel(
+data.rows,
+data.tech,
+data.law
+);
+
+data.v13Score=
+Math.round(
+
+data.breakout.score*.25+
+
+data.weeklySafe.score*.15+
+
+data.baseBuilding.score*.15+
+
+data.consolidation.score*.15+
+
+(100-data.breakdown.score)*.10+
+
+data.dayTrade.score*.10+
+
+data.weeklyMeat.score*.10
+
+);
+
 return data;
+
 }
-function renderDbStatus(text){
-const el=$("dashDbDate");
-if(el)el.textContent=text;
-const top=$("topDbState");
-const time=$("topDbTime");
-if(top)top.textContent=text.includes("🟢")?"已建立":"尚未建立";
-if(time)time.textContent=text.includes("🟢")
-?`今日：${todayKey()}`
-:"請先抓取今天完整資料";
-}
-async function fetchTodaySnapshot(force=false){
-if(!force){
-const cached=readMarketSnapshot();
-if(cached){
-state.lastSnapshot=cached;
-state.info=cached.rows||[];
-dashDbReady(state.info.length,"今日 Cache");
-renderDbStatus(`🟢 今日完整資料已建立｜${state.info.length.toLocaleString()} 檔｜後續查詢與分析優先使用本機 Cache`);
-setStatus(`🟢 今日資料庫已存在｜${state.info.length.toLocaleString()} 檔｜未重新抓 API`,"ok");
-return cached;
-}
-}
-setStatus(
-force
-?"🔄 正在強制更新今日完整資料…"
-:"⏳ 正在建立今天完整資料庫…",
-"loading"
-);
-dashLog(
-force
-?"強制更新：重新抓取今日市場資料"
-:"第一次建立：抓取今天完整市場資料"
-);
-try{
-const rows=await loadFullUniverse(force);
-let lawToday=[];
-try{
-lawToday=await fetchTodayLawSnapshot(rows,force);
-}catch(e){
-dashLog("法人今日快照失敗："+e.message);
-}
-const snapshot=writeMarketSnapshot(rows,lawToday);
-state.info=rows;
-state.lastSnapshot=snapshot;
-dashDbReady(rows.length,"TWSE＋TPEx／FinMind備援");
-setStatus(
-`🟢 ${force?"強制更新完成":"今日完整資料建立完成"}｜${rows.length.toLocaleString()} 檔`,
-"ok"
-);
-return snapshot;
-}catch(e){
-setStatus(`❌ 今日資料建立失敗：${e.message}`,"error");
-dashLog("今日資料建立失敗："+e.message);
-throw e;
-}
-}
-/* =========================================================
-TODAY INSTITUTIONAL SNAPSHOT
-========================================================= */
-async function fetchTodayLawSnapshot(rows,force=false){
-const cached=cacheRead(
-"M1391_V19_LAW_TODAY",
-CONFIG.lawTTL
-);
-if(!force&&Array.isArray(cached)&&cached.length){
-window.__m1391CacheHits++;
-dashCache();
-dashLog("Cache 命中：今日法人資料");
-return cached;
-}
-const ids=rows
-.filter(x=>x.quote&&x.quote.price>0)
-.map(x=>x.stock_id);
-if(!ids.length)return[];
+
 /*
-法人資料不是所有股票都能一次取得。
-V19 只在建立今日資料庫時做有限度抓取；
-後續掃描直接讀 lawToday，不重抓。
+覆蓋原 buildStock：
+保留所有 M1391 原模型，
+再掛上 V19。
 */
-const result=[];
-const candidates=ids.slice(0,CONFIG.lawSnapshotCandidates||100);
-let completed=0;
-for(const id of candidates){
-try{
-const data=await getLawRows(id,force);
-const agg=aggregateInstitutional(data);
-const last=agg.at(-1);
-if(last){
-result.push({
-stock_id:id,
-foreign:last.foreign||0,
-trust:last.trust||0,
-dealer:last.dealer||0,
-date:last.date
-});
-}
-}catch(e){}
-completed++;
-if(completed%10===0){
-dashLog(`法人快照：${completed}/${candidates.length}`);
-}
-}
-cacheWrite("M1391_V19_LAW_TODAY",result);
-return result;
-}
-/* =========================================================
-UNIVERSE / SNAPSHOT INITIALIZATION
-========================================================= */
-function updateInitialDbUI(){
-const snapshot=readMarketSnapshot();
-if(snapshot){
-state.lastSnapshot=snapshot;
-state.info=snapshot.rows||[];
-dashDbReady(state.info.length,"今日 Cache");
-renderDbStatus(`🟢 今日完整資料已建立｜${state.info.length.toLocaleString()} 檔｜後續查詢與分析優先使用本機 Cache`);
-dashProgress("pToday",state.info.filter(x=>x.quote?.price>0).length,state.info.length);
-const etfCount=state.info.filter(
-x=>/^00/.test(x.stock_id)||/ETF|指數|債券/.test(x.stock_name)
-).length;
-dashProgress("pEtf",etfCount,etfCount);
-return true;
-}
-renderDbStatus("🔴 尚未建立今日完整資料");
-return false;
-}
-/* =========================================================
-ESCAPE / FORMAT
-========================================================= */
-function escapeHTML(value){
-return String(value??"")
-.replace(/&/g,"&amp;")
-.replace(/</g,"&lt;")
-.replace(/>/g,"&gt;")
-.replace(/"/g,"&quot;")
-.replace(/'/g,"&#039;");
-}
-function average(arr){
-const a=(arr||[]).map(toNumber).filter(Number.isFinite);
-return a.length?sum(a)/a.length:0;
-}
-/* =========================================================
-SEARCH RESULT DETAIL COMPATIBILITY
-========================================================= */
-function showHome(){
-["detail","searchResults","resultSection"].forEach(id=>{
-const el=$(id);
-if(el)el.classList.add("hidden");
-});
-const home=$("home");
-if(home)home.classList.remove("hidden");
-window.scrollTo({top:0,behavior:"smooth"});
-}
-function renderSearchResults(hits,query){
-const box=$("resultList");
-if(!box)return;
-if(!hits.length){
-box.innerHTML=`<div class="empty">找不到「${escapeHTML(query)}」</div>`;
-return;
-}
-box.innerHTML=hits.slice(0,100).map(x=>`
-<button class="searchResult" type="button" data-search-id="${escapeHTML(x.stock_id)}">
-<b>${escapeHTML(x.stock_id)}｜${escapeHTML(x.stock_name)}</b>
-<small>${escapeHTML(x.type||"")}｜點擊查看完整 M1391 分析</small>
-</button>
-`).join("");
-box.querySelectorAll("[data-search-id]").forEach(btn=>{
-btn.onclick=async()=>{
-const id=btn.dataset.searchId;
-btn.disabled=true;
-setStatus(`⏳ 正在分析 ${id}…`,"loading");
-try{
-const model=await buildStock(id);
-renderDetail(model);
-setStatus(`🟢 ${id} 分析完成｜後續再次查看優先使用 Cache`,"ok");
-}catch(e){
-setStatus(`❌ ${id} 資料讀取失敗：${e.message}`,"error");
-}finally{
-btn.disabled=false;
-}
+
+const buildStockOriginal=
+buildStock;
+
+buildStock=async function(query){
+
+const data=
+await buildStockOriginal(query);
+
+return attachV19(data);
+
 };
-});
-}
-/* =========================================================
-HOME QUICK SEARCH
-========================================================= */
-async function quickSearch(query){
-if(!query)return;
-const snapshot=readMarketSnapshot();
-if(!snapshot){
-setStatus("🟡 請先按「📥 抓取今天完整資料」，搜尋不會偷偷重抓 API。","error");
-return;
-}
-state.info=snapshot.rows||[];
-const q=String(query).trim().toUpperCase();
-const hits=state.info.filter(
-x=>x.stock_id.toUpperCase().includes(q)||
-x.stock_name.toUpperCase().includes(q)
-);
-if(!hits.length){
-setStatus(`找不到「${query}」`,"error");
-return;
-}
-renderSearchResults(hits,q);
-showOnly("searchResults");
-}
-/* =========================================================
-BUTTON EVENTS
-========================================================= */
-document.addEventListener("DOMContentLoaded",()=>{
-dashApi();
-dashCache();
-updateInitialDbUI();
 
-document.querySelectorAll("[data-page]").forEach(btn=>{
-btn.addEventListener("click",()=>{
-const page=btn.dataset.page;
-document.querySelectorAll(".pagePanel").forEach(panel=>{
-panel.classList.toggle("active",panel.id===page);
-});
-document.querySelectorAll("[data-page]").forEach(x=>{
-x.classList.toggle("active",x.dataset.page===page);
-});
-window.scrollTo({top:0,behavior:"smooth"});
-});
-});
-
-const searchBtn=$("searchBtn");
-if(searchBtn)searchBtn.addEventListener("click",searchStock);
-
-const searchInput=$("searchInput");
-if(searchInput)searchInput.addEventListener("keydown",e=>{
-if(e.key==="Enter")searchStock();
-});
-
-const dashSearchBtn=$("dashSearchBtn");
-if(dashSearchBtn)dashSearchBtn.addEventListener("click",()=>{
-quickSearch($("dashSearchInput")?.value||"");
-});
-
-const dashSearchInput=$("dashSearchInput");
-if(dashSearchInput)dashSearchInput.addEventListener("keydown",e=>{
-if(e.key==="Enter")quickSearch(dashSearchInput.value);
-});
-
-const dashFetchBtn=$("dashFetchBtn");
-if(dashFetchBtn)dashFetchBtn.addEventListener("click",async()=>{
-if(dashFetchBtn.disabled)return;
-dashFetchBtn.disabled=true;
-try{
-await fetchTodaySnapshot(false);
-}catch(e){}finally{
-dashFetchBtn.disabled=false;
-}
-});
-
-const dashForceBtn=$("dashForceBtn");
-if(dashForceBtn)dashForceBtn.addEventListener("click",async()=>{
-if(dashForceBtn.disabled)return;
-dashForceBtn.disabled=true;
-try{
-await forceRefreshMarket();
-}catch(e){}finally{
-dashForceBtn.disabled=false;
-}
-});
-
-const scanBtn=$("scanBtn");
-if(scanBtn)scanBtn.addEventListener("click",()=>scan("breakout"));
-
-const scanFastBtn=$("scanFastBtn");
-if(scanFastBtn)scanFastBtn.addEventListener("click",()=>scan("rebound"));
-
-const fetchTodayBtn=$("fetchTodayBtn");
-if(fetchTodayBtn)fetchTodayBtn.addEventListener("click",async()=>{
-try{await fetchTodaySnapshot(false)}catch(e){}
-});
-
-const refreshCloseBtn=$("refreshCloseBtn");
-if(refreshCloseBtn)refreshCloseBtn.addEventListener("click",async()=>{
-try{await forceRefreshMarket()}catch(e){}
-});
-
-const levelCost=$("levelCost");
-const levelStep=$("levelStep");
-function updateLevels(){
-const cost=toNumber(levelCost?.value);
-const step=toNumber(levelStep?.value)||3;
-const out=$("levelResult");
-if(!out)return;
-if(!Number.isFinite(cost)||cost<=0){
-out.innerHTML=`<div class="empty">輸入成本價格後顯示仙兔關卡。</div>`;
-return;
-}
-const levels=[];
-for(let i=-4;i<=4;i++){
-const price=cost*Math.pow(1+step/100,i);
-levels.push({
+function v13RankLine(
+data,
 i,
-price,
-pct:i*step
-});
-}
-out.innerHTML=`
-<div class="levelGrid">
-${levels.map(x=>`
-<div class="level">
-<div class="label">${x.i===0?"成本":x.i>0?"上方關卡":"下方關卡"}</div>
-<div class="value">${formatPrice(x.price)}</div>
-<div class="sub">${x.pct>0?"+":""}${x.pct.toFixed(1)}%</div>
-</div>
-`).join("")}
-</div>`;
-}
-if(levelCost)levelCost.addEventListener("input",updateLevels);
-if(levelStep)levelStep.addEventListener("input",updateLevels);
+type
+){
 
-updateLevels();
-});
+let main="";
+let sub="";
+let label="";
+
+if(type==="breakdown"){
+
+main=
+data.breakdown.score;
+
+sub=
+data.tech.volumeRatio.toFixed(2)+"x";
+
+label=
+data.breakdown.label;
+
+}
+
+else if(type==="consolidation"){
+
+main=
+data.consolidation.score;
+
+sub=
+data.consolidation.range.toFixed(1)+"%";
+
+label=
+data.consolidation.label;
+
+}
+
+else if(type==="sideways"){
+
+main=
+data.sideways.score;
+
+sub=
+data.sideways.range.toFixed(1)+"%";
+
+label=
+data.sideways.label;
+
+}
+
+else if(type==="daytrade"){
+
+main=
+data.dayTrade.score;
+
+sub=
+data.dayTrade.amplitude.toFixed(1)+"%";
+
+label=
+data.dayTrade.label;
+
+}
+
+else{
+
+main=
+data.v13Score;
+
+sub=
+data.total;
+
+label=
+"M1391 V19";
+
+}
+
+return `
+
+<div
+class="v13Rank"
+data-v13id="${escapeHTML(data.id)}">
+
+<div class="v13Num">
+${i+1}
+</div>
+
+<div>
+
+<div class="v13Name">
+${escapeHTML(data.id)}
+${escapeHTML(data.name)}
+</div>
+
+<div class="v13Mini">
+${escapeHTML(label)}
+</div>
+
+</div>
+
+<div>
+${formatPrice(data.tech.price)}
+</div>
+
+<div
+class="${scoreClass(Number(main))}">
+${main}
+</div>
+
+<div class="v13Mini">
+${sub}
+</div>
+
+</div>
+
+`;
+
+}
+
+function renderV19Panel(data){
+
+const t=data.tech;
+const d=data.dayTrade;
+const c=data.consolidation;
+const s=data.sideways;
+const b=data.breakdown;
+const base=data.baseBuilding;
+
+return `
+
+<div class="card">
+
+<div class="sectionTitle">
+🧭 M1391 V19 股票型態雷達
+</div>
+
+<div class="v13Grid">
+
+<div class="v13Card">
+
+<h3>
+🚀 突破股票分析
+</h3>
+
+<div class="v13Signal">
+${data.breakout.stage}
+　${data.breakout.score}/100
+</div>
+
+<div class="v13Explain">
+${data.breakout.reasons.join("｜")||"條件不足"}
+</div>
+
+</div>
+
+<div class="v13Card">
+
+<h3>
+🔻 跌破股票分析
+</h3>
+
+<div class="v13Signal">
+${b.label}　${b.score}/100
+</div>
+
+<div class="v13Explain">
+${b.reasons.join("｜")||"目前未見明顯跌破"}
+</div>
+
+</div>
+
+<div class="v13Card">
+
+<h3>
+🟡 盤整股票分析
+</h3>
+
+<div class="v13Signal">
+${c.label}　${c.score}/100
+</div>
+
+<div class="v13Explain">
+區間 ${c.range?.toFixed(1)||"-"}%｜
+${c.reasons.join("｜")}
+</div>
+
+</div>
+
+<div class="v13Card">
+
+<h3>
+🐢 盤股股票分析
+</h3>
+
+<div class="v13Signal">
+${s.label}　${s.score}/100
+</div>
+
+<div class="v13Explain">
+60日區間 ${s.range?.toFixed(1)||"-"}%｜
+${s.reasons.join("｜")}
+</div>
+
+</div>
+
+<div class="v13Card">
+
+<h3>
+🐰 跌深量縮安全注意
+</h3>
+
+<div class="v13Signal">
+${base.label}　${base.score}/100
+</div>
+
+<div class="v13Explain">
+跌幅 ${base.dropFromPeak.toFixed(1)}%｜
+5日/20日量 ${base.shrinkRatio.toFixed(2)}x｜
+${base.reasons.join("｜")}
+</div>
+
+</div>
+
+<div class="v13Card">
+
+<h3>
+⚡ 當沖股票建議
+</h3>
+
+<div class="v13Signal">
+${d.label}　${d.score}/100
+</div>
+
+<div class="v13Explain">
+日內振幅 ${d.amplitude.toFixed(1)}%｜
+做多 ${d.longScore}｜
+做空 ${d.shortScore}｜
+${d.reasons.join("｜")}
+</div>
+
+</div>
+
+</div>
+</div>
+
+`;
+
+}
+
+const renderDetailOriginal=
+renderDetail;
+
+renderDetail=function(data){
+
+renderDetailOriginal(data);
+
+const panel=
+renderV19Panel(data);
+
+const detail=
+$("detail");
+
+const back=
+detail.querySelector(
+"#backHomeBtn"
+);
+
+const box=
+document.createElement("div");
+
+box.innerHTML=panel;
+
+detail.insertBefore(
+box.firstElementChild,
+back.closest(".card")
+);
+
+};
+
 /* =========================================================
-FORCE REFRESH
+V19 掃描器
 ========================================================= */
+
+const scanConfigOriginal=
+scanConfig;
+
+scanConfig=function(type){
+
+const base=
+scanConfigOriginal(type);
+
+if(base)
+return base;
+
+const common={
+
+pool:null,
+
+filter:x=>true,
+
+sort:(a,b)=>
+b.v13Score-a.v13Score
+
+};
+
+if(type==="breakdown")
+
+return {
+...common,
+
+title:"🔻 跌破股票分析",
+
+filter:x=>
+x.breakdown.score>=35,
+
+sort:(a,b)=>
+b.breakdown.score-
+a.breakdown.score
+
+};
+
+if(type==="consolidation")
+
+return {
+...common,
+
+title:"🟡 盤整股票分析",
+
+filter:x=>
+x.consolidation.score>=55,
+
+sort:(a,b)=>
+b.consolidation.score-
+a.consolidation.score
+
+};
+
+if(type==="sideways")
+
+return {
+...common,
+
+title:"🐢 盤股股票分析",
+
+filter:x=>
+x.sideways.score>=55,
+
+sort:(a,b)=>
+b.sideways.score-
+a.sideways.score
+
+};
+
+if(type==="daytrade")
+
+return {
+...common,
+
+title:"⚡ 當沖股票建議",
+
+filter:x=>
+x.dayTrade.score>=50,
+
+sort:(a,b)=>
+b.dayTrade.score-
+a.dayTrade.score
+
+};
+
+if(type==="attention")
+
+return {
+...common,
+
+title:"🚨 今日注意股票 TOP20",
+
+filter:x=>
+
+x.breakout.score>=55 ||
+
+x.breakdown.score>=55 ||
+
+x.volumeWarning.ratio>=1.5 ||
+
+x.baseBuilding.score>=55 ||
+
+x.consolidation.score>=55,
+
+sort:(a,b)=>
+b.v13Score-
+a.v13Score
+
+};
+
+};
+
+/*
+V19 掃描統一交給 V19 快速掃描器：
+避免舊版逐檔 2,000+ API。
+*/
+
+// V19: keep the unified scan() implementation above;
+// do not overwrite it with an undefined scanFast.
+
 async function forceRefreshMarket(){
+
 try{
-localStorage.removeItem(MARKET_SNAPSHOT_KEY);
-localStorage.removeItem("M1391_V11_FULL_UNIVERSE");
+
+localStorage.removeItem(
+MARKET_SNAPSHOT_KEY
+);
+
+localStorage.removeItem(
+"M1391_V11_FULL_UNIVERSE"
+);
+
 state.info=null;
-await fetchTodaySnapshot(true);
+
+await fetchTodaySnapshot(
+true
+);
+
 }catch(e){
-setStatus("❌ 強制更新失敗："+e.message,"error");
+
+setStatus(
+"❌ 強制更新失敗："+e.message,
+"error"
+);
+
 }
+
 }
+
 </script>
 </body>
-</html>const info=byId.get(l.stock_id)||{stock_id:l.stock_id,stock_name:l.stock_id,type:l.market,quote:{}};
-const f=toNumber(l.foreign),t=toNumber(l.trust),d=toNumber(l.dealer),total=f+t+d;
-const q=info.quote||{};
-const tech={price:toNumber(q.price),volume:toNumber(q.volume),previousDayChange:0,volumeRatio:0,extension:0,distanceToResistance:0};
-return {quickLawOnly:true,id:info.stock_id,name:info.stock_name||info.stock_id,market:info.type||l.market,tech,law:{foreign5:f,trust5:t,dealer5:d,total5:total,allThree5:f>0&&t>0&&d>0,foreign20:f,trust20:t,dealer20:d,total20:total,allThree20:f>0&&t>0&&d>0,daily:[l]},total:Math.max(0,Math.min(100,50+(f>0?10:0)+(t>0?10:0)+(d>0?10:0)))};
-}).filter(x=>x.law.allThree5).sort((a,b)=>b.law.total5-a.law.total5).slice(0,19);
-state.cacheModel=new Map(quick.map(x=>[x.id,x]));
-$("home").classList.add("hidden");$("detail").classList.add("hidden");$("searchResults").classList.add("hidden");$("resultSection").classList.remove("hidden");
-$("resultTitle").textContent=`${config.title}｜全市場 ${state.info.length.toLocaleString()} 檔｜今日法人快照`;
-renderRanking(quick,"three");
-$("progressText").textContent=`完成｜全市場法人快照 ${snapshot.lawToday.length.toLocaleString()} 筆｜取前 ${quick.length} 檔｜0 額外 API`;
-$("progressBar").style.width="100%";
-return;
-}
-let pool=getFastScanPool(type);
-scanRunning=true;
-try{
-$("home").classList.add("hidden");$("detail").classList.add("hidden");$("searchResults").classList.add("hidden");$("resultSection").classList.remove("hidden");
-$("resultTitle").textContent=`${config.title}｜全市場 ${state.info.length.toLocaleString()} 檔｜快速深度分析 ${pool.length} 檔`;
-$("resultList").innerHTML=`<div class="card"><div class="empty">⏳ 先用今日快照快速篩選，再只對候選股建立歷史／法人 Cache，避免一次抓 2,000+ 檔。</div></div>`;
-const results=await runBatch(pool,async(x,i)=>{
-$("progressText").textContent=`全市場快篩 ${state.info.length.toLocaleString()} 檔 → 深度分析 ${i+1} / ${pool.length}：${x.stock_id}`;
-$("progressBar").style.width=((i+1)/Math.max(pool.length,1)*100)+"%";
-const data=await buildStock(x.stock_id);
-return config.filter(data)?data:null;
-},CONFIG.scanConcurrency);
-results.sort(config.sort);
-state.cacheModel=new Map(results.map(x=>[x.id,x]));
-const finalResults=(type==="three"||type==="meat"||type==="attention")?results.slice(0,20):results.slice(0,50);
-renderRanking(finalResults,type);
-$("progressText").textContent=`完成｜全市場 ${state.info.length.toLocaleString()} 檔｜深度分析 ${pool.length} 檔｜符合 ${results.length.toLocaleString()} 檔｜後續查看共用 Cache`;
-}finally{scanRunning=false;}
-}
-/* =========================================================
-RANKING
-========================================================= */
-function rowClick(id) {
-const data=state.cacheModel?.get(id);
-if(data) renderDetail(data);
-}
-function rankingRow(data,index,type) {
-const t=data.tech;
-const l=data.law;
-let primary="";
-let secondary="";
-let label="";
-if(type==="three"){
-primary=signed(l.total5/1000)+"K";
-secondary=data.total;
-label=l.allThree5 ? "🔥三方同買" : "";
-} else if(type==="volume"){
-primary=t.volumeRatio.toFixed(2)+"x";
-secondary=data.total;
-label=data.volumeWarning.level;
-} else if(type==="base"){
-primary=data.baseBuilding.score;
-secondary=data.total;
-label=data.baseBuilding.label;
-} else if(type==="rebound"){
-primary=data.rebound.score;
-secondary=data.total;
-label=data.rebound.label;
-} else if(type==="week"){
-primary=data.weeklySafe.score;
-secondary=data.weeklyMeat.score;
-label=data.weeklySafe.label;
-} else if(type==="month"){
-primary=data.monthlySafe.score;
-secondary=data.weeklyMeat.score;
-label=data.monthlySafe.label;
-} else if(type==="meat"){
-primary=data.weeklyMeat.score;
-secondary=percent(data.weeklyMeat.upside);
-label=data.weeklyMeat.label;
-} else if(type==="breakout"){
-primary=data.breakout.score;
-secondary=data.weeklyMeat.score;
-label=data.breakout.stage;
-} else if(type==="etf"){
-primary=data.total;
-secondary=data.weeklyMeat.score;
-label="大型ETF";
-} else if(type==="bank"){
-primary=data.total;
-secondary=data.weeklySafe.score;
-label="金控";
-} else if(type==="breakdown"){
-primary=data.breakdown?.score??0;
-secondary=data.v13Score??data.total;
-label=data.breakdown?.label||"跌破分析";
-} else if(type==="consolidation"){
-primary=data.consolidation?.score??0;
-secondary=data.v13Score??data.total;
-label=data.consolidation?.label||"盤整分析";
-} else if(type==="sideways"){
-primary=data.sideways?.score??0;
-secondary=data.v13Score??data.total;
-label=data.sideways?.label||"盤股分析";
-} else if(type==="daytrade"){
-primary=data.dayTrade?.score??0;
-secondary=data.v13Score??data.total;
-label=data.dayTrade?.label||"當沖候選";
-}
-return `
-<div class="rankRow" data-id="${escapeHTML(data.id)}">
-<div class="rankNo">${index+1}</div>
-<div>
-<div class="rankStock">${escapeHTML(data.id)} ${escapeHTML(data.name)}</div>
-<div class="muted">${escapeHTML(label)}</div>
-</div>
-<div class="rankSmall">${formatPrice(t.price)}</div>
-<div class="rankSmall">${primary}</div>
-<div class="rankSmall">${secondary}</div>
-<div class="rankSmall ${scoreClass(data.total)}">${data.total}</div>
-<div class="rankSmall">›</div>
-</div>
-`;
-}
-function renderRanking(results,type) {
-state.cacheModel=new Map(results.map(x=>[x.id,x]));
-if(!results.length) {
-$("resultList").innerHTML=`
-<div class="card">
-<div class="empty">
-沒有符合目前條件的股票。<br>
-可以放寬條件或換另一個搜尋器。
-</div>
-</div>
-`;
-return;
-}
-$("resultList").innerHTML=`
-<div class="card">
-<div class="muted">
-${type==="three"
-? "條件：外資5日 > 0＋投信5日 > 0＋自營5日 > 0，取前19檔"
-: "依 M1391 模型排序；分數越高代表條件越集中。"}
-</div>
-</div>
-<div class="card" style="padding:0;overflow:hidden">
-<div class="rankHead">
-<div>#</div>
-<div>股票</div>
-<div>價格</div>
-<div>主分數</div>
-<div>副分數</div>
-<div>M1391</div>
-<div></div>
-</div>
-${results.map((x,i)=>rankingRow(x,i,type)).join("")}
-</div>
-`;
-document.querySelectorAll(".rankRow").forEach(row=>{
-row.addEventListener("click",()=>{
-const data=state.cacheModel.get(row.dataset.id);
-if(!data)return;
-if(data.quickLawOnly){
-setStatus(`⏳ 正在建立 ${data.id} 完整分析 Cache…`,`loading`);
-buildStock(data.id).then(renderDetail).catch(e=>setStatus(`❌ ${data.id} 分析失敗：${e.message}`,"error"));
-}else renderDetail(data);
-});
-});
-}
-/* =========================================================
-HOME / NAV
-========================================================= */
-function showHome() {
-$("home").classList.remove("hidden");
-$("detail").classList.add("hidden");
-$("resultSection").classList.add("hidden");
-$("searchResults").classList.add("hidden");
-clearStatus();
-window.scrollTo({top:0,behavior:"smooth"});
-}
-function navAction(type) {
-if(type==="home") {
-showHome();
-return;
-}
-if(type==="search") {
-showHome();
-setTimeout(()=>$("searchInput")?.focus(),80);
-return;
-}
-if(type==="three") {
-scan("three");
-return;
-}
-if(type==="safe") {
-scan("week");
-return;
-}
-if(type==="risk") {
-scan("volume");
-return;
-}
-if(type==="bank") {
-scan("bank");
-}
-}
-/* =========================================================
-EVENT BINDINGS
-========================================================= */
-$("searchBtn").addEventListener("click",searchStock);
-$("searchInput").addEventListener("keydown",event=>{
-if(event.key==="Enter") searchStock();
-});
-document.querySelectorAll("[data-scan]").forEach(button=>{
-button.addEventListener("click",()=>{
-document.querySelectorAll(".sideBtn").forEach(x=>x.classList.remove("active"));
-button.classList.add("active");
-scan(button.dataset.scan);
-});
-});
-document.querySelectorAll("[data-v13-scan]").forEach(button=>{
-button.addEventListener("click",()=>{
-scan(button.dataset.v13Scan);
-});
-});
-document.querySelectorAll("[data-nav]").forEach(button=>{
-button.addEventListener("click",()=>{
-document.querySelectorAll(".navBtn")
-.forEach(btn=>btn.classList.remove("active"));
-button.classList.add("active");
-navAction(button.dataset.nav);
-});
-});
-/* =========================================================
-V11 資料庫控制：今日完整市場快照共用 Cache
-========================================================= */
-const MARKET_SNAPSHOT_KEY="M1391_V11_TODAY_SNAPSHOT";
-const MARKET_SNAPSHOT_TTL=36*60*60*1000;
-function todayKey(){
-const d=new Date();
-return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
-}
-function readMarketSnapshot(){
-try{
-const raw=localStorage.getItem(MARKET_SNAPSHOT_KEY); if(!raw)return null;
-const obj=JSON.parse(raw);
-/* cacheWrite() 會將資料包成 {time,data}，這裡必須讀 data；
-   同時相容舊版直接儲存 {date,savedAt,rows,lawToday} 的格式。 */
-const data=(obj && obj.data && typeof obj.data==="object") ? obj.data : obj;
-if(!data || data.date!==todayKey() || !data.savedAt || Date.now()-data.savedAt>MARKET_SNAPSHOT_TTL)return null;
-return data;
-}catch(e){return null}
-}
-function renderDbStatus(text,type="ok"){
-const el=$("dataDbStatus"); if(!el)return;
-el.textContent=text; el.className="muted "+type;
-}
-function updateDbStatus(){
-const x=readMarketSnapshot();
-if(x){
-const n=(x.rows||[]).length;
-renderDbStatus(`🟢 今日完整資料已儲存｜${n.toLocaleString()} 檔｜${new Date(x.savedAt).toLocaleTimeString("zh-TW",{hour:"2-digit",minute:"2-digit"})}｜後續查詢與分析優先使用本機 Cache`);
-}else renderDbStatus("🟡 今日資料尚未建立，請按「📥 抓取今天完整資料」");
-}
-function lastLikelyTradingDate(){
-const d=new Date();
-if(d.getDay()===0)d.setDate(d.getDate()-2);
-else if(d.getDay()===6)d.setDate(d.getDate()-1);
-return dateString(d).replace(/-/g,"");
-}
-function parseT86(json){
-if(!json||!Array.isArray(json.fields)||!Array.isArray(json.data))return [];
-const idx={}; json.fields.forEach((f,i)=>idx[String(f).trim()]=i);
-const codeIdx=idx["證券代號"];
-const foreignIdx=idx["外陸資買賣超股數(不含外資自營商)"];
-const trustIdx=idx["投信買賣超股數"];
-const dealerIdx=idx["自營商買賣超股數"];
-if(codeIdx==null)return [];
-return json.data.map(r=>({
-stock_id:String(r[codeIdx]||"").trim(),
-foreign:toNumber(r[foreignIdx]),trust:toNumber(r[trustIdx]),dealer:toNumber(r[dealerIdx])
-})).filter(x=>x.stock_id);
-}
-async function fetchTodayInstitutional(force=false){
-const key="M1391_V19_TODAY_LAW";
-if(!force){const hit=cacheRead(key,CONFIG.lawTTL);if(Array.isArray(hit)&&hit.length){window.__m1391CacheHits++;dashCache();return hit;}}
-const date=lastLikelyTradingDate();
-const out=[];
-try{
-const twse=await fetchJSON(CONFIG.twseInstitution.replace("{DATE}",date));
-const parsed=parseT86(twse);
-out.push(...parsed);
-}catch(e){}
-try{
-const tpex=await fetchJSON(CONFIG.tpexInstitution.replace("{DATE}",date));
-const parsed=parseT86(tpex);
-const existing=new Set(out.map(x=>x.stock_id));
-for(const x of parsed)if(!existing.has(x.stock_id))out.push(x);
-}catch(e){}
-cacheWrite(key,out);
-return out;
-}
-async function fetchTodaySnapshot(force=false){
-if(!force){
-const cached=readMarketSnapshot();
-if(cached){
-state.lastSnapshot=cached;
-state.info=cached.rows||[];
-state.todayLaw=cached.lawToday||[];
-dashDbReady(state.info.length,"本機今日資料庫");
-updateDbStatus();
-setStatus(`🟢 今日完整資料已存在｜${state.info.length.toLocaleString()} 檔｜不重新抓取 API`,"ok");
-return cached;
-}
-}
-setStatus(force?"🔄 強制更新今日完整資料…":"⏳ 正在建立今天完整資料庫…","loading");
-dashLog(force?"強制更新：重新抓取今日完整市場資料":"第一次建立：抓取今天完整市場資料");
-const rows=await loadFullUniverse(force);
-let lawToday=[];
-try{
-lawToday=await fetchTodayInstitutional(force);
-}catch(e){
-dashLog("法人資料取得失敗："+e.message);
-}
-const snapshot={
-date:todayKey(),
-savedAt:Date.now(),
-rows,
-lawToday
-};
-cacheWrite(MARKET_SNAPSHOT_KEY,snapshot);
-state.lastSnapshot=snapshot;
-state.info=rows;
-state.todayLaw=lawToday;
-dashDbReady(rows.length,"TWSE＋TPEx／FinMind備援");
-updateDbStatus();
-setStatus(`🟢 ${force?"強制更新完成":"今日完整資料建立完成"}｜${rows.length.toLocaleString()} 檔`,"ok");
-dashLog(`今日資料庫完成：${rows.length.toLocaleString()} 檔`);
-return snapshot;
-}
-function getFastScanPool(type){
-const info=state.info||[];
-if(type==="bank"){
-return info.filter(x=>/金控|銀行|金融/.test(x.stock_name));
-}
-if(type==="etf"){
-return info.filter(x=>/^00/.test(x.stock_id)||/ETF|指數|債券/.test(x.stock_name));
-}
-if(type==="three"||type==="attention"){
-const law=state.todayLaw||state.lastSnapshot?.lawToday||[];
-const ids=new Set(law.map(x=>x.stock_id));
-return info.filter(x=>ids.has(x.stock_id));
-}
-return info.filter(x=>x.quote&&x.quote.price>0);
-}
-async function runBatch(items,worker,concurrency=4){
-const result=[];
-let cursor=0;
-async function runner(){
-while(true){
-const i=cursor++;
-if(i>=items.length)return;
-try{
-const value=await worker(items[i],i);
-if(value)result.push(value);
-}catch(e){
-dashLog(`分析失敗：${items[i]?.stock_id||"?"}｜${e.message}`);
-}
-}
-}
-const runners=[];
-for(let i=0;i<Math.min(concurrency,items.length);i++)runners.push(runner());
-await Promise.all(runners);
-return result;
-}
-/* =========================================================
-V19 SCAN
-========================================================= */
-let scanRunning=false;
-const scanConcurrency=3;
-function scoreClass(score){
-const n=Number(score)||0;
-return n>=80?"green":n>=65?"orange":n>=50?"yellow":"red";
-}
-function scanConfig(type){
-const configs={
-three:{
-title:"🏦 三大法人同買",
-filter:x=>x.law?.allThree5,
-sort:(a,b)=>(b.law?.total5||0)-(a.law?.total5||0)
-},
-volume:{
-title:"📊 量能異常",
-filter:x=>(x.volumeWarning?.ratio||0)>=1.5,
-sort:(a,b)=>(b.volumeWarning?.ratio||0)-(a.volumeWarning?.ratio||0)
-},
-base:{
-title:"🐰 跌深量縮",
-filter:x=>(x.baseBuilding?.score||0)>=55,
-sort:(a,b)=>(b.baseBuilding?.score||0)-(a.baseBuilding?.score||0)
-},
-rebound:{
-title:"🔄 反彈候選",
-filter:x=>(x.rebound?.score||0)>=55,
-sort:(a,b)=>(b.rebound?.score||0)-(a.rebound?.score||0)
-},
-week:{
-title:"📅 週線安全買點",
-filter:x=>(x.weeklySafe?.score||0)>=60,
-sort:(a,b)=>(b.weeklySafe?.score||0)-(a.weeklySafe?.score||0)
-},
-month:{
-title:"🗓 月線安全買點",
-filter:x=>(x.monthlySafe?.score||0)>=60,
-sort:(a,b)=>(b.monthlySafe?.score||0)-(a.monthlySafe?.score||0)
-},
-meat:{
-title:"🥩 週線大肉",
-filter:x=>(x.weeklyMeat?.score||0)>=65,
-sort:(a,b)=>(b.weeklyMeat?.score||0)-(a.weeklyMeat?.score||0)
-},
-breakout:{
-title:"🚀 突破候選",
-filter:x=>(x.breakout?.score||0)>=55,
-sort:(a,b)=>(b.breakout?.score||0)-(a.breakout?.score||0)
-},
-etf:{
-title:"📦 ETF",
-filter:x=>true,
-sort:(a,b)=>(b.total||0)-(a.total||0)
-},
-bank:{
-title:"🏦 金控",
-filter:x=>true,
-sort:(a,b)=>(b.total||0)-(a.total||0)
-},
-attention:{
-title:"🚨 今日注意股票",
-filter:x=>
-(x.breakout?.score||0)>=55 ||
-(x.breakdown?.score||0)>=55 ||
-(x.volumeWarning?.ratio||0)>=1.5 ||
-(x.baseBuilding?.score||0)>=55,
-sort:(a,b)=>(b.v13Score||b.total||0)-(a.v13Score||a.total||0)
-}
-};
-return configs[type]||configs.breakout;
-}
-async function scan(type="breakout"){
-if(scanRunning)return;
-const snapshot=readMarketSnapshot();
-if(!snapshot){
-setStatus("🟡 請先按「📥 抓取今天完整資料」。掃描不會偷偷重抓完整市場資料。","error");
-return;
-}
-state.info=snapshot.rows||[];
-state.todayLaw=snapshot.lawToday||[];
-const config=scanConfig(type);
-if(type==="three" && state.todayLaw.length){
-const byId=new Map(state.info.map(x=>[x.stock_id,x]));
-const quick=state.todayLaw.map(l=>{
-const info=byId.get(l.stock_id)||{stock_id:l.stock_id,stock_name:l.stock_id,type:l.market,quote:{}};
-const f=toNumber(l.foreign),t=toNumber(l.trust),d=toNumber(l.dealer),total=f+t+d;
-const q=info.quote||{};
-const tech={price:toNumber(q.price),volume:toNumber(q.volume),previousDayChange:0,volumeRatio:0,extension:0,distanceToResistance:0};
-return {quickLawOnly:true,id:info.stock_id,name:info.stock_name||info.stock_id,market:info.type||l.market,tech,law:{foreign5:f,trust5:t,dealer5:d,total5:total,allThree5:f>0&&t>0&&d>0,foreign20:f,trust20:t,dealer20:d,total20:total,allThree20:f>0&&t>0&&d>0,daily:[l]},total:Math.max(0,Math.min(100,50+(f>0?10:0)+(t>0?10:0)+(d>0?10:0)))};
-}).filter(x=>x.law.allThree5).sort((a,b)=>b.law.total5-a.law.total5).slice(0,19);
-state.cacheModel=new Map(quick.map(x=>[x.id,x]));
-$("home").classList.add("hidden");$("detail").classList.add("hidden");$("searchResults").classList.add("hidden");$("resultSection").classList.remove("hidden");
-$("resultTitle").textContent=`${config.title}｜全市場 ${state.info.length.toLocaleString()} 檔｜今日法人快照`;
-renderRanking(quick,"three");
-$("progressText").textContent=`完成｜全市場法人快照 ${snapshot.lawToday.length.toLocaleString()} 筆｜取前 ${quick.length} 檔｜0 額外 API`;
-$("progressBar").style.width="100%";
-return;
-}
-let pool=getFastScanPool(type);
-scanRunning=true;
-try{
-$("home").classList.add("hidden");$("detail").classList.add("hidden");$("searchResults").classList.add("hidden");$("resultSection").classList.remove("hidden");
-$("resultTitle").textContent=`${config.title}｜全市場 ${state.info.length.toLocaleString()} 檔｜快速深度分析 ${pool.length} 檔`;
-$("resultList").innerHTML=`<div class="card"><div class="empty">⏳ 先用今日快照快速篩選，再只對候選股建立歷史／法人 Cache，避免一次抓 2,000+ 檔。</div></div>`;
-const results=await runBatch(pool,async(x,i)=>{
-$("progressText").textContent=`全市場快篩 ${state.info.length.toLocaleString()} 檔 → 深度分析 ${i+1} / ${pool.length}：${x.stock_id}`;
-$("progressBar").style.width=((i+1)/Math.max(pool.length,1)*100)+"%";
-const data=await buildStock(x.stock_id);
-return config.filter(data)?data:null;
-},CONFIG.scanConcurrency);
-results.sort(config.sort);
-state.cacheModel=new Map(results.map(x=>[x.id,x]));
-const finalResults=(type==="three"||type==="meat"||type==="attention")?results.slice(0,20):results.slice(0,50);
-renderRanking(finalResults,type);
-$("progressText").textContent=`完成｜全市場 ${state.info.length.toLocaleString()} 檔｜深度分析 ${pool.length} 檔｜符合 ${results.length.toLocaleString()} 檔｜後續查看共用 Cache`;
-}finally{scanRunning=false;}
-}
-/* =========================================================
-RANKING
-========================================================= */
-function rowClick(id) {
-const data=state.cacheModel?.get(id);
-if(data) renderDetail(data);
-}
-function rankingRow(data,index,type) {
-const t=data.tech;
-const l=data.law;
-let primary="";
-let secondary="";
-let label="";
-if(type==="three"){
-primary=signed(l.total5/1000)+"K";
-secondary=data.total;
-label=l.allThree5 ? "🔥三方同買" : "";
-} else if(type==="volume"){
-primary=t.volumeRatio.toFixed(2)+"x";
-secondary=data.total;
-label=data.volumeWarning.level;
-} else if(type==="base"){
-primary=data.baseBuilding.score;
-secondary=data.total;
-label=data.baseBuilding.label;
-} else if(type==="rebound"){
-primary=data.rebound.score;
-secondary=data.total;
-label=data.rebound.label;
-} else if(type==="week"){
-primary=data.weeklySafe.score;
-secondary=data.weeklyMeat.score;
-label=data.weeklySafe.label;
-} else if(type==="month"){
-primary=data.monthlySafe.score;
-secondary=data.weeklyMeat.score;
-label=data.monthlySafe.label;
-} else if(type==="meat"){
-primary=data.weeklyMeat.score;
-secondary=percent(data.weeklyMeat.upside);
-label=data.weeklyMeat.label;
-} else if(type==="breakout"){
-primary=data.breakout.score;
-secondary=data.weeklyMeat.score;
-label=data.breakout.stage;
-} else if(type==="etf"){
-primary=data.total;
-secondary=data.weeklyMeat.score;
-label="大型ETF";
-} else if(type==="bank"){
-primary=data.total;
-secondary=data.weeklySafe.score;
-label="金控";
-} else if(type==="breakdown"){
-primary=data.breakdown?.score??0;
-secondary=data.v13Score??data.total;
-label=data.breakdown?.label||"跌破分析";
-} else if(type==="consolidation"){
-primary=data.consolidation?.score??0;
-secondary=data.v13Score??data.total;
-label=data.consolidation?.label||"盤整分析";
-} else if(type==="sideways"){
-primary=data.sideways?.score??0;
-secondary=data.v13Score??data.total;
-label=data.sideways?.label||"盤股分析";
-} else if(type==="daytrade"){
-primary=data.dayTrade?.score??0;
-secondary=data.v13Score??data.total;
-label=data.dayTrade?.label||"當沖候選";
-}
-return `
-<div class="rankRow" data-id="${escapeHTML(data.id)}">
-<div class="rankNo">${index+1}</div>
-<div>
-<div class="rankStock">${escapeHTML(data.id)} ${escapeHTML(data.name)}</div>
-<div class="muted">${escapeHTML(label)}</div>
-</div>
-<div class="rankSmall">${formatPrice(t.price)}</div>
-<div class="rankSmall">${primary}</div>
-<div class="rankSmall">${secondary}</div>
-<div class="rankSmall ${scoreClass(data.total)}">${data.total}</div>
-<div class="rankSmall">›</div>
-</div>
-`;
-}
-function renderRanking(results,type) {
-state.cacheModel=new Map(results.map(x=>[x.id,x]));
-if(!results.length) {
-$("resultList").innerHTML=`
-<div class="card">
-<div class="empty">
-沒有符合目前條件的股票。<br>
-可以放寬條件或換另一個搜尋器。
-</div>
-</div>
-`;
-return;
-}
-$("resultList").innerHTML=`
-<div class="card">
-<div class="muted">
-${type==="three"
-? "條件：外資5日 > 0＋投信5日 > 0＋自營商5日 > 0，取前19檔"
-: "依 M1391 模型排序；分數越高代表條件越集中。"}
-</div>
-</div>
-<div class="card" style="padding:0;overflow:hidden">
-<div class="rankHead">
-<div>#</div>
-<div>股票</div>
-<div>價格</div>
-<div>主分數</div>
-<div>副分數</div>
-<div>M1391</div>
-<div></div>
-</div>
-${results.map((x,i)=>rankingRow(x,i,type)).join("")}
-</div>
-`;
-document.querySelectorAll(".rankRow").forEach(row=>{
-row.addEventListener("click",()=>{
-const data=state.cacheModel.get(row.dataset.id);
-if(!data)return;
-if(data.quickLawOnly){
-setStatus(`⏳ 正在建立 ${data.id} 完整分析 Cache…`,`loading`);
-buildStock(data.id).then(renderDetail).catch(e=>setStatus(`❌ ${data.id} 分析失敗：${e.message}`,"error"));
-}else renderDetail(data);
-});
-});
-}
-/* =========================================================
-HOME / NAV
-========================================================= */
-function showHome() {
-$("home").classList.remove("hidden");
-$("detail").classList.add("hidden");
-$("resultSection").classList.add("hidden");
-$("searchResults").classList.add("hidden");
-clearStatus();
-window.scrollTo({top:0,behavior:"smooth"});
-}
-function navAction(type) {
-if(type==="home") {
-showHome();
-return;
-}
-if(type==="search") {
-showHome();
-setTimeout(()=>$("searchInput")?.focus(),80);
-return;
-}
-if(type==="three") {
-scan("three");
-return;
-}
-if(type==="safe") {
-scan("week");
-return;
-}
-if(type==="risk") {
-scan("volume");
-return;
-}
-if(type==="bank") {
-scan("bank");
-}
-}
-/* =========================================================
-EVENT BINDINGS
-=========================================================
+</html>
