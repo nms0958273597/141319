@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#080a0c">
+<title>台股法人籌碼與突破分析 M1391 V17｜完整台股搜尋校正版</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+--bg:#080a0c;--card:#17191d;--card2:#101215;--line:#3d4148;
+--text:#f4f5f6;--muted:#92969d;--red:#ff5966;--green:#35e56b;
+--orange:#ff9f1c;--yellow:#ffd447;--blue:#36b9ff;--purple:#bd83ff
+}
+html{scroll-behavior:smooth}
+body{
+margin:0;background:var(--bg);color:var(--text);
+font-family:-apple-system,BlinkMacSystemFont,"PingFang TC",
+"Microsoft JhengHei",Arial,sans-serif;padding-bottom:95px
+}
+.wrap{max-width:1000px;margin:auto;padding:8px 12px 120px}
+.search{
+position:sticky;top:0;z-index:50;display:flex;gap:8px;
+padding:8px 0;background:rgba(8,10,12,.96);backdrop-filter:blur(14px)
+}
+.search input{
+flex:1;height:55px;border:2px solid #555b63;border-radius:18px;
+background:#191b1f;color:#fff;padding:0 15px;font-size:18px;outline:none
+}
+.search input:focus{border-color:var(--orange)}
+button{
+border:1px solid #555b63;border-radius:14px;background:#15181c;
+color:#fff;padding:10px 12px;font-size:14px;font-weight:800;cursor:pointer
+}
+.search button{width:100px;background:var(--orange);color:#111;border:0;font-size:18px}
+button:active{transform:scale(.97)}
+.hint{font-size:12px;color:var(--muted);line-height:1.7;padding:3px 3px 7px}
+.status{display:none;padding:10px 12px;border-radius:13px;margin:8px 0}
+.status.show{display:block}.status.loading{background:#32280e;color:var(--yellow)}
+.status.ok{background:#0c2816;color:var(--green)}.status.error{background:#351319;color:#ff9da6}
+.card{
+background:var(--card);border:1px solid var(--line);border-radius:19px;
+padding:14px;margin:10px 0
+}
+.title{font-size:22px;font-weight:900;margin-bottom:8px}
+.muted{color:var(--muted);font-size:12px;line-height:1.7}
+.actionGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.action{min-height:74px;text-align:left;background:#111417}
+.action b{display:block;font-size:15px}.action small{color:#8e9298;display:block;margin-top:4px}
+.action.hot{border-color:var(--orange)}.action.danger{border-color:var(--red)}
+.action.safe{border-color:var(--green)}.action.blue{border-color:var(--blue)}
+.hero{
+background:#17191d;border:1px solid #4a4e55;border-radius:18px;padding:14px
+}
+.heroTop{display:flex;align-items:center;gap:10px}
+.stockIcon{font-size:31px}.stockName{font-size:25px;font-weight:900}
+.stockSub{font-size:12px;color:#999;margin-top:3px}
+.stockTime{margin-left:auto;color:#777;font-size:11px;text-align:right}
+.price{font-size:34px;font-weight:900;margin-top:12px}
+.priceChange{font-size:16px;font-weight:800;margin-left:7px}
+.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.metric{
+background:#111417;border:1px solid #34383e;border-radius:13px;padding:10px
+}
+.metric .label{font-size:11px;color:#8d9299}.metric .value{font-size:19px;font-weight:900;margin-top:3px}
+.metric .sub{font-size:11px;color:#777;margin-top:2px}
+.sectionTitle{font-size:19px;font-weight:900;margin-bottom:10px}
+.badge{
+display:inline-block;padding:5px 8px;border-radius:999px;background:#20252c;
+margin:2px;font-size:12px;font-weight:800
+}
+.green{color:var(--green)!important}.red{color:var(--red)!important}
+.orange{color:var(--orange)!important}.yellow{color:var(--yellow)!important}
+.blue{color:var(--blue)!important}.purple{color:var(--purple)!important}
+.score{font-size:31px;font-weight:900}.scoreBar{height:9px;background:#30343a;border-radius:99px;overflow:hidden;margin-top:8px}
+.scoreBar span{display:block;height:100%;background:var(--orange)}
+.checkList{display:grid;grid-template-columns:1fr 1fr;gap:4px 12px}
+.checkRow{font-size:13px;color:#aaa;line-height:1.8}.checkRow b{color:#eee}
+.dot{
+display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;
+background:#555;vertical-align:middle
+}
+.dot.on{background:var(--green)}.dot.warn{background:var(--yellow)}.dot.off{background:var(--red)}
+.levelGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.level{background:#111417;border:1px solid #363a40;border-radius:13px;padding:10px}
+.level .label{font-size:11px;color:#888}.level .value{font-size:20px;font-weight:900;margin-top:3px}
+.alert{
+border-radius:16px;padding:13px;border:1px solid #444;background:#111417
+}
+.alert.danger{border-color:#8b3540}.alert.warn{border-color:#806322}
+.alert.safe{border-color:#2f7445}.alert.info{border-color:#27678b}
+.alertTitle{font-size:19px;font-weight:900}.alertText{font-size:13px;color:#aaa;line-height:1.8;margin-top:5px}
+.rankHead,.rankRow{
+display:grid;grid-template-columns:38px 1.4fr .8fr .75fr .75fr .75fr .75fr;
+gap:5px;align-items:center
+}
+.rankHead{padding:9px 6px;color:#888;font-size:11px}
+.rankRow{
+padding:10px 6px;border-top:1px solid #33373d;background:#14171a;
+cursor:pointer
+}
+.rankRow:first-child{border-radius:13px 13px 0 0}.rankRow:last-child{border-radius:0 0 13px 13px}
+.rankNo{font-size:15px;font-weight:900;color:#aaa}.rankStock{font-size:14px;font-weight:900}
+.rankSmall{font-size:12px}.rankScore{font-size:18px;font-weight:900}
+.tableWrap{overflow:auto}
+table{width:100%;min-width:720px;border-collapse:collapse;font-size:12px}
+th,td{padding:8px 5px;border-bottom:1px solid #34383e;text-align:center}
+th{color:#92969c;font-weight:600;background:#17191d}
+.searchResult{
+border:1px solid #3e4248;background:#131619;border-radius:14px;
+padding:11px;margin-top:7px;cursor:pointer
+}
+.searchResult b{font-size:15px}.searchResult small{display:block;color:#858a91;margin-top:3px}
+.empty{text-align:center;padding:18px;color:#777;line-height:1.8}
+.progress{height:8px;background:#30343a;border-radius:99px;overflow:hidden;margin-top:8px}
+.progress span{display:block;width:0;height:100%;background:var(--yellow);transition:.2s}
+.footer{text-align:center;color:#666;font-size:11px;line-height:1.8;padding:15px}
+.bottomNav{
+position:fixed;left:0;right:0;bottom:0;z-index:99;display:grid;
+grid-template-columns:repeat(5,1fr);background:rgba(18,20,23,.98);
+border-top:1px solid #373b41;padding:6px 6px calc(6px + env(safe-area-inset-bottom));
+backdrop-filter:blur(15px)
+}
+.navBtn{border:0;background:transparent;color:#999;padding:5px 2px;min-height:55px}
+.navBtn.active{color:var(--orange);background:#241b10}
+.navIcon{display:block;font-size:22px}.navText{display:block;font-size:11px;margin-top:4px}
+.hidden{display:none!important}
+@media(max-width:720px){
+.actionGrid{grid-template-columns:repeat(2,1fr)}
+.grid4{grid-template-columns:repeat(2,1fr)}
+.levelGrid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:500px){
+.wrap{padding-left:9px;padding-right:9px}
+.search input{font-size:16px}.search button{width:85px}
+.actionGrid{grid-template-columns:repeat(2,1fr)}
+.grid3{grid-template-columns:1fr}
+.grid2{grid-template-columns:1fr}
+.checkList{grid-template-columns:1fr}
+.rankHead,.rankRow{grid-template-columns:30px 1.5fr .7fr .7fr .7fr}
+.rankHead>:nth-child(6),.rankHead>:nth-child(7),
+.rankRow>:nth-child(6),.rankRow>:nth-child(7){display:none}
+}
+/* ================= M1391 V13 Radar ================= */
+.v13Grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.v13Card{background:#111417;border:1px solid #3b4047;border-radius:16px;padding:13px}
+.v13Card h3{margin:0 0 7px;font-size:17px}
+.v13Tag{display:inline-block;padding:4px 8px;border-radius:999px;background:#22272e;font-size:12px;font-weight:900;margin:2px}
+.v13Signal{font-size:21px;font-weight:900;margin:5px 0}
+.v13Explain{font-size:12px;color:#9a9fa6;line-height:1.75}
+.v13Rank{display:grid;grid-template-columns:34px 1.5fr .8fr .8fr .8fr;gap:5px;padding:9px 5px;border-top:1px solid #33373d;align-items:center}
+.v13Rank:first-child{border-top:0}
+.v13Num{font-weight:900;color:#999}
+.v13Name{font-weight:900}
+.v13Mini{font-size:11px;color:#999}
+.v13Good{color:var(--green)}.v13Bad{color:var(--red)}.v13Warn{color:var(--yellow)}
+@media(max-width:600px){.v13Grid{grid-template-columns:1fr}.v13Rank{grid-template-columns:28px 1.5fr .7fr .7fr}}
+.dataControl{margin-top:8px}.mainArea>.dataControl{display:none}.dataControlGrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.dataControl .action{min-height:54px}@media(max-width:560px){.dataControlGrid{grid-template-columns:1fr}}
+/* ================= V17 Dashboard UI ================= */
+:root{--dash:#06121b;--panel:#0b1a26;--panel2:#0d202e;--cyan:#25b9ff;--lime:#43ef78;--pink:#ff3f58;--gold:#ffb21c}
+body{background:radial-gradient(circle at 50% -10%,#123247 0,#061018 34%,#05090d 72%);min-height:100vh}
+.dashboardTop{display:flex;align-items:center;gap:14px;padding:16px 18px 12px;border-bottom:1px solid #24404e;background:linear-gradient(180deg,rgba(5,20,30,.98),rgba(5,14,22,.94));position:sticky;top:0;z-index:60}
+.brandRabbit{font-size:46px;line-height:1}.brandText h1{margin:0;font-size:30px;letter-spacing:.5px}.brandText h1 span{color:var(--cyan)}.brandText p{margin:3px 0 0;color:#d5dde2;font-size:13px}.dbTop{margin-left:auto;border:1px solid var(--lime);border-radius:15px;padding:9px 16px;color:var(--lime);background:#071d17;min-width:220px}.dbTop strong{display:block;font-size:17px}.dbTop small{color:#c8d5d1}
+.dashboard{display:grid;grid-template-columns:250px minmax(0,1fr);min-height:calc(100vh - 86px)}
+.sidebar{border-right:1px solid #203b49;background:rgba(6,18,27,.95);padding:12px 0;position:sticky;top:75px;height:calc(100vh - 75px);overflow:auto}.sideBtn{width:100%;border:0;border-bottom:1px solid #203440;border-radius:0;background:transparent;color:#e2e8eb;text-align:left;padding:13px 17px;font-size:16px;font-weight:800}.sideBtn.active{background:linear-gradient(90deg,#128eea,#1486dc);color:#fff}.sideIcon{display:inline-block;width:34px;font-size:23px}.sideArrow{float:right;color:#9ab1bd}.mainArea{padding:14px 16px 100px;min-width:0}.dashGrid{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:12px}.dashPanel{background:linear-gradient(180deg,#0b1a26,#09151e);border:1px solid #274555;border-radius:20px;padding:15px}.dashPanel h
+/* 後半段接續 */
+function refreshDashboard(){
+  try{
+    const el=document.getElementById("dbStatus");
+    if(el) el.textContent="資料庫：重新整理中";
+    dashLog("開始重新整理資料庫");
+    fetchTodaySnapshot(true);
+  }catch(e){
+    console.error(e);
+  }
+}
+
+function updateDashboardSummary(){
+  const universe=Array.isArray(window.M1391_UNIVERSE)?window.M1391_UNIVERSE:[];
+  const el=document.getElementById("dashUniverseCount");
+  if(el) el.textContent=universe.length.toLocaleString();
+}
+
+function setDashboardReady(source){
+  const status=document.getElementById("dbStatus");
+  const badge=document.getElementById("dbBadge");
+  if(status) status.textContent="資料庫：已建立";
+  if(badge){
+    badge.textContent="● 資料庫已建立";
+    badge.className="dbBadge ready";
+  }
+  dashLog("資料庫建立完成｜來源："+(source||"市場資料"));
+  updateDashboardSummary();
+}
+
+function safeNum(v){
+  const n=Number(String(v??"").replace(/,/g,""));
+  return Number.isFinite(n)?n:0;
+}
+
+function fmtNum(v){
+  const n=safeNum(v);
+  return n.toLocaleString("zh-TW");
+}
+
+function fmtPrice(v){
+  const n=safeNum(v);
+  if(!n) return "-";
+  return n.toFixed(2);
+}
+
+function pct(a,b){
+  a=safeNum(a); b=safeNum(b);
+  if(!b) return 0;
+  return (a/b-1)*100;
+}
+
+function average(arr){
+  const x=arr.map(Number).filter(Number.isFinite);
+  return x.length?x.reduce((a,b)=>a+b,0)/x.length:0;
+}
+
+function calcMA(rows,n){
+  const prices=rows.map(r=>safeNum(r.close??r.Close??r.收盤價)).filter(v=>v>0);
+  if(prices.length<n) return 0;
+  return average(prices.slice(-n));
+}
+
+function normalizeDate(v){
+  if(!v) return "";
+  const s=String(v);
+  if(/^\d{4}-\d{2}-\d{2}$/.test(s)) return s;
+  if(/^\d{8}$/.test(s)) return s.slice(0,4)+"-"+s.slice(4,6)+"-"+s.slice(6,8);
+  return s.slice(0,10);
+}
+
+function getRowDate(r){
+  return normalizeDate(r.date??r.Date??r.日期??r.年月日);
+}
+
+function getClose(r){
+  return safeNum(r.close??r.Close??r.收盤價??r.close_price);
+}
+
+function getOpen(r){
+  return safeNum(r.open??r.Open??r.開盤價??r.open_price);
+}
+
+function getHigh(r){
+  return safeNum(r.max??r.high??r.High??r.最高價??r.high_price);
+}
+
+function getLow(r){
+  return safeNum(r.min??r.low??r.Low??r.最低價??r.low_price);
+}
+
+function getVolume(r){
+  return safeNum(r.Trading_Volume??r.volume??r.Volume??r.成交股數??r.成交量);
+}
+
+function normalizePriceRows(data){
+  const rows=Array.isArray(data)?data:(data&&Array.isArray(data.data)?data.data:[]);
+  return rows.map(r=>({
+    date:getRowDate(r),
+    open:getOpen(r),
+    high:getHigh(r),
+    low:getLow(r),
+    close:getClose(r),
+    volume:getVolume(r),
+    raw:r
+  })).filter(r=>r.date);
+}
+
+function calcIndicators(rows){
+  const x=normalizePriceRows(rows).sort((a,b)=>a.date.localeCompare(b.date));
+  const closes=x.map(r=>r.close).filter(v=>v>0);
+  const last=closes.length?closes[closes.length-1]:0;
+  const ma5=closes.length>=5?average(closes.slice(-5)):0;
+  const ma20=closes.length>=20?average(closes.slice(-20)):0;
+  const ma60=closes.length>=60?average(closes.slice(-60)):0;
+  const ma120=closes.length>=120?average(closes.slice(-120)):0;
+  const ma240=closes.length>=240?average(closes.slice(-240)):0;
+  return {rows:x,close:last,ma5,ma20,ma60,ma120,ma240};
+}
+
+function levelPrice(price,step){
+  price=safeNum(price);
+  step=safeNum(step)||3;
+  return {
+    up1:price*(1+step/100),
+    up2:price*(1+step*2/100),
+    up3:price*(1+step*3/100),
+    down1:price*(1-step/100),
+    down2:price*(1-step*2/100),
+    down3:price*(1-step*3/100)
+  };
+}
+
+function renderStockCard(stock){
+  const box=document.getElementById("stockResult");
+  if(!box) return;
+  const price=safeNum(stock.price);
+  const prev=safeNum(stock.prev);
+  const change=price-prev;
+  const changePct=prev?change/prev*100:0;
+  const cls=change>0?"up":change<0?"down":"flat";
+  const ma5=safeNum(stock.ma5);
+  const ma20=safeNum(stock.ma20);
+  box.innerHTML=`
+    <div class="stockHero">
+      <div>
+        <div class="stockCode">${stock.id||"-"}</div>
+        <div class="stockName">${stock.name||"-"}</div>
+      </div>
+      <div class="stockPrice ${cls}">
+        ${fmtPrice(price)}
+        <small>${change>=0?"+":""}${change.toFixed(2)} (${changePct.toFixed(2)}%)</small>
+      </div>
+    </div>
+    <div class="metricGrid">
+      <div><span>開盤</span><b>${fmtPrice(stock.open)}</b></div>
+      <div><span>最高</span><b>${fmtPrice(stock.high)}</b></div>
+      <div><span>最低</span><b>${fmtPrice(stock.low)}</b></div>
+      <div><span>成交量</span><b>${fmtNum(stock.volume)}</b></div>
+      <div><span>5日均線</span><b>${fmtPrice(ma5)}</b></div>
+      <div><span>20日均線</span><b>${fmtPrice(ma20)}</b></div>
+    </div>
+  `;
+}
+
+function renderEmptyResult(msg){
+  const box=document.getElementById("stockResult");
+  if(box) box.innerHTML=`<div class="emptyResult">${msg}</div>`;
+}
+
+async function searchStock(){
+  const input=document.getElementById("searchInput");
+  const q=String(input?.value||"").trim();
+  if(!q){
+    renderEmptyResult("請輸入股票代號或名稱");
+    return;
+  }
+
+  dashLog("搜尋："+q);
+  const btn=document.getElementById("searchBtn");
+  if(btn){
+    btn.disabled=true;
+    btn.classList.add("loading");
+  }
+
+  try{
+    const universe=await loadFullUniverse(false);
+    const s=universe.find(x=>{
+      const id=String(x.id||"").toUpperCase();
+      const name=String(x.name||"");
+      return id===q.toUpperCase() || name.includes(q);
+    });
+
+    if(!s){
+      renderEmptyResult("找不到符合的股票／ETF");
+      dashLog("搜尋不到："+q);
+      return;
+    }
+
+    const data=await buildStock(s.id);
+    if(data){
+      renderStockCard(data);
+      window.M1391_CURRENT_STOCK=data;
+      dashLog(`${s.id} ${s.name||""} 資料完成`);
+    }else{
+      renderEmptyResult("資料讀取失敗：Load failed");
+      dashLog(`${s.id} 資料讀取失敗`);
+    }
+  }catch(e){
+    console.error(e);
+    renderEmptyResult("資料讀取失敗："+(e?.message||"Load failed"));
+    dashLog("搜尋失敗："+(e?.message||"Load failed"));
+  }finally{
+    if(btn){
+      btn.disabled=false;
+      btn.classList.remove("loading");
+    }
+  }
+}
+
+function bindSearch(){
+  const input=document.getElementById("searchInput");
+  const btn=document.getElementById("searchBtn");
+  if(btn) btn.addEventListener("click",searchStock);
+  if(input){
+    input.addEventListener("keydown",e=>{
+      if(e.key==="Enter") searchStock();
+    });
+  }
+}
+
+function renderScanRows(rows,targetId){
+  const box=document.getElementById(targetId);
+  if(!box) return;
+  if(!rows.length){
+    box.innerHTML=`<div class="scanEmpty">目前沒有符合條件的標的</div>`;
+    return;
+  }
+  box.innerHTML=rows.map((r,i)=>`
+    <div class="scanRow">
+      <div class="rank">${i+1}</div>
+      <div class="scanCode">${r.id||"-"}</div>
+      <div class="scanName">${r.name||""}</div>
+      <div class="scanPrice">${fmtPrice(r.price)}</div>
+      <div class="scanPct">${safeNum(r.changePct).toFixed(2)}%</div>
+    </div>
+  `).join("");
+}
+
+async function scanInstitution(){
+  const status=document.getElementById("institutionStatus");
+  if(status) status.textContent="分析中…";
+  dashLog("開始三大法人掃描");
+  try{
+    const universe=await loadFullUniverse(false);
+    const result=[];
+    let done=0;
+    for(const s of universe){
+      try{
+        const d=await buildStock(s.id);
+        if(d){
+          const total=safeNum(d.foreign)+safeNum(d.investment)+safeNum(d.dealer);
+          if(total>0) result.push({...d,total});
+        }
+      }catch(e){}
+      done++;
+      if(done%10===0){
+        dashLog(`法人掃描 ${done}/${universe.length}`);
+      }
+    }
+    result.sort((a,b)=>b.total-a.total);
+    renderScanRows(result.slice(0,20),"institutionResults");
+    if(status) status.textContent=`完成｜全市場 ${universe.length} 檔｜符合 ${result.length} 檔`;
+    dashLog(`法人掃描完成｜符合 ${result.length} 檔`);
+  }catch(e){
+    if(status) status.textContent="掃描失敗";
+    dashLog("法人掃描失敗："+(e?.message||""));
+  }
+}
+
+async function scanETF(){
+  const status=document.getElementById("etfStatus");
+  if(status) status.textContent="分析中…";
+  dashLog("開始 ETF 掃描");
+  try{
+    const universe=await loadFullUniverse(false);
+    const etfs=universe.filter(s=>s.type==="ETF" || /^00\d{3,4}[A-Z]?$/.test(String(s.id||"")));
+    const result=[];
+    let done=0;
+    for(const s of etfs){
+      try{
+        const d=await buildStock(s.id);
+        if(d) result.push(d);
+      }catch(e){}
+      done++;
+      if(done%10===0) dashLog(`ETF 掃描 ${done}/${etfs.length}`);
+    }
+    result.sort((a,b)=>safeNum(b.volume)-safeNum(a.volume));
+    renderScanRows(result.slice(0,20),"etfResults");
+    if(status) status.textContent=`完成｜全市場 ${etfs.length} 檔｜符合 ${result.length} 檔`;
+    dashLog(`ETF 掃描完成｜符合 ${result.length} 檔`);
+  }catch(e){
+    if(status) status.textContent="掃描失敗";
+    dashLog("ETF 掃描失敗："+(e?.message||""));
+  }
+}
+
+function initQuickButtons(){
+  document.querySelectorAll("[data-action]").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      const action=btn.dataset.action;
+      if(action==="search"){
+        document.getElementById("searchInput")?.focus();
+      }else if(action==="today"){
+        fetchTodaySnapshot(false);
+      }else if(action==="institution"){
+        scanInstitution();
+      }else if(action==="etf"){
+        scanETF();
+      }
+    });
+  });
+}
+
+function updateTime(){
+  const el=document.getElementById("liveTime");
+  if(el){
+    const d=new Date();
+    el.textContent=d.toLocaleTimeString("zh-TW",{hour12:false});
+  }
+}
+
+function initClock(){
+  updateTime();
+  setInterval(updateTime,1000);
+}
+
+function initNav(){
+  document.querySelectorAll(".navItem").forEach(item=>{
+    item.addEventListener("click",()=>{
+      document.querySelectorAll(".navItem").forEach(x=>x.classList.remove("active"));
+      item.classList.add("active");
+      const target=item.dataset.target;
+      if(target){
+        const el=document.getElementById(target);
+        if(el) el.scrollIntoView({behavior:"smooth",block:"start"});
+      }
+    });
+  });
+}
+
+function init(){
+  bindSearch();
+  initQuickButtons();
+  initClock();
+  initNav();
+
+  const fetchBtn=document.getElementById("fetchTodayBtn");
+  const refreshBtn=document.getElementById("refreshCloseBtn");
+
+  if(fetchBtn){
+    fetchBtn.addEventListener("click",()=>{
+      fetchTodaySnapshot(false);
+    });
+  }
+
+  if(refreshBtn){
+    refreshBtn.addEventListener("click",()=>{
+      fetchTodaySnapshot(true);
+    });
+  }
+
+  dashLog("M1391 V17 已啟動");
+  dashLog("等待建立今日資料庫");
+  updateDashboardSummary();
+}
+
+document.addEventListener("DOMContentLoaded",init);
+
+window.M1391={
+  search:searchStock,
+  refresh:()=>fetchTodaySnapshot(true),
+  scanInstitution,
+  scanETF,
+  loadFullUniverse,
+  buildStock
+};
+
+</script>
+
+</body>
+</html>
