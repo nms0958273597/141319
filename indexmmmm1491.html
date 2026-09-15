@@ -267,7 +267,8 @@ const CONFIG={
   institutionTTL:45*60*1000,
   fundamentalTTL:12*60*60*1000,
   concurrency:4,
-  deepCandidates:120,
+  deepCandidates:180,
+  hotPoolCandidates:420,
   minHotVolume:2000,
   minHotResults:14,
   maxHotResults:27,
@@ -444,17 +445,22 @@ async function loadStockInfo(){
   return stockInfoLoading
 }
 function normalizeQuoteRow(x,market){
-  const id=String(x.Code??x.code??x.stock_id??x.c??"").trim().toUpperCase();
+  // V1491：兼容 TWSE STOCK_DAY_ALL、TPEx daily close 兩種欄位命名。
+  const id=String(x.Code??x.SecuritiesCompanyCode??x.code??x.stock_id??x.c??"").trim().toUpperCase();
   if(!id)return null;
-  const name=String(x.Name??x.name??x.stock_name??x.n??id).trim();
-  const price=n(x.Close??x.closing_price??x.z??x.price);
-  const change=n(x.Change??x.change);
-  // TWSE / TPEx 公開行情的 Trading_Volume 為「股數」，V1491 顯示與篩選統一換算成「張」。
-  const rawVolume=n(x.Trading_Volume??x.TradingVolume??x.volume??x.v);
+  const name=String(x.Name??x.SecuritiesCompanyName??x.name??x.stock_name??x.n??id).trim();
+  const price=n(x.Close??x.ClosingPrice??x.closing_price??x.z??x.price);
+  const change=n(x.Change??x.PriceChange??x.change);
+  // TWSE/TPEx 公開日行情的成交量通常是「股數」，V1491 統一換算為「張」。
+  const rawVolume=n(x.Trading_Volume??x.TradingVolume??x.TradeVolume??x.volume??x.v);
   const volume=rawVolume!==null?rawVolume/1000:null;
-  const prev=n(x.y??x.PreviousClose??x.previous);
-  return{stock_id:id,stock_name:name,market,price,change,changeRate:prev?change/prev*100:null,volume,rawVolume}
+  let prev=n(x.y??x.PreviousClose??x.previous??x.PrevClose);
+  if(prev===null&&price!==null&&change!==null)prev=price-change;
+  const changeRate=prev!==null&&prev!==0&&change!==null?change/prev*100:null;
+  const turnover=n(x.TradeValue??x.TradingValue??x.Turnover??x.turnover);
+  return{stock_id:id,stock_name:name,market,price,change,changeRate,volume,rawVolume,turnover};
 }
+
 async function getDynamicUniverse(force=false){
   if(!force&&dynamicUniverseCache&&Date.now()-dynamicUniverseCache.time<CONFIG.universeTTL)return dynamicUniverseCache.rows;
   if(universeLoading)return universeLoading;
@@ -953,14 +959,18 @@ function calcDataQuality(d){
    ========================= */
 async function scanOne(code){
   const stock=await findStock(code);
-  const [rtResult,priceResult,instResult]=await Promise.allSettled([getRealtime(stock),getPrices(code,160),getInstitution(code,50)]);
+  const [rtResult,priceResult,instResult,perResult]=await Promise.allSettled([getRealtime(stock),getPrices(code,160),getInstitution(code,50),getPER(code)]);
   const rt=rtResult.status==="fulfilled"?rtResult.value:null,prices=priceResult.status==="fulfilled"&&Array.isArray(priceResult.value)?priceResult.value:[],instRows=instResult.status==="fulfilled"?instResult.value:null;
+  const perData=perResult.status==="fulfilled"?perResult.value:null;
   const last=latest(prices),price=rt?.price??n(last?.close);if(price===null)throw new Error("無價格");
   const rows=prices.length?prices:[{date:rt?.date||twDate(),close:price,max:rt?.high,min:rt?.low,volume:rt?.volume}];
   const tech=technical(rows,price),inst20=aggregatePeriods(instRows),lv=levels(price,tech),pressure=pressureModel(rows,price,inst20),advanced=breakoutAdvanced(rows,price,tech,inst20);
   const safe=safeBuyModel(price,tech,lv,inst20),rebound=reboundModel(rows,price,tech),three=threeWayAccumulation(inst20),chase=noChaseModel(price,tech,rt);
+  /* 掃描階段先使用 PER 建立輕量估值；完整財報仍留在單股深度分析 buildData。 */
+  const perValue=n(perData?.PER),eps=null,pbr=null,val=valuation(price,eps,pbr,perValue),target=null;
+  const relative=null,sig=signal(tech,inst20,val,price,target,!!rt,{relative,momentum:tech.momentumAcceleration??0});
   const opportunity=scanOpportunity({tech,inst20,pressure,advanced,safe,rebound,three,chase});
-  return{stock,price,realtime:!!rt,rt,rows,tech,inst20,pressure,advanced,safe,rebound,three,chase,opportunity}
+  return{stock,price,realtime:!!rt,rt,rows,tech,inst20,pressure,advanced,safe,rebound,three,chase,opportunity,val,sig,perData};
 }
 function scanOpportunity(x){
   let score=50;const reasons=[];
@@ -986,18 +996,54 @@ function quoteRank(x,mode){
   if(x.price!==null&&x.price>0)score+=5;
   return score
 }
+const HOT_CORE=[
+  "2409","6770","2303","2305","6226","3481","2344","6147",
+  "3105","2408","3624","6173","8358","5425","5483","6274",
+  "5351","1815","2324","2887","2834","2883","2481","2606",
+  "2330","2317","2308","3324","3711","8046"
+];
+
 async function prepareCandidates(mode){
   const universe=await getDynamicUniverse();
-  // V1491 熱門股票池：不使用固定股票名單，完全依當日市場成交量動態建立。
-  // 低於 2,000 張直接排除；ETF 不納入一般股票推薦，避免熱門 ETF 把真正個股擠掉。
-  const hot=universe.filter(x=>{
-    if(x.isETF)return false;
-    const vol=Number(x.volume??0);
-    return Number.isFinite(vol)&&vol>=CONFIG.minHotVolume;
+  /*
+   * V1491 動態熱門池：每天從上市＋上櫃公開行情重新抓成交量、漲幅、成交值。
+   * 另外保留 HOT_CORE 作為「公開行情 API 暫時異常」時的保底候選，不代表固定推薦；
+   * 每檔仍會重新取得即時／歷史行情後再評分。
+   */
+  let stocks=universe.filter(x=>!x.isETF&&x.stock_id&&/^[0-9A-Z]+$/.test(x.stock_id));
+  const fallback=HOT_CORE.map(id=>{
+    const k=KNOWN[id]||{};
+    return{stock_id:id,stock_name:k.name||id,industry_category:k.industry||"其他",market:k.market||"tse",isETF:false,price:null,volume:null,changeRate:null};
   });
-  const ranked=hot.map(x=>({...x,preScore:quoteRank(x,mode)})).sort((a,b)=>b.preScore-a.preScore);
-  const top=ranked.slice(0,CONFIG.deepCandidates);
-  return top;
+  const byId=new Map(stocks.map(x=>[x.stock_id,x]));
+  fallback.forEach(x=>{if(!byId.has(x.stock_id))byId.set(x.stock_id,x)});
+  stocks=[...byId.values()];
+  const validVol=stocks.filter(x=>Number.isFinite(Number(x.volume))&&Number(x.volume)>0);
+  const byVolume=[...validVol].sort((a,b)=>Number(b.volume||0)-Number(a.volume||0)).slice(0,300);
+  const byChange=[...stocks].sort((a,b)=>Number(b.changeRate||-999)-Number(a.changeRate||-999)).slice(0,220);
+  const byTurnover=[...validVol].sort((a,b)=>{
+    const ta=Number(a.turnover||0)||((Number(a.price)||0)*(Number(a.volume)||0));
+    const tb=Number(b.turnover||0)||((Number(b.price)||0)*(Number(b.volume)||0));
+    return tb-ta;
+  }).slice(0,220);
+  const hotSet=new Map();
+  [...byVolume,...byChange,...byTurnover].forEach(x=>hotSet.set(x.stock_id,x));
+  validVol.filter(x=>Number(x.volume)>=CONFIG.minHotVolume).forEach(x=>hotSet.set(x.stock_id,x));
+  /* API 暫時沒有成交量時，至少讓核心熱門股票進入掃描，避免畫面直接顯示 0 檔。 */
+  if(validVol.length<CONFIG.minHotResults){
+    fallback.forEach(x=>hotSet.set(x.stock_id,byId.get(x.stock_id)||x));
+  }
+  const hot=[...hotSet.values()];
+  const ranked=hot.map(x=>{
+    const vol=Number(x.volume||0),chg=Number(x.changeRate||0),turn=Number(x.turnover||0)||((Number(x.price)||0)*vol);
+    const volumeRank=vol>0?Math.log10(Math.max(1,vol))*8:8;
+    const turnoverRank=turn>0?Math.log10(Math.max(1,turn))*5:0;
+    const gainRank=Math.max(-20,Math.min(30,chg*2));
+    const coreBonus=HOT_CORE.includes(x.stock_id)?10:0;
+    const poolBonus=(vol>=CONFIG.minHotVolume?12:0)+(chg>=3?8:0)+(chg>=6?6:0);
+    return{...x,preScore:volumeRank+turnoverRank+gainRank+poolBonus+coreBonus};
+  }).sort((a,b)=>b.preScore-a.preScore);
+  return ranked.slice(0,CONFIG.deepCandidates);
 }
 async function mapConcurrent(items,worker,limit=CONFIG.concurrency,onProgress=()=>{}){
   const out=[];let cursor=0;
@@ -1051,7 +1097,7 @@ async function scanStrategy(type){
   const my=++scanSeq;scanState={running:true,mode:type,started:Date.now(),done:0,total:0};
   setStatus("🔎 正在建立動態市場股票池…","loading");
   const candidates=await prepareCandidates(type);scanState.total=candidates.length;
-  setStatus("📡 動態初篩完成｜深度分析 "+candidates.length+" 檔…","loading");
+  setStatus("📡 動態熱門池建立完成｜成交量＋漲幅＋成交值交集｜深度分析 "+candidates.length+" 檔…","loading");
   const results=await mapConcurrent(candidates,async stock=>{
     if(my!==scanSeq)return null;
     const x=await scanOne(stock.stock_id);x.strategy=strategyScore(x,type);return x
@@ -1298,7 +1344,7 @@ async function scanHotAndCheap(mode="hot"){
     if(my!==scanSeq)return;
     let filtered=results.filter(x=>Number(x.stock?.volume||0)>=CONFIG.minHotVolume&&x.price!==null);
     if(mode==="hot"){
-      filtered=filtered.filter(x=>!x.stock?.isETF&&!x.chase?.noChase&&x.sig?.score!==null);
+      filtered=filtered.filter(x=>!x.stock?.isETF&&!x.chase?.noChase);
       filtered.sort((a,b)=>(b.strategy?.score??0)-(a.strategy?.score??0));
     }else{
       filtered=filtered.filter(x=>!x.stock?.isETF&&x.val?.state==="💎 便宜"&&!x.tech?.breakdown&&x.sig?.score!==null);
