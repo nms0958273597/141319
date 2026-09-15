@@ -96,6 +96,7 @@ th{color:#92959a;font-weight:500}.recTable{overflow:hidden;border:1px solid #3c3
 .toolbar{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.toolbar .smallBtn.active{border-color:var(--orange);color:var(--orange)}
 .quality{display:flex;align-items:center;gap:7px}.qualityBar{height:7px;flex:1;background:#303237;border-radius:99px;overflow:hidden}.qualityBar span{display:block;height:100%;background:var(--blue)}
 .reasonList{margin:0;padding-left:20px;color:#aaa;line-height:1.8}.warningBox{border:1px solid #684f1d;background:#191710;border-radius:14px;padding:11px;color:#c8bd91;line-height:1.7}
+.hotGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:10px}.hotItem{background:#141619;border:1px solid #3e4146;border-radius:14px;padding:10px}.hotItem b{font-size:15px}.hotMeta{font-size:12px;color:#8f9399;margin-top:4px;line-height:1.6}.hotLevels{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin-top:7px}.hotLevel{background:#101214;border-radius:9px;padding:7px;text-align:center}.hotLevel span{display:block;font-size:10px;color:#777}.hotLevel strong{display:block;font-size:14px;margin-top:2px}.sentiment{font-weight:900}.valueCheap{color:var(--green)!important}.valueExpensive{color:var(--red)!important}
 @media(max-width:650px){
   .wrap{padding:7px 10px 120px}.search button{width:102px}.card{padding:14px}.stockTitle{font-size:26px}
   .breakGrid{grid-template-columns:1fr}.data{border-left:0;border-top:1px solid #383b40;padding:9px 0 0;margin-top:8px}
@@ -165,6 +166,10 @@ th{color:#92959a;font-weight:500}.recTable{overflow:hidden;border:1px solid #3c3
       <div class="sectionGrid" style="margin-top:9px">
         <button id="consolidationScanBtn" class="action" type="button">📦 盤整中的股票觀察推薦</button>
         <button id="breakoutOnlyBtn" class="action" type="button">🚀 突破股票推薦</button>
+      </div>
+      <div class="sectionGrid" style="margin-top:9px">
+        <button id="hotScanBtn" class="action" type="button">🔥 近期熱門股票推薦</button>
+        <button id="cheapScanBtn" class="action" type="button">💎 便宜股票推薦</button>
       </div>
     </div>
 
@@ -1030,6 +1035,13 @@ function strategyScore(x,type){
     score=30+(t.longBull?30:0)+(t.trend.includes("多")?20:0)+(inst?.periods?.[20]?.total?.net>0?10:0)+(safe.score*.1);reasons=["長期均線結構",...x.opportunity.reasons];
   }else if(type==="breakout"){
     score=adv.score+(p.score*.25);reasons=[...adv.reasons,...p.reasons];
+  }else if(type==="popular"){
+    const vol=Number(x.stock?.volume||0),chg=Number(x.stock?.changeRate||0),vr=Number(adv?.volumeRatio||0);
+    score=35+Math.min(25,Math.log10(Math.max(1,vol))*6)+Math.min(18,Math.max(-8,chg)*2)+Math.min(15,vr*6);
+    if(t.nearHigh)score+=8;if(t.breakout)score+=10;if(t.trend==="多頭")score+=10;else if(t.trend==="偏多")score+=6;
+    if(inst?.periods?.[5]?.total?.net>0)score+=7;
+    if(x.chase?.noChase)score-=20;
+    reasons=["成交量熱門",vr>=1.2?"量能放大":"成交活躍",t.breakout?"突破近期高點":t.nearHigh?"接近近期高點":"趨勢觀察"];
   }else if(type==="rebound"){
     score=rebound.score;reasons=[...rebound.reasons];
   }
@@ -1262,13 +1274,47 @@ async function scanBreakoutMode(mode="combined"){
 async function scanBreakout(){return scanBreakoutMode("combined")}
 function renderScanTable(results,type,title){
   const box=$("recommendTable")||$("result");if(!box)return;
-  if(!results.length){box.innerHTML=`<div class="empty">今日沒有符合條件的高品質機會。<br>系統不強迫湊數。</div>`;return}
-  // 推薦結果最多 27 檔；一般熱門池目標維持 14～27 檔。若真正符合條件不足 14 檔，不硬塞冷門股。
+  if(!results.length){box.innerHTML=`<div class="empty">今日沒有符合條件的高品質機會。<br><b>系統不會為了湊數而加入冷門股。</b></div>`;return}
   const top=results.slice(0,CONFIG.maxHotResults);
-  const modeNote=type==="consolidation"?"只列出尚未正式突破、正在盤整且未觸發追高的股票。":type==="breakout"?"只列出已突破近期高點、帶量且通過假突破檢查的股票。":"盤整、蓄勢與突破的綜合候選。";
-  box.innerHTML=`<div class="card"><div class="title green">${esc(title)}</div><div class="notice">${esc(modeNote)}<br>成交量門檻：≥ ${integer(CONFIG.minHotVolume)} 張。</div><div class="recTable"><div class="recHead"><div>股票</div><div>價格</div><div>趨勢</div><div>狀態</div><div>分數</div><div></div></div>${top.map(x=>`<div class="row" data-result-code="${esc(x.stock.stock_id)}"><div class="recName">${iconFor(x.stock)} ${esc(x.stock.stock_name)}<br><span style="color:#777">${esc(x.stock.stock_id)}｜${integer(x.stock.volume??0)}張</span></div><div class="recSmall">${money(x.price)}</div><div class="recSmall ${trendClass(x.tech.trend)}">${esc(x.tech.trend)}</div><div class="recSmall">${type==="consolidation"?"📦 盤整觀察":type==="breakout"?"🚀 突破推薦":esc(x.strategy?.reasons?.[0]||x.breakout?.state||"觀察")}</div><div class="recSmall orange">${x.strategy?.score??x.opportunity?.score??0}</div><div class="arrow">›</div></div>`).join("")}</div><div class="notice">動態股票池、不使用固定名單｜實際找到 ${results.length} 檔；顯示 ${top.length} 檔（上限 27 檔）。${results.length<CONFIG.minHotResults?'符合條件不足 14 檔，不強制加入冷門股。':''}</div></div>`;
-  box.querySelectorAll("[data-result-code]").forEach(el=>el.addEventListener("click",()=>{const code=el.getAttribute("data-result-code");$("searchInput").value=code;searchStock(code)}))
+  const modeNote=type==="consolidation"?"只列出尚未正式突破、正在盤整且未觸發追高的股票。":type==="breakout"?"只列出已突破近期高點、帶量且通過假突破檢查的股票。":type==="popular"?"依近期成交活躍度、量能、趨勢、前高位置與法人動向動態排名。":type==="cheap"?"只列出估值模型達到「便宜」且成交量達標的股票。":"盤整、蓄勢與突破的綜合候選。";
+  const valueState=x=>x.val?.state||"⚪ 資料不足";
+  const sentiment=x=>x.sig?.state||"🟡 中性";
+  const pointText=x=>x.tech?.breakout!==null?money(x.tech.breakout):"—";
+  const observeText=x=>x.lv?.buyLow!==null&&x.lv?.buyHigh!==null?`${money(x.lv.buyLow)}～${money(x.lv.buyHigh)}`:(x.lv?.support!==null?money(x.lv.support):"—");
+  const directionClass=x=>(x.sig?.state||"").includes("空")?"red":(x.sig?.state||"").includes("多")?"green":"yellow";
+  box.innerHTML=`<div class="card"><div class="title green">${esc(title)}</div><div class="notice">${esc(modeNote)}<br>成交量門檻：≥ ${integer(CONFIG.minHotVolume)} 張｜動態股票池｜不使用固定推薦名單。</div><div class="recTable"><div class="recHead"><div>股票</div><div>現價</div><div>突破高點</div><div>觀察點</div><div>多空</div><div>估值</div></div>${top.map(x=>`<div class="row" data-result-code="${esc(x.stock.stock_id)}" style="grid-template-columns:1.35fr .72fr .9fr 1fr .78fr .78fr"><div class="recName">${iconFor(x.stock)} ${esc(x.stock.stock_name)}<br><span style="color:#777">${esc(x.stock.stock_id)}｜${integer(x.stock.volume??0)}張</span></div><div class="recSmall">${money(x.price)}</div><div class="recSmall orange">${pointText(x)}</div><div class="recSmall blue">${observeText(x)}</div><div class="recSmall sentiment ${directionClass(x)}">${esc(sentiment(x))}</div><div class="recSmall ${valueState(x).includes("便宜")?"green":valueState(x).includes("貴")?"red":"yellow"}">${esc(valueState(x))}</div></div>`).join("")}</div><div class="notice">實際符合 <b>${results.length}</b> 檔｜顯示 <b>${top.length}</b> 檔（上限 27 檔）。${results.length<CONFIG.minHotResults?'符合條件不足 14 檔，不強制加入冷門股。':''}</div></div>`;
+  box.querySelectorAll("[data-result-code]").forEach(el=>el.addEventListener("click",()=>{const code=el.getAttribute("data-result-code");$("searchInput").value=code;searchStock(code)}));
 }
+
+async function scanHotAndCheap(mode="hot"){
+  const btn=mode==="hot"?$("hotScanBtn"):(mode==="cheap"?$("cheapScanBtn"):null);
+  const title=mode==="hot"?"🔥 近期熱門股票推薦":"💎 便宜股票推薦";
+  const my=++scanSeq;
+  if(btn){btn.disabled=true;btn.textContent="⏳ 掃描中…"}
+  const table=$("recommendTable");
+  if(table)table.innerHTML=`<div class="loadingBox">${esc(title)}｜正在搜尋近期熱門股票…<div class="progress"><span id="scanProgress"></span></div><div id="scanText">建立動態市場股票池</div></div>`;
+  try{
+    const results=await scanStrategy(mode==="hot"?"popular":"long");
+    if(my!==scanSeq)return;
+    let filtered=results.filter(x=>Number(x.stock?.volume||0)>=CONFIG.minHotVolume&&x.price!==null);
+    if(mode==="hot"){
+      filtered=filtered.filter(x=>!x.stock?.isETF&&!x.chase?.noChase&&x.sig?.score!==null);
+      filtered.sort((a,b)=>(b.strategy?.score??0)-(a.strategy?.score??0));
+    }else{
+      filtered=filtered.filter(x=>!x.stock?.isETF&&x.val?.state==="💎 便宜"&&!x.tech?.breakdown&&x.sig?.score!==null);
+      filtered.sort((a,b)=>((b.val?.score??0)+(b.strategy?.score??0)*.35+(b.sig?.score??0)*.15)-((a.val?.score??0)+(a.strategy?.score??0)*.35+(a.sig?.score??0)*.15));
+    }
+    renderScanTable(filtered,mode,title);
+    setStatus(`✅ ${title}完成｜符合條件 ${filtered.length} 檔`,'ok');
+  }catch(e){
+    console.error("scanHotAndCheap",e);
+    if(table)table.innerHTML=`<div class="empty">❌ ${esc(title)}失敗：${esc(e.message||"未知錯誤")}</div>`;
+    setStatus("❌ "+title+"失敗｜"+esc(e.message||"未知錯誤"),"error");
+  }finally{
+    if(my===scanSeq&&btn){btn.disabled=false;btn.textContent=mode==="hot"?"🔥 近期熱門股票推薦":"💎 便宜股票推薦"}
+  }
+}
+
 async function scanPressure(){
   const my=++scanSeq;setStatus("🔒 正在動態掃描近期賣壓卡關…","loading");
   try{const results=await scanStrategy("breakout");if(my!==scanSeq)return;results.sort((a,b)=>b.pressure.score-a.pressure.score);renderScanTable(results.filter(x=>x.pressure?.pressure!==null),"pressure","🔒 近期賣壓卡關排行榜");scrollToResult();setStatus("🔒 賣壓卡關掃描完成｜"+results.length+" 檔","ok")}catch(e){setStatus("❌ 賣壓掃描失敗","error")}
@@ -1373,6 +1419,8 @@ function bindEvents(){
   const scanBtn=$("breakScanBtn");if(scanBtn)scanBtn.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();e.__v1491Handled=true;scanBreakout().catch(err=>{console.error(err);setStatus("❌ 掃描啟動失敗："+esc(err.message||""),"error")})});
   const consolidationBtn=$("consolidationScanBtn");if(consolidationBtn)consolidationBtn.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();e.__v1491Handled=true;scanBreakoutMode("consolidation").catch(err=>{console.error(err);setStatus("❌ 盤整掃描啟動失敗："+esc(err.message||""),"error")})});
   const breakoutBtn=$("breakoutOnlyBtn");if(breakoutBtn)breakoutBtn.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();e.__v1491Handled=true;scanBreakoutMode("breakout").catch(err=>{console.error(err);setStatus("❌ 突破掃描啟動失敗："+esc(err.message||""),"error")})});
+  const hotBtn=$("hotScanBtn");if(hotBtn)hotBtn.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();e.__v1491Handled=true;scanHotAndCheap("hot").catch(err=>{console.error(err);setStatus("❌ 熱門掃描啟動失敗："+esc(err.message||""),"error")})});
+  const cheapBtn=$("cheapScanBtn");if(cheapBtn)cheapBtn.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();e.__v1491Handled=true;scanHotAndCheap("cheap").catch(err=>{console.error(err);setStatus("❌ 便宜掃描啟動失敗："+esc(err.message||""),"error")})});
   document.querySelectorAll("[data-radar]").forEach(btn=>btn.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();e.__v1491Handled=true;try{runRadar(btn.getAttribute("data-radar"))}catch(err){console.error(err);setStatus("❌ 雷達啟動失敗："+esc(err.message||""),"error")}}));
   document.querySelectorAll("[data-nav]").forEach(btn=>btn.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();e.__v1491Handled=true;try{navAction(btn.getAttribute("data-nav"))}catch(err){console.error(err);setStatus("❌ 導覽啟動失敗："+esc(err.message||""),"error")}}));
 }
@@ -1382,7 +1430,7 @@ function installV1491Failsafe(){
   if(window.__V1491_FAILSAFE_BOUND__)return;
   window.__V1491_FAILSAFE_BOUND__=true;
   const delegated=(e)=>{
-    const el=e.target?.closest?.("#searchBtn,[data-code],[data-action],#breakScanBtn,#consolidationScanBtn,#breakoutOnlyBtn,[data-radar],[data-nav]");
+    const el=e.target?.closest?.("#searchBtn,[data-code],[data-action],#breakScanBtn,#consolidationScanBtn,#breakoutOnlyBtn,#hotScanBtn,#cheapScanBtn,[data-radar],[data-nav]");
     if(!el)return;
     if(e.__v1491Handled)return;
     if(el.dataset.v1491Handled==="1")return;
@@ -1395,6 +1443,8 @@ function installV1491Failsafe(){
       if(el.id==="breakScanBtn"){e.preventDefault();scanBreakout();return}
       if(el.id==="consolidationScanBtn"){e.preventDefault();scanBreakoutMode("consolidation");return}
       if(el.id==="breakoutOnlyBtn"){e.preventDefault();scanBreakoutMode("breakout");return}
+      if(el.id==="hotScanBtn"){e.preventDefault();scanHotAndCheap("hot");return}
+      if(el.id==="cheapScanBtn"){e.preventDefault();scanHotAndCheap("cheap");return}
       if(el.matches("[data-radar]")){e.preventDefault();runRadar(el.getAttribute("data-radar"));return}
       if(el.matches("[data-nav]")){e.preventDefault();navAction(el.getAttribute("data-nav"));return}
     }catch(err){console.error("V1491 failsafe",err);setStatus("❌ 操作失敗："+esc(err.message||""),"error")}
