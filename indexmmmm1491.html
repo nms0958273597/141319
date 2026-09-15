@@ -213,7 +213,7 @@ th{color:#92959a;font-weight:500}.recTable{overflow:hidden;border:1px solid #3c3
   <div id="result"></div>
 
   <div class="footer">
-    V1491｜專業動態版<br>
+    V1491｜熱門5～80專業動態版<br>
     每次掃描重新建立市場股票池；不使用固定 SCAN_CODES 作為掃描宇宙。<br>
     盤中 09:00～13:30 優先使用 TWSE MIS；非盤中使用可取得的盤後／最近交易資料。<br>
     法人、賣壓、主力成本、相對強弱等部分屬公開資料模型估算，不等同券商逐筆資料。<br>
@@ -267,8 +267,10 @@ const CONFIG={
   institutionTTL:45*60*1000,
   fundamentalTTL:12*60*60*1000,
   concurrency:4,
-  deepCandidates:180,
+  deepCandidates:240,
   hotPoolCandidates:420,
+  hotRankMin:5,
+  hotRankMax:80,
   minHotVolume:2000,
   minHotResults:14,
   maxHotResults:27,
@@ -1019,15 +1021,22 @@ async function prepareCandidates(mode){
   fallback.forEach(x=>{if(!byId.has(x.stock_id))byId.set(x.stock_id,x)});
   stocks=[...byId.values()];
   const validVol=stocks.filter(x=>Number.isFinite(Number(x.volume))&&Number(x.volume)>0);
-  const byVolume=[...validVol].sort((a,b)=>Number(b.volume||0)-Number(a.volume||0)).slice(0,300);
-  const byChange=[...stocks].sort((a,b)=>Number(b.changeRate||-999)-Number(a.changeRate||-999)).slice(0,220);
+  const byVolume=[...validVol].sort((a,b)=>Number(b.volume||0)-Number(a.volume||0));
+  const byChange=[...stocks].sort((a,b)=>Number(b.changeRate||-999)-Number(a.changeRate||-999));
   const byTurnover=[...validVol].sort((a,b)=>{
     const ta=Number(a.turnover||0)||((Number(a.price)||0)*(Number(a.volume)||0));
     const tb=Number(b.turnover||0)||((Number(b.price)||0)*(Number(b.volume)||0));
     return tb-ta;
-  }).slice(0,220);
+  });
+  /*
+   * V1491 熱門候選池正式採用「第 5～80 名」區間。
+   * 不只抓前幾名，避免熱門榜單中段的強勢股被漏掉。
+   * 三種公開排行交集：成交量、漲幅、成交值；最後仍交給 V1491 深度模型重排。
+   */
+  const rankSlice=(arr)=>arr.slice(Math.max(0,CONFIG.hotRankMin-1),CONFIG.hotRankMax);
   const hotSet=new Map();
-  [...byVolume,...byChange,...byTurnover].forEach(x=>hotSet.set(x.stock_id,x));
+  [...rankSlice(byVolume),...rankSlice(byChange),...rankSlice(byTurnover)].forEach(x=>hotSet.set(x.stock_id,x));
+  /* 同時保留達到 2,000 張的高流動性股票，避免第 5～80 名以外突然放量的股票被漏掉。 */
   validVol.filter(x=>Number(x.volume)>=CONFIG.minHotVolume).forEach(x=>hotSet.set(x.stock_id,x));
   /* API 暫時沒有成交量時，至少讓核心熱門股票進入掃描，避免畫面直接顯示 0 檔。 */
   if(validVol.length<CONFIG.minHotResults){
@@ -1100,8 +1109,19 @@ async function scanStrategy(type){
   setStatus("📡 動態熱門池建立完成｜成交量＋漲幅＋成交值交集｜深度分析 "+candidates.length+" 檔…","loading");
   const results=await mapConcurrent(candidates,async stock=>{
     if(my!==scanSeq)return null;
-    const x=await scanOne(stock.stock_id);x.strategy=strategyScore(x,type);return x
-  },CONFIG.concurrency,(done)=>{scanState.done=done});
+    const x=await scanOne(stock.stock_id);
+    /* 保留動態市場池的成交量／漲幅／成交值／市場等資訊，避免深度掃描後遺失 5～80 名排行資料。 */
+    x.stock={...(x.stock||{}),...stock};
+    x.strategy=strategyScore(x,type);
+    return x
+  },CONFIG.concurrency,(done,current,total)=>{
+    scanState.done=done;
+    const pct=total?Math.round(done/total*100):0;
+    const bar=$("scanProgress");
+    const txt=$("scanText");
+    if(bar)bar.style.width=pct+"%";
+    if(txt)txt.textContent="深度分析 "+done+" / "+total+" 檔（"+pct+"%）";
+  });
   if(my!==scanSeq)return[];
   results.sort((a,b)=>b.strategy.score-a.strategy.score);
   const regime=await getMarketRegime();
@@ -1328,20 +1348,26 @@ function renderScanTable(results,type,title){
   const pointText=x=>x.tech?.breakout!==null?money(x.tech.breakout):"—";
   const observeText=x=>x.lv?.buyLow!==null&&x.lv?.buyHigh!==null?`${money(x.lv.buyLow)}～${money(x.lv.buyHigh)}`:(x.lv?.support!==null?money(x.lv.support):"—");
   const directionClass=x=>(x.sig?.state||"").includes("空")?"red":(x.sig?.state||"").includes("多")?"green":"yellow";
-  box.innerHTML=`<div class="card"><div class="title green">${esc(title)}</div><div class="notice">${esc(modeNote)}<br>成交量門檻：≥ ${integer(CONFIG.minHotVolume)} 張｜動態股票池｜不使用固定推薦名單。</div><div class="recTable"><div class="recHead"><div>股票</div><div>現價</div><div>突破高點</div><div>觀察點</div><div>多空</div><div>估值</div></div>${top.map(x=>`<div class="row" data-result-code="${esc(x.stock.stock_id)}" style="grid-template-columns:1.35fr .72fr .9fr 1fr .78fr .78fr"><div class="recName">${iconFor(x.stock)} ${esc(x.stock.stock_name)}<br><span style="color:#777">${esc(x.stock.stock_id)}｜${integer(x.stock.volume??0)}張</span></div><div class="recSmall">${money(x.price)}</div><div class="recSmall orange">${pointText(x)}</div><div class="recSmall blue">${observeText(x)}</div><div class="recSmall sentiment ${directionClass(x)}">${esc(sentiment(x))}</div><div class="recSmall ${valueState(x).includes("便宜")?"green":valueState(x).includes("貴")?"red":"yellow"}">${esc(valueState(x))}</div></div>`).join("")}</div><div class="notice">實際符合 <b>${results.length}</b> 檔｜顯示 <b>${top.length}</b> 檔（上限 27 檔）。${results.length<CONFIG.minHotResults?'符合條件不足 14 檔，不強制加入冷門股。':''}</div></div>`;
+  box.innerHTML=`<div class="card"><div class="title green">${esc(title)}</div><div class="notice">${esc(modeNote)}<br>熱門候選：公開排行第 5～80 名＋成交量 ≥ ${integer(CONFIG.minHotVolume)} 張｜動態股票池｜不使用固定推薦名單。</div><div class="recTable"><div class="recHead"><div>股票</div><div>現價</div><div>突破高點</div><div>觀察點</div><div>多空</div><div>估值</div></div>${top.map(x=>`<div class="row" data-result-code="${esc(x.stock.stock_id)}" style="grid-template-columns:1.35fr .72fr .9fr 1fr .78fr .78fr"><div class="recName">${iconFor(x.stock)} ${esc(x.stock.stock_name)}<br><span style="color:#777">${esc(x.stock.stock_id)}｜${integer(x.stock.volume??0)}張</span></div><div class="recSmall">${money(x.price)}</div><div class="recSmall orange">${pointText(x)}</div><div class="recSmall blue">${observeText(x)}</div><div class="recSmall sentiment ${directionClass(x)}">${esc(sentiment(x))}</div><div class="recSmall ${valueState(x).includes("便宜")?"green":valueState(x).includes("貴")?"red":"yellow"}">${esc(valueState(x))}</div></div>`).join("")}</div><div class="notice">實際符合 <b>${results.length}</b> 檔｜顯示 <b>${top.length}</b> 檔（上限 27 檔）。${results.length<CONFIG.minHotResults?'符合條件不足 14 檔，不強制加入冷門股。':''}</div></div>`;
   box.querySelectorAll("[data-result-code]").forEach(el=>el.addEventListener("click",()=>{const code=el.getAttribute("data-result-code");$("searchInput").value=code;searchStock(code)}));
 }
 
 async function scanHotAndCheap(mode="hot"){
+  /* scanStrategy() 會自行管理 scanSeq；這裡不能再 ++scanSeq，否則掃描完成後外層序號永遠不一致，畫面會卡在「準備中」。 */
   const btn=mode==="hot"?$("hotScanBtn"):(mode==="cheap"?$("cheapScanBtn"):null);
   const title=mode==="hot"?"🔥 近期熱門股票推薦":"💎 便宜股票推薦";
-  const my=++scanSeq;
+  let my=scanSeq;
   if(btn){btn.disabled=true;btn.textContent="⏳ 掃描中…"}
   const table=$("recommendTable");
   if(table)table.innerHTML=`<div class="loadingBox">${esc(title)}｜正在搜尋近期熱門股票…<div class="progress"><span id="scanProgress"></span></div><div id="scanText">建立動態市場股票池</div></div>`;
   try{
     const results=await scanStrategy(mode==="hot"?"popular":"long");
-    if(my!==scanSeq)return;
+    my=scanSeq;
+    if(!results.length){
+      if(table)table.innerHTML=`<div class="empty">⚠️ 目前沒有完成可用的深度分析結果。<br>請稍後再按一次熱門掃描；系統不會用假資料湊數。</div>`;
+      setStatus(`🟡 ${title}暫無可用結果｜可能是公開行情 API 暫時忙碌`,'loading');
+      return;
+    }
     let filtered=results.filter(x=>Number(x.stock?.volume||0)>=CONFIG.minHotVolume&&x.price!==null);
     if(mode==="hot"){
       filtered=filtered.filter(x=>!x.stock?.isETF&&!x.chase?.noChase);
