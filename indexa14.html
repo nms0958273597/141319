@@ -97,15 +97,25 @@ th{color:#92959a;font-weight:500}.recTable{overflow:hidden;border:1px solid #3c3
 .quality{display:flex;align-items:center;gap:7px}.qualityBar{height:7px;flex:1;background:#303237;border-radius:99px;overflow:hidden}.qualityBar span{display:block;height:100%;background:var(--blue)}
 .reasonList{margin:0;padding-left:20px;color:#aaa;line-height:1.8} .warningBox{border:1px solid #684f1d;background:#191710;border-radius:14px;padding:11px;color:#c8bd91;line-height:1.7}
 .longRepoGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:12px}
-.longRepoItem{background:#141619;border:1px solid #41444a;border-radius:16px;padding:13px;cursor:pointer}
-.longRepoItem:active{transform:scale(.98)}
+.longRepoItem{background:#141619;border:1px solid #41444a;border-radius:16px;padding:13px}
+
 .longRepoTop{display:flex;justify-content:space-between;gap:8px;align-items:center}
 .longRepoCode{font-size:13px;color:#888}
 .longRepoName{font-size:18px;font-weight:900;margin-top:4px}
 .longRepoType{font-size:12px;color:#aaa;margin-top:6px}
 .longRepoWhy{font-size:13px;color:#c2c5ca;line-height:1.7;margin-top:8px}
 .longRepoTag{display:inline-block;padding:3px 8px;border-radius:999px;background:#25282d;color:#ffd447;font-size:11px;font-weight:800}
-@media(max-width:650px){.longRepoGrid{grid-template-columns:1fr}}
+.longRepoMetrics{display:grid;grid-template-columns:repeat(2,1fr);gap:7px;margin-top:10px}
+.longRepoMetric{background:#0f1113;border:1px solid #30343a;border-radius:10px;padding:8px;min-width:0}
+.longRepoMetricLabel{font-size:11px;color:#8f949b}
+.longRepoMetricValue{font-size:15px;font-weight:900;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.longRepoMetricValue.green{color:var(--green)}
+.longRepoMetricValue.red{color:var(--red)}
+.longRepoMetricValue.orange{color:var(--orange)}
+.longRepoMetricValue.blue{color:var(--blue)}
+.longRepoMetricValue.yellow{color:var(--yellow)}
+.longRepoLoading{font-size:11px;color:#ffd447;margin-top:8px}
+@media(max-width:650px){.longRepoGrid{grid-template-columns:1fr}.longRepoMetrics{grid-template-columns:repeat(2,1fr)}}
 .hotGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:10px}.hotItem{background:#141619;border:1px solid #3e4146;border-radius:14px;padding:10px}.hotItem b{font-size:15px}.hotMeta{font-size:12px;color:#8f9399;margin-top:4px;line-height:1.6}.hotLevels{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin-top:7px}.hotLevel{background:#101214;border-radius:9px;padding:7px;text-align:center}.hotLevel span{display:block;font-size:10px;color:#777}.hotLevel strong{display:block;font-size:14px;margin-top:2px}.sentiment{font-weight:900}.valueCheap{color:var(--green)!important}.valueExpensive{color:var(--red)!important}
 @media(max-width:650px){
   .wrap{padding:7px 10px 120px}.search button{width:102px}.card{padding:14px}.stockTitle{font-size:26px}
@@ -1020,7 +1030,7 @@ async function scanOne(code){
   const perValue=n(perData?.PER),eps=null,pbr=null,val=valuation(price,eps,pbr,perValue),target=null;
   const relative=null,sig=signal(tech,inst20,val,price,target,!!rt,{relative,momentum:tech.momentumAcceleration??0});
   const opportunity=scanOpportunity({tech,inst20,pressure,advanced,safe,rebound,three,chase});
-  return{stock,price,realtime:!!rt,rt,rows,tech,inst20,pressure,advanced,safe,rebound,three,chase,opportunity,val,sig,perData};
+  return{stock,price,realtime:!!rt,rt,rows,tech,inst20,lv,pressure,advanced,safe,rebound,three,chase,opportunity,val,sig,perData};
 }
 function scanOpportunity(x){
   let score=50;const reasons=[];
@@ -1421,44 +1431,21 @@ function getFixedPoolRows(){
 
 function renderFixedPoolImmediate(rows){
   const box=$("recommendTable");if(!box)return;
-  box.innerHTML=`<div class="card"><div class="title green">📦 固定 4～60 股票池｜57 檔</div><div class="notice">這 57 檔直接顯示，不等待深度分析。行情、趨勢、法人與突破資料會在背景逐檔補上。</div><div class="recTable"><div class="recHead"><div>股票</div><div>現價</div><div>突破高點</div><div>觀察點</div><div>狀態</div><div>排名</div></div>${rows.map(x=>`<div class="row fixed57row" data-result-code="${esc(x.stock.stock_id)}" style="grid-template-columns:1.35fr .72fr .9fr 1fr .78fr .78fr"><div class="recName">${iconFor(x.stock)} ${esc(x.stock.stock_name)}<br><span style="color:#777">${esc(x.stock.stock_id)}｜固定第 ${x.stock.fixedRank} 檔${x.stock.volume!==null?`｜${integer(x.stock.volume)}張`:""}</span></div><div class="recSmall">${money(x.price)}</div><div class="recSmall orange">—</div><div class="recSmall blue">—</div><div class="recSmall yellow">⏳ 分析中</div><div class="recSmall orange">${x.stock.fixedRank}</div></div>`).join("")}</div><div class="notice">固定股票池：<b>57 檔</b>｜不因模型條件不足而隱藏股票。</div></div>`;
+  box.innerHTML=`<div class="card"><div class="title green">📦 固定 4～60 股票池｜57 檔</div><div class="notice">這 57 檔直接顯示，不等待深度分析。不等待57檔深度分析；需要個股詳細資料時，直接點擊該股票進入完整分析。</div><div class="recTable"><div class="recHead"><div>股票</div><div>現價</div><div>突破高點</div><div>觀察點</div><div>狀態</div><div>排名</div></div>${rows.map(x=>`<div class="row fixed57row" data-result-code="${esc(x.stock.stock_id)}" style="grid-template-columns:1.35fr .72fr .9fr 1fr .78fr .78fr"><div class="recName">${iconFor(x.stock)} ${esc(x.stock.stock_name)}<br><span style="color:#777">${esc(x.stock.stock_id)}｜固定第 ${x.stock.fixedRank} 檔${x.stock.volume!==null?`｜${integer(x.stock.volume)}張`:""}</span></div><div class="recSmall">${money(x.price)}</div><div class="recSmall orange">—</div><div class="recSmall blue">—</div><div class="recSmall green">📌 固定存庫</div><div class="recSmall orange">第${x.stock.fixedRank}檔</div></div>`).join("")}</div><div class="notice">固定股票池：<b>57 檔</b>｜不因模型條件不足而隱藏股票。</div></div>`;
   box.querySelectorAll("[data-result-code]").forEach(el=>el.addEventListener("click",()=>{const code=el.getAttribute("data-result-code");$("searchInput").value=code;searchStock(code)}));
 }
 
-async function scanFixed57(){
+function scanFixed57(){
   const btn=$("fixed57Btn"),box=$("recommendTable");
-  if(!btn||!box)return;
-  const my=++scanSeq;
+  if(!box)return;
+  /* 固定4～60的用途就是「直接跳出57檔」，不應該再逐檔深度掃描。
+     每一列點下去才進入原本完整個股分析，避免57檔卡在「分析中」。 */
+  ++scanSeq;
   const rows=getFixedPoolRows();
   renderFixedPoolImmediate(rows);
-  btn.disabled=true;btn.textContent="⏳ 57 檔背景分析中…";
-  setStatus("📦 固定 4～60 股票池已顯示 57 檔｜背景補充行情／技術／法人…","loading");
-  try{
-    const results=await mapConcurrent(rows,async row=>{
-      if(my!==scanSeq)return null;
-      const x=await Promise.race([
-        scanOne(row.stock.stock_id),
-        new Promise((_,reject)=>setTimeout(()=>reject(new Error("單檔分析逾時")),CONFIG.scanTimeout))
-      ]);
-      x.stock={...x.stock,...row.stock};
-      x.strategy=strategyScore(x,"breakout");
-      return x;
-    },CONFIG.concurrency,(done,i,total)=>{
-      const bar=$("scanProgress"),txt=$("scanText");
-      if(bar)bar.style.width=Math.round(i/total*100)+"%";
-      if(txt)txt.textContent=`固定57檔背景分析 ${i} / ${total} 檔（${Math.round(i/total*100)}%）｜完成 ${done} 檔`;
-    });
-    if(my!==scanSeq)return;
-    const byId=new Map(results.map(x=>[x.stock.stock_id,x]));
-    const merged=rows.map(r=>byId.get(r.stock.stock_id)||r);
-    renderScanTable(merged,"fixed","📦 固定 4～60 股票池｜57 檔");
-    setStatus(`✅ 固定 4～60 完成｜共 ${merged.length} 檔`,`ok`);
-  }catch(e){
-    console.error("scanFixed57",e);
-    setStatus("⚠️ 57 檔已顯示，部分背景分析失敗："+esc(e.message||""),"error");
-  }finally{
-    if(my===scanSeq){btn.disabled=false;btn.textContent="📦 固定 4～60 股票池（57 檔）";}
-  }
+  if(btn){btn.disabled=false;btn.textContent="📦 固定 4～60 股票池（57 檔）";}
+  setStatus("📦 固定 4～60 已直接顯示｜共57檔｜點股票可進完整分析","ok");
+  scrollToResult();
 }
 
 async function scanHotAndCheap(mode="hot"){
@@ -1495,11 +1482,74 @@ async function scanPressure(){
   const my=++scanSeq;setStatus("🔒 正在動態掃描近期賣壓卡關…","loading");
   try{const results=await scanStrategy("breakout");if(my!==scanSeq)return;results.sort((a,b)=>b.pressure.score-a.pressure.score);renderScanTable(results.filter(x=>x.pressure?.pressure!==null),"pressure","🔒 近期賣壓卡關排行榜");scrollToResult();setStatus("🔒 賣壓卡關掃描完成｜"+results.length+" 檔","ok")}catch(e){setStatus("❌ 賣壓掃描失敗","error")}
 }
+function longRepoInitialData(item){
+  const universe=Array.isArray(window.__V1491_UNIVERSE)?window.__V1491_UNIVERSE:[];
+  const u=universe.find(x=>String(x.stock_id)===String(item.code));
+  return {price:u?.price??null,changeRate:u?.changeRate??null,loading:true};
+}
+function longRepoMetric(label,value,cls=""){return`<div class="longRepoMetric"><div class="longRepoMetricLabel">${esc(label)}</div><div class="longRepoMetricValue ${cls}">${esc(value)}</div></div>`}
+function longRepoDirection(data){
+  const state=data?.sig?.state||"";
+  if(state.includes("偏多"))return {text:"🟢 偏多",cls:"green"};
+  if(state.includes("多頭"))return {text:"🟢 多頭",cls:"green"};
+  if(state.includes("偏空"))return {text:"🟠 偏空",cls:"orange"};
+  if(state.includes("空頭"))return {text:"🔴 空頭",cls:"red"};
+  return {text:"🟡 中性",cls:"yellow"};
+}
+function longRepoSuggestion(data){
+  if(!data)return {text:"資料不足",cls:"yellow"};
+  if(data.chase?.noChase)return {text:"🚫 不追高",cls:"red"};
+  if(data.advanced?.confirmed && data.tech?.breakout)return {text:"🚀 突破確認",cls:"green"};
+  if(data.tech?.breakout)return {text:"🚀 突破觀察",cls:"green"};
+  if(data.tech?.consolidation || data.tech?.nearHigh)return {text:"📦 盤整／等待突破",cls:"orange"};
+  if(data.tech?.trend==="多頭"||data.tech?.trend==="偏多")return {text:"👀 偏多觀察",cls:"green"};
+  if(data.tech?.trend==="空頭"||data.tech?.trend==="偏空")return {text:"⚠️ 偏空／等待",cls:"red"};
+  return {text:"🟡 中性觀察",cls:"yellow"};
+}
+function updateLongRepoCard(code,data){
+  const card=document.querySelector(`[data-long-code="${CSS.escape(String(code))}"]`);if(!card)return;
+  const price=data?.price??data?.displayPrice??null;
+  const direction=longRepoDirection(data);
+  const suggestion=longRepoSuggestion(data);
+  const breakout=data?.tech?.recentHigh??data?.lv?.breakout??null;
+  const support=data?.lv?.support??data?.lv?.buyLow??null;
+  const priceText=price!==null?money(price):"—";
+  const breakoutText=breakout!==null?money(breakout):"—";
+  const observeText=support!==null?money(support):"—";
+  const metrics=card.querySelector(".longRepoMetrics");
+  if(metrics)metrics.innerHTML=longRepoMetric("現價",priceText,price!==null?"blue":"yellow")+
+    longRepoMetric("偏多／偏空",direction.text,direction.cls)+
+    longRepoMetric("突破點位",breakoutText,"orange")+
+    longRepoMetric("建議行情",suggestion.text,suggestion.cls)+
+    longRepoMetric("觀察／支撐",observeText,"blue")+
+    longRepoMetric("模型分數",data?.sig?.score!==null&&data?.sig?.score!==undefined?`${data.sig.score}/100`:"—",data?.sig?.score>=60?"green":data?.sig?.score<=40?"red":"yellow");
+  const loading=card.querySelector(".longRepoLoading");if(loading)loading.textContent=data?"✓ 自動分析完成｜現價／多空／突破／建議已更新":"⚠️ 暫時無法取得模型資料";
+}
+async function enrichLongTermRepository(){
+  const codes=LONG_TERM_REPOSITORY.map(x=>x.code);
+  let cursor=0;
+  const worker=async()=>{
+    while(cursor<codes.length){
+      const code=codes[cursor++];
+      try{
+        const data=await scanOne(code);
+        updateLongRepoCard(code,{...data,price:data.price??data.rt?.price});
+      }catch(e){
+        console.warn("long repository",code,e);
+        const card=document.querySelector(`[data-long-code="${CSS.escape(String(code))}"]`);
+        const loading=card?.querySelector(".longRepoLoading");
+        if(loading)loading.textContent="⚠️ 此檔暫時無法更新即時模型";
+      }
+    }
+  };
+  await Promise.all(Array.from({length:5},worker));
+}
 function renderLongTermRepository(){
   const box=$("result");if(!box)return;
-  const categories={"核心":"核心大型股／核心觀察","大盤核心":"大盤型 ETF","現金流":"高股息／現金流 ETF","科技":"科技型／大型科技股","大型股":"大型權值／電子股"};
-  box.innerHTML=`<div class="card"><div class="title green">💎 中長期觀察存庫</div><div class="intro">這一區與熱門、盤整、突破掃描分開。按下後<b>立即顯示存庫</b>，不再等待深度分析。名單用來做長期觀察；點任一項即可進入原本完整的個股／ETF分析。</div><div class="notice" style="margin-top:10px">📌 存庫分成大型權值、台灣大盤 ETF、高股息／現金流、科技型 ETF。槓桿／反向 ETF 不放進核心存庫。</div><div class="longRepoGrid">${LONG_TERM_REPOSITORY.map(x=>`<div class="longRepoItem" data-long-code="${esc(x.code)}"><div class="longRepoTop"><span class="longRepoTag">${esc(x.tag)}</span><span class="longRepoCode">${esc(x.code)}</span></div><div class="longRepoName">${iconFor({industry_category:x.type,isETF:x.type.includes("ETF")})} ${esc(x.name)}</div><div class="longRepoType">${esc(x.type)}</div><div class="longRepoWhy">${esc(x.why)}</div></div>`).join("")}</div><div class="notice" style="margin-top:12px">證交所 2026/09/14 公開資料顯示，0050、0056、00878、00919、006208 等均在 ETF 資產規模排行前段；本存庫不以單一排行作為買進判斷。</div></div>`;
-  box.querySelectorAll("[data-long-code]").forEach(el=>el.addEventListener("click",()=>{const code=el.getAttribute("data-long-code");$("searchInput").value=code;searchStock(code)}));
+  const initial=LONG_TERM_REPOSITORY.map(longRepoInitialData);
+  box.innerHTML=`<div class="card"><div class="title green">💎 中長期觀察存庫</div><div class="intro">這裡直接顯示長期觀察存庫。進入後自動分析全部十檔，不需要再一檔一檔點擊；每一檔直接補上 <b>偏多／偏空、突破點位、現價、建議行情</b>。</div><div class="notice" style="margin-top:10px">📌 存庫分成大型權值、大盤型 ETF、高股息／現金流、科技型 ETF。這些是長期觀察分類，不代表個人化買賣建議。</div><div class="longRepoGrid">${LONG_TERM_REPOSITORY.map((x,i)=>{const q=initial[i];return`<div class="longRepoItem" data-long-code="${esc(x.code)}"><div class="longRepoTop"><span class="longRepoTag">${esc(x.tag)}</span><span class="longRepoCode">${esc(x.code)}</span></div><div class="longRepoName">${iconFor({industry_category:x.type,isETF:x.type.includes("ETF")})} ${esc(x.name)}</div><div class="longRepoType">${esc(x.type)}</div><div class="longRepoMetrics">${longRepoMetric("現價",q.price!==null?money(q.price):"讀取中","blue")}${longRepoMetric("偏多／偏空","分析中…","yellow")}${longRepoMetric("突破點位","分析中…","orange")}${longRepoMetric("建議行情","分析中…","yellow")}${longRepoMetric("觀察／支撐","分析中…","blue")}${longRepoMetric("模型分數","分析中…","yellow")}</div><div class="longRepoLoading">⏳ 正在更新此檔行情／技術模型…</div><div class="longRepoWhy">${esc(x.why)}</div></div>`}).join("")}</div><div class="notice" style="margin-top:12px">證交所公開 ETF 資料可作為存庫參考；例如 0050、0056、00878、00919、006208 均屬主要 ETF 觀察項。</div></div>`;
+  /* 中長期十檔不需要逐檔點擊；進入存庫後自動分析全部十檔。 */
+  enrichLongTermRepository().catch(e=>console.warn("enrichLongTermRepository",e));
 }
 
 async function scanCategory(type){
@@ -1613,7 +1663,7 @@ function bindEvents(){
   document.querySelectorAll("[data-code]").forEach(btn=>btn.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();e.__v1491Handled=true;const code=btn.getAttribute("data-code");if(input)input.value=code;doSearch(code)}));
   document.querySelectorAll("[data-action]").forEach(btn=>btn.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();e.__v1491Handled=true;try{runFeature(btn.getAttribute("data-action"))}catch(err){console.error(err);setStatus("❌ 分析啟動失敗："+esc(err.message||""),"error")}}));
   const fixedBtn=$("fixed57Btn");if(fixedBtn)fixedBtn.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();e.__v1491Handled=true;scanFixed57().catch(err=>{console.error(err);setStatus("❌ 固定57檔啟動失敗："+esc(err.message||""),"error")})});
-  const scanBtn=$("breakScanBtn");if(scanBtn)scanBtn.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();e.__v1491Handled=true;scanFixed57().catch(err=>{console.error(err);setStatus("❌ 掃描啟動失敗："+esc(err.message||""),"error")})});
+  const scanBtn=$("breakScanBtn");if(scanBtn)scanBtn.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();e.__v1491Handled=true;scanBreakout().catch(err=>{console.error(err);setStatus("❌ 盤整突破掃描啟動失敗："+esc(err.message||""),"error")})});
   const consolidationBtn=$("consolidationScanBtn");if(consolidationBtn)consolidationBtn.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();e.__v1491Handled=true;scanBreakoutMode("consolidation").catch(err=>{console.error(err);setStatus("❌ 盤整掃描啟動失敗："+esc(err.message||""),"error")})});
   const breakoutBtn=$("breakoutOnlyBtn");if(breakoutBtn)breakoutBtn.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();e.__v1491Handled=true;scanBreakoutMode("breakout").catch(err=>{console.error(err);setStatus("❌ 突破掃描啟動失敗："+esc(err.message||""),"error")})});
   const hotBtn=$("hotScanBtn");if(hotBtn)hotBtn.addEventListener("click",e=>{e.preventDefault();e.stopPropagation();e.__v1491Handled=true;scanHotAndCheap("hot").catch(err=>{console.error(err);setStatus("❌ 熱門掃描啟動失敗："+esc(err.message||""),"error")})});
@@ -1641,7 +1691,7 @@ function installV1491Failsafe(){
       if(el.id==="breakScanBtn"){e.preventDefault();scanBreakout();return}
       if(el.id==="consolidationScanBtn"){e.preventDefault();scanBreakoutMode("consolidation");return}
       if(el.id==="breakoutOnlyBtn"){e.preventDefault();scanBreakoutMode("breakout");return}
-      if(el.id==="fixed57Btn"||el.id==="breakScanBtn"){e.preventDefault();scanFixed57();return}
+      if(el.id==="fixed57Btn"){e.preventDefault();scanFixed57();return}
       if(el.id==="hotScanBtn"){e.preventDefault();scanHotAndCheap("hot");return}
       if(el.id==="longTermRepoBtn"){e.preventDefault();renderLongTermRepository();setStatus("💎 中長期存庫已直接顯示｜不等待深度掃描","ok");scrollToResult();return}
       if(el.id==="cheapScanBtn"){e.preventDefault();scanHotAndCheap("cheap");return}
