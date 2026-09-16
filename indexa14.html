@@ -128,7 +128,22 @@ th{color:#92959a;font-weight:500}.recTable{overflow:hidden;border:1px solid #3c3
 .longRepoMetricValue.blue{color:var(--blue)}
 .longRepoMetricValue.yellow{color:var(--yellow)}
 .longRepoLoading{font-size:11px;color:#ffd447;margin-top:8px}
-@media(max-width:650px){.longRepoGrid{grid-template-columns:1fr}.longRepoMetrics{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:650px){.longRepoGrid{grid-template-columns:1fr}.longRepoMetrics{grid-template-columns:repeat(2,1fr)}
+  /* V1491 手機版：固定57檔不再要求左右滑動，七個重點直接分兩欄顯示 */
+  .fixedSimpleTable{overflow:visible;border:0;background:transparent}
+  .fixedSimpleHead{display:none}
+  .fixedSimpleRow{display:grid;grid-template-columns:1fr 1fr;gap:7px;min-width:0;margin:8px 0;padding:10px;border:1px solid #3c3f44;border-radius:16px;background:#181a1d}
+  .fixedSimpleRow>div{min-width:0}
+  .fixedSimpleName{grid-column:1/-1!important;padding-bottom:5px;border-bottom:1px solid #34373c}
+  .fixedSimpleCell{background:#101214;border:1px solid #30343a;border-radius:11px;padding:8px;min-height:50px;display:flex;flex-direction:column;justify-content:center;white-space:normal;overflow-wrap:anywhere}
+  .fixedSimpleCell::before{font-size:10px;color:#777;font-weight:700;margin-bottom:3px}
+  .fixed-breakout::before{content:"壓力／突破點"}
+  .fixed-price::before{content:"現價"}
+  .fixed-action::before{content:"策略"}
+  .fixed-volume::before{content:"量價"}
+  .fixed-instSignal::before{content:"法人"}
+  .fixed-consume::before{content:"賣壓消化"}
+}
 .hotGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:10px}.hotItem{background:#141619;border:1px solid #3e4146;border-radius:14px;padding:10px}.hotItem b{font-size:15px}.hotMeta{font-size:12px;color:#8f9399;margin-top:4px;line-height:1.6}.hotLevels{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin-top:7px}.hotLevel{background:#101214;border-radius:9px;padding:7px;text-align:center}.hotLevel span{display:block;font-size:10px;color:#777}.hotLevel strong{display:block;font-size:14px;margin-top:2px}.sentiment{font-weight:900}.fixedSimpleTable{overflow-x:auto;border:1px solid #3c3f44;border-radius:17px;background:#181a1d;margin-top:10px}
 .fixedSimpleHead,.fixedSimpleRow{display:grid;grid-template-columns:1.55fr .9fr .85fr 1.05fr .9fr .9fr .9fr;gap:6px;align-items:center;padding:12px 10px;min-width:760px}
 .fixedSimpleHead{font-size:14px;color:#aaa;background:#141619;font-weight:800}
@@ -279,7 +294,6 @@ th{color:#92959a;font-weight:500}.recTable{overflow:hidden;border:1px solid #3c3
   <button class="navBtn" data-nav="industry" type="button"><span class="navIcon">◔</span><span class="navText">產業</span></button>
   <button class="navBtn" data-nav="setting" type="button"><span class="navIcon">⚙</span><span class="navText">設定</span></button>
 </nav>
-
 <script>
 "use strict";
 
@@ -305,6 +319,7 @@ const FINMIND="https://api.finmindtrade.com/api/v4/data";
 const MIS="https://mis.twse.com.tw/stock/api/getStockInfo.jsp";
 const TWSE_INFO="https://openapi.twse.com.tw/v1/exchangeReport/STOCK_DAY_ALL";
 const TPEX_INFO="https://www.tpex.org.tw/openapi/v1/tpex_mainboard_daily_close_quotes";
+const YAHOO_CHART="https://query1.finance.yahoo.com/v8/finance/chart/";
 
 const PROXIES=[
   u=>"https://api.allorigins.win/raw?url="+encodeURIComponent(u),
@@ -383,16 +398,30 @@ const KNOWN={
   "1326":{name:"台化",industry:"塑膠工業",market:"tse"},
   "2002":{name:"中鋼",industry:"鋼鐵工業",market:"tse"},
   "2303":{name:"聯電",industry:"半導體業",market:"tse"},
+  "2305":{name:"全友",industry:"電腦及週邊設備業",market:"tse"},
   "2308":{name:"台達電",industry:"電子零組件業",market:"tse"},
   "2312":{name:"金寶",industry:"其他電子業",market:"tse"},
   "2313":{name:"華通",industry:"電子零組件業",market:"tse"},
   "2317":{name:"鴻海",industry:"電子零組件業",market:"tse"},
   "2330":{name:"台積電",industry:"半導體業",market:"tse"},
+  "2344":{name:"華邦電",industry:"半導體業",market:"tse"},
   "2367":{name:"燿華",industry:"電子零組件業",market:"tse"},
+  "2409":{name:"友達",industry:"光電業",market:"tse"},
+  "2408":{name:"南亞科",industry:"半導體業",market:"tse"},
   "2481":{name:"強茂",industry:"半導體業",market:"tse"},
   "2606":{name:"裕民",industry:"航運業",market:"tse"},
   "2618":{name:"長榮航",industry:"航運業",market:"tse"},
   "2614":{name:"東森",industry:"其他",market:"tse"},
+  "2883":{name:"凱基金",industry:"金融保險業",market:"tse"},
+  "2324":{name:"仁寶",industry:"電腦及週邊設備業",market:"tse"},
+  "2887":{name:"台新新光金",industry:"金融保險業",market:"tse"},
+  "2834":{name:"臺企銀",industry:"金融保險業",market:"tse"},
+  "2801":{name:"彰銀",industry:"金融保險業",market:"tse"},
+  "1528":{name:"恩德",industry:"電腦及週邊設備業",market:"tse"},
+  "2884":{name:"玉山金",industry:"金融保險業",market:"tse"},
+  "3016":{name:"嘉晶",industry:"半導體業",market:"tse"},
+  "2892":{name:"第一金",industry:"金融保險業",market:"tse"},
+  "2409":{name:"友達",industry:"光電業",market:"tse"},
   "4128":{name:"中天",industry:"生技醫療業",market:"otc"},
   "2891":{name:"中信金",industry:"金融保險業",market:"tse"},
   "3324":{name:"雙鴻",industry:"電子零組件業",market:"tse"},
@@ -403,12 +432,54 @@ const KNOWN={
   "6244":{name:"茂迪",industry:"光電業",market:"tse"},
   "6770":{name:"力積電",industry:"半導體業",market:"tse"},
   "8046":{name:"南電",industry:"電子零組件業",market:"tse"},
+  "6226":{name:"光鼎",industry:"光電業",market:"otc"},
+  "6147":{name:"頎邦",industry:"半導體業",market:"otc"},
+  "6179":{name:"亞通利大",industry:"建材營造業",market:"otc"},
+  "5347":{name:"世界先進",industry:"半導體業",market:"otc"},
+  "3374":{name:"精材",industry:"半導體業",market:"otc"},
+  "4939":{name:"亞電",industry:"電子零組件業",market:"otc"},
+  "4908":{name:"前鼎",industry:"通信網路業",market:"otc"},
+  "6488":{name:"環球晶",industry:"半導體業",market:"otc"},
+  "2221":{name:"大甲",industry:"電機機械業",market:"otc"},
+  "5314":{name:"世紀",industry:"其他電子業",market:"otc"},
+  "6274":{name:"台燿",industry:"電子零組件業",market:"otc"},
+  "5351":{name:"鈺創",industry:"半導體業",market:"otc"},
+  "4807":{name:"日成-KY",industry:"電子零組件業",market:"otc"},
+  "8045":{name:"達運光電",industry:"通信網路業",market:"tse"},
+  "2468":{name:"華經",industry:"資訊服務業",market:"tse"},
+  "3021":{name:"鴻名",industry:"電子零組件業",market:"tse"},
+  "2427":{name:"三商電",industry:"資訊服務業",market:"tse"},
+  "3296":{name:"勝德",industry:"電子零組件業",market:"tse"},
+  "3311":{name:"閎暉",industry:"通信網路業",market:"tse"},
+  "7786":{name:"東方風能",industry:"綠能環保",market:"tse"},
+  "1815":{name:"富喬",industry:"電子零組件業",market:"otc"},
+  "6182":{name:"合晶",industry:"半導體業",market:"otc"},
+  "3441":{name:"聯一光",industry:"光電業",market:"otc"},
+  "3105":{name:"穩懋",industry:"半導體業",market:"otc"},
+  "3624":{name:"光頡",industry:"電子零組件業",market:"otc"},
+  "6173":{name:"信昌電",industry:"電子零組件業",market:"otc"},
+  "8358":{name:"金居",industry:"電子零組件業",market:"otc"},
+  "5425":{name:"台半",industry:"半導體業",market:"otc"},
+  "5483":{name:"中美晶",industry:"半導體業",market:"otc"},
+  "4737":{name:"華廣",industry:"生技醫療業",market:"otc"},
+  "2438":{name:"翔耀",industry:"光電業",market:"tse"},
+  "7749":{name:"意騰-KY",industry:"半導體業",market:"otc"},
+  "2546":{name:"根基",industry:"建材營造業",market:"tse"},
+  "6715":{name:"嘉基",industry:"電子零組件業",market:"tse"},
+  "2254":{name:"巨鎧精密-創",industry:"電機機械業",market:"tse"},
+  "1463":{name:"強盛新",industry:"紡織纖維業",market:"tse"},
+  "4771":{name:"望隼",industry:"生技醫療業",market:"tse"},
+  "1795":{name:"美時",industry:"生技醫療業",market:"tse"},
+  "2454":{name:"聯發科",industry:"半導體業",market:"tse"},
   "0050":{name:"元大台灣50",industry:"ETF",market:"tse"},
   "0056":{name:"元大高股息",industry:"ETF",market:"tse"},
   "00631L":{name:"元大台灣50正2",industry:"ETF",market:"tse"},
   "00685L":{name:"群益臺灣加權正2",industry:"ETF",market:"tse"},
   "00891":{name:"中信關鍵半導體",industry:"ETF",market:"tse"},
   "00919":{name:"群益台灣精選高息",industry:"ETF",market:"tse"},
+  "0052":{name:"富邦科技",industry:"ETF",market:"tse"},
+  "006208":{name:"富邦台50",industry:"ETF",market:"tse"},
+  "00878":{name:"國泰永續高股息",industry:"ETF",market:"tse"},
   "00981A":{name:"主動統一台股增長",industry:"ETF",market:"tse"}
 };
 
@@ -423,8 +494,10 @@ const ALIAS={
   "元大台灣50":"0050","台灣50":"0050","0050":"0050","元大高股息":"0056","高股息":"0056",
   "台灣50正2":"00631L","元大台灣50正2":"00631L","群益臺灣加權正2":"00685L",
   "中信關鍵半導體":"00891","群益台灣精選高息":"00919","高息":"00919",
-  "主動統一台股增長":"00981A"
+  "主動統一台股增長":"00981A","富邦台50":"006208","006208":"006208","富邦科技":"0052","0052":"0052","國泰永續高股息":"00878","00878":"00878","聯發科":"2454","2454":"2454"
 };
+Object.assign(ALIAS,{
+  "友達":"2409","力積電":"6770","全友":"2305","光鼎":"6226","群創":"3481","華邦電":"2344","頎邦":"6147","中信金":"2891","強茂":"2481","凱基金":"2883","仁寶":"2324","台新新光金":"2887","臺企銀":"2834","彰銀":"2801","恩德":"1528","玉山金":"2884","南亞科":"2408","嘉晶":"3016","第一金":"2892","亞通":"6179","亞通利大":"6179","世界":"5347","世界先進":"5347","精材":"3374","亞電":"4939","前鼎":"4908","環球晶":"6488","大甲":"2221","世紀":"5314","台燿":"6274","鈺創":"5351","日成-KY":"4807","達運光電":"8045","華經":"2468","鴻名":"3021","三商電":"2427","勝德":"3296","閎暉":"3311","東方風能":"7786","富喬":"1815","合晶":"6182","聯一光":"3441","穩懋":"3105","光頡":"3624","信昌電":"6173","金居":"8358","中美晶":"5483","華廣":"4737","翔耀":"2438","意騰-KY":"7749","根基":"2546","嘉基":"6715","巨鎧精密-創":"2254","強盛新":"1463","望隼":"4771","美時":"1795"});
 Object.keys(KNOWN).forEach(code=>{ALIAS[KNOWN[code].name]=code});
 
 function $(id){return document.getElementById(id)}
@@ -534,7 +607,9 @@ async function loadStockInfo(){
 function normalizeQuoteRow(x,market){
   const id=String(x.Code??x.code??x.stock_id??x.c??"").trim().toUpperCase();
   if(!id)return null;
-  const name=String(x.Name??x.name??x.stock_name??x.n??id).trim();
+  const fallback=KNOWN[id]||{};
+  const rawName=String(x.Name??x.name??x.stock_name??x.n??"").trim();
+  const name=rawName&&rawName!==id?rawName:(fallback.name||id);
   const price=n(x.Close??x.closing_price??x.z??x.price);
   const change=n(x.Change??x.change);
   // TWSE / TPEx 公開行情的 Trading_Volume 為「股數」，V1491 顯示與篩選統一換算成「張」。
@@ -647,6 +722,8 @@ async function findStock(query){
   if(candidates.length)return candidates[0];
   if(/^[0-9A-Z]+$/i.test(raw)){
     const code=raw.toUpperCase();
+    const k=KNOWN[code];
+    if(k)return{stock_id:code,stock_name:k.name,industry_category:k.industry,market:k.market,isETF:k.industry==="ETF"};
     return{stock_id:code,stock_name:code,industry_category:"股票／ETF",market:"tse",isETF:false}
   }
   throw new Error("找不到「"+raw+"」。請改輸入代碼、名稱或關鍵字。")
@@ -689,16 +766,71 @@ async function getRealtime(stock,force=false){
       if(parsed)return cacheSet(key,parsed)
     }catch(e){console.warn("即時行情",item.name,e)}
   }
+  try{
+    const yahoo=await getYahooQuote(stock);
+    if(yahoo)return cacheSet(key,yahoo);
+  }catch(e){console.warn("Yahoo quote",code,e)}
   return null
 }
 
 /* =========================
    歷史
    ========================= */
+function yahooSymbol(stockOrCode){
+  const code=typeof stockOrCode==="string"?stockOrCode:String(stockOrCode?.stock_id||"");
+  const market=typeof stockOrCode==="string"?"tse":String(stockOrCode?.market||"tse");
+  return encodeURIComponent(code+"."+(market==="otc"?"TWO":"TW"));
+}
+async function getYahooChart(stockOrCode,days=430){
+  const code=typeof stockOrCode==="string"?stockOrCode:String(stockOrCode?.stock_id||"");
+  if(!code)return null;
+  const period2=Math.floor(Date.now()/1000)+86400;
+  const period1=Math.floor((Date.now()-days*86400000)/1000);
+  const url=YAHOO_CHART+yahooSymbol(stockOrCode)+"?period1="+period1+"&period2="+period2+"&interval=1d&events=history&includeAdjustedClose=true";
+  try{
+    const data=await fetchJSON(url,12000);
+    const r=data?.chart?.result?.[0];
+    const ts=r?.timestamp||[];
+    const q=r?.indicators?.quote?.[0]||{};
+    if(!ts.length)return null;
+    const out=[];
+    for(let i=0;i<ts.length;i++){
+      const close=n(q.close?.[i]),open=n(q.open?.[i]),high=n(q.high?.[i]),low=n(q.low?.[i]),volume=n(q.volume?.[i]);
+      if(close===null)continue;
+      const d=new Date(ts[i]*1000);
+      const date=new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Taipei",year:"numeric",month:"2-digit",day:"2-digit"}).format(d);
+      out.push({date,open,high,low,close,Trading_Volume:volume});
+    }
+    return out;
+  }catch(e){console.warn("Yahoo history",code,e);return null}
+}
+async function getYahooQuote(stock){
+  const marketState=getMarketState();
+  /* Yahoo 只作盤前／盤後備援；盤中不把延遲資料冒充 TWSE MIS 即時價。 */
+  if(marketState.type==="intraday")return null;
+  const rows=await getYahooChart(stock,10);
+  if(!rows?.length)return null;
+  const last=rows.at(-1),prev=rows.length>1?rows.at(-2):null;
+  const price=n(last.close);
+  if(price===null)return null;
+  return{
+    source:"Yahoo Finance 備援（盤後）",price,previous:n(prev?.close),
+    change:prev?.close!=null?price-n(prev.close):null,
+    changeRate:prev?.close?((price/n(prev.close))-1)*100:null,
+    open:n(last.open),high:n(last.high),low:n(last.low),bid:null,ask:null,
+    bidVol:null,askVol:null,volume:n(last.Trading_Volume),tradeVolume:null,
+    time:"",date:last.date,name:stock.stock_name,market:stock.market,upper:null,lower:null
+  };
+}
 async function getPrices(code,days=430){
   const key="history:"+code+":"+days;const cached=cacheGet(key,CONFIG.historyTTL);if(cached)return cached;
-  try{return cacheSet(key,await finmind({dataset:"TaiwanStockPrice",data_id:code,start_date:twDate(days),end_date:twDate()},18000))}
-  catch(e){console.warn("history",code,e);return[]}
+  try{
+    const rows=await finmind({dataset:"TaiwanStockPrice",data_id:code,start_date:twDate(days),end_date:twDate()},18000);
+    if(Array.isArray(rows)&&rows.length)return cacheSet(key,rows);
+  }catch(e){console.warn("history FinMind",code,e)}
+  const yahoo=await getYahooChart(code,days);
+  if(Array.isArray(yahoo)&&yahoo.length)return cacheSet(key,yahoo);
+  return[];
 }
 function sorted(rows){return[...rows].sort((a,b)=>String(a.date||"").localeCompare(String(b.date||"")))}
 function latest(rows){const x=sorted(rows);return x.length?x[x.length-1]:null}
@@ -1032,6 +1164,27 @@ function riskModel(price,tech,lv,pressure,regime,rt){
   if(regime?.state==="偏空"){risk+=12;reasons.push("大盤環境偏弱")}
   if(pressure?.score<40){risk+=5;reasons.push("上方壓力仍重")}
   const level=risk>=70?"高":risk>=45?"中":"低";return{score:clamp(Math.round(risk)),level,reasons}
+}
+
+/* =========================
+   搜尋行情最後保底
+   ========================= */
+async function getSearchPriceFallback(stock){
+  const code=String(stock?.stock_id||"").toUpperCase();
+  if(!code)return null;
+  /* 先嘗試公開上市／上櫃日行情股票池；成功即可在盤後顯示最近可取得價格。 */
+  try{
+    const u=await getDynamicUniverse(false);
+    const q=u.find(x=>String(x.stock_id||"").toUpperCase()===code);
+    if(q&&n(q.price)!==null)return{price:n(q.price),volume:n(q.volume),date:twDate(),source:"公開市場日行情"};
+  }catch(e){console.warn("search price market fallback",code,e)}
+  /* 再用 Yahoo 盤後日線；只在非盤中使用，避免延遲資料冒充即時價。 */
+  try{
+    const rows=await getYahooChart(stock,10);
+    const last=Array.isArray(rows)&&rows.length?rows.at(-1):null;
+    if(last&&n(last.close)!==null)return{price:n(last.close),volume:n(last.Trading_Volume),date:last.date,source:"Yahoo Finance 盤後備援"};
+  }catch(e){console.warn("search price yahoo fallback",code,e)}
+  return null;
 }
 
 /* =========================
@@ -1424,13 +1577,29 @@ async function searchStock(query){
     setStatus("🔎 正在搜尋「"+esc(query)+"」…","loading");
     const stock=await findStock(query);if(token!==searchSeq)return;
     $("searchResults").classList.add("hidden");setStatus("📡 正在取得 "+esc(stock.stock_name)+" "+esc(stock.stock_id)+"…","loading");
-    const data=await buildData(stock);if(token!==searchSeq)return;
-    if(!data.realtime&&!data.rows.length)throw new Error("目前無法取得 "+stock.stock_id+" 的行情資料。");
+    let data=null;
+    try{
+      data=await buildData(stock);
+    }catch(buildErr){
+      console.warn("buildData fallback",stock.stock_id,buildErr);
+      const fb=await getSearchPriceFallback(stock).catch(()=>null);
+      if(fb&&n(fb.price)!==null){
+        data={stock,realtime:null,marketState:getMarketState(),displayPrice:n(fb.price),historicalClose:n(fb.price),rows:[{date:fb.date,close:n(fb.price),max:n(fb.price),min:n(fb.price),Trading_Volume:n(fb.volume)||0}],tech:technical([{date:fb.date,close:n(fb.price),max:n(fb.price),min:n(fb.price),Trading_Volume:n(fb.volume)||0}],n(fb.price)),inst20:null,inst:null,epsData:null,eps:null,book:null,perValue:null,pbr:null,dividend:null,val:valuation(n(fb.price),null,null,null),target:null,lv:levels(n(fb.price),technical([{date:fb.date,close:n(fb.price),max:n(fb.price),min:n(fb.price),Trading_Volume:n(fb.volume)||0}],n(fb.price))),sig:null,fake:null,breakout:null,advanced:null,pressure:null,rebound:null,safe:null,three:null,regime:null,risk:null,chase:null,relative:null,quality:{score:10,label:"低",items:[fb.source,"僅有價格資料"]}};
+      }else throw buildErr;
+    }
+    if(token!==searchSeq)return;
+    /* 搜尋不因單一行情來源失敗而整頁報錯；至少保留股票名稱、代號與資料品質狀態。 */
     renderData(data);
-    setStatus(data.marketState.type==="intraday"?(data.realtime?"🟢 "+esc(stock.stock_name)+"｜即時價格 "+money(data.realtime.price):"🟡 盤中行情暫時無法取得"):("🟣 "+esc(stock.stock_name)+"｜盤後價 "+money(data.displayPrice)),"ok");
+    if(data.marketState.type==="intraday"){
+      setStatus(data.realtime?"🟢 "+esc(stock.stock_name)+"｜即時價格 "+money(data.realtime.price):"🟡 "+esc(stock.stock_name)+"｜TWSE MIS 暫時無法取得，即時價格未冒充歷史資料","ok");
+    }else if(data.displayPrice!==null&&data.displayPrice!==undefined){
+      setStatus("🟣 "+esc(stock.stock_name)+"｜盤後／最近可取得價格 "+money(data.displayPrice),"ok");
+    }else{
+      setStatus("🟡 "+esc(stock.stock_name)+"｜已找到股票，但行情來源暫時無回應；可稍後重新整理","loading");
+    }
     scrollToResult();
     if(data.marketState.type==="intraday")refreshTimer=setInterval(()=>refreshPrice(stock),10000);
-  }catch(e){if(token!==searchSeq)return;console.error("searchStock",e);setStatus("❌ "+esc(e.message||"搜尋失敗"),"error")}
+  }catch(e){if(token!==searchSeq)return;console.error("searchStock",e);setStatus("🟡 已找到 "+esc((KNOWN[String(query||"").trim().toUpperCase()]||{}).name||query)+"，但目前公開行情來源暫時無回應；名稱與功能仍可使用，稍後可重新整理再抓取。","loading")}
 }
 async function refreshPrice(stock){
   try{
@@ -1530,9 +1699,9 @@ function getFixedPoolRows(){
     return {
       stock:{
         stock_id:code,
-        stock_name:u.stock_name||k.name||code,
+        stock_name:(u.stock_name&&u.stock_name!==code?u.stock_name:null)||k.name||code,
         industry_category:u.industry_category||k.industry||"—",
-        market:u.market||k.market||"twse",
+        market:u.market||k.market||"tse",
         isETF:false,
         volume:u.volume??null,
         changeRate:u.changeRate??null,
@@ -1602,7 +1771,7 @@ function fixedAnalysisClass(text){
 function renderFixedPoolImmediate(rows){
   const box=$("recommendTable");if(!box)return;
   box.innerHTML=`<div class="card">
-    <div class="title green">🔥 股票觀察列表｜中文名稱＋代號</div>
+    <div class="title green">🔥 57檔股票觀察｜第4～60檔</div>
     <div class="notice"><b>直接看 7 個重點：</b>壓力／突破點／現價／策略／量增量縮／法人買超賣超／賣壓消化。<br>
       <span style="color:#aaa">壓力／突破點＝模型估算上方關卡｜現價＝目前價格｜策略＝目前模型狀態｜消化＝賣壓消化程度</span>
     </div>
@@ -1610,15 +1779,15 @@ function renderFixedPoolImmediate(rows){
       <div class="fixedSimpleHead"><div>股票</div><div>壓力／突破點</div><div>現價</div><div>策略</div><div>量價</div><div>法人</div><div>消化</div></div>
       ${rows.map(x=>`<div class="fixedSimpleRow" data-result-code="${esc(x.stock.stock_id)}" data-fixed-row="${esc(x.stock.stock_id)}">
         <div class="fixedSimpleName"><b>${iconFor(x.stock)} ${esc(x.stock.stock_name)}</b><span>股票代號：${esc(x.stock.stock_id)}</span></div>
-        <div class="fixedSimpleCell fixed-breakout" style="color:var(--orange)">${x.loading?"分析中…":"—"}</div>
+        <div class="fixedSimpleCell fixed-breakout" style="color:var(--orange)">${x.loading?"待分析":"—"}</div>
         <div class="fixedSimpleCell fixed-price" style="color:#38bdf8">${x.price!==null?money(x.price):"讀取中…"}</div>
-        <div class="fixedSimpleCell fixed-action fixedStrategy">${x.loading?"分析中…":"—"}</div>
-        <div class="fixedSimpleCell fixed-volume">${x.loading?"分析中…":"—"}</div>
-        <div class="fixedSimpleCell fixed-instSignal">${x.loading?"分析中…":"—"}</div>
-        <div class="fixedSimpleCell fixed-consume">${x.loading?"分析中…":"—"}</div>
+        <div class="fixedSimpleCell fixed-action fixedStrategy">${x.loading?"待分析":"—"}</div>
+        <div class="fixedSimpleCell fixed-volume">${x.loading?"待分析":"—"}</div>
+        <div class="fixedSimpleCell fixed-instSignal">${x.loading?"待分析":"—"}</div>
+        <div class="fixedSimpleCell fixed-consume">${x.loading?"待分析":"—"}</div>
       </div>`).join("")}
     </div>
-    <div class="notice" style="margin-top:10px">📌 點擊任一股票可進入完整分析；完整頁面仍保留法人、突破、支撐、追高警報等資料。</div>
+    <div class="notice" style="margin-top:10px">📌 57檔先全部列出，再背景自動分析；完成一檔就更新一檔。點擊股票可進入完整分析。</div>
   </div>`;
   box.querySelectorAll("[data-result-code]").forEach(el=>el.addEventListener("click",()=>{
     const code=el.getAttribute("data-result-code");$("searchInput").value=code;searchStock(code)
@@ -1679,7 +1848,7 @@ async function scanFixed57(){
     }catch(e){
       const row=document.querySelector(`[data-fixed-row="${CSS.escape(String(item.stock.stock_id))}"]`);
       const action=row?.querySelector(".fixed-action"),sig=row?.querySelector(".fixed-signal");
-      if(action){action.textContent="⚠️ 資料暫不足";action.className="recSmall fixed-action yellow"}
+      if(action){action.textContent="⚠️ 行情／模型暫不足";action.className="recSmall fixed-action yellow"}
       if(sig){sig.textContent="⚪ 待更新";sig.className="recSmall fixed-signal sentiment yellow"}
       return null;
     }finally{
@@ -2012,3 +2181,4 @@ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",
 </script>
 </body>
 </html>
+
