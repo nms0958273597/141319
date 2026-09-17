@@ -1864,3 +1864,2476 @@ renderHistory();
 
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#111827">
+<title>電表記錄 V1491</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+html,body{
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    "Noto Sans TC",
+    "PingFang TC",
+    Arial,
+    sans-serif;
+  background:#f3f4f6;
+  color:#111827;
+}
+
+.container{
+  width:min(1100px,100%);
+  margin:auto;
+  padding:12px;
+}
+
+.header{
+  background:linear-gradient(135deg,#111827,#243b53);
+  color:#fff;
+  border-radius:20px;
+  padding:20px;
+  margin-bottom:14px;
+  box-shadow:0 6px 22px rgba(0,0,0,.12);
+}
+
+.header-top{
+  display:flex;
+  justify-content:space-between;
+  gap:15px;
+  align-items:flex-start;
+}
+
+.header h1{
+  margin:0;
+  font-size:27px;
+  font-weight:900;
+}
+
+.subtitle{
+  margin-top:6px;
+  font-size:13px;
+  opacity:.78;
+}
+
+.live-box{
+  text-align:right;
+  min-width:170px;
+}
+
+.live-date{
+  font-size:15px;
+  font-weight:800;
+}
+
+.live-time{
+  font-size:29px;
+  line-height:1.1;
+  font-weight:900;
+  margin-top:3px;
+}
+
+.live-note{
+  font-size:11px;
+  opacity:.7;
+  margin-top:4px;
+}
+
+.card{
+  background:#fff;
+  border-radius:18px;
+  padding:16px;
+  margin-bottom:14px;
+  box-shadow:0 3px 16px rgba(0,0,0,.06);
+}
+
+.card-title{
+  font-size:19px;
+  font-weight:900;
+  margin-bottom:15px;
+  padding:9px 12px;
+  border-radius:11px;
+  background:linear-gradient(90deg,#f1f5f9,#fff);
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+}
+
+.field{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+.field.full{
+  grid-column:1/-1;
+}
+
+.field label{
+  font-size:13px;
+  font-weight:800;
+  color:#475569;
+}
+
+input{
+  width:100%;
+  min-height:48px;
+  border:1px solid #cbd5e1;
+  border-radius:12px;
+  padding:10px 12px;
+  font-size:17px;
+  font-weight:700;
+  color:#111827;
+  background:#fff;
+  outline:none;
+}
+
+input:focus{
+  border-color:#2563eb;
+  box-shadow:0 0 0 3px rgba(37,99,235,.10);
+}
+
+.hint{
+  font-size:12px;
+  color:#64748b;
+  line-height:1.6;
+  margin-top:8px;
+}
+
+.summary{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+}
+
+.summary-box{
+  border:1px solid #e2e8f0;
+  background:#f8fafc;
+  border-radius:14px;
+  padding:13px;
+}
+
+.summary-label{
+  font-size:12px;
+  color:#64748b;
+  font-weight:700;
+}
+
+.summary-value{
+  margin-top:5px;
+  font-size:23px;
+  font-weight:900;
+}
+
+.ok-box{
+  margin-top:13px;
+  padding:12px;
+  border-radius:12px;
+  background:#ecfdf5;
+  color:#166534;
+  font-weight:900;
+}
+
+.warning-box{
+  margin-top:13px;
+  padding:12px;
+  border-radius:12px;
+  background:#fef2f2;
+  color:#991b1b;
+  font-weight:900;
+}
+
+.people{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+
+.person{
+  border:1px solid #e2e8f0;
+  border-radius:16px;
+  padding:15px;
+  background:#fff;
+}
+
+.person-name{
+  font-size:17px;
+  font-weight:900;
+}
+
+.person-usage{
+  margin-top:8px;
+  color:#64748b;
+  font-size:13px;
+}
+
+.person-money{
+  margin-top:8px;
+  font-size:28px;
+  font-weight:900;
+}
+
+.average-table-wrap{
+  overflow-x:auto;
+}
+
+.average-table{
+  width:100%;
+  min-width:650px;
+  border-collapse:collapse;
+}
+
+.average-table th,
+.average-table td{
+  border:1px solid #dbe3ec;
+  padding:12px 8px;
+  text-align:center;
+}
+
+.average-table th{
+  background:#eef3f8;
+  font-size:14px;
+}
+
+.average-table td{
+  font-size:15px;
+}
+
+.average-table .total{
+  font-weight:900;
+}
+
+.average-table .money-cell{
+  font-weight:900;
+  font-size:17px;
+}
+
+.note-box{
+  margin-top:12px;
+  padding:11px 13px;
+  border-radius:12px;
+  background:#eff6ff;
+  color:#334155;
+  font-size:12px;
+  line-height:1.7;
+}
+
+.actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:9px;
+}
+
+button{
+  border:0;
+  border-radius:12px;
+  padding:12px 16px;
+  font-size:15px;
+  font-weight:900;
+  cursor:pointer;
+}
+
+.btn-main{
+  background:#172554;
+  color:#fff;
+}
+
+.btn-purple{
+  background:#7c3aed;
+  color:#fff;
+}
+
+.btn-danger{
+  background:#dc2626;
+  color:#fff;
+}
+
+.btn-green{
+  background:#059669;
+  color:#fff;
+}
+
+.btn-light{
+  background:#e2e8f0;
+  color:#111827;
+}
+
+.save-status{
+  margin-top:10px;
+  color:#166534;
+  font-size:12px;
+  font-weight:700;
+}
+
+.table-wrap{
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+}
+
+.history{
+  width:100%;
+  min-width:1100px;
+  border-collapse:collapse;
+}
+
+.history th,
+.history td{
+  padding:10px 7px;
+  border-bottom:1px solid #e2e8f0;
+  text-align:center;
+  white-space:nowrap;
+}
+
+.history th{
+  background:#f8fafc;
+  font-size:12px;
+}
+
+.history td{
+  font-size:13px;
+}
+
+.empty{
+  text-align:center;
+  padding:28px;
+  color:#94a3b8;
+}
+
+.version{
+  text-align:center;
+  color:#94a3b8;
+  font-size:11px;
+  padding:4px 0 20px;
+}
+
+@media(max-width:750px){
+
+  .container{
+    padding:9px;
+  }
+
+  .header-top{
+    flex-direction:column;
+  }
+
+  .live-box{
+    text-align:left;
+  }
+
+  .header h1{
+    font-size:23px;
+  }
+
+  .live-time{
+    font-size:27px;
+  }
+
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  .field.full{
+    grid-column:auto;
+  }
+
+  .summary{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .people{
+    grid-template-columns:1fr;
+  }
+
+  button{
+    flex:1;
+    min-width:135px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- ================= HEADER ================= -->
+
+<div class="header">
+
+  <div class="header-top">
+
+    <div>
+
+      <h1>⚡ 電表記錄 V1491</h1>
+
+      <div class="subtitle">
+        三人分表・自動計算・歷史紀錄・均價表格
+      </div>
+
+    </div>
+
+    <div class="live-box">
+
+      <div
+        class="live-date"
+        id="liveDate">
+        讀取日期中...
+      </div>
+
+      <div
+        class="live-time"
+        id="liveTime">
+        00:00:00
+      </div>
+
+      <div class="live-note">
+        自動帶入日期時間・可手動修改
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ================= 抄表資訊 ================= -->
+
+<div class="card">
+
+  <div class="card-title">
+    📅 抄表資訊
+  </div>
+
+  <div class="grid">
+
+    <div class="field">
+
+      <label>
+        本期帳單日期
+      </label>
+
+      <input
+        id="billDate"
+        type="date">
+
+    </div>
+
+
+    <div class="field">
+
+      <label>
+        ⭐ 抄表日期（幾號抄表）
+      </label>
+
+      <input
+        id="meterDate"
+        type="date">
+
+    </div>
+
+
+    <div class="field">
+
+      <label>
+        抄表時間
+      </label>
+
+      <input
+        id="meterTime"
+        type="time">
+
+    </div>
+
+
+    <div class="field">
+
+      <label>
+        下次抄表日期
+      </label>
+
+      <input
+        id="nextMeterDate"
+        type="date">
+
+    </div>
+
+  </div>
+
+  <div class="hint">
+    📌 本次抄表日期預設為 11 月 10 日；你可以直接點日期修改。
+  </div>
+
+</div>
+
+
+<!-- ================= 用電資訊 ================= -->
+
+<div class="card">
+
+  <div class="card-title">
+    📄 用電資訊
+  </div>
+
+  <div class="grid">
+
+    <div class="field">
+
+      <label>
+        本期用電度數
+      </label>
+
+      <input
+        id="totalUsageInput"
+        type="number"
+        inputmode="decimal"
+        step="0.01"
+        placeholder="1455">
+
+    </div>
+
+
+    <div class="field">
+
+      <label>
+        去年同期用電度數
+      </label>
+
+      <input
+        id="lastYearUsage"
+        type="number"
+        inputmode="decimal"
+        step="0.01"
+        placeholder="1573">
+
+    </div>
+
+
+    <div class="field full">
+
+      <label>
+        💰 台電總金額
+      </label>
+
+      <input
+        id="totalBill"
+        type="number"
+        inputmode="decimal"
+        step="1"
+        placeholder="5200">
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ================= 三人分表 ================= -->
+
+<div class="card">
+
+  <div class="card-title">
+    👥 三人分表輸入（可手動修改）
+  </div>
+
+  <div class="people">
+
+    <div class="person">
+
+      <div class="person-name">
+        鄰居① 用電度數
+      </div>
+
+      <input
+        id="meter1"
+        type="number"
+        inputmode="decimal"
+        step="0.01"
+        value="341">
+
+      <div class="person-usage">
+        單位：度
+      </div>
+
+    </div>
+
+
+    <div class="person">
+
+      <div class="person-name">
+        鄰居② 用電度數
+      </div>
+
+      <input
+        id="meter2"
+        type="number"
+        inputmode="decimal"
+        step="0.01"
+        value="721">
+
+      <div class="person-usage">
+        單位：度
+      </div>
+
+    </div>
+
+
+    <div class="person">
+
+      <div class="person-name">
+        你 用電度數
+      </div>
+
+      <input
+        id="meter3"
+        type="number"
+        inputmode="decimal"
+        step="0.01"
+        value="393">
+
+      <div class="person-usage">
+        單位：度
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ================= 計算結果 ================= -->
+
+<div class="card">
+
+  <div class="card-title">
+    🧮 計算結果
+  </div>
+
+  <div class="summary">
+
+    <div class="summary-box">
+
+      <div class="summary-label">
+        三人總用電
+      </div>
+
+      <div
+        class="summary-value"
+        id="totalUsage">
+        1,455
+      </div>
+
+    </div>
+
+
+    <div class="summary-box">
+
+      <div class="summary-label">
+        平均每度電價
+      </div>
+
+      <div
+        class="summary-value"
+        id="unitPrice">
+        0
+      </div>
+
+    </div>
+
+
+    <div class="summary-box">
+
+      <div class="summary-label">
+        台電總金額
+      </div>
+
+      <div
+        class="summary-value"
+        id="billDisplay">
+        $0
+      </div>
+
+    </div>
+
+
+    <div class="summary-box">
+
+      <div class="summary-label">
+        分攤合計
+      </div>
+
+      <div
+        class="summary-value"
+        id="allocatedTotal">
+        $0
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div id="checkResult"></div>
+
+</div>
+
+
+<!-- ================= 均價表格 ================= -->
+
+<div class="card">
+
+  <div class="card-title">
+    📊 均價表格計算
+  </div>
+
+  <div class="average-table-wrap">
+
+    <table class="average-table">
+
+      <thead>
+
+        <tr>
+
+          <th>
+            項目
+          </th>
+
+          <th>
+            鄰居①
+          </th>
+
+          <th>
+            鄰居②
+          </th>
+
+          <th>
+            你
+          </th>
+
+          <th>
+            合計
+          </th>
+
+        </tr>
+
+      </thead>
+
+      <tbody>
+
+        <tr>
+
+          <td>
+            使用度數（度）
+          </td>
+
+          <td id="avgUsage1">
+            341
+          </td>
+
+          <td id="avgUsage2">
+            721
+          </td>
+
+          <td id="avgUsage3">
+            393
+          </td>
+
+          <td
+            class="total"
+            id="avgUsageTotal">
+            1,455
+          </td>
+
+        </tr>
+
+
+        <tr>
+
+          <td>
+            每度均價（元）
+          </td>
+
+          <td id="avgPrice1">
+            0
+          </td>
+
+          <td id="avgPrice2">
+            0
+          </td>
+
+          <td id="avgPrice3">
+            0
+          </td>
+
+          <td>
+            —
+          </td>
+
+        </tr>
+
+
+        <tr>
+
+          <td>
+            應付金額（元）
+          </td>
+
+          <td
+            class="money-cell"
+            id="avgAmount1">
+            $0
+          </td>
+
+          <td
+            class="money-cell"
+            id="avgAmount2">
+            $0
+          </td>
+
+          <td
+            class="money-cell"
+            id="avgAmount3">
+            $0
+          </td>
+
+          <td
+            class="money-cell"
+            id="avgAmountTotal">
+            $0
+          </td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+
+  <div class="note-box">
+    💡 金額採四捨五入計算，最後一人金額會自動調整，
+    確保三人合計精準等於台電總金額。
+  </div>
+
+</div>
+
+
+<!-- ================= 三人應付 ================= -->
+
+<div class="card">
+
+  <div class="card-title">
+    💰 三人應付金額
+  </div>
+
+  <div class="people">
+
+    <div class="person">
+
+      <div class="person-name">
+        鄰居①
+      </div>
+
+      <div class="person-usage">
+        用電：
+        <span id="usage1">
+          341
+        </span>
+        度
+      </div>
+
+      <div
+        class="person-money"
+        id="amount1">
+        $1,219
+      </div>
+
+    </div>
+
+
+    <div class="person">
+
+      <div class="person-name">
+        鄰居②
+      </div>
+
+      <div class="person-usage">
+        用電：
+        <span id="usage2">
+          721
+        </span>
+        度
+      </div>
+
+      <div
+        class="person-money"
+        id="amount2">
+        $2,577
+      </div>
+
+    </div>
+
+
+    <div class="person">
+
+      <div class="person-name">
+        你
+      </div>
+
+      <div class="person-usage">
+        用電：
+        <span id="usage3">
+          393
+        </span>
+        度
+      </div>
+
+      <div
+        class="person-money"
+        id="amount3">
+        $1,404
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ================= 操作 ================= -->
+
+<div class="card">
+
+  <div class="card-title">
+    ⚙️ 操作
+  </div>
+
+  <div class="actions">
+
+    <button
+      class="btn-main"
+      onclick="saveRecord()">
+      💾 儲存本期
+    </button>
+
+
+    <button
+      class="btn-purple"
+      onclick="clearToday()">
+      🗑️ 清除今天
+    </button>
+
+
+    <button
+      class="btn-danger"
+      onclick="clearAll()">
+      ⚠️ 清除全部
+    </button>
+
+
+    <button
+      class="btn-green"
+      onclick="exportCSV()">
+      📥 匯出 CSV
+    </button>
+
+  </div>
+
+
+  <div
+    class="save-status"
+    id="saveStatus">
+    💾 自動儲存已開啟
+  </div>
+
+</div>
+
+
+<!-- ================= 歷史紀錄 ================= -->
+
+<div class="card">
+
+  <div class="card-title">
+    📚 歷史紀錄
+  </div>
+
+  <div class="table-wrap">
+
+    <table class="history">
+
+      <thead>
+
+        <tr>
+
+          <th>抄表日期</th>
+          <th>星期</th>
+          <th>時間</th>
+          <th>本期度數</th>
+          <th>去年同期</th>
+          <th>平均電價</th>
+          <th>台電金額</th>
+          <th>鄰居①</th>
+          <th>鄰居②</th>
+          <th>你</th>
+          <th>操作</th>
+
+        </tr>
+
+      </thead>
+
+      <tbody id="historyBody"></tbody>
+
+    </table>
+
+  </div>
+
+</div>
+
+
+<div class="version">
+  電表記錄 V1491
+</div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   電表記錄 V1491
+   ========================================================= */
+
+const STORAGE_KEY =
+  "electric_meter_v1491_records";
+
+const DRAFT_KEY =
+  "electric_meter_v1491_draft";
+
+
+const billDate =
+  document.getElementById("billDate");
+
+const meterDate =
+  document.getElementById("meterDate");
+
+const meterTime =
+  document.getElementById("meterTime");
+
+const nextMeterDate =
+  document.getElementById("nextMeterDate");
+
+const totalUsageInput =
+  document.getElementById("totalUsageInput");
+
+const lastYearUsage =
+  document.getElementById("lastYearUsage");
+
+const totalBill =
+  document.getElementById("totalBill");
+
+const meter1 =
+  document.getElementById("meter1");
+
+const meter2 =
+  document.getElementById("meter2");
+
+const meter3 =
+  document.getElementById("meter3");
+
+
+/* =========================================================
+   日期工具
+   ========================================================= */
+
+function pad(n){
+
+  return String(n).padStart(2,"0");
+
+}
+
+
+function todayISO(){
+
+  const d =
+    new Date();
+
+  return (
+    d.getFullYear() +
+    "-" +
+    pad(d.getMonth()+1) +
+    "-" +
+    pad(d.getDate())
+  );
+
+}
+
+
+function currentTime(){
+
+  const d =
+    new Date();
+
+  return (
+    pad(d.getHours()) +
+    ":" +
+    pad(d.getMinutes())
+  );
+
+}
+
+
+/* =========================================================
+   11月10日
+   ========================================================= */
+
+function defaultNovember10(){
+
+  const d =
+    new Date();
+
+  const year =
+    d.getFullYear();
+
+  return (
+    year +
+    "-11-10"
+  );
+
+}
+
+
+/* =========================================================
+   星期
+   ========================================================= */
+
+function weekday(dateString){
+
+  if(!dateString)
+    return "";
+
+  const d =
+    new Date(
+      dateString + "T00:00:00"
+    );
+
+  const days = [
+    "星期日",
+    "星期一",
+    "星期二",
+    "星期三",
+    "星期四",
+    "星期五",
+    "星期六"
+  ];
+
+  return days[d.getDay()];
+
+}
+
+
+/* =========================================================
+   民國日期
+   ========================================================= */
+
+function rocDate(dateString){
+
+  if(!dateString)
+    return "";
+
+  const parts =
+    dateString.split("-");
+
+  if(parts.length !== 3)
+    return dateString;
+
+  const y =
+    Number(parts[0]) - 1911;
+
+  return (
+    y +
+    "年" +
+    parts[1] +
+    "月" +
+    parts[2] +
+    "日"
+  );
+
+}
+
+
+/* =========================================================
+   即時日期時間
+   ========================================================= */
+
+function updateClock(){
+
+  const d =
+    new Date();
+
+  const y =
+    d.getFullYear();
+
+  const m =
+    pad(d.getMonth()+1);
+
+  const day =
+    pad(d.getDate());
+
+  const h =
+    pad(d.getHours());
+
+  const min =
+    pad(d.getMinutes());
+
+  const sec =
+    pad(d.getSeconds());
+
+
+  document.getElementById(
+    "liveDate"
+  ).textContent =
+    `${y-1911}年${m}月${day}日 ${weekday(
+      `${y}-${m}-${day}`
+    )}`;
+
+
+  document.getElementById(
+    "liveTime"
+  ).textContent =
+    `${h}:${min}:${sec}`;
+
+}
+
+
+updateClock();
+
+setInterval(
+  updateClock,
+  1000
+);
+
+
+/* =========================================================
+   初始化
+   ========================================================= */
+
+billDate.value =
+  todayISO();
+
+meterDate.value =
+  defaultNovember10();
+
+meterTime.value =
+  currentTime();
+
+nextMeterDate.value =
+  defaultNovember10();
+
+
+/* =========================================================
+   數字
+   ========================================================= */
+
+function num(value){
+
+  const n =
+    Number(value);
+
+  return Number.isFinite(n)
+    ? n
+    : 0;
+
+}
+
+
+function money(value){
+
+  return Math.round(value)
+    .toLocaleString("zh-TW");
+
+}
+
+
+function price(value){
+
+  return Number(value)
+    .toFixed(5);
+
+}
+
+
+/* =========================================================
+   自動計算
+   ========================================================= */
+
+function calculate(){
+
+  const m1 =
+    num(meter1.value);
+
+  const m2 =
+    num(meter2.value);
+
+  const m3 =
+    num(meter3.value);
+
+  const bill =
+    num(totalBill.value);
+
+  const last =
+    num(lastYearUsage.value);
+
+
+  /*
+    三人實際分表總用電
+  */
+
+  const total =
+    m1 + m2 + m3;
+
+
+  /*
+    如果三人合計沒有輸入，
+    也可以使用「本期用電度數」
+    做為顯示參考。
+  */
+
+  const displayTotal =
+    total > 0
+      ? total
+      : num(totalUsageInput.value);
+
+
+  /*
+    實際平均每度
+  */
+
+  let unit =
+    0;
+
+  if(displayTotal > 0){
+
+    unit =
+      bill / displayTotal;
+
+  }
+
+
+  /*
+    精準分攤：
+    前兩人四捨五入
+    最後一人 = 總額 - 前兩人
+  */
+
+  const a1 =
+    Math.round(
+      m1 * unit
+    );
+
+  const a2 =
+    Math.round(
+      m2 * unit
+    );
+
+  const a3 =
+    Math.round(
+      bill - a1 - a2
+    );
+
+
+  const allocated =
+    a1 + a2 + a3;
+
+
+  /* =================
+     上方結果
+     ================= */
+
+  document.getElementById(
+    "totalUsage"
+  ).textContent =
+    displayTotal.toLocaleString("zh-TW");
+
+
+  document.getElementById(
+    "unitPrice"
+  ).textContent =
+    unit > 0
+      ? price(unit)
+      : "0";
+
+
+  document.getElementById(
+    "billDisplay"
+  ).textContent =
+    "$" + money(bill);
+
+
+  document.getElementById(
+    "allocatedTotal"
+  ).textContent =
+    "$" + money(allocated);
+
+
+  /* =================
+     均價表格
+     ================= */
+
+  document.getElementById(
+    "avgUsage1"
+  ).textContent =
+    m1.toLocaleString("zh-TW");
+
+
+  document.getElementById(
+    "avgUsage2"
+  ).textContent =
+    m2.toLocaleString("zh-TW");
+
+
+  document.getElementById(
+    "avgUsage3"
+  ).textContent =
+    m3.toLocaleString("zh-TW");
+
+
+  document.getElementById(
+    "avgUsageTotal"
+  ).textContent =
+    total.toLocaleString("zh-TW");
+
+
+  document.getElementById(
+    "avgPrice1"
+  ).textContent =
+    unit > 0
+      ? price(unit)
+      : "0";
+
+
+  document.getElementById(
+    "avgPrice2"
+  ).textContent =
+    unit > 0
+      ? price(unit)
+      : "0";
+
+
+  document.getElementById(
+    "avgPrice3"
+  ).textContent =
+    unit > 0
+      ? price(unit)
+      : "0";
+
+
+  document.getElementById(
+    "avgAmount1"
+  ).textContent =
+    "$" + money(a1);
+
+
+  document.getElementById(
+    "avgAmount2"
+  ).textContent =
+    "$" + money(a2);
+
+
+  document.getElementById(
+    "avgAmount3"
+  ).textContent =
+    "$" + money(a3);
+
+
+  document.getElementById(
+    "avgAmountTotal"
+  ).textContent =
+    "$" + money(allocated);
+
+
+  /* =================
+     三人金額
+     ================= */
+
+  document.getElementById(
+    "usage1"
+  ).textContent =
+    m1.toLocaleString("zh-TW");
+
+
+  document.getElementById(
+    "usage2"
+  ).textContent =
+    m2.toLocaleString("zh-TW");
+
+
+  document.getElementById(
+    "usage3"
+  ).textContent =
+    m3.toLocaleString("zh-TW");
+
+
+  document.getElementById(
+    "amount1"
+  ).textContent =
+    "$" + money(a1);
+
+
+  document.getElementById(
+    "amount2"
+  ).textContent =
+    "$" + money(a2);
+
+
+  document.getElementById(
+    "amount3"
+  ).textContent =
+    "$" + money(a3);
+
+
+  /* =================
+     去年同期
+     ================= */
+
+  const usageDiff =
+    total - last;
+
+  let lastYearText =
+    "";
+
+  if(last > 0){
+
+    const pct =
+      usageDiff / last * 100;
+
+    lastYearText =
+      `（較去年同期 ${
+        usageDiff >= 0 ? "+" : ""
+      }${usageDiff.toFixed(0)} 度 / ${
+        pct.toFixed(1)
+      }%）`;
+
+  }
+
+
+  /* =================
+     精準檢查
+     ================= */
+
+  const check =
+    document.getElementById(
+      "checkResult"
+    );
+
+
+  if(
+    bill > 0 &&
+    total > 0 &&
+    allocated === Math.round(bill)
+  ){
+
+    check.className =
+      "ok-box";
+
+    check.textContent =
+      "✅ 三人分攤精準相等：" +
+      "$" +
+      money(bill);
+
+  }else if(
+    bill <= 0
+  ){
+
+    check.className =
+      "warning-box";
+
+    check.textContent =
+      "⚠️ 請輸入台電總金額";
+
+  }else if(
+    total <= 0
+  ){
+
+    check.className =
+      "warning-box";
+
+    check.textContent =
+      "⚠️ 請輸入三人的用電度數";
+
+  }else{
+
+    check.className =
+      "warning-box";
+
+    check.textContent =
+      "⚠️ 請檢查輸入資料";
+
+  }
+
+
+  autoSaveDraft();
+
+
+  return {
+
+    billDate:
+      billDate.value,
+
+    meterDate:
+      meterDate.value,
+
+    meterTime:
+      meterTime.value,
+
+    nextMeterDate:
+      nextMeterDate.value,
+
+    totalUsage:
+      total,
+
+    lastYearUsage:
+      last,
+
+    meter1:
+      m1,
+
+    meter2:
+      m2,
+
+    meter3:
+      m3,
+
+    bill:
+      bill,
+
+    unitPrice:
+      unit,
+
+    amount1:
+      a1,
+
+    amount2:
+      a2,
+
+    amount3:
+      a3,
+
+    usageDifference:
+      usageDiff,
+
+    lastYearText:
+      lastYearText
+
+  };
+
+}
+
+
+/* =========================================================
+   自動儲存草稿
+   ========================================================= */
+
+function autoSaveDraft(){
+
+  const data = {
+
+    billDate:
+      billDate.value,
+
+    meterDate:
+      meterDate.value,
+
+    meterTime:
+      meterTime.value,
+
+    nextMeterDate:
+      nextMeterDate.value,
+
+    totalUsage:
+      totalUsageInput.value,
+
+    lastYearUsage:
+      lastYearUsage.value,
+
+    totalBill:
+      totalBill.value,
+
+    meter1:
+      meter1.value,
+
+    meter2:
+      meter2.value,
+
+    meter3:
+      meter3.value
+
+  };
+
+
+  localStorage.setItem(
+    DRAFT_KEY,
+    JSON.stringify(data)
+  );
+
+
+  document.getElementById(
+    "saveStatus"
+  ).textContent =
+    "💾 已自動儲存 · " +
+    new Date().toLocaleTimeString(
+      "zh-TW"
+    );
+
+}
+
+
+/* =========================================================
+   載入草稿
+   ========================================================= */
+
+function loadDraft(){
+
+  try{
+
+    const raw =
+      localStorage.getItem(
+        DRAFT_KEY
+      );
+
+    if(!raw)
+      return;
+
+
+    const d =
+      JSON.parse(raw);
+
+
+    if(d.billDate)
+      billDate.value =
+        d.billDate;
+
+    if(d.meterDate)
+      meterDate.value =
+        d.meterDate;
+
+    if(d.meterTime)
+      meterTime.value =
+        d.meterTime;
+
+    if(d.nextMeterDate)
+      nextMeterDate.value =
+        d.nextMeterDate;
+
+    if(d.totalUsage !== undefined)
+      totalUsageInput.value =
+        d.totalUsage;
+
+    if(d.lastYearUsage !== undefined)
+      lastYearUsage.value =
+        d.lastYearUsage;
+
+    if(d.totalBill !== undefined)
+      totalBill.value =
+        d.totalBill;
+
+    if(d.meter1 !== undefined)
+      meter1.value =
+        d.meter1;
+
+    if(d.meter2 !== undefined)
+      meter2.value =
+        d.meter2;
+
+    if(d.meter3 !== undefined)
+      meter3.value =
+        d.meter3;
+
+  }catch(e){
+
+    console.error(
+      "讀取草稿失敗",
+      e
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   歷史資料
+   ========================================================= */
+
+function getRecords(){
+
+  try{
+
+    return JSON.parse(
+      localStorage.getItem(
+        STORAGE_KEY
+      ) || "[]"
+    );
+
+  }catch(e){
+
+    return [];
+
+  }
+
+}
+
+
+function setRecords(records){
+
+  localStorage.setItem(
+    STORAGE_KEY,
+    JSON.stringify(records)
+  );
+
+}
+
+
+/* =========================================================
+   儲存本期
+   ========================================================= */
+
+function saveRecord(){
+
+  const data =
+    calculate();
+
+
+  if(!data.meterDate){
+
+    alert(
+      "請輸入抄表日期。"
+    );
+
+    return;
+
+  }
+
+
+  if(data.bill <= 0){
+
+    alert(
+      "請輸入台電總金額。"
+    );
+
+    return;
+
+  }
+
+
+  if(data.totalUsage <= 0){
+
+    alert(
+      "請輸入三人的用電度數。"
+    );
+
+    return;
+
+  }
+
+
+  const records =
+    getRecords();
+
+
+  /*
+    同一天同一時間：
+    更新原本紀錄
+  */
+
+  const index =
+    records.findIndex(
+      r =>
+        r.meterDate === data.meterDate &&
+        r.meterTime === data.meterTime
+    );
+
+
+  if(index >= 0){
+
+    records[index] =
+      data;
+
+  }else{
+
+    records.push(data);
+
+  }
+
+
+  records.sort(
+    (a,b) => {
+
+      const aa =
+        `${a.meterDate} ${a.meterTime}`;
+
+      const bb =
+        `${b.meterDate} ${b.meterTime}`;
+
+      return bb.localeCompare(aa);
+
+    }
+  );
+
+
+  setRecords(records);
+
+  renderHistory();
+
+
+  alert(
+    "✅ 本期電表已儲存！\n\n" +
+    "抄表日期：" +
+    rocDate(data.meterDate) +
+    "\n" +
+    weekday(data.meterDate) +
+    "\n" +
+    "抄表時間：" +
+    data.meterTime
+  );
+
+}
+
+
+/* =========================================================
+   修改歷史
+   ========================================================= */
+
+function editRecord(index){
+
+  const records =
+    getRecords();
+
+  const r =
+    records[index];
+
+
+  if(!r)
+    return;
+
+
+  billDate.value =
+    r.billDate || "";
+
+  meterDate.value =
+    r.meterDate || "";
+
+  meterTime.value =
+    r.meterTime || "";
+
+  nextMeterDate.value =
+    r.nextMeterDate || "";
+
+  totalUsageInput.value =
+    r.totalUsage || "";
+
+  lastYearUsage.value =
+    r.lastYearUsage || "";
+
+  totalBill.value =
+    r.bill || "";
+
+  meter1.value =
+    r.meter1 || "";
+
+  meter2.value =
+    r.meter2 || "";
+
+  meter3.value =
+    r.meter3 || "";
+
+
+  calculate();
+
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+}
+
+
+/* =========================================================
+   刪除單筆
+   ========================================================= */
+
+function deleteRecord(index){
+
+  const records =
+    getRecords();
+
+
+  if(!records[index])
+    return;
+
+
+  const ok =
+    confirm(
+      "確定要刪除這一筆電表紀錄嗎？"
+    );
+
+
+  if(!ok)
+    return;
+
+
+  records.splice(
+    index,
+    1
+  );
+
+
+  setRecords(records);
+
+  renderHistory();
+
+}
+
+
+/* =========================================================
+   清除今天
+   ========================================================= */
+
+function clearToday(){
+
+  const today =
+    todayISO();
+
+
+  const ok =
+    confirm(
+      "⚠️ 確定要清除今天的電表紀錄嗎？"
+    );
+
+
+  if(!ok)
+    return;
+
+
+  const records =
+    getRecords();
+
+
+  const filtered =
+    records.filter(
+      r =>
+        r.meterDate !== today
+    );
+
+
+  setRecords(filtered);
+
+
+  localStorage.removeItem(
+    DRAFT_KEY
+  );
+
+
+  billDate.value =
+    today;
+
+  meterDate.value =
+    defaultNovember10();
+
+  meterTime.value =
+    currentTime();
+
+  nextMeterDate.value =
+    defaultNovember10();
+
+  totalUsageInput.value =
+    "";
+
+  lastYearUsage.value =
+    "";
+
+  totalBill.value =
+    "";
+
+  meter1.value =
+    "";
+
+  meter2.value =
+    "";
+
+  meter3.value =
+    "";
+
+
+  calculate();
+
+  renderHistory();
+
+
+  alert(
+    "✅ 今天的資料已清除。"
+  );
+
+}
+
+
+/* =========================================================
+   清除全部
+   ========================================================= */
+
+function clearAll(){
+
+  const first =
+    confirm(
+      "⚠️⚠️ 確定要刪除所有歷史電表紀錄嗎？"
+    );
+
+
+  if(!first)
+    return;
+
+
+  const second =
+    confirm(
+      "🚨 再確認一次！\n\n" +
+      "所有歷史資料與目前自動儲存資料都會被刪除。\n\n" +
+      "確定要繼續嗎？"
+    );
+
+
+  if(!second)
+    return;
+
+
+  localStorage.removeItem(
+    STORAGE_KEY
+  );
+
+  localStorage.removeItem(
+    DRAFT_KEY
+  );
+
+
+  billDate.value =
+    todayISO();
+
+  meterDate.value =
+    defaultNovember10();
+
+  meterTime.value =
+    currentTime();
+
+  nextMeterDate.value =
+    defaultNovember10();
+
+  totalUsageInput.value =
+    "";
+
+  lastYearUsage.value =
+    "";
+
+  totalBill.value =
+    "";
+
+  meter1.value =
+    "";
+
+  meter2.value =
+    "";
+
+  meter3.value =
+    "";
+
+
+  calculate();
+
+  renderHistory();
+
+
+  alert(
+    "✅ 所有電表資料已清除。"
+  );
+
+}
+
+
+/* =========================================================
+   CSV
+   ========================================================= */
+
+function exportCSV(){
+
+  const records =
+    getRecords();
+
+
+  if(records.length === 0){
+
+    alert(
+      "目前沒有歷史紀錄可以匯出。"
+    );
+
+    return;
+
+  }
+
+
+  let csv =
+    "本期帳單日期,抄表日期,星期,抄表時間,下次抄表日期,本期用電,去年同期,平均每度,台電金額,鄰居①度數,鄰居②度數,你度數,鄰居①金額,鄰居②金額,你金額\n";
+
+
+  records.forEach(r => {
+
+    csv += [
+
+      r.billDate,
+
+      r.meterDate,
+
+      weekday(r.meterDate),
+
+      r.meterTime,
+
+      r.nextMeterDate,
+
+      r.totalUsage,
+
+      r.lastYearUsage,
+
+      r.unitPrice,
+
+      r.bill,
+
+      r.meter1,
+
+      r.meter2,
+
+      r.meter3,
+
+      r.amount1,
+
+      r.amount2,
+
+      r.amount3
+
+    ].join(",") +
+    "\n";
+
+  });
+
+
+  const blob =
+    new Blob(
+      ["\uFEFF" + csv],
+      {
+        type:
+          "text/csv;charset=utf-8;"
+      }
+    );
+
+
+  const url =
+    URL.createObjectURL(
+      blob
+    );
+
+
+  const a =
+    document.createElement("a");
+
+
+  a.href =
+    url;
+
+  a.download =
+    "電表紀錄_V1491.csv";
+
+
+  document.body.appendChild(a);
+
+  a.click();
+
+  document.body.removeChild(a);
+
+  URL.revokeObjectURL(url);
+
+}
+
+
+/* =========================================================
+   歷史紀錄
+   ========================================================= */
+
+function renderHistory(){
+
+  const body =
+    document.getElementById(
+      "historyBody"
+    );
+
+
+  const records =
+    getRecords();
+
+
+  if(records.length === 0){
+
+    body.innerHTML =
+      `
+      <tr>
+        <td
+          colspan="11"
+          class="empty">
+          📭 目前沒有歷史電表紀錄
+        </td>
+      </tr>
+      `;
+
+    return;
+
+  }
+
+
+  body.innerHTML =
+    records.map(
+      (r,index) => {
+
+        return `
+
+        <tr>
+
+          <td>
+            ${rocDate(r.meterDate)}
+          </td>
+
+          <td>
+            ${weekday(r.meterDate)}
+          </td>
+
+          <td>
+            ${r.meterTime || ""}
+          </td>
+
+          <td>
+            ${Number(r.totalUsage || 0)
+              .toLocaleString("zh-TW")}
+          </td>
+
+          <td>
+            ${Number(r.lastYearUsage || 0)
+              .toLocaleString("zh-TW")}
+          </td>
+
+          <td>
+            ${price(r.unitPrice || 0)}
+          </td>
+
+          <td>
+            $${money(r.bill || 0)}
+          </td>
+
+          <td>
+            $${money(r.amount1 || 0)}
+          </td>
+
+          <td>
+            $${money(r.amount2 || 0)}
+          </td>
+
+          <td>
+            $${money(r.amount3 || 0)}
+          </td>
+
+          <td>
+
+            <button
+              class="btn-light"
+              onclick="editRecord(${index})">
+              ✏️ 修改
+            </button>
+
+            <button
+              class="btn-danger"
+              onclick="deleteRecord(${index})">
+              刪除
+            </button>
+
+          </td>
+
+        </tr>
+
+        `;
+
+      }
+    ).join("");
+
+}
+
+
+/* =========================================================
+   所有欄位即時計算＋自動儲存
+   ========================================================= */
+
+[
+  billDate,
+  meterDate,
+  meterTime,
+  nextMeterDate,
+  totalUsageInput,
+  lastYearUsage,
+  totalBill,
+  meter1,
+  meter2,
+  meter3
+].forEach(
+  el => {
+
+    el.addEventListener(
+      "input",
+      calculate
+    );
+
+    el.addEventListener(
+      "change",
+      calculate
+    );
+
+  }
+);
+
+
+/* =========================================================
+   啟動
+   ========================================================= */
+
+loadDraft();
+
+calculate();
+
+renderHistory();
+
+</script>
+
+</body>
+</html>
