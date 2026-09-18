@@ -1,0 +1,2393 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>每日飲食控制｜雙體重獎金管理 V1491</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  background:#f4f6f8;
+  color:#222;
+  font-family:-apple-system,BlinkMacSystemFont,
+  "Segoe UI","Noto Sans TC","Microsoft JhengHei",sans-serif;
+  line-height:1.6;
+}
+
+.container{
+  max-width:950px;
+  margin:auto;
+  padding:12px;
+}
+
+.header{
+  background:linear-gradient(135deg,#667eea,#764ba2);
+  color:#fff;
+  border-radius:20px;
+  padding:22px;
+  margin-bottom:15px;
+  box-shadow:0 8px 25px rgba(0,0,0,.12);
+}
+
+.header h1{
+  margin:0 0 5px;
+  font-size:24px;
+}
+
+.header p{
+  margin:0;
+  opacity:.9;
+}
+
+.timeBox{
+  margin-top:14px;
+  background:rgba(255,255,255,.16);
+  border-radius:13px;
+  padding:12px;
+  font-size:17px;
+  font-weight:700;
+}
+
+.card{
+  background:#fff;
+  border-radius:18px;
+  padding:18px;
+  margin-bottom:15px;
+  box-shadow:0 4px 15px rgba(0,0,0,.06);
+}
+
+.card h2{
+  margin:0 0 13px;
+  font-size:20px;
+}
+
+.modeButtons{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.modeBtn{
+  border:0;
+  border-radius:13px;
+  padding:15px 10px;
+  font-size:17px;
+  font-weight:800;
+  cursor:pointer;
+  background:#e9ecef;
+  color:#333;
+}
+
+.modeBtn.active{
+  background:#667eea;
+  color:#fff;
+  box-shadow:0 5px 15px rgba(102,126,234,.3);
+}
+
+.modeTitle{
+  margin-top:13px;
+  text-align:center;
+  font-size:20px;
+  font-weight:800;
+  color:#6741d9;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+}
+
+.field{
+  display:flex;
+  flex-direction:column;
+}
+
+.full{
+  grid-column:1/-1;
+}
+
+label{
+  font-weight:700;
+  margin-bottom:5px;
+}
+
+input,select,textarea{
+  width:100%;
+  border:1px solid #d6dbe1;
+  border-radius:10px;
+  padding:11px 12px;
+  font-size:16px;
+  background:#fff;
+  outline:none;
+}
+
+input:focus,select:focus,textarea:focus{
+  border-color:#667eea;
+  box-shadow:0 0 0 3px rgba(102,126,234,.1);
+}
+
+textarea{
+  min-height:90px;
+  resize:vertical;
+}
+
+.readonly{
+  background:#f1f3f5;
+}
+
+.encouragement{
+  padding:17px;
+  border-radius:14px;
+  background:#fff8e7;
+  text-align:center;
+  font-size:19px;
+  font-weight:800;
+}
+
+.notice{
+  padding:14px;
+  border-radius:13px;
+  background:#f7f8ff;
+  border:1px solid #e0e4ff;
+}
+
+.waterLow{
+  background:#fff8e8;
+  border-color:#f3dda3;
+}
+
+.waterGood{
+  background:#eefbf2;
+  border-color:#c9ecd4;
+}
+
+.progress{
+  height:14px;
+  background:#e9ecef;
+  border-radius:20px;
+  overflow:hidden;
+  margin-top:12px;
+}
+
+.progressBar{
+  height:100%;
+  width:0%;
+  background:#4dabf7;
+  transition:.3s;
+}
+
+.rewardBox{
+  border:1px solid #eee0bb;
+  background:#fffaf0;
+  border-radius:14px;
+  padding:12px;
+}
+
+.rewardRow{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  padding:9px 2px;
+  border-bottom:1px solid #eee3c8;
+}
+
+.rewardRow:last-child{
+  border-bottom:0;
+}
+
+.rewardValue{
+  color:#d9480f;
+  font-weight:800;
+  white-space:nowrap;
+}
+
+.total{
+  margin-top:12px;
+  padding:16px;
+  border-radius:14px;
+  background:#fff3bf;
+  color:#d9480f;
+  text-align:center;
+  font-size:24px;
+  font-weight:900;
+}
+
+.summaryItem{
+  padding:8px 0;
+  border-bottom:1px dashed #ddd;
+}
+
+.summaryItem:last-child{
+  border-bottom:0;
+}
+
+.fastBox{
+  margin-top:13px;
+  background:#f3f0ff;
+  border:1px solid #ddd3ff;
+  border-radius:14px;
+  padding:13px;
+}
+
+.fastHours{
+  color:#6741d9;
+  font-size:25px;
+  font-weight:900;
+}
+
+.buttons{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+
+button{
+  border:0;
+  border-radius:11px;
+  padding:12px;
+  font-size:16px;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.primary{background:#667eea;color:#fff}
+.success{background:#2f9e44;color:#fff}
+.warning{background:#f08c00;color:#fff}
+.danger{background:#e03131;color:#fff}
+.gray{background:#868e96;color:#fff}
+
+.history{
+  overflow-x:auto;
+}
+
+table{
+  width:100%;
+  min-width:780px;
+  border-collapse:collapse;
+}
+
+th,td{
+  padding:8px;
+  border-bottom:1px solid #eee;
+  text-align:center;
+  white-space:nowrap;
+}
+
+th{
+  background:#f1f3f5;
+}
+
+.positive{
+  color:#2f9e44;
+  font-weight:800;
+}
+
+.negative{
+  color:#e03131;
+  font-weight:800;
+}
+
+.small{
+  color:#777;
+  font-size:13px;
+}
+
+.status{
+  position:fixed;
+  left:50%;
+  bottom:18px;
+  transform:translateX(-50%);
+  background:#222;
+  color:#fff;
+  padding:10px 18px;
+  border-radius:30px;
+  opacity:0;
+  pointer-events:none;
+  transition:.25s;
+  z-index:9999;
+}
+
+.status.show{
+  opacity:1;
+}
+
+@media(max-width:650px){
+  .container{padding:9px}
+  .grid{grid-template-columns:1fr}
+  .full{grid-column:auto}
+  .buttons{grid-template-columns:1fr}
+  .header h1{font-size:21px}
+  .modeButtons{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- ================= HEADER ================= -->
+
+<div class="header">
+  <h1>⚖️ 每日飲食控制｜雙體重獎金管理</h1>
+  <p>V1491｜56kg ＋ 61kg 雙模式</p>
+
+  <div class="timeBox">
+    📅 <span id="currentDate"></span>
+    <br>
+    🕐 現在時間：<span id="currentTime"></span>
+  </div>
+</div>
+
+
+<!-- ================= 模式 ================= -->
+
+<div class="card">
+
+  <h2>🏆 選擇體重獎金模式</h2>
+
+  <div class="modeButtons">
+
+    <button
+      id="mode56Btn"
+      class="modeBtn active"
+      onclick="switchMode('56')">
+      🏆 56kg 獎金模式
+    </button>
+
+    <button
+      id="mode61Btn"
+      class="modeBtn"
+      onclick="switchMode('61')">
+      🏆 61kg 獎金模式
+    </button>
+
+  </div>
+
+  <div id="modeTitle" class="modeTitle">
+    目前使用：56kg 獎金模式
+  </div>
+
+</div>
+
+
+<!-- ================= 鼓勵 ================= -->
+
+<div class="card">
+
+  <h2>💪 今日鼓勵</h2>
+
+  <div id="encouragement" class="encouragement">
+    今天也有努力，就是很棒的進步！❤️
+  </div>
+
+</div>
+
+
+<!-- ================= 今日資料 ================= -->
+
+<div class="card">
+
+  <h2>📅 今日基本資料</h2>
+
+  <div class="grid">
+
+    <div class="field">
+      <label>年月日</label>
+      <input id="recordDate" class="readonly" readonly>
+    </div>
+
+    <div class="field">
+      <label>星期</label>
+      <input id="recordWeekday" class="readonly" readonly>
+    </div>
+
+    <div class="field">
+      <label>目前體重（kg）</label>
+      <input
+        id="weight"
+        type="number"
+        min="20"
+        max="200"
+        step="0.1"
+        placeholder="例如：55.8">
+    </div>
+
+    <div class="field">
+      <label>目前獎金模式基準</label>
+      <input
+        id="baseDisplay"
+        class="readonly"
+        readonly>
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ================= 獎金規則 ================= -->
+
+<div class="card">
+
+  <h2>🏆 獎金規則</h2>
+
+  <div id="rewardRules"></div>
+
+  <div class="small" style="margin-top:10px;">
+    💡 系統會按照每個公斤級距逐級計算。
+  </div>
+
+  <div id="totalReward" class="total">
+    累計獎金：$0
+  </div>
+
+</div>
+
+
+<!-- ================= 飲食 ================= -->
+
+<div class="card">
+
+  <h2>🍱 今日飲食控制</h2>
+
+  <div class="grid">
+
+    <div class="field">
+      <label>🍳 早餐</label>
+      <select id="breakfast">
+        <option value="">請選擇</option>
+        <option>正常控制</option>
+        <option>低醣</option>
+        <option>高蛋白</option>
+        <option>少量</option>
+        <option>未吃</option>
+        <option>外食</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>🍱 午餐</label>
+      <select id="lunch">
+        <option value="">請選擇</option>
+        <option>正常控制</option>
+        <option>低醣</option>
+        <option>高蛋白</option>
+        <option>少量</option>
+        <option>未吃</option>
+        <option>外食</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>🥗 晚餐</label>
+      <select id="dinner">
+        <option value="">請選擇</option>
+        <option>正常控制</option>
+        <option>低醣</option>
+        <option>高蛋白</option>
+        <option>少量</option>
+        <option>未吃</option>
+        <option>外食</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>🌙 宵夜</label>
+      <select id="lateNight">
+        <option value="">請選擇</option>
+        <option>無</option>
+        <option>少量</option>
+        <option>有</option>
+        <option>控制良好</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>🍪 零食</label>
+      <select id="snack">
+        <option value="">請選擇</option>
+        <option>無</option>
+        <option>少量</option>
+        <option>水果</option>
+        <option>甜食</option>
+        <option>餅乾</option>
+        <option>其他</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>🥤 飲料</label>
+      <select id="drink">
+        <option value="">請選擇</option>
+        <option>白開水</option>
+        <option>無糖茶</option>
+        <option>黑咖啡</option>
+        <option>無</option>
+        <option>含糖飲料</option>
+        <option>其他</option>
+      </select>
+    </div>
+
+    <div class="field full">
+      <label>📝 其他飲食紀錄</label>
+      <textarea
+        id="otherFood"
+        placeholder="例如：雞胸肉、蛋、蔬菜、水果……"></textarea>
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ================= 飲食摘要 ================= -->
+
+<div class="card">
+
+  <h2>📋 今日飲食控制紀錄</h2>
+
+  <div id="dietSummary" class="notice">
+    尚未記錄今日飲食。
+  </div>
+
+</div>
+
+
+<!-- ================= 喝水 ================= -->
+
+<div class="card">
+
+  <h2>💧 喝水提醒</h2>
+
+  <div id="waterReminder" class="notice waterLow">
+    今天喝水偏少，再補充一些水分喔！
+  </div>
+
+  <div class="grid" style="margin-top:12px;">
+
+    <div class="field">
+      <label>今日喝水量（ml）</label>
+      <input
+        id="water"
+        type="number"
+        min="0"
+        step="100"
+        placeholder="例如：1500">
+    </div>
+
+    <div class="field">
+      <label>建議目標</label>
+      <input
+        value="2,000 ml"
+        class="readonly"
+        readonly>
+    </div>
+
+  </div>
+
+  <div class="progress">
+    <div id="waterProgress" class="progressBar"></div>
+  </div>
+
+  <div id="waterText" class="small" style="margin-top:7px;">
+    今日：0 ml / 建議目標：2,000 ml
+  </div>
+
+</div>
+
+
+<!-- ================= 作息 ================= -->
+
+<div class="card">
+
+  <h2>😴 作息紀錄</h2>
+
+  <div class="grid">
+
+    <div class="field">
+      <label>起床時間</label>
+      <input id="wakeTime" type="time">
+    </div>
+
+    <div class="field">
+      <label>睡覺時間</label>
+      <input id="sleepTime" type="time">
+    </div>
+
+    <div class="field">
+      <label>睡眠時間（小時）</label>
+      <input
+        id="sleepHours"
+        type="number"
+        min="0"
+        max="24"
+        step="0.1">
+    </div>
+
+    <div class="field">
+      <label>排便</label>
+      <select id="bowel">
+        <option value="">請選擇</option>
+        <option>正常</option>
+        <option>有</option>
+        <option>沒有</option>
+        <option>不順</option>
+      </select>
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ================= 斷食 ================= -->
+
+<div class="card">
+
+  <h2>⏱️ 間歇性斷食</h2>
+
+  <div class="grid">
+
+    <div class="field">
+      <label>斷食模式</label>
+      <select id="fastingMode">
+        <option value="">未設定</option>
+        <option>12:12</option>
+        <option>14:10</option>
+        <option>16:8</option>
+        <option>18:6</option>
+        <option>20:4</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>第一餐時間</label>
+      <input id="firstMeal" type="time">
+    </div>
+
+    <div class="field">
+      <label>最後一餐時間</label>
+      <input id="lastMeal" type="time">
+    </div>
+
+  </div>
+
+  <div class="fastBox">
+    <div>⏳ 今日估算斷食時間</div>
+    <div id="fastHours" class="fastHours">尚未設定</div>
+  </div>
+
+</div>
+
+
+<!-- ================= 心情 ================= -->
+
+<div class="card">
+
+  <h2>❤️ 今日心情</h2>
+
+  <textarea
+    id="mood"
+    placeholder="今天的心情、身體狀態、飲食感受……"></textarea>
+
+</div>
+
+
+<!-- ================= 趨勢 ================= -->
+
+<div class="card">
+
+  <h2>📊 體重趨勢</h2>
+
+  <div class="grid">
+
+    <div class="notice">
+      <div class="small">今日體重</div>
+      <strong id="todayWeight">—</strong> kg
+    </div>
+
+    <div class="notice">
+      <div class="small">7日平均</div>
+      <strong id="avg7">—</strong> kg
+    </div>
+
+    <div class="notice">
+      <div class="small">30日平均</div>
+      <strong id="avg30">—</strong> kg
+    </div>
+
+    <div class="notice">
+      <div class="small">趨勢</div>
+      <strong id="trend">—</strong>
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ================= 資料操作 ================= -->
+
+<div class="card">
+
+  <h2>💾 資料操作</h2>
+
+  <div class="buttons">
+
+    <button
+      class="primary"
+      onclick="saveToday(true)">
+      💾 儲存今日
+    </button>
+
+    <button
+      class="success"
+      onclick="loadToday()">
+      🔄 重新載入今天
+    </button>
+
+    <button
+      class="warning"
+      onclick="confirmClearToday()">
+      🗑️ 清除今天
+    </button>
+
+    <button
+      class="danger"
+      onclick="confirmClearAll()">
+      ⚠️ 清除全部
+    </button>
+
+  </div>
+
+  <div class="small" style="margin-top:12px;">
+    💡 輸入資料後系統會自動儲存。
+  </div>
+
+</div>
+
+
+<!-- ================= 歷史 ================= -->
+
+<div class="card">
+
+  <h2>📜 歷史紀錄</h2>
+
+  <div class="history">
+
+    <table>
+
+      <thead>
+        <tr>
+          <th>日期</th>
+          <th>體重</th>
+          <th>變化</th>
+          <th>本次獎金</th>
+          <th>累計獎金</th>
+          <th>模式</th>
+        </tr>
+      </thead>
+
+      <tbody id="historyBody"></tbody>
+
+    </table>
+
+  </div>
+
+</div>
+
+</div>
+
+
+<div id="status" class="status">
+  已自動儲存
+</div>
+
+
+<script>
+
+/* ==========================================================
+   V1491 雙模式核心設定
+========================================================== */
+
+const STORAGE_KEY = "dailyDietDual_V1491";
+
+const MODES = {
+
+  "56":{
+    name:"56kg 獎金模式",
+    base:56,
+
+    /*
+      56→55 = 2862
+      55→54 = 1431
+      54→53 = 1431
+      ...
+    */
+    firstReward:2862,
+    nextReward:1431
+  },
+
+  "61":{
+    name:"61kg 獎金模式",
+    base:61,
+
+    /*
+      61→60 = 1000
+      60→59 = 1500
+      59→58 = 2000
+      58→57 = 2500
+      57→56 = 3000
+    */
+    rewards:[
+      1000,
+      1500,
+      2000,
+      2500,
+      3000
+    ]
+  }
+
+};
+
+let currentMode = localStorage.getItem(
+  "dailyDietCurrentMode_V1491"
+) || "56";
+
+
+/* ==========================================================
+   日期
+========================================================== */
+
+function pad(n){
+  return String(n).padStart(2,"0");
+}
+
+function todayKey(){
+
+  const d=new Date();
+
+  return [
+    d.getFullYear(),
+    pad(d.getMonth()+1),
+    pad(d.getDate())
+  ].join("-");
+}
+
+function updateDateTime(){
+
+  const d=new Date();
+
+  const week=[
+    "星期日",
+    "星期一",
+    "星期二",
+    "星期三",
+    "星期四",
+    "星期五",
+    "星期六"
+  ];
+
+  const date=
+    `${d.getFullYear()}/${pad(d.getMonth()+1)}/${pad(d.getDate())}`;
+
+  const time=
+    `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+
+  document.getElementById("currentDate").textContent=
+    `${date}（${week[d.getDay()]}）`;
+
+  document.getElementById("currentTime").textContent=time;
+
+  document.getElementById("recordDate").value=date;
+
+  document.getElementById("recordWeekday").value=
+    week[d.getDay()];
+}
+
+updateDateTime();
+setInterval(updateDateTime,1000);
+
+
+/* ==========================================================
+   資料
+========================================================== */
+
+function defaultData(){
+
+  return {
+    modes:{
+      "56":{
+        records:{},
+        history:[]
+      },
+      "61":{
+        records:{},
+        history:[]
+      }
+    }
+  };
+
+}
+
+function getData(){
+
+  try{
+
+    const raw=localStorage.getItem(STORAGE_KEY);
+
+    if(!raw) return defaultData();
+
+    const data=JSON.parse(raw);
+
+    if(!data.modes) return defaultData();
+
+    if(!data.modes["56"])
+      data.modes["56"]={records:{},history:[]};
+
+    if(!data.modes["61"])
+      data.modes["61"]={records:{},history:[]};
+
+    return data;
+
+  }catch(e){
+
+    return defaultData();
+
+  }
+
+}
+
+function saveData(data){
+
+  localStorage.setItem(
+    STORAGE_KEY,
+    JSON.stringify(data)
+  );
+
+}
+
+
+/* ==========================================================
+   表單
+========================================================== */
+
+const fields=[
+  "weight",
+  "breakfast",
+  "lunch",
+  "dinner",
+  "lateNight",
+  "snack",
+  "drink",
+  "otherFood",
+  "water",
+  "wakeTime",
+  "sleepTime",
+  "sleepHours",
+  "bowel",
+  "fastingMode",
+  "firstMeal",
+  "lastMeal",
+  "mood"
+];
+
+
+function getFormData(){
+
+  const obj={
+    date:todayKey(),
+    savedAt:new Date().toISOString()
+  };
+
+  fields.forEach(id=>{
+    const el=document.getElementById(id);
+    obj[id]=el ? el.value : "";
+  });
+
+  return obj;
+
+}
+
+
+function setFormData(data){
+
+  fields.forEach(id=>{
+
+    const el=document.getElementById(id);
+
+    if(el){
+      el.value=data && data[id] != null
+        ? data[id]
+        : "";
+    }
+
+  });
+
+  renderAll();
+
+}
+
+
+/* ==========================================================
+   模式切換
+========================================================== */
+
+function switchMode(mode){
+
+  currentMode=mode;
+
+  localStorage.setItem(
+    "dailyDietCurrentMode_V1491",
+    mode
+  );
+
+  document.getElementById("mode56Btn")
+    .classList.toggle("active",mode==="56");
+
+  document.getElementById("mode61Btn")
+    .classList.toggle("active",mode==="61");
+
+  document.getElementById("modeTitle").textContent=
+    "目前使用：" + MODES[mode].name;
+
+  document.getElementById("baseDisplay").value=
+    MODES[mode].base + " kg";
+
+  loadToday();
+
+}
+
+
+/* ==========================================================
+   獎金計算
+========================================================== */
+
+/*
+  56kg 模式：
+
+  56→55 = 2862
+  55→54 = 1431
+  54→53 = 1431
+  ...
+
+  回胖：
+
+  依照「目前累積獎金的一半」退回。
+*/
+
+function reward56ForDownStep(fromWeight){
+
+  /*
+    fromWeight = 56
+    56→55
+  */
+  if(fromWeight===56) return 2862;
+
+  if(fromWeight<56) return 1431;
+
+  return 0;
+}
+
+
+/*
+  61kg 模式：
+
+  from 61→60 = rewards[0]
+  from 60→59 = rewards[1]
+  ...
+*/
+
+function reward61ForDownStep(fromWeight){
+
+  const index=61-fromWeight;
+
+  if(index>=0 && index<MODES["61"].rewards.length){
+
+    return MODES["61"].rewards[index];
+
+  }
+
+  return 0;
+}
+
+
+/*
+  取得從 base 往下到某重量的累計獎金。
+*/
+
+function cumulativeReward(weight){
+
+  const mode=MODES[currentMode];
+
+  const w=Number(weight);
+
+  if(!Number.isFinite(w)) return 0;
+
+  if(w>=mode.base) return 0;
+
+  let total=0;
+
+  /*
+    用整數公斤級距計算。
+    例如 56 → 54：
+    56→55 + 55→54
+  */
+
+  let current=mode.base;
+
+  while(current>w){
+
+    let reward=0;
+
+    if(currentMode==="56"){
+
+      reward=reward56ForDownStep(current);
+
+    }else{
+
+      reward=reward61ForDownStep(current);
+
+    }
+
+    total+=reward;
+
+    current--;
+
+  }
+
+  return total;
+
+}
+
+
+/*
+  取得兩個體重紀錄之間的獎金變化。
+
+  重要：
+  跨多公斤時逐公斤計算。
+*/
+
+function movementBetween(previous,current){
+
+  const p=Number(previous);
+  const c=Number(current);
+
+  if(
+    !Number.isFinite(p) ||
+    !Number.isFinite(c) ||
+    p===c
+  ){
+    return 0;
+  }
+
+  /*
+    下降：
+    每跨過一個整數公斤，
+    取得該級距獎金。
+  */
+
+  if(c<p){
+
+    let total=0;
+
+    let step=Math.floor(p);
+
+    const target=Math.floor(c);
+
+    while(step>target){
+
+      let reward=0;
+
+      if(currentMode==="56"){
+        reward=reward56ForDownStep(step);
+      }else{
+        reward=reward61ForDownStep(step);
+      }
+
+      total+=reward;
+
+      step--;
+    }
+
+    return total;
+
+  }
+
+
+  /*
+    上升：
+    56kg 模式：
+    按「當時累積獎金的一半」退回。
+
+    61kg 模式：
+    按「該公斤級距獎金的一半」退回。
+  */
+
+  let total=0;
+
+  let step=Math.floor(p);
+
+  const target=Math.floor(c);
+
+  while(step<target){
+
+    if(currentMode==="56"){
+
+      /*
+        例如：
+        54 → 55
+
+        54kg 當時累計：
+        4293
+
+        退回：
+        4293 / 2
+      */
+
+      const currentCumulative=
+        cumulativeReward(step);
+
+      total-=currentCumulative/2;
+
+    }else{
+
+      /*
+        例如：
+        59 → 60
+
+        59→58 的獎金 = 2000
+        回來退 1000
+      */
+
+      const downReward=
+        reward61ForDownStep(step);
+
+      total-=downReward/2;
+
+    }
+
+    step++;
+
+  }
+
+  return total;
+
+}
+
+
+/* ==========================================================
+   顯示獎金規則
+========================================================== */
+
+function renderRewardRules(){
+
+  const box=document.getElementById("rewardRules");
+
+  const mode=MODES[currentMode];
+
+  let html="";
+
+  if(currentMode==="56"){
+
+    html+=`
+      <div class="rewardBox">
+
+        <div class="rewardRow">
+          <span><b>56 → 55 kg</b></span>
+          <span class="rewardValue">＋$2,862</span>
+        </div>
+
+        <div class="rewardRow">
+          <span><b>55 → 54 kg</b></span>
+          <span class="rewardValue">＋$1,431</span>
+        </div>
+
+        <div class="rewardRow">
+          <span><b>54 → 53 kg</b></span>
+          <span class="rewardValue">＋$1,431</span>
+        </div>
+
+        <div class="rewardRow">
+          <span><b>53 → 52 kg</b></span>
+          <span class="rewardValue">＋$1,431</span>
+        </div>
+
+        <div class="rewardRow">
+          <span><b>52 → 51 kg</b></span>
+          <span class="rewardValue">＋$1,431</span>
+        </div>
+
+      </div>
+
+      <div class="notice" style="margin-top:10px;">
+        ↩️ 回胖時：依當時累計獎金的 <b>一半</b> 退回。
+        <br>
+        例如 54kg 累計 $4,293，
+        回到55kg退回 $2,146.5。
+      </div>
+    `;
+
+  }else{
+
+    html+=`
+      <div class="rewardBox">
+
+        <div class="rewardRow">
+          <span><b>61 → 60 kg</b></span>
+          <span class="rewardValue">＋$1,000</span>
+        </div>
+
+        <div class="rewardRow">
+          <span><b>60 → 59 kg</b></span>
+          <span class="rewardValue">＋$1,500</span>
+        </div>
+
+        <div class="rewardRow">
+          <span><b>59 → 58 kg</b></span>
+          <span class="rewardValue">＋$2,000</span>
+        </div>
+
+        <div class="rewardRow">
+          <span><b>58 → 57 kg</b></span>
+          <span class="rewardValue">＋$2,500</span>
+        </div>
+
+        <div class="rewardRow">
+          <span><b>57 → 56 kg</b></span>
+          <span class="rewardValue">＋$3,000</span>
+        </div>
+
+      </div>
+
+      <div class="notice" style="margin-top:10px;">
+        ↩️ 回胖時：退回該公斤級距獎金的 <b>一半</b>。
+        <br>
+        例如 60→61：−$500；
+        59→60：−$750；
+        58→59：−$1,000。
+      </div>
+    `;
+
+  }
+
+  box.innerHTML=html;
+
+}
+
+
+/* ==========================================================
+   今日儲存
+========================================================== */
+
+function saveToday(showMessage=true){
+
+  const data=getData();
+
+  const key=todayKey();
+
+  const record=getFormData();
+
+  const modeData=data.modes[currentMode];
+
+  const previousRecord=
+    modeData.records[key];
+
+  let rewardChange=0;
+
+  /*
+    如果今天原本已經有資料，
+    以「今天原紀錄」更新，
+    不重複發獎金。
+  */
+
+  if(previousRecord){
+
+    /*
+      若今天體重被修改，
+      重新計算今天與昨天的體重差。
+    */
+
+    const previousDate=getPreviousDate(key);
+
+    const before=
+      modeData.records[previousDate];
+
+    if(before && before.weight!=="" && record.weight!==""){
+
+      rewardChange=
+        movementBetween(
+          Number(before.weight),
+          Number(record.weight)
+        );
+
+    }
+
+  }else{
+
+    /*
+      新增今天資料：
+      找最近一筆之前的體重。
+    */
+
+    const previousDate=findPreviousRecordDate(key);
+
+    if(previousDate){
+
+      const before=
+        modeData.records[previousDate];
+
+      if(
+        before &&
+        before.weight!=="" &&
+        record.weight!==""
+      ){
+
+        rewardChange=
+          movementBetween(
+            Number(before.weight),
+            Number(record.weight)
+          );
+
+      }
+
+    }
+
+  }
+
+  modeData.records[key]=record;
+
+  /*
+    每次重新儲存今日，
+    歷史紀錄只保留一筆。
+  */
+
+  let history=modeData.history || [];
+
+  history=history.filter(
+    x=>x.date!==key
+  );
+
+  history.push({
+    date:key,
+    weight:record.weight,
+    reward:rewardChange,
+    cumulative:cumulativeReward(record.weight),
+    mode:currentMode
+  });
+
+  history.sort((a,b)=>
+    a.date.localeCompare(b.date)
+  );
+
+  modeData.history=history;
+
+  saveData(data);
+
+  renderAll();
+
+  if(showMessage){
+    showStatus("💾 今日資料已儲存");
+  }
+
+}
+
+
+/* ==========================================================
+   找前一天
+========================================================== */
+
+function getPreviousDate(dateString){
+
+  const d=new Date(dateString+"T12:00:00");
+
+  d.setDate(d.getDate()-1);
+
+  return [
+    d.getFullYear(),
+    pad(d.getMonth()+1),
+    pad(d.getDate())
+  ].join("-");
+
+}
+
+
+function findPreviousRecordDate(key){
+
+  const data=getData();
+
+  const records=
+    data.modes[currentMode].records;
+
+  const dates=
+    Object.keys(records)
+      .filter(d=>d<key)
+      .sort();
+
+  return dates.length
+    ? dates[dates.length-1]
+    : null;
+
+}
+
+
+/* ==========================================================
+   載入今天
+========================================================== */
+
+function loadToday(){
+
+  const data=getData();
+
+  const record=
+    data.modes[currentMode].records[todayKey()];
+
+  if(record){
+
+    setFormData(record);
+
+  }else{
+
+    setFormData({
+      weight:"",
+      breakfast:"",
+      lunch:"",
+      dinner:"",
+      lateNight:"",
+      snack:"",
+      drink:"",
+      otherFood:"",
+      water:"",
+      wakeTime:"",
+      sleepTime:"",
+      sleepHours:"",
+      bowel:"",
+      fastingMode:"",
+      firstMeal:"",
+      lastMeal:"",
+      mood:""
+    });
+
+  }
+
+  renderAll();
+
+}
+
+
+/* ==========================================================
+   清除今天：三次確認
+========================================================== */
+
+function confirmClearToday(){
+
+  const first=
+    confirm(
+      "⚠️ 第一次確認\n\n"+
+      "確定要清除「今天」的資料嗎？"
+    );
+
+  if(!first) return;
+
+  const second=
+    confirm(
+      "⚠️ 第二次確認\n\n"+
+      "今天的體重、飲食、喝水、作息等紀錄都會被清除。\n\n"+
+      "確定繼續嗎？"
+    );
+
+  if(!second) return;
+
+  const third=
+    confirm(
+      "🚨 最後一次確認\n\n"+
+      "這是第 3 次確認。\n"+
+      "確定要永久清除今天的紀錄嗎？"
+    );
+
+  if(!third) return;
+
+  const data=getData();
+
+  delete data.modes[currentMode]
+    .records[todayKey()];
+
+  data.modes[currentMode].history=
+    data.modes[currentMode].history.filter(
+      x=>x.date!==todayKey()
+    );
+
+  saveData(data);
+
+  loadToday();
+
+  showStatus("🗑️ 今天資料已清除");
+
+}
+
+
+/* ==========================================================
+   清除全部：三次確認
+========================================================== */
+
+function confirmClearAll(){
+
+  const first=
+    confirm(
+      "🚨 第一次確認\n\n"+
+      "確定要清除全部資料嗎？"
+    );
+
+  if(!first) return;
+
+  const second=
+    confirm(
+      "🚨 第二次確認\n\n"+
+      "這會清除 56kg 與 61kg 兩個模式的：\n"+
+      "• 歷史體重\n"+
+      "• 飲食紀錄\n"+
+      "• 喝水紀錄\n"+
+      "• 作息紀錄\n"+
+      "• 獎金紀錄\n\n"+
+      "確定繼續嗎？"
+    );
+
+  if(!second) return;
+
+  const third=
+    confirm(
+      "🔴 最後一次確認\n\n"+
+      "這是第 3 次確認。\n"+
+      "全部資料清除後無法由本程式恢復。\n\n"+
+      "真的要全部清除嗎？"
+    );
+
+  if(!third) return;
+
+  localStorage.removeItem(STORAGE_KEY);
+
+  loadToday();
+
+  showStatus("⚠️ 全部資料已清除");
+
+}
+
+
+/* ==========================================================
+   鼓勵
+========================================================== */
+
+const encouragements=[
+
+  "🌟 今天也有努力，就是很棒的進步！",
+
+  "💪 不需要一次做到完美，持續就會看見改變。",
+
+  "❤️ 為自己努力的每一天，都值得肯定。",
+
+  "🔥 一公斤一公斤慢慢來，你正在靠近目標。",
+
+  "🌱 今天控制好一點，就是比昨天更進步。",
+
+  "👏 有記錄就是一種自律，繼續保持！",
+
+  "😊 不要急，穩穩地走，你一定會看到成果。",
+
+  "⭐ 今天的自己，比昨天更懂得照顧自己。",
+
+  "💖 飲食控制不是懲罰自己，而是在照顧自己。",
+
+  "🚶 慢慢走、穩穩走，累積就是力量。"
+
+];
+
+
+function renderEncouragement(){
+
+  /*
+    同一天固定同一句，
+    不會每次重新整理都亂跳。
+  */
+
+  const key=todayKey();
+
+  let hash=0;
+
+  for(let i=0;i<key.length;i++){
+    hash=
+      ((hash<<5)-hash)+
+      key.charCodeAt(i);
+    hash|=0;
+  }
+
+  const index=
+    Math.abs(hash)%encouragements.length;
+
+  document.getElementById(
+    "encouragement"
+  ).textContent=
+    encouragements[index];
+
+}
+
+
+/* ==========================================================
+   喝水
+========================================================== */
+
+function updateWaterReminder(){
+
+  const value=
+    Number(document.getElementById("water").value)||0;
+
+  const target=2000;
+
+  const percent=
+    Math.min(
+      100,
+      (value/target)*100
+    );
+
+  document.getElementById(
+    "waterProgress"
+  ).style.width=
+    percent+"%";
+
+  document.getElementById(
+    "waterText"
+  ).textContent=
+    `今日：${value.toLocaleString()} ml / 建議目標：2,000 ml`;
+
+  const box=
+    document.getElementById(
+      "waterReminder"
+    );
+
+  box.classList.remove(
+    "waterLow",
+    "waterGood"
+  );
+
+  if(value<1000){
+
+    box.classList.add("waterLow");
+
+    box.innerHTML=
+      "💧 今天喝水偏少，再補充一些水分喔！";
+
+  }else if(value<1500){
+
+    box.classList.add("waterLow");
+
+    box.innerHTML=
+      "💧 還可以，再多喝一些水。";
+
+  }else if(value<2000){
+
+    box.classList.add("waterGood");
+
+    box.innerHTML=
+      "👍 不錯，繼續保持，距離2,000ml還差一點！";
+
+  }else{
+
+    box.classList.add("waterGood");
+
+    box.innerHTML=
+      "💦 今日喝水達標！做得很好！";
+
+  }
+
+}
+
+
+/* ==========================================================
+   飲食摘要
+========================================================== */
+
+function updateDietSummary(){
+
+  const names={
+    breakfast:"🍳 早餐",
+    lunch:"🍱 午餐",
+    dinner:"🥗 晚餐",
+    lateNight:"🌙 宵夜",
+    snack:"🍪 零食",
+    drink:"🥤 飲料",
+    otherFood:"📝 其他"
+  };
+
+  const ids=[
+    "breakfast",
+    "lunch",
+    "dinner",
+    "lateNight",
+    "snack",
+    "drink",
+    "otherFood"
+  ];
+
+  let html="";
+
+  let has=false;
+
+  ids.forEach(id=>{
+
+    const el=
+      document.getElementById(id);
+
+    if(!el) return;
+
+    const value=
+      el.value.trim();
+
+    if(value){
+
+      has=true;
+
+      html+=`
+        <div class="summaryItem">
+          <b>${names[id]}</b>：${escapeHTML(value)}
+        </div>
+      `;
+
+    }
+
+  });
+
+  if(!has){
+
+    html=
+      "尚未記錄今日飲食。<br>"+
+      "<span class='small'>把今天吃了什麼記下來，就是控制的第一步 ❤️</span>";
+
+  }else{
+
+    html+=`
+      <div style="margin-top:10px;font-weight:800;">
+        🌟 今日飲食紀錄完成！
+        有記錄就是控制的第一步，繼續保持。
+      </div>
+    `;
+
+  }
+
+  document.getElementById(
+    "dietSummary"
+  ).innerHTML=html;
+
+}
+
+
+/* 防止摘要文字直接插入HTML */
+
+function escapeHTML(str){
+
+  return str
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+/* ==========================================================
+   斷食
+========================================================== */
+
+function timeToMinutes(t){
+
+  if(!t) return null;
+
+  const parts=t.split(":");
+
+  if(parts.length!==2) return null;
+
+  return Number(parts[0])*60+
+    Number(parts[1]);
+
+}
+
+
+function updateFasting(){
+
+  const first=
+    timeToMinutes(
+      document.getElementById("firstMeal").value
+    );
+
+  const last=
+    timeToMinutes(
+      document.getElementById("lastMeal").value
+    );
+
+  const box=
+    document.getElementById("fastHours");
+
+  if(
+    first===null ||
+    last===null
+  ){
+
+    box.textContent="尚未設定";
+    return;
+
+  }
+
+  let diff=last-first;
+
+  if(diff<0){
+    diff+=24*60;
+  }
+
+  const eatingHours=diff/60;
+
+  let fastingHours=24-eatingHours;
+
+  if(fastingHours<0)
+    fastingHours=0;
+
+  box.textContent=
+    `約 ${fastingHours.toFixed(1)} 小時`;
+
+}
+
+
+/* ==========================================================
+   趨勢
+========================================================== */
+
+function getWeightRecords(){
+
+  const data=getData();
+
+  return Object.entries(
+    data.modes[currentMode].records
+  )
+  .filter(([date,record])=>
+    record.weight!=="" &&
+    Number.isFinite(Number(record.weight))
+  )
+  .map(([date,record])=>({
+    date,
+    weight:Number(record.weight)
+  }))
+  .sort((a,b)=>
+    a.date.localeCompare(b.date)
+  );
+
+}
+
+
+function averageLastDays(days){
+
+  const records=
+    getWeightRecords();
+
+  const cutoff=
+    new Date();
+
+  cutoff.setHours(0,0,0,0);
+
+  cutoff.setDate(
+    cutoff.getDate()-(days-1)
+  );
+
+  const values=
+    records
+      .filter(x=>
+        new Date(x.date+"T00:00:00")>=cutoff
+      )
+      .map(x=>x.weight);
+
+  if(!values.length) return null;
+
+  return values.reduce(
+    (a,b)=>a+b,0
+  )/values.length;
+
+}
+
+
+function updateTrend(){
+
+  const records=
+    getWeightRecords();
+
+  const today=
+    records.find(
+      x=>x.date===todayKey()
+    );
+
+  document.getElementById(
+    "todayWeight"
+  ).textContent=
+    today ? today.weight.toFixed(1) : "—";
+
+  const a7=
+    averageLastDays(7);
+
+  const a30=
+    averageLastDays(30);
+
+  document.getElementById(
+    "avg7"
+  ).textContent=
+    a7===null ? "—" : a7.toFixed(1);
+
+  document.getElementById(
+    "avg30"
+  ).textContent=
+    a30===null ? "—" : a30.toFixed(1);
+
+  if(records.length<2){
+
+    document.getElementById(
+      "trend"
+    ).textContent="資料不足";
+
+    return;
+
+  }
+
+  const last=
+    records[records.length-1];
+
+  const prev=
+    records[records.length-2];
+
+  const diff=
+    last.weight-prev.weight;
+
+  let text="持平";
+
+  if(diff<0){
+    text=`下降 ${Math.abs(diff).toFixed(1)} kg`;
+  }else if(diff>0){
+    text=`上升 ${diff.toFixed(1)} kg`;
+  }
+
+  document.getElementById(
+    "trend"
+  ).textContent=text;
+
+}
+
+
+/* ==========================================================
+   累計獎金
+========================================================== */
+
+function updateTotalReward(){
+
+  const data=getData();
+
+  const records=
+    data.modes[currentMode].records;
+
+  const values=
+    Object.values(records)
+      .map(x=>Number(x.weight))
+      .filter(Number.isFinite);
+
+  if(!values.length){
+
+    document.getElementById(
+      "totalReward"
+    ).textContent=
+      "累計獎金：$0";
+
+    return;
+
+  }
+
+  /*
+    目前體重直接對應目前累計獎金。
+  */
+
+  const latestDate=
+    Object.keys(records).sort().pop();
+
+  const latest=
+    records[latestDate];
+
+  const reward=
+    cumulativeReward(
+      latest.weight
+    );
+
+  document.getElementById(
+    "totalReward"
+  ).textContent=
+    `累計獎金：$${formatMoney(reward)}`;
+
+}
+
+
+/* ==========================================================
+   金額格式
+========================================================== */
+
+function formatMoney(value){
+
+  if(Math.abs(value-Math.round(value))<0.000001){
+
+    return Math.round(value).toLocaleString();
+
+  }
+
+  return value.toLocaleString(
+    "zh-TW",
+    {
+      minimumFractionDigits:1,
+      maximumFractionDigits:2
+    }
+  );
+
+}
+
+
+/* ==========================================================
+   歷史
+========================================================== */
+
+function renderHistory(){
+
+  const data=getData();
+
+  const history=
+    data.modes[currentMode].history || [];
+
+  const body=
+    document.getElementById(
+      "historyBody"
+    );
+
+  if(!history.length){
+
+    body.innerHTML=`
+      <tr>
+        <td colspan="6">
+          尚無歷史紀錄
+        </td>
+      </tr>
+    `;
+
+    return;
+
+  }
+
+  body.innerHTML=
+    history
+      .slice()
+      .reverse()
+      .map(x=>{
+
+        const reward=
+          Number(x.reward)||0;
+
+        const rewardClass=
+          reward>0
+            ?"positive"
+            :reward<0
+            ?"negative"
+            :"neutral";
+
+        const rewardText=
+          reward>0
+            ?`＋$${formatMoney(reward)}`
+            :reward<0
+            ?`−$${formatMoney(Math.abs(reward))}`
+            :"$0";
+
+        return `
+          <tr>
+
+            <td>${x.date}</td>
+
+            <td>
+              ${x.weight==="" ? "—" :
+              Number(x.weight).toFixed(1)}
+              kg
+            </td>
+
+            <td class="${rewardClass}">
+              ${rewardText}
+            </td>
+
+            <td class="${rewardClass}">
+              ${rewardText}
+            </td>
+
+            <td>
+              $${formatMoney(Number(x.cumulative)||0)}
+            </td>
+
+            <td>
+              ${x.mode==="56"
+                ?"56kg"
+                :"61kg"}
+            </td>
+
+          </tr>
+        `;
+
+      })
+      .join("");
+
+}
+
+
+/* ==========================================================
+   自動儲存
+========================================================== */
+
+let autoSaveTimer=null;
+
+function autoSave(){
+
+  clearTimeout(autoSaveTimer);
+
+  autoSaveTimer=
+    setTimeout(()=>{
+
+      saveToday(false);
+
+      showStatus("💾 已自動儲存");
+
+    },500);
+
+}
+
+
+/* ==========================================================
+   所有欄位監聽
+========================================================== */
+
+fields.forEach(id=>{
+
+  const el=
+    document.getElementById(id);
+
+  if(!el) return;
+
+  el.addEventListener(
+    "input",
+    ()=>{
+
+      if(id==="water"){
+        updateWaterReminder();
+      }
+
+      if(
+        id==="breakfast" ||
+        id==="lunch" ||
+        id==="dinner" ||
+        id==="lateNight" ||
+        id==="snack" ||
+        id==="drink" ||
+        id==="otherFood"
+      ){
+        updateDietSummary();
+      }
+
+      if(
+        id==="firstMeal" ||
+        id==="lastMeal"
+      ){
+        updateFasting();
+      }
+
+      autoSave();
+
+    }
+  );
+
+  el.addEventListener(
+    "change",
+    ()=>{
+
+      if(id==="water"){
+        updateWaterReminder();
+      }
+
+      updateDietSummary();
+      updateFasting();
+
+      autoSave();
+
+    }
+  );
+
+});
+
+
+/* ==========================================================
+   狀態提示
+========================================================== */
+
+let statusTimer=null;
+
+function showStatus(text){
+
+  const box=
+    document.getElementById(
+      "status"
+    );
+
+  box.textContent=text;
+
+  box.classList.add("show");
+
+  clearTimeout(statusTimer);
+
+  statusTimer=
+    setTimeout(()=>{
+      box.classList.remove("show");
+    },1800);
+
+}
+
+
+/* ==========================================================
+   全部畫面更新
+========================================================== */
+
+function renderAll(){
+
+  renderRewardRules();
+
+  renderEncouragement();
+
+  updateWaterReminder();
+
+  updateDietSummary();
+
+  updateFasting();
+
+  updateTrend();
+
+  updateTotalReward();
+
+  renderHistory();
+
+}
+
+
+/* ==========================================================
+   初始化
+========================================================== */
+
+switchMode(currentMode);
+
+</script>
+
+</body>
+</html>
