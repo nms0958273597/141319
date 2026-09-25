@@ -2,8 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
 <title>SUGO｜視頻直播時數統計</title>
 
@@ -19,13 +18,18 @@ html{
 
 body{
     margin:0;
-    background:#f4f6f8;
-    color:#202124;
+    padding:0;
+    background:#f4f7fc;
+    color:#182230;
     font-family:
         -apple-system,
         BlinkMacSystemFont,
+        "SF Pro Display",
+        "SF Pro Text",
+        "PingFang TC",
         "Noto Sans TC",
         "Microsoft JhengHei",
+        Arial,
         sans-serif;
 }
 
@@ -40,346 +44,425 @@ button{
 }
 
 .container{
-    width:min(1100px,94%);
-    margin:0 auto;
-    padding:20px 0 60px;
+    width:min(920px,100%);
+    margin:auto;
+    padding:24px 16px 60px;
 }
+
+/* =========================
+   標題
+========================= */
 
 .header{
-    background:linear-gradient(135deg,#111827,#374151);
-    color:white;
-    border-radius:22px;
-    padding:25px 22px;
-    margin-bottom:18px;
-    box-shadow:0 10px 30px rgba(0,0,0,.12);
+    text-align:center;
+    padding:10px 8px 22px;
 }
 
-.header h1{
-    margin:0;
-    font-size:28px;
+.title-input{
+    width:100%;
+    max-width:720px;
+    border:0;
+    outline:0;
+    background:transparent;
+    text-align:center;
+    color:#182230;
+    font-size:38px;
+    font-weight:900;
+    padding:5px 8px;
 }
 
-.header p{
-    margin:8px 0 0;
-    opacity:.85;
+.title-input:focus{
+    background:#fff;
+    border-radius:16px;
+    box-shadow:0 0 0 3px rgba(56,100,229,.12);
 }
 
-.monthBar{
+.subtitle{
+    margin-top:4px;
+    font-size:19px;
+    font-weight:700;
+    color:#6d7480;
+}
+
+.save-status{
+    text-align:center;
+    font-size:15px;
+    font-weight:800;
+    min-height:24px;
+    margin-top:8px;
+}
+
+/* =========================
+   卡片
+========================= */
+
+.card{
+    background:#fff;
+    border:1px solid #e3e7ee;
+    border-radius:28px;
+    padding:24px;
+    margin-bottom:20px;
+    box-shadow:0 3px 12px rgba(20,35,60,.04);
+}
+
+.card-title{
     display:flex;
     align-items:center;
-    justify-content:space-between;
+    gap:9px;
+    font-size:27px;
+    font-weight:900;
+    margin-bottom:20px;
+}
+
+/* =========================
+   月份
+========================= */
+
+.month-selector{
+    display:flex;
     gap:10px;
-    background:white;
-    border-radius:18px;
-    padding:12px;
-    margin-bottom:18px;
-    box-shadow:0 5px 18px rgba(0,0,0,.06);
+    align-items:center;
+    margin-bottom:16px;
 }
 
-.monthTitle{
-    flex:1;
-    text-align:center;
-    font-size:21px;
-    font-weight:800;
-}
-
-.monthBtn{
-    width:48px;
-    height:48px;
+.month-arrow{
+    width:58px;
+    height:58px;
     border:0;
-    border-radius:14px;
-    background:#eef1f5;
-    font-size:24px;
+    border-radius:18px;
+    background:#3864e5;
+    color:#fff;
+    font-size:30px;
+    font-weight:900;
 }
 
-.monthBtn:active{
+.month-arrow:active{
     transform:scale(.96);
 }
 
-.card{
-    background:white;
-    border-radius:20px;
-    padding:20px;
-    margin-bottom:18px;
-    box-shadow:0 5px 18px rgba(0,0,0,.06);
-}
-
-.card h2{
-    margin:0 0 15px;
-    font-size:20px;
-}
-
-.formGrid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:12px;
-}
-
-.field{
+.current-month{
+    flex:1;
+    height:58px;
+    border-radius:18px;
+    background:#edf4ff;
     display:flex;
-    flex-direction:column;
-    gap:6px;
-}
-
-.field.full{
-    grid-column:1/-1;
-}
-
-.field label{
-    font-weight:700;
-    font-size:14px;
-}
-
-.field input,
-.field textarea{
-    width:100%;
-    border:1px solid #d8dde5;
-    border-radius:12px;
-    padding:12px;
-    background:#fff;
-    outline:none;
-}
-
-.field input:focus,
-.field textarea:focus{
-    border-color:#667eea;
-    box-shadow:0 0 0 3px rgba(102,126,234,.12);
-}
-
-textarea{
-    min-height:80px;
-    resize:vertical;
-}
-
-.actions{
-    display:flex;
-    flex-wrap:wrap;
-    gap:10px;
-    margin-top:15px;
-}
-
-.btn{
-    border:0;
-    border-radius:12px;
-    padding:12px 18px;
-    font-weight:800;
-}
-
-.btnPrimary{
-    background:#111827;
-    color:white;
-}
-
-.btnSuccess{
-    background:#16803c;
-    color:white;
-}
-
-.btnWarning{
-    background:#d97706;
-    color:white;
-}
-
-.btnDanger{
-    background:#dc2626;
-    color:white;
-}
-
-.btnGray{
-    background:#eef1f5;
-    color:#202124;
-}
-
-.btnBlue{
-    background:#2563eb;
-    color:white;
-}
-
-.btn:active{
-    transform:scale(.98);
-}
-
-.editBanner{
-    display:none;
-    background:#fff7d6;
-    color:#7a5600;
-    border:1px solid #f1d46a;
-    padding:12px 14px;
-    border-radius:12px;
-    margin-bottom:14px;
-    font-weight:700;
-}
-
-.editBanner.show{
-    display:block;
-}
-
-.status{
-    min-height:25px;
-    margin-top:12px;
-    font-weight:700;
-}
-
-.stats{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:12px;
-}
-
-.stat{
-    background:#f7f8fa;
-    border-radius:16px;
-    padding:17px;
-    text-align:center;
-}
-
-.statLabel{
-    color:#6b7280;
-    font-size:13px;
-    margin-bottom:7px;
-}
-
-.statValue{
+    align-items:center;
+    justify-content:center;
     font-size:25px;
     font-weight:900;
 }
 
-.records{
+.month-notice{
+    background:#f4f7fc;
+    border-radius:18px;
+    padding:14px;
+    text-align:center;
+    font-size:16px;
+    font-weight:800;
+    color:#596270;
+    margin-bottom:18px;
+}
+
+.month-notice strong{
+    color:#3864e5;
+}
+
+/* =========================
+   表單
+========================= */
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+}
+
+.form-label{
+    display:block;
+    font-size:19px;
+    font-weight:900;
+    margin-bottom:8px;
+}
+
+.input-box{
+    width:100%;
+    height:66px;
+    border:2px solid #dce1e9;
+    border-radius:20px;
+    background:#fff;
+    padding:0 17px;
+    font-size:21px;
+    font-weight:800;
+    color:#182230;
+    outline:none;
+}
+
+textarea.input-box{
+    height:90px;
+    padding:14px 17px;
+    resize:vertical;
+}
+
+.input-box:focus{
+    border-color:#3864e5;
+    box-shadow:0 0 0 4px rgba(56,100,229,.10);
+}
+
+/* =========================
+   按鈕
+========================= */
+
+.primary-btn,
+.secondary-btn,
+.danger-btn{
+    width:100%;
+    height:64px;
+    border:0;
+    border-radius:20px;
+    font-size:21px;
+    font-weight:900;
+}
+
+.primary-btn{
+    background:#3864e5;
+    color:#fff;
+    box-shadow:0 7px 16px rgba(56,100,229,.18);
+}
+
+.secondary-btn{
+    background:#edf4ff;
+    color:#3864e5;
+}
+
+.danger-btn{
+    background:#fff0f0;
+    color:#d33b3b;
+}
+
+.primary-btn:active,
+.secondary-btn:active,
+.danger-btn:active{
+    transform:scale(.985);
+}
+
+.button-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    margin-top:16px;
+}
+
+/* =========================
+   修改提示
+========================= */
+
+.editing-banner{
+    display:none;
+    background:#fff8e8;
+    color:#9a6a00;
+    border-radius:16px;
+    padding:12px;
+    font-size:16px;
+    font-weight:900;
+    margin-bottom:15px;
+    text-align:center;
+}
+
+.editing-banner.show{
+    display:block;
+}
+
+/* =========================
+   統計
+========================= */
+
+.stats-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+}
+
+.stat{
+    background:#f4f7fc;
+    border-radius:24px;
+    min-height:145px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:18px;
+}
+
+.stat-icon{
+    font-size:34px;
+}
+
+.stat-number{
+    font-size:43px;
+    line-height:1.05;
+    font-weight:950;
+}
+
+.stat-label{
+    font-size:17px;
+    color:#6d7480;
+    font-weight:800;
+    margin-top:7px;
+}
+
+.summary{
+    background:#edf4ff;
+    border-radius:24px;
+    padding:20px;
+    margin-top:16px;
+}
+
+.summary-row{
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+    padding:8px 0;
+    font-size:18px;
+    font-weight:800;
+}
+
+.summary-row strong{
+    color:#3864e5;
+}
+
+/* =========================
+   紀錄
+========================= */
+
+.record-list{
     display:flex;
     flex-direction:column;
     gap:12px;
 }
 
 .record{
-    border:1px solid #e2e5e9;
-    border-radius:16px;
-    padding:15px;
+    border:2px solid #e5e9f0;
+    border-radius:22px;
+    padding:16px;
     background:#fff;
 }
 
-.recordTop{
+.record.today{
+    border-color:#3864e5;
+    background:#f8fbff;
+}
+
+.record-head{
     display:flex;
     justify-content:space-between;
-    gap:10px;
     align-items:center;
+    gap:10px;
 }
 
-.recordDate{
-    font-size:18px;
-    font-weight:900;
+.record-date{
+    font-size:21px;
+    font-weight:950;
 }
 
-.recordHours{
-    font-size:22px;
-    font-weight:900;
+.record-hours{
+    font-size:24px;
+    font-weight:950;
+    color:#3864e5;
 }
 
-.recordNote{
-    margin-top:8px;
-    color:#6b7280;
+.record-note{
+    margin-top:7px;
+    color:#69727f;
+    font-size:16px;
+    font-weight:700;
     white-space:pre-wrap;
 }
 
-.recordActions{
-    display:flex;
-    gap:8px;
+.record-actions{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:9px;
     margin-top:12px;
 }
 
-.recordActions button{
-    flex:1;
+.small-btn{
+    height:45px;
+    border:0;
+    border-radius:14px;
+    font-size:16px;
+    font-weight:900;
+}
+
+.edit-btn{
+    background:#edf4ff;
+    color:#3864e5;
+}
+
+.delete-btn{
+    background:#fff0f0;
+    color:#d33b3b;
 }
 
 .empty{
     text-align:center;
-    padding:35px 10px;
-    color:#8a919c;
+    color:#7b8490;
+    font-weight:800;
+    padding:24px 8px;
 }
 
-.backupGrid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:12px;
-}
+/* =========================
+   備份
+========================= */
 
-.backupBox{
-    background:#f7f8fa;
-    border-radius:16px;
+.backup-box{
+    background:#f4f7fc;
+    border-radius:18px;
     padding:15px;
+    font-size:14px;
+    color:#596270;
+    line-height:1.7;
 }
 
-.backupBox h3{
-    margin:0 0 8px;
-}
+/* =========================
+   手機版
+========================= */
 
-.warning{
-    background:#fff4f4;
-    border:1px solid #fecaca;
-    color:#991b1b;
-    padding:13px;
-    border-radius:12px;
-    margin-bottom:12px;
-}
-
-.successBox{
-    background:#effdf5;
-    border:1px solid #bbf7d0;
-    color:#166534;
-    padding:13px;
-    border-radius:12px;
-    margin-bottom:12px;
-}
-
-.footer{
-    text-align:center;
-    color:#8a919c;
-    padding:15px 0;
-    font-size:13px;
-}
-
-.hidden{
-    display:none !important;
-}
-
-@media(max-width:700px){
+@media(max-width:620px){
 
     .container{
-        width:94%;
-        padding-top:12px;
+        padding:18px 12px 45px;
     }
 
-    .header h1{
-        font-size:23px;
+    .title-input{
+        font-size:30px;
     }
 
-    .formGrid{
+    .card{
+        padding:19px;
+        border-radius:24px;
+    }
+
+    .card-title{
+        font-size:24px;
+    }
+
+    .form-grid{
         grid-template-columns:1fr;
     }
 
-    .field.full{
-        grid-column:auto;
-    }
-
-    .stats{
+    .stats-grid{
         grid-template-columns:1fr 1fr;
     }
 
-    .backupGrid{
+    .stat-number{
+        font-size:38px;
+    }
+
+    .button-row{
         grid-template-columns:1fr;
     }
 
-    .monthTitle{
-        font-size:18px;
-    }
-
-    .actions .btn{
-        flex:1;
-        min-width:130px;
-    }
-
-    .recordTop{
-        align-items:flex-start;
-    }
 }
 </style>
 </head>
@@ -388,300 +471,448 @@ textarea{
 
 <div class="container">
 
-    <section class="header">
-        <h1 id="pageTitle">SUGO｜視頻直播時數統計</h1>
-        <p>一個月歸一個月｜資料獨立保存｜安全儲存版</p>
-    </section>
+<header class="header">
 
-    <!-- 月份 -->
-    <section class="monthBar">
+    <input
+        id="titleInput"
+        class="title-input"
+        value="SUGO｜視頻直播時數統計"
+        aria-label="標題"
+    >
+
+    <div class="subtitle">
+        一個月歸一個月｜資料獨立保存
+    </div>
+
+    <div id="saveStatus" class="save-status">
+        🔒 資料保存在此裝置
+    </div>
+
+</header>
+
+
+<!-- =========================
+     月份
+========================= -->
+
+<section class="card">
+
+    <div class="card-title">
+        📅 月份
+    </div>
+
+    <div class="month-selector">
 
         <button
-            class="monthBtn"
+            class="month-arrow"
             id="prevMonth"
-            type="button">
+            type="button"
+        >
             ‹
         </button>
 
-        <div class="monthTitle" id="monthTitle">
-            2026年09月
-        </div>
+        <div
+            class="current-month"
+            id="currentMonth"
+        ></div>
 
         <button
-            class="monthBtn"
+            class="month-arrow"
             id="nextMonth"
-            type="button">
+            type="button"
+        >
             ›
         </button>
 
-    </section>
-
-    <!-- 統計 -->
-    <section class="card">
-
-        <h2>📊 本月統計</h2>
-
-        <div class="stats">
-
-            <div class="stat">
-                <div class="statLabel">直播天數</div>
-                <div class="statValue" id="liveDays">0</div>
-            </div>
-
-            <div class="stat">
-                <div class="statLabel">總時數</div>
-                <div class="statValue" id="totalHours">0</div>
-            </div>
-
-            <div class="stat">
-                <div class="statLabel">平均每日</div>
-                <div class="statValue" id="avgHours">0</div>
-            </div>
-
-            <div class="stat">
-                <div class="statLabel">最後儲存</div>
-                <div
-                    class="statValue"
-                    style="font-size:14px"
-                    id="lastSaved">
-                    尚未儲存
-                </div>
-            </div>
-
-        </div>
-
-    </section>
-
-    <!-- 新增 / 修改 -->
-    <section class="card">
-
-        <h2 id="formTitle">➕ 新增直播紀錄</h2>
-
-        <div
-            id="editBanner"
-            class="editBanner">
-            🟡 目前正在修改資料。
-            <br>
-            修改只是暫存，必須按「💾 儲存修改」才會正式覆蓋原資料。
-        </div>
-
-        <div class="formGrid">
-
-            <div class="field">
-                <label>📅 日期</label>
-
-                <input
-                    id="dateInput"
-                    type="date">
-            </div>
-
-            <div class="field">
-                <label>⏱️ 直播時數</label>
-
-                <input
-                    id="hoursInput"
-                    type="number"
-                    min="0"
-                    step="0.1"
-                    placeholder="例如 3.5">
-            </div>
-
-            <div class="field full">
-                <label>📝 備註</label>
-
-                <textarea
-                    id="noteInput"
-                    placeholder="可填寫直播內容、備註……"></textarea>
-            </div>
-
-        </div>
-
-        <div class="actions">
-
-            <button
-                id="addBtn"
-                class="btn btnPrimary"
-                type="button">
-                ➕ 新增並自動儲存
-            </button>
-
-            <button
-                id="saveEditBtn"
-                class="btn btnSuccess hidden"
-                type="button">
-                💾 儲存修改
-            </button>
-
-            <button
-                id="cancelEditBtn"
-                class="btn btnGray hidden"
-                type="button">
-                ↩️ 取消修改
-            </button>
-
-        </div>
-
-        <div
-            id="status"
-            class="status">
-        </div>
-
-    </section>
-
-    <!-- 紀錄 -->
-    <section class="card">
-
-        <h2>📋 本月直播紀錄</h2>
-
-        <div
-            id="records"
-            class="records">
-        </div>
-
-    </section>
-
-    <!-- 備份 -->
-    <section class="card">
-
-        <h2>💾 資料備份與安全</h2>
-
-        <div class="warning">
-            ⚠️ 網站資料儲存在目前瀏覽器。
-            建議定期匯出 JSON 備份。
-        </div>
-
-        <div class="backupGrid">
-
-            <div class="backupBox">
-
-                <h3>📤 目前月份</h3>
-
-                <p>
-                    只備份目前月份，例如 2026/09。
-                </p>
-
-                <div class="actions">
-
-                    <button
-                        id="exportMonthBtn"
-                        class="btn btnBlue"
-                        type="button">
-                        📤 匯出本月
-                    </button>
-
-                    <button
-                        id="importMonthBtn"
-                        class="btn btnGray"
-                        type="button">
-                        📥 匯入本月
-                    </button>
-
-                    <input
-                        id="importMonthFile"
-                        class="hidden"
-                        type="file"
-                        accept=".json,application/json">
-
-                </div>
-
-            </div>
-
-            <div class="backupBox">
-
-                <h3>📦 全月份完整備份</h3>
-
-                <p>
-                    一次備份所有月份資料。
-                </p>
-
-                <div class="actions">
-
-                    <button
-                        id="exportAllBtn"
-                        class="btn btnSuccess"
-                        type="button">
-                        📦 匯出全部月份
-                    </button>
-
-                    <button
-                        id="importAllBtn"
-                        class="btn btnGray"
-                        type="button">
-                        ♻️ 還原全部月份
-                    </button>
-
-                    <input
-                        id="importAllFile"
-                        class="hidden"
-                        type="file"
-                        accept=".json,application/json">
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-    <!-- 清除 -->
-    <section class="card">
-
-        <h2>🗑️ 危險操作</h2>
-
-        <div class="warning">
-            此功能只會清除「目前月份」。
-            <br>
-            其他月份資料完全不會受到影響。
-            <br><br>
-            <strong>
-                ⚠️ 不會因為重新整理、切換月份或重新開啟網頁而自動清除。
-            </strong>
-        </div>
-
-        <button
-            id="clearMonthBtn"
-            class="btn btnDanger"
-            type="button">
-            🗑️ 清除目前月份資料
-        </button>
-
-        <button
-            id="undoClearBtn"
-            class="btn btnWarning hidden"
-            type="button">
-            ↩️ 復原剛才清除的資料
-        </button>
-
-        <div
-            id="clearStatus"
-            class="status">
-        </div>
-
-    </section>
-
-    <div class="footer">
-        SUGO｜資料安全管理版
     </div>
+
+    <div class="month-notice">
+
+        <strong id="monthNotice"></strong>
+
+        的資料只屬於本月份，
+        不會與其他月份合併或覆蓋。
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     新增 / 修改
+========================= -->
+
+<section class="card">
+
+    <div class="card-title">
+        ➕ 新增／修改紀錄
+    </div>
+
+    <div
+        id="editingBanner"
+        class="editing-banner"
+    >
+        ✏️ 正在修改既有紀錄｜
+        修改完成後請按「💾 儲存修改」
+    </div>
+
+    <div class="form-grid">
+
+        <div>
+
+            <label
+                class="form-label"
+                for="dateInput"
+            >
+                直播日期
+            </label>
+
+            <input
+                id="dateInput"
+                class="input-box"
+                type="date"
+            >
+
+        </div>
+
+        <div>
+
+            <label
+                class="form-label"
+                for="hoursInput"
+            >
+                直播時數
+            </label>
+
+            <input
+                id="hoursInput"
+                class="input-box"
+                type="number"
+                min="0"
+                step="0.1"
+                placeholder="例如 3.5"
+            >
+
+        </div>
+
+    </div>
+
+    <div style="margin-top:16px">
+
+        <label
+            class="form-label"
+            for="noteInput"
+        >
+            備註（可選）
+        </label>
+
+        <textarea
+            id="noteInput"
+            class="input-box"
+            placeholder="例如：晚上直播、活動場、休息日……"
+        ></textarea>
+
+    </div>
+
+    <div class="button-row">
+
+        <button
+            id="addBtn"
+            class="primary-btn"
+            type="button"
+        >
+            ＋ 新增直播紀錄
+        </button>
+
+        <button
+            id="saveEditBtn"
+            class="secondary-btn"
+            type="button"
+            style="display:none"
+        >
+            💾 儲存修改
+        </button>
+
+    </div>
+
+    <button
+        id="cancelEditBtn"
+        class="danger-btn"
+        type="button"
+        style="display:none;margin-top:10px"
+    >
+        取消修改
+    </button>
+
+</section>
+
+
+<!-- =========================
+     統計
+========================= -->
+
+<section class="card">
+
+    <div class="card-title">
+        📊 本月統計
+    </div>
+
+    <div class="stats-grid">
+
+        <div class="stat">
+
+            <div class="stat-icon">
+                🎥
+            </div>
+
+            <div
+                id="daysStat"
+                class="stat-number"
+            >
+                0
+            </div>
+
+            <div class="stat-label">
+                直播天數
+            </div>
+
+        </div>
+
+        <div class="stat">
+
+            <div class="stat-icon">
+                ⏱️
+            </div>
+
+            <div
+                id="hoursStat"
+                class="stat-number"
+            >
+                0
+            </div>
+
+            <div class="stat-label">
+                總直播時數
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="summary">
+
+        <div class="summary-row">
+
+            <span>
+                平均每日直播
+            </span>
+
+            <strong id="avgStat">
+                0 小時
+            </strong>
+
+        </div>
+
+        <div class="summary-row">
+
+            <span>
+                目前月份
+            </span>
+
+            <strong id="summaryMonth"></strong>
+
+        </div>
+
+        <div class="summary-row">
+
+            <span>
+                最後儲存
+            </span>
+
+            <strong id="lastSaved">
+                尚未儲存
+            </strong>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     紀錄
+========================= -->
+
+<section class="card">
+
+    <div class="card-title">
+        📋 本月紀錄
+    </div>
+
+    <div
+        id="recordList"
+        class="record-list"
+    ></div>
+
+</section>
+
+
+<!-- =========================
+     資料保護
+========================= -->
+
+<section class="card">
+
+    <div class="card-title">
+        🛡️ 資料保護
+    </div>
+
+    <div class="backup-box">
+
+        每個月份使用完全獨立的儲存空間。
+
+        <br>
+
+        ➕ 新增紀錄會立即自動儲存。
+
+        <br>
+
+        ✏️ 修改既有紀錄必須按
+        「💾 儲存修改」才會寫入。
+
+        <br>
+
+        ↩️ 取消修改不會影響原本資料。
+
+        <br>
+
+        🛡️ 建議每月結算後匯出一份備份。
+
+    </div>
+
+    <div class="button-row">
+
+        <button
+            id="exportBtn"
+            class="secondary-btn"
+            type="button"
+        >
+            📤 匯出目前月份
+        </button>
+
+        <button
+            id="importBtn"
+            class="secondary-btn"
+            type="button"
+        >
+            📥 匯入備份
+        </button>
+
+    </div>
+
+    <input
+        id="fileInput"
+        type="file"
+        accept=".json,application/json"
+        style="display:none"
+    >
+
+    <button
+        id="clearBtn"
+        class="danger-btn"
+        type="button"
+        style="margin-top:10px"
+    >
+        🗑️ 清除目前月份資料
+    </button>
+
+</section>
 
 </div>
 
+
 <script>
 
+"use strict";
+
+
 /* =====================================================
-   基本設定
+   SUGO 月份獨立儲存系統
+
+   儲存規則：
+
+   ① 每個月份完全獨立
+
+   ② 新增紀錄 → 自動儲存
+
+   ③ 修改既有紀錄 → 手動儲存
+
+   ④ 修改中 → 只存在草稿
+
+   ⑤ 取消修改 → 原資料完全不變
+
+   ⑥ 刪除 → 確認後立即儲存
+
+   ⑦ 清除 → 只清除目前月份
+
+   ⑧ 絕不使用 localStorage.clear()
+
 ===================================================== */
 
-const STORAGE_PREFIX = "sugo_records_";
+
+/* =====================================================
+   儲存 KEY
+===================================================== */
+
+const STORAGE_PREFIX =
+    "sugo_records_";
 
 const TITLE_KEY =
-    "sugo_page_title_v3";
+    "sugo_page_title_v2";
 
 const MONTH_KEY =
-    "sugo_current_month_v3";
+    "sugo_current_month_v2";
 
-const BACKUP_UNDO_KEY =
-    "sugo_last_clear_backup_v3";
+
+/* =====================================================
+   目前月份
+===================================================== */
+
+const NOW =
+    new Date();
+
+let currentMonth =
+    localStorage.getItem(MONTH_KEY)
+    ||
+    `${NOW.getFullYear()}-${String(NOW.getMonth()+1).padStart(2,"0")}`;
+
+
+/* =====================================================
+   正式資料
+===================================================== */
+
+let records = [];
+
+
+/* =====================================================
+   編輯狀態
+
+   editingId：
+   正在修改哪一筆
+
+   editDraft：
+   修改中的暫存副本
+
+   dirtyEdit：
+   是否已經修改但尚未儲存
+===================================================== */
+
+let editingId = null;
+
+let editDraft = null;
+
+let dirtyEdit = false;
 
 
 /* =====================================================
@@ -693,124 +924,94 @@ const $ = id =>
 
 
 /* =====================================================
-   狀態
+   月份 KEY
 ===================================================== */
-
-let currentMonth =
-    localStorage.getItem(MONTH_KEY)
-    ||
-    getCurrentMonth();
-
-let records = [];
-
-let editingId = null;
-
-let editDraft = null;
-
-let dirtyEdit = false;
-
-let lastClearedBackup = null;
-
-
-/* =====================================================
-   日期 / 月份
-===================================================== */
-
-function getCurrentMonth(){
-
-    const d = new Date();
-
-    return (
-        d.getFullYear()
-        +
-        "-"
-        +
-        String(d.getMonth()+1).padStart(2,"0")
-    );
-
-}
-
-
-function monthLabel(month){
-
-    const [y,m] =
-        month.split("-");
-
-    return `${y}年${m}月`;
-
-}
-
 
 function monthKey(month){
 
-    return STORAGE_PREFIX
-        +
+    return STORAGE_PREFIX +
         month.replace("-","_");
 
 }
 
 
-function changeMonthValue(month, delta){
+/*
+   例如：
 
-    const [y,m] =
-        month.split("-").map(Number);
+   2026-08
+   ↓
+   sugo_records_2026_08
+
+   2026-09
+   ↓
+   sugo_records_2026_09
+
+   完全不同。
+*/
+
+
+/* =====================================================
+   月份名稱
+===================================================== */
+
+function monthLabel(month){
+
+    const [
+        year,
+        monthNumber
+    ] =
+        month.split("-");
+
+    return `${year} 年 ${Number(monthNumber)} 月`;
+
+}
+
+
+/* =====================================================
+   今天
+===================================================== */
+
+function todayString(){
 
     const d =
-        new Date(y,m-1+delta,1);
+        new Date();
 
-    return (
-        d.getFullYear()
-        +
-        "-"
-        +
-        String(d.getMonth()+1)
-            .padStart(2,"0")
-    );
+    return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
 
 }
 
 
 /* =====================================================
-   日期格式
+   安全解析 JSON
 ===================================================== */
 
-function formatDate(date){
+function safeParse(raw){
 
-    if(!date){
-        return "";
+    try{
+
+        const parsed =
+            JSON.parse(raw);
+
+        return Array.isArray(parsed)
+            ? parsed
+            : [];
+
+    }catch(error){
+
+        console.error(
+            "JSON 解析失敗：",
+            error
+        );
+
+        return [];
+
     }
-
-    const parts =
-        date.split("-");
-
-    if(parts.length !== 3){
-        return date;
-    }
-
-    return `${parts[0]}/${parts[1]}/${parts[2]}`;
 
 }
 
 
 /* =====================================================
-   ID
-===================================================== */
-
-function createId(){
-
-    return (
-        Date.now().toString(36)
-        +
-        Math.random()
-            .toString(36)
-            .slice(2,10)
-    );
-
-}
-
-
-/* =====================================================
-   安全讀取月份
+   載入月份
 ===================================================== */
 
 function loadMonth(month){
@@ -818,122 +1019,149 @@ function loadMonth(month){
     const key =
         monthKey(month);
 
-    try{
+    const raw =
+        localStorage.getItem(key);
 
-        const raw =
-            localStorage.getItem(key);
 
-        if(!raw){
-
-            records = [];
-
-            updateLastSaved();
-
-            return;
-
-        }
-
-        const parsed =
-            JSON.parse(raw);
-
-        if(!Array.isArray(parsed)){
-
-            records = [];
-
-            return;
-
-        }
-
-        /*
-           ⭐ 重要
-           即使儲存內容有其他月份資料，
-           也只接受目前月份。
-        */
+    if(raw){
 
         records =
-            parsed
-                .filter(item =>
-                    item
-                    &&
-                    typeof item.date === "string"
-                    &&
-                    item.date.startsWith(month)
-                )
-                .sort((a,b) =>
-                    a.date.localeCompare(b.date)
-                );
+            safeParse(raw);
 
-        updateLastSaved();
-
-    }catch(error){
-
-        console.error(error);
+    }else{
 
         records = [];
 
-        showStatus(
-            "🔴 讀取資料失敗，請先檢查備份。",
-            true
+    }
+
+
+    /*
+       防止錯月份資料混進來
+    */
+
+    records =
+        records.filter(
+            record => {
+
+                return (
+                    record
+                    &&
+                    record.date
+                    &&
+                    record.date.startsWith(month)
+                );
+
+            }
         );
 
-    }
+
+    records.sort(
+        (a,b) =>
+            a.date.localeCompare(b.date)
+    );
+
+
+    const savedAt =
+        localStorage.getItem(
+            key + "_savedAt"
+        );
+
+
+    $("lastSaved").textContent =
+        savedAt || "尚未儲存";
 
 }
 
 
 /* =====================================================
-   安全儲存月份
+   儲存月份
+
+   重要：
+
+   只有正式 records 才會進來。
+
+   editDraft 不會被儲存。
 ===================================================== */
 
 function saveMonth(
-    month = currentMonth,
-    showMessage = true
+    month,
+    showStatus = true
 ){
+
+    const key =
+        monthKey(month);
+
 
     try{
 
-        /*
-           ⭐ 只保存目前月份
-        */
-
         const monthRecords =
-            records.filter(item =>
-                item.date.startsWith(month)
+            records.filter(
+                record => {
+
+                    return (
+                        record
+                        &&
+                        record.date
+                        &&
+                        record.date.startsWith(month)
+                    );
+
+                }
             );
 
-        const key =
-            monthKey(month);
 
         localStorage.setItem(
             key,
             JSON.stringify(monthRecords)
         );
 
+
+        const now =
+            new Date();
+
+
+        const stamp =
+            now.toLocaleString(
+                "zh-TW",
+                {
+                    hour12:false
+                }
+            );
+
+
         localStorage.setItem(
             key + "_savedAt",
-            new Date().toISOString()
+            stamp
         );
 
-        if(showMessage){
 
-            showStatus(
-                "🟢 資料已儲存"
+        $("lastSaved").textContent =
+            stamp;
+
+
+        if(showStatus){
+
+            showStatusMsg(
+                "🟢 已儲存"
             );
 
         }
 
-        updateLastSaved();
 
         return true;
 
     }catch(error){
 
-        console.error(error);
-
-        showStatus(
-            "🔴 儲存失敗！請立即匯出備份。",
-            true
+        console.error(
+            "儲存失敗：",
+            error
         );
+
+
+        showStatusMsg(
+            "🔴 儲存失敗，請立即匯出備份"
+        );
+
 
         return false;
 
@@ -943,173 +1171,30 @@ function saveMonth(
 
 
 /* =====================================================
-   最後儲存時間
+   儲存提示
 ===================================================== */
 
-function updateLastSaved(){
+function showStatusMsg(message){
 
-    const savedAt =
-        localStorage.getItem(
-            monthKey(currentMonth)
-            +
-            "_savedAt"
+    $("saveStatus").textContent =
+        message;
+
+
+    clearTimeout(
+        showStatusMsg.timer
+    );
+
+
+    showStatusMsg.timer =
+        setTimeout(
+            () => {
+
+                $("saveStatus").textContent =
+                    "🔒 資料保存在此裝置";
+
+            },
+            3000
         );
-
-    if(!savedAt){
-
-        $("lastSaved").textContent =
-            "尚未儲存";
-
-        return;
-
-    }
-
-    const d =
-        new Date(savedAt);
-
-    $("lastSaved").textContent =
-        d.toLocaleString(
-            "zh-TW",
-            {
-                month:"2-digit",
-                day:"2-digit",
-                hour:"2-digit",
-                minute:"2-digit"
-            }
-        );
-
-}
-
-
-/* =====================================================
-   統計
-===================================================== */
-
-function updateStats(){
-
-    const total =
-        records.reduce(
-            (sum,item) =>
-                sum +
-                Number(item.hours || 0),
-            0
-        );
-
-    const days =
-        records.length;
-
-    const avg =
-        days
-        ?
-        total / days
-        :
-        0;
-
-    $("liveDays").textContent =
-        days;
-
-    $("totalHours").textContent =
-        total.toFixed(1);
-
-    $("avgHours").textContent =
-        avg.toFixed(1);
-
-    $("monthTitle").textContent =
-        monthLabel(currentMonth);
-
-}
-
-
-/* =====================================================
-   顯示紀錄
-===================================================== */
-
-function render(){
-
-    updateStats();
-
-    const box =
-        $("records");
-
-    box.innerHTML = "";
-
-    if(records.length === 0){
-
-        box.innerHTML = `
-            <div class="empty">
-                📭 本月目前沒有直播紀錄
-            </div>
-        `;
-
-        return;
-
-    }
-
-    records.forEach(record => {
-
-        const div =
-            document.createElement("div");
-
-        div.className =
-            "record";
-
-        div.innerHTML = `
-            <div class="recordTop">
-
-                <div class="recordDate">
-                    📅 ${formatDate(record.date)}
-                </div>
-
-                <div class="recordHours">
-                    ${Number(record.hours).toFixed(1)} 小時
-                </div>
-
-            </div>
-
-            ${
-                record.note
-                ?
-                `<div class="recordNote">
-                    ${escapeHtml(record.note)}
-                </div>`
-                :
-                ""
-            }
-
-            <div class="recordActions">
-
-                <button
-                    class="btn btnBlue editRecord"
-                    type="button">
-                    ✏️ 修改
-                </button>
-
-                <button
-                    class="btn btnDanger deleteRecord"
-                    type="button">
-                    🗑️ 刪除
-                </button>
-
-            </div>
-        `;
-
-        div
-            .querySelector(".editRecord")
-            .addEventListener(
-                "click",
-                () => startEdit(record.id)
-            );
-
-        div
-            .querySelector(".deleteRecord")
-            .addEventListener(
-                "click",
-                () => deleteRecord(record.id)
-            );
-
-        box.appendChild(div);
-
-    });
 
 }
 
@@ -1118,54 +1203,246 @@ function render(){
    HTML 安全
 ===================================================== */
 
-function escapeHtml(value){
+function escapeHtml(str){
 
-    return String(value)
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
+    return String(str)
+
+        .replaceAll(
+            "&",
+            "&amp;"
+        )
+
+        .replaceAll(
+            "<",
+            "&lt;"
+        )
+
+        .replaceAll(
+            ">",
+            "&gt;"
+        )
+
+        .replaceAll(
+            '"',
+            "&quot;"
+        )
+
+        .replaceAll(
+            "'",
+            "&#039;"
+        );
 
 }
 
 
 /* =====================================================
-   狀態訊息
+   渲染
 ===================================================== */
 
-function showStatus(
-    message,
-    danger = false
-){
+function render(){
 
-    const el =
-        $("status");
+    $("currentMonth").textContent =
+        monthLabel(currentMonth);
 
-    el.textContent =
-        message;
 
-    el.style.color =
-        danger
-        ?
-        "#b91c1c"
-        :
-        "#166534";
+    $("monthNotice").textContent =
+        monthLabel(currentMonth);
+
+
+    $("summaryMonth").textContent =
+        monthLabel(currentMonth);
+
+
+    /*
+       統計只使用目前月份正式資料
+    */
+
+    const totalHours =
+        records.reduce(
+            (sum,record) =>
+                sum +
+                Number(record.hours || 0),
+            0
+        );
+
+
+    const days =
+        records.length;
+
+
+    const average =
+        days
+            ? totalHours / days
+            : 0;
+
+
+    $("daysStat").textContent =
+        days;
+
+
+    $("hoursStat").textContent =
+        formatNumber(totalHours);
+
+
+    $("avgStat").textContent =
+        `${formatNumber(average)} 小時`;
+
+
+    const list =
+        $("recordList");
+
+
+    if(!records.length){
+
+        list.innerHTML = `
+            <div class="empty">
+                本月份目前沒有直播紀錄
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    const today =
+        todayString();
+
+
+    list.innerHTML =
+
+        records
+        .slice()
+        .sort(
+            (a,b) =>
+                b.date.localeCompare(a.date)
+        )
+
+        .map(
+            record => {
+
+                const isToday =
+                    record.date === today;
+
+
+                return `
+
+                    <div
+                        class="record ${isToday ? "today" : ""}"
+                    >
+
+                        <div class="record-head">
+
+                            <div class="record-date">
+
+                                ${escapeHtml(record.date)}
+
+                                ${
+                                    isToday
+                                        ? "　🟢 今天"
+                                        : ""
+                                }
+
+                            </div>
+
+
+                            <div class="record-hours">
+
+                                ${formatNumber(record.hours)}
+
+                                小時
+
+                            </div>
+
+                        </div>
+
+
+                        ${
+                            record.note
+
+                            ?
+
+                            `
+                            <div class="record-note">
+                                ${escapeHtml(record.note)}
+                            </div>
+                            `
+
+                            :
+
+                            ""
+                        }
+
+
+                        <div class="record-actions">
+
+                            <button
+                                class="small-btn edit-btn"
+                                type="button"
+                                onclick="startEdit('${record.id}')"
+                            >
+                                ✏️ 修改
+                            </button>
+
+
+                            <button
+                                class="small-btn delete-btn"
+                                type="button"
+                                onclick="deleteRecord('${record.id}')"
+                            >
+                                🗑️ 刪除
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            }
+        )
+
+        .join("");
 
 }
 
 
 /* =====================================================
-   表單
+   數字格式
+===================================================== */
+
+function formatNumber(value){
+
+    const number =
+        Number(value || 0);
+
+
+    return number
+        .toFixed(1)
+        .replace(".0","");
+
+}
+
+
+/* =====================================================
+   清空表單
 ===================================================== */
 
 function clearForm(){
 
+    const thisMonth =
+        `${NOW.getFullYear()}-${String(NOW.getMonth()+1).padStart(2,"0")}`;
+
+
     $("dateInput").value =
-        "";
+        currentMonth === thisMonth
+            ? todayString()
+            : `${currentMonth}-01`;
+
 
     $("hoursInput").value =
         "";
+
 
     $("noteInput").value =
         "";
@@ -1173,133 +1450,119 @@ function clearForm(){
 }
 
 
-function setFormModeEdit(){
-
-    $("formTitle").textContent =
-        "✏️ 修改直播紀錄";
-
-    $("addBtn")
-        .classList
-        .add("hidden");
-
-    $("saveEditBtn")
-        .classList
-        .remove("hidden");
-
-    $("cancelEditBtn")
-        .classList
-        .remove("hidden");
-
-    $("editBanner")
-        .classList
-        .add("show");
-
-}
-
-
-function setFormModeAdd(){
-
-    $("formTitle").textContent =
-        "➕ 新增直播紀錄";
-
-    $("addBtn")
-        .classList
-        .remove("hidden");
-
-    $("saveEditBtn")
-        .classList
-        .add("hidden");
-
-    $("cancelEditBtn")
-        .classList
-        .add("hidden");
-
-    $("editBanner")
-        .classList
-        .remove("show");
-
-}
-
-
 /* =====================================================
-   新增
+   新增紀錄
 ===================================================== */
 
 function addRecord(){
 
+    /*
+       如果正在修改，
+       不允許同時新增。
+    */
+
+    if(editingId !== null){
+
+        return;
+
+    }
+
+
     const date =
         $("dateInput").value;
+
 
     const hours =
         Number(
             $("hoursInput").value
         );
 
+
     const note =
-        $("noteInput").value.trim();
+        $("noteInput")
+        .value
+        .trim();
 
-    if(!date){
 
-        showStatus(
-            "⚠️ 請選擇日期",
-            true
+    /*
+       日期
+    */
+
+    if(
+        !date
+        ||
+        !date.startsWith(currentMonth)
+    ){
+
+        alert(
+            `請輸入 ${monthLabel(currentMonth)} 的日期。`
         );
 
         return;
 
     }
 
-    if(!date.startsWith(currentMonth)){
 
-        showStatus(
-            `⚠️ 日期必須是 ${monthLabel(currentMonth)}`,
-            true
+    /*
+       時數
+    */
+
+    if(
+        !Number.isFinite(hours)
+        ||
+        hours < 0
+    ){
+
+        alert(
+            "請輸入正確的直播時數。"
         );
 
         return;
 
     }
 
-    if(!Number.isFinite(hours) || hours < 0){
 
-        showStatus(
-            "⚠️ 請輸入正確直播時數",
-            true
-        );
-
-        return;
-
-    }
+    /*
+       同一天不可重複
+    */
 
     const duplicate =
         records.some(
-            item =>
-                item.date === date
+            record =>
+                record.date === date
         );
+
 
     if(duplicate){
 
-        showStatus(
-            "⚠️ 這一天已經有紀錄，請使用「修改」",
-            true
+        alert(
+            "這一天已經有紀錄。\n\n請按「✏️ 修改」，再按「💾 儲存修改」。"
         );
 
         return;
 
     }
 
-    const oldRecords =
-        [...records];
+
+    /*
+       建立正式新紀錄
+    */
 
     const newRecord = {
 
-        id:createId(),
+        id:
+            crypto.randomUUID
+            ? crypto.randomUUID()
+            : `${Date.now()}_${Math.random()}`,
 
-        date,
+        date:
+            date,
 
-        hours,
+        hours:
+            hours,
 
-        note,
+        note:
+            note,
 
         createdAt:
             new Date().toISOString(),
@@ -1309,27 +1572,48 @@ function addRecord(){
 
     };
 
-    records = [
-        ...records,
-        newRecord
-    ];
 
-    records.sort(
+    /*
+       先建立新的正式陣列
+    */
+
+    const nextRecords =
+        [
+            ...records,
+            newRecord
+        ];
+
+
+    nextRecords.sort(
         (a,b) =>
             a.date.localeCompare(b.date)
     );
+
+
+    const oldRecords =
+        records;
+
+
+    records =
+        nextRecords;
+
 
     /*
        ⭐ 新增立即自動儲存
     */
 
-    const success =
+    const saved =
         saveMonth(
-            currentMonth,
-            false
+            currentMonth
         );
 
-    if(!success){
+
+    /*
+       如果儲存失敗，
+       恢復原本資料。
+    */
+
+    if(!saved){
 
         records =
             oldRecords;
@@ -1340,11 +1624,13 @@ function addRecord(){
 
     }
 
-    clearForm();
 
     render();
 
-    showStatus(
+    clearForm();
+
+
+    showStatusMsg(
         "🟢 新增紀錄並已自動儲存"
     );
 
@@ -1353,6 +1639,12 @@ function addRecord(){
 
 /* =====================================================
    開始修改
+
+   ⭐ 重點：
+
+   不直接修改 records。
+
+   先複製成 editDraft。
 ===================================================== */
 
 function startEdit(id){
@@ -1363,192 +1655,294 @@ function startEdit(id){
                 item.id === id
         );
 
+
     if(!record){
 
         return;
 
     }
 
+
     editingId =
         id;
 
-    /*
-       ⭐ 關鍵
-       修改一定建立副本
-       絕不直接修改 records
-    */
 
     editDraft =
         {
             ...record
         };
 
+
     dirtyEdit =
         false;
+
 
     $("dateInput").value =
         editDraft.date;
 
+
     $("hoursInput").value =
         editDraft.hours;
+
 
     $("noteInput").value =
         editDraft.note || "";
 
-    setFormModeEdit();
 
-    showStatus(
-        "🟡 修改只是暫存，請按「💾 儲存修改」才會正式生效"
-    );
+    $("editingBanner")
+        .classList
+        .add("show");
+
+
+    $("editingBanner").textContent =
+        "✏️ 正在修改既有紀錄｜修改完成後請按「💾 儲存修改」";
+
+
+    $("addBtn").style.display =
+        "none";
+
+
+    $("saveEditBtn").style.display =
+        "block";
+
+
+    $("cancelEditBtn").style.display =
+        "block";
+
+
+    $("dateInput").oninput =
+        markDirty;
+
+
+    $("hoursInput").oninput =
+        markDirty;
+
+
+    $("noteInput").oninput =
+        markDirty;
+
 
     window.scrollTo({
-        top:0,
-        behavior:"smooth"
+
+        top:
+            $("dateInput")
+            .getBoundingClientRect()
+            .top
+            +
+            window.scrollY
+            -
+            100,
+
+        behavior:
+            "smooth"
+
     });
 
 }
 
 
 /* =====================================================
-   修改輸入變化
+   修改標記
 ===================================================== */
 
-function markEditDirty(){
+function markDirty(){
 
-    if(editingId === null){
+    if(
+        editingId === null
+    ){
 
         return;
 
     }
 
+
     dirtyEdit =
         true;
 
-    showStatus(
-        "🟡 已修改但尚未儲存｜請按「💾 儲存修改」"
-    );
+
+    $("editingBanner").textContent =
+        "🟡 已修改但尚未儲存｜請按「💾 儲存修改」";
+
+
+    $("saveStatus").textContent =
+        "🟡 有修改尚未儲存";
 
 }
 
 
 /* =====================================================
    儲存修改
+
+   ⭐ 核心安全機制：
+
+   ① 先讀取表單
+   ② 驗證
+   ③ 建立 updatedRecord
+   ④ 建立 nextRecords
+   ⑤ 寫入 localStorage
+   ⑥ 成功後才視為正式修改
+
+   沒按這個按鈕：
+   records 完全不會被修改。
 ===================================================== */
 
 function saveEdit(){
 
-    if(editingId === null){
+    if(
+        editingId === null
+        ||
+        !editDraft
+    ){
 
         return;
 
     }
 
+
     const date =
         $("dateInput").value;
+
 
     const hours =
         Number(
             $("hoursInput").value
         );
 
+
     const note =
-        $("noteInput").value.trim();
+        $("noteInput")
+        .value
+        .trim();
 
-    if(!date){
 
-        showStatus(
-            "⚠️ 請選擇日期",
-            true
+    /*
+       日期必須屬於目前月份
+    */
+
+    if(
+        !date
+        ||
+        !date.startsWith(currentMonth)
+    ){
+
+        alert(
+            `修改後日期必須仍在 ${monthLabel(currentMonth)}。`
         );
 
         return;
 
     }
 
-    if(!date.startsWith(currentMonth)){
 
-        showStatus(
-            `⚠️ 日期必須是 ${monthLabel(currentMonth)}`,
-            true
+    /*
+       時數
+    */
+
+    if(
+        !Number.isFinite(hours)
+        ||
+        hours < 0
+    ){
+
+        alert(
+            "請輸入正確的直播時數。"
         );
 
         return;
 
     }
 
-    if(!Number.isFinite(hours) || hours < 0){
 
-        showStatus(
-            "⚠️ 請輸入正確直播時數",
-            true
-        );
-
-        return;
-
-    }
+    /*
+       防止改成重複日期
+    */
 
     const duplicate =
-        records.some(
+        records.find(
             item =>
-                item.id !== editingId
-                &&
                 item.date === date
+                &&
+                item.id !== editingId
         );
+
 
     if(duplicate){
 
-        showStatus(
-            "⚠️ 這一天已經有其他紀錄",
-            true
+        alert(
+            "這個日期已經有另一筆紀錄，不能重複。"
         );
 
         return;
 
     }
 
-    const oldRecords =
-        [...records];
+
+    /*
+       建立新的修改副本
+
+       注意：
+
+       此時正式 records 還完全沒動。
+    */
 
     const updatedRecord = {
 
         ...editDraft,
 
-        date,
+        date:
+            date,
 
-        hours,
+        hours:
+            hours,
 
-        note,
+        note:
+            note,
 
         updatedAt:
             new Date().toISOString()
 
     };
 
+
+    /*
+       建立修改後陣列
+    */
+
     const nextRecords =
         records.map(
             item =>
                 item.id === editingId
-                ?
-                updatedRecord
-                :
-                item
+                    ? updatedRecord
+                    : item
         );
+
+
+    const oldRecords =
+        records;
+
+
+    /*
+       暫時使用 nextRecords
+       嘗試寫入 localStorage
+    */
 
     records =
         nextRecords;
 
-    /*
-       ⭐ 只有按下儲存修改
-       才正式寫入 localStorage
-    */
 
-    const success =
+    const saved =
         saveMonth(
-            currentMonth,
-            false
+            currentMonth
         );
 
-    if(!success){
+
+    /*
+       ⭐ 儲存失敗：
+
+       完整恢復原本 records。
+    */
+
+    if(!saved){
 
         records =
             oldRecords;
@@ -1559,22 +1953,60 @@ function saveEdit(){
 
     }
 
+
+    /*
+       儲存成功：
+
+       才正式結束編輯。
+    */
+
     editingId =
         null;
+
 
     editDraft =
         null;
 
+
     dirtyEdit =
         false;
 
-    clearForm();
 
-    setFormModeAdd();
+    $("editingBanner")
+        .classList
+        .remove("show");
+
+
+    $("addBtn").style.display =
+        "block";
+
+
+    $("saveEditBtn").style.display =
+        "none";
+
+
+    $("cancelEditBtn").style.display =
+        "none";
+
+
+    $("dateInput").oninput =
+        null;
+
+
+    $("hoursInput").oninput =
+        null;
+
+
+    $("noteInput").oninput =
+        null;
+
 
     render();
 
-    showStatus(
+    clearForm();
+
+
+    showStatusMsg(
         "🟢 修改已儲存"
     );
 
@@ -1583,32 +2015,61 @@ function saveEdit(){
 
 /* =====================================================
    取消修改
+
+   ⭐ 不碰正式 records。
 ===================================================== */
 
 function cancelEdit(
-    showMessage = true
+    show = true
 ){
 
     editingId =
         null;
 
+
     editDraft =
         null;
+
 
     dirtyEdit =
         false;
 
+
+    $("editingBanner")
+        .classList
+        .remove("show");
+
+
+    $("addBtn").style.display =
+        "block";
+
+
+    $("saveEditBtn").style.display =
+        "none";
+
+
+    $("cancelEditBtn").style.display =
+        "none";
+
+
+    $("dateInput").oninput =
+        null;
+
+
+    $("hoursInput").oninput =
+        null;
+
+
+    $("noteInput").oninput =
+        null;
+
+
     clearForm();
 
-    setFormModeAdd();
 
-    render();
+    if(show){
 
-    if(showMessage){
-
-        showStatus(
-            "↩️ 已取消修改，正式資料沒有變更"
-        );
+        render();
 
     }
 
@@ -1616,7 +2077,7 @@ function cancelEdit(
 
 
 /* =====================================================
-   刪除單筆
+   刪除
 ===================================================== */
 
 function deleteRecord(id){
@@ -1627,16 +2088,39 @@ function deleteRecord(id){
                 item.id === id
         );
 
+
     if(!record){
 
         return;
 
     }
 
+
+    /*
+       如果正在修改同一筆，
+       不允許直接刪除。
+    */
+
+    if(
+        editingId === id
+        &&
+        dirtyEdit
+    ){
+
+        alert(
+            "目前正在修改這筆紀錄，請先儲存或取消修改。"
+        );
+
+        return;
+
+    }
+
+
     const confirmed =
         confirm(
-            `⚠️ 確定要刪除 ${formatDate(record.date)} 的紀錄嗎？\n\n刪除後會立即儲存。`
+            `確定刪除 ${record.date} 的 ${formatNumber(record.hours)} 小時紀錄嗎？`
         );
+
 
     if(!confirmed){
 
@@ -1644,8 +2128,10 @@ function deleteRecord(id){
 
     }
 
+
     const oldRecords =
-        [...records];
+        records;
+
 
     const nextRecords =
         records.filter(
@@ -1653,16 +2139,26 @@ function deleteRecord(id){
                 item.id !== id
         );
 
+
     records =
         nextRecords;
 
-    const success =
+
+    /*
+       刪除後立即儲存
+    */
+
+    const saved =
         saveMonth(
-            currentMonth,
-            false
+            currentMonth
         );
 
-    if(!success){
+
+    /*
+       儲存失敗恢復
+    */
+
+    if(!saved){
 
         records =
             oldRecords;
@@ -1673,15 +2169,20 @@ function deleteRecord(id){
 
     }
 
-    if(editingId === id){
+
+    if(
+        editingId === id
+    ){
 
         cancelEdit(false);
 
     }
 
+
     render();
 
-    showStatus(
+
+    showStatusMsg(
         "🟢 紀錄已刪除並儲存"
     );
 
@@ -1689,10 +2190,15 @@ function deleteRecord(id){
 
 
 /* =====================================================
-   月份切換
+   切換月份
 ===================================================== */
 
 function changeMonth(delta){
+
+    /*
+       有未儲存修改：
+       先確認是否放棄。
+    */
 
     if(
         editingId !== null
@@ -1700,12 +2206,13 @@ function changeMonth(delta){
         dirtyEdit
     ){
 
-        const ok =
+        const confirmed =
             confirm(
-                "⚠️ 目前有尚未儲存的修改。\n\n確定要放棄修改並切換月份嗎？"
+                "目前有尚未儲存的修改。\n\n確定要放棄修改並切換月份嗎？"
             );
 
-        if(!ok){
+
+        if(!confirmed){
 
             return;
 
@@ -1713,287 +2220,85 @@ function changeMonth(delta){
 
     }
 
-    /*
-       ⭐ 切換月份只改目前月份指標
-       不會清除任何月份資料
-    */
+
+    let [
+        year,
+        month
+    ] =
+        currentMonth
+        .split("-")
+        .map(Number);
+
+
+    month += delta;
+
+
+    if(month < 1){
+
+        month = 12;
+
+        year--;
+
+    }
+
+
+    if(month > 12){
+
+        month = 1;
+
+        year++;
+
+    }
+
 
     currentMonth =
-        changeMonthValue(
-            currentMonth,
-            delta
-        );
+        `${year}-${String(month).padStart(2,"0")}`;
+
+
+    /*
+       記住目前月份
+    */
 
     localStorage.setItem(
         MONTH_KEY,
         currentMonth
     );
 
+
+    /*
+       清掉編輯草稿
+
+       注意：
+       不會碰其他月份資料。
+    */
+
     cancelEdit(false);
+
+
+    /*
+       載入新月份自己的資料
+    */
 
     loadMonth(
         currentMonth
     );
 
+
+    clearForm();
+
+
     render();
 
-    showStatus(
-        `📅 已切換至 ${monthLabel(currentMonth)}`
+
+    showStatusMsg(
+        `📅 已切換到 ${monthLabel(currentMonth)}`
     );
 
 }
 
 
 /* =====================================================
-   清除目前月份
-===================================================== */
-
-function clearCurrentMonth(){
-
-    /*
-       ⭐ 只有使用者主動點擊這個按鈕
-       才會進入這裡
-    */
-
-    const confirmed =
-        confirm(
-            `⚠️ 確定要清除 ${monthLabel(currentMonth)} 的全部紀錄嗎？\n\n` +
-            `只有目前月份會被清除。\n` +
-            `其他月份完全不會受到影響。\n\n` +
-            `清除後可以立即使用「復原」。`
-        );
-
-    if(!confirmed){
-
-        return;
-
-    }
-
-    /*
-       ⭐ 再加一道保護
-    */
-
-    const typed =
-        prompt(
-            `請輸入「清除」確認刪除 ${monthLabel(currentMonth)} 的資料：`
-        );
-
-    if(typed !== "清除"){
-
-        showClearStatus(
-            "↩️ 已取消清除，資料完全沒有變動"
-        );
-
-        return;
-
-    }
-
-    const oldRecords =
-        [...records];
-
-    const oldSavedAt =
-        localStorage.getItem(
-            monthKey(currentMonth)
-            +
-            "_savedAt"
-        );
-
-    /*
-       ⭐ 把清除前資料暫存
-       用來復原
-    */
-
-    lastClearedBackup = {
-
-        month:
-            currentMonth,
-
-        records:
-            oldRecords,
-
-        savedAt:
-            oldSavedAt
-
-    };
-
-    try{
-
-        /*
-           ⭐ 只刪目前月份
-           絕對不使用 localStorage.clear()
-        */
-
-        localStorage.removeItem(
-            monthKey(currentMonth)
-        );
-
-        localStorage.removeItem(
-            monthKey(currentMonth)
-            +
-            "_savedAt"
-        );
-
-        records =
-            [];
-
-        cancelEdit(false);
-
-        render();
-
-        $("undoClearBtn")
-            .classList
-            .remove("hidden");
-
-        showClearStatus(
-            `🗑️ ${monthLabel(currentMonth)} 已清除，可按「↩️ 復原」救回`
-        );
-
-    }catch(error){
-
-        console.error(error);
-
-        records =
-            oldRecords;
-
-        render();
-
-        showClearStatus(
-            "🔴 清除失敗，原資料已保留",
-            true
-        );
-
-    }
-
-}
-
-
-/* =====================================================
-   復原清除
-===================================================== */
-
-function undoClear(){
-
-    if(!lastClearedBackup){
-
-        return;
-
-    }
-
-    if(
-        lastClearedBackup.month
-        !==
-        currentMonth
-    ){
-
-        showClearStatus(
-            "⚠️ 復原失敗：請先切回原本的月份",
-            true
-        );
-
-        return;
-
-    }
-
-    const confirmed =
-        confirm(
-            `♻️ 確定要復原 ${monthLabel(currentMonth)} 剛才清除的資料嗎？`
-        );
-
-    if(!confirmed){
-
-        return;
-
-    }
-
-    const oldRecords =
-        [...records];
-
-    records =
-        [
-            ...lastClearedBackup.records
-        ];
-
-    try{
-
-        localStorage.setItem(
-            monthKey(currentMonth),
-            JSON.stringify(records)
-        );
-
-        if(
-            lastClearedBackup.savedAt
-        ){
-
-            localStorage.setItem(
-                monthKey(currentMonth)
-                +
-                "_savedAt",
-                lastClearedBackup.savedAt
-            );
-
-        }
-
-        render();
-
-        updateLastSaved();
-
-        showClearStatus(
-            "♻️ 已成功復原剛才清除的資料"
-        );
-
-        lastClearedBackup =
-            null;
-
-        $("undoClearBtn")
-            .classList
-            .add("hidden");
-
-    }catch(error){
-
-        console.error(error);
-
-        records =
-            oldRecords;
-
-        render();
-
-        showClearStatus(
-            "🔴 復原失敗，請使用 JSON 備份還原",
-            true
-        );
-
-    }
-
-}
-
-
-/* =====================================================
-   清除狀態
-===================================================== */
-
-function showClearStatus(
-    message,
-    danger = false
-){
-
-    const el =
-        $("clearStatus");
-
-    el.textContent =
-        message;
-
-    el.style.color =
-        danger
-        ?
-        "#b91c1c"
-        :
-        "#166534";
-
-}
-
-
-/* =====================================================
-   匯出目前月份
+   匯出
 ===================================================== */
 
 function exportMonth(){
@@ -2004,10 +2309,7 @@ function exportMonth(){
             "SUGO Live Hours",
 
         version:
-            4,
-
-        type:
-            "month",
+            3,
 
         month:
             currentMonth,
@@ -2020,20 +2322,66 @@ function exportMonth(){
 
     };
 
-    downloadJson(
-        payload,
-        `SUGO_${currentMonth}_備份.json`
+
+    const blob =
+        new Blob(
+            [
+                JSON.stringify(
+                    payload,
+                    null,
+                    2
+                )
+            ],
+            {
+                type:
+                    "application/json"
+            }
+        );
+
+
+    const url =
+        URL.createObjectURL(
+            blob
+        );
+
+
+    const a =
+        document.createElement(
+            "a"
+        );
+
+
+    a.href =
+        url;
+
+
+    a.download =
+        `SUGO_${currentMonth.replace("-","_")}_備份.json`;
+
+
+    document.body.appendChild(a);
+
+
+    a.click();
+
+
+    a.remove();
+
+
+    URL.revokeObjectURL(
+        url
     );
 
-    showStatus(
-        "📤 本月資料已匯出"
+
+    showStatusMsg(
+        "📤 備份檔已匯出"
     );
 
 }
 
 
 /* =====================================================
-   匯入目前月份
+   匯入
 ===================================================== */
 
 function importMonth(file){
@@ -2041,484 +2389,319 @@ function importMonth(file){
     const reader =
         new FileReader();
 
-    reader.onload =
-        function(){
 
-            try{
-
-                const payload =
-                    JSON.parse(
-                        reader.result
-                    );
-
-                if(
-                    payload.month
-                    !==
-                    currentMonth
-                ){
-
-                    alert(
-                        `⚠️ 這份備份是 ${payload.month}，目前是 ${currentMonth}。\n\n為避免月份資料混在一起，無法匯入。`
-                    );
-
-                    return;
-
-                }
-
-                if(
-                    !Array.isArray(
-                        payload.records
-                    )
-                ){
-
-                    throw new Error(
-                        "records 格式錯誤"
-                    );
-
-                }
-
-                const imported =
-                    payload.records
-                        .filter(item =>
-                            item
-                            &&
-                            typeof item.date === "string"
-                            &&
-                            item.date.startsWith(currentMonth)
-                        );
-
-                const confirmed =
-                    confirm(
-                        `📥 確定要匯入 ${monthLabel(currentMonth)} 備份嗎？\n\n目前月份原本資料會被這份備份取代。`
-                    );
-
-                if(!confirmed){
-
-                    return;
-
-                }
-
-                const oldRecords =
-                    [...records];
-
-                records =
-                    imported;
-
-                if(
-                    !saveMonth(
-                        currentMonth,
-                        false
-                    )
-                ){
-
-                    records =
-                        oldRecords;
-
-                    render();
-
-                    return;
-
-                }
-
-                render();
-
-                showStatus(
-                    "📥 本月備份已成功匯入"
-                );
-
-            }catch(error){
-
-                console.error(error);
-
-                alert(
-                    "🔴 JSON 備份格式錯誤，無法匯入。"
-                );
-
-            }
-
-        };
-
-    reader.readAsText(file);
-
-}
-
-
-/* =====================================================
-   收集全部月份
-===================================================== */
-
-function getAllMonthData(){
-
-    const result = {};
-
-    /*
-       localStorage.key() 只讀取 SUGO 自己的 key。
-       不會修改任何其他網站資料。
-    */
-
-    for(
-        let i=0;
-        i<localStorage.length;
-        i++
-    ){
-
-        const key =
-            localStorage.key(i);
-
-        if(
-            !key
-            ||
-            !key.startsWith(
-                STORAGE_PREFIX
-            )
-            ||
-            key.endsWith(
-                "_savedAt"
-            )
-        ){
-
-            continue;
-
-        }
-
-        const raw =
-            localStorage.getItem(key);
+    reader.onload = () => {
 
         try{
 
-            const parsed =
-                JSON.parse(raw);
+            const payload =
+                JSON.parse(
+                    reader.result
+                );
 
-            const month =
-                key
-                    .replace(
-                        STORAGE_PREFIX,
-                        ""
-                    )
-                    .replace("_","-");
+
+            /*
+               必須是目前月份
+            */
 
             if(
-                Array.isArray(parsed)
+                payload.month !== currentMonth
             ){
 
-                result[month] =
-                    parsed;
+                alert(
+                    `這份備份是 ${payload.month}，目前正在查看 ${currentMonth}。\n\n請切換到正確月份後再匯入。`
+                );
+
+                return;
 
             }
 
+
+            if(
+                !Array.isArray(
+                    payload.records
+                )
+            ){
+
+                throw new Error(
+                    "Invalid records"
+                );
+
+            }
+
+
+            /*
+               過濾目前月份
+            */
+
+            const importedRecords =
+                payload.records.filter(
+                    record =>
+                        record
+                        &&
+                        record.date
+                        &&
+                        record.date.startsWith(
+                            currentMonth
+                        )
+                );
+
+
+            /*
+               匯入前先保留舊資料
+            */
+
+            const oldRecords =
+                records;
+
+
+            records =
+                importedRecords;
+
+
+            const saved =
+                saveMonth(
+                    currentMonth
+                );
+
+
+            /*
+               匯入儲存失敗
+               恢復原資料
+            */
+
+            if(!saved){
+
+                records =
+                    oldRecords;
+
+                render();
+
+                return;
+
+            }
+
+
+            cancelEdit(false);
+
+            render();
+
+
+            showStatusMsg(
+                "🟢 備份已匯入並儲存"
+            );
+
+
         }catch(error){
 
-            console.warn(
-                "忽略無法解析的資料:",
-                key
+            console.error(
+                error
+            );
+
+
+            alert(
+                "備份檔案格式不正確。"
             );
 
         }
 
-    }
-
-    /*
-       確保目前月份也存在
-    */
-
-    if(
-        !Object.prototype.hasOwnProperty
-            .call(
-                result,
-                currentMonth
-            )
-    ){
-
-        result[currentMonth] =
-            records;
-
-    }
-
-    return result;
-
-}
-
-
-/* =====================================================
-   匯出全部月份
-===================================================== */
-
-function exportAll(){
-
-    const payload = {
-
-        app:
-            "SUGO Live Hours",
-
-        version:
-            4,
-
-        type:
-            "all-months",
-
-        exportedAt:
-            new Date().toISOString(),
-
-        currentMonth:
-            currentMonth,
-
-        months:
-            getAllMonthData()
-
     };
 
-    downloadJson(
-        payload,
-        `SUGO_全部月份備份_${new Date().toISOString().slice(0,10)}.json`
-    );
 
-    showStatus(
-        "📦 全部月份資料已完整匯出"
+    reader.readAsText(
+        file
     );
 
 }
 
 
 /* =====================================================
-   匯入全部月份
+   清除目前月份
 ===================================================== */
 
-function importAll(file){
+function clearCurrentMonth(){
 
-    const reader =
-        new FileReader();
+    const confirmed =
+        confirm(
+            `⚠️ 確定要清除 ${monthLabel(currentMonth)} 的全部紀錄嗎？\n\n只有目前月份會被清除。\n其他月份完全不會受到影響。`
+        );
 
-    reader.onload =
-        function(){
 
-            try{
+    if(!confirmed){
 
-                const payload =
-                    JSON.parse(
-                        reader.result
-                    );
+        return;
 
-                if(
-                    payload.type
-                    !==
-                    "all-months"
-                ){
+    }
 
-                    throw new Error(
-                        "不是全部月份備份"
-                    );
 
-                }
+    /*
+       只刪目前月份
 
-                if(
-                    !payload.months
-                    ||
-                    typeof payload.months
-                    !== "object"
-                ){
+       絕對不使用：
+       localStorage.clear()
+    */
 
-                    throw new Error(
-                        "月份資料格式錯誤"
-                    );
+    localStorage.removeItem(
+        monthKey(currentMonth)
+    );
 
-                }
 
-                const months =
-                    payload.months;
+    localStorage.removeItem(
+        monthKey(currentMonth)
+        +
+        "_savedAt"
+    );
 
-                const monthNames =
-                    Object.keys(months);
 
-                if(
-                    monthNames.length === 0
-                ){
+    records =
+        [];
 
-                    throw new Error(
-                        "沒有任何月份資料"
-                    );
 
-                }
+    cancelEdit(false);
 
-                const confirmed =
-                    confirm(
-                        `📦 確定要還原全部月份資料嗎？\n\n` +
-                        `備份內共有 ${monthNames.length} 個月份。\n\n` +
-                        `這些月份的現有資料會被備份內容取代。`
-                    );
 
-                if(!confirmed){
+    render();
 
-                    return;
 
-                }
-
-                /*
-                   ⭐ 先建立目前資料的安全備份
-                   避免匯入失敗時無法恢復
-                */
-
-                const currentState =
-                    getAllMonthData();
-
-                try{
-
-                    monthNames.forEach(month => {
-
-                        if(
-                            !/^\d{4}-\d{2}$/
-                                .test(month)
-                        ){
-
-                            return;
-
-                        }
-
-                        const data =
-                            Array.isArray(
-                                months[month]
-                            )
-                            ?
-                            months[month]
-                            :
-                            [];
-
-                        const filtered =
-                            data.filter(item =>
-                                item
-                                &&
-                                typeof item.date === "string"
-                                &&
-                                item.date.startsWith(month)
-                            );
-
-                        localStorage.setItem(
-                            monthKey(month),
-                            JSON.stringify(filtered)
-                        );
-
-                        localStorage.setItem(
-                            monthKey(month)
-                            +
-                            "_savedAt",
-                            new Date().toISOString()
-                        );
-
-                    });
-
-                }catch(error){
-
-                    /*
-                       如果中途失敗，
-                       嘗試恢復匯入前狀態
-                    */
-
-                    Object.keys(currentState)
-                        .forEach(month => {
-
-                            localStorage.setItem(
-                                monthKey(month),
-                                JSON.stringify(
-                                    currentState[month]
-                                )
-                            );
-
-                        });
-
-                    throw error;
-
-                }
-
-                /*
-                   重新讀取目前月份
-                */
-
-                loadMonth(
-                    currentMonth
-                );
-
-                render();
-
-                showStatus(
-                    "♻️ 全部月份備份已成功還原"
-                );
-
-            }catch(error){
-
-                console.error(error);
-
-                alert(
-                    "🔴 全月份備份格式錯誤或還原失敗。"
-                );
-
-            }
-
-        };
-
-    reader.readAsText(file);
+    showStatusMsg(
+        `🗑️ ${monthLabel(currentMonth)} 已清除`
+    );
 
 }
 
 
 /* =====================================================
-   JSON 下載
+   標題
 ===================================================== */
 
-function downloadJson(
-    data,
-    filename
-){
+$("titleInput").value =
+    localStorage.getItem(
+        TITLE_KEY
+    )
+    ||
+    "SUGO｜視頻直播時數統計";
 
-    const blob =
-        new Blob(
-            [
-                JSON.stringify(
-                    data,
-                    null,
-                    2
-                )
-            ],
-            {
-                type:
-                    "application/json;charset=utf-8"
-            }
-        );
 
-    const url =
-        URL.createObjectURL(
-            blob
-        );
+$("titleInput")
+    .addEventListener(
+        "change",
+        () => {
 
-    const a =
-        document.createElement("a");
+            const title =
+                $("titleInput")
+                .value
+                .trim();
 
-    a.href =
-        url;
 
-    a.download =
-        filename;
+            localStorage.setItem(
+                TITLE_KEY,
+                title
+                ||
+                "SUGO｜視頻直播時數統計"
+            );
 
-    document.body.appendChild(a);
+        }
+    );
 
-    a.click();
 
-    a.remove();
+/* =====================================================
+   事件
+===================================================== */
 
-    setTimeout(
+$("addBtn")
+    .addEventListener(
+        "click",
+        addRecord
+    );
+
+
+$("saveEditBtn")
+    .addEventListener(
+        "click",
+        saveEdit
+    );
+
+
+$("cancelEditBtn")
+    .addEventListener(
+        "click",
         () =>
-            URL.revokeObjectURL(url),
-        1000
+            cancelEdit(true)
     );
 
-}
+
+$("prevMonth")
+    .addEventListener(
+        "click",
+        () =>
+            changeMonth(-1)
+    );
+
+
+$("nextMonth")
+    .addEventListener(
+        "click",
+        () =>
+            changeMonth(1)
+    );
+
+
+$("exportBtn")
+    .addEventListener(
+        "click",
+        exportMonth
+    );
+
+
+$("importBtn")
+    .addEventListener(
+        "click",
+        () =>
+            $("fileInput").click()
+    );
+
+
+$("fileInput")
+    .addEventListener(
+        "change",
+        event => {
+
+            const file =
+                event.target.files[0];
+
+
+            if(file){
+
+                importMonth(file);
+
+            }
+
+
+            /*
+               讓同一個檔案可以再次選取
+            */
+
+            event.target.value =
+                "";
+
+        }
+    );
+
+
+$("clearBtn")
+    .addEventListener(
+        "click",
+        clearCurrentMonth
+    );
 
 
 /* =====================================================
-   未儲存修改離開提醒
+   離開頁面保護
 ===================================================== */
 
 window.addEventListener(
     "beforeunload",
-    function(event){
+    event => {
 
         if(
             editingId !== null
@@ -2528,7 +2711,8 @@ window.addEventListener(
 
             event.preventDefault();
 
-            event.returnValue = "";
+            event.returnValue =
+                "";
 
         }
 
@@ -2537,68 +2721,20 @@ window.addEventListener(
 
 
 /* =====================================================
-   表單事件
+   啟動
 ===================================================== */
 
-$("addBtn")
-    .addEventListener(
-        "click",
-        addRecord
-    );
-
-$("saveEditBtn")
-    .addEventListener(
-        "click",
-        saveEdit
-    );
-
-$("cancelEditBtn")
-    .addEventListener(
-        "click",
-        function(){
-
-            if(
-                dirtyEdit
-            ){
-
-                const ok =
-                    confirm(
-                        "目前有尚未儲存的修改。\n\n確定要取消嗎？"
-                    );
-
-                if(!ok){
-
-                    return;
-
-                }
-
-            }
-
-            cancelEdit(true);
-
-        }
-    );
+loadMonth(
+    currentMonth
+);
 
 
-$("dateInput")
-    .addEventListener(
-        "input",
-        markEditDirty
-    );
-
-$("hoursInput")
-    .addEventListener(
-        "input",
-        markEditDirty
-    );
-
-$("noteInput")
-    .addEventListener(
-        "input",
-        markEditDirty
-    );
+clearForm();
 
 
-/* =====================================================
-   月份按鈕
-================================================
+render();
+
+</script>
+
+</body>
+</html>
