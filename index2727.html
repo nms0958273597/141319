@@ -311,10 +311,6 @@ textarea.input-box{
     margin-top:7px;
 }
 
-/* =========================
-   總結
-========================= */
-
 .summary{
     background:#edf4ff;
     border-radius:24px;
@@ -425,7 +421,7 @@ textarea.input-box{
     padding:15px;
     font-size:14px;
     color:#596270;
-    line-height:1.6;
+    line-height:1.7;
 }
 
 /* =========================
@@ -475,379 +471,363 @@ textarea.input-box{
 
 <div class="container">
 
-    <!-- =========================
-         標題
-    ========================== -->
+<header class="header">
 
-    <header class="header">
+    <input
+        id="titleInput"
+        class="title-input"
+        value="SUGO｜視頻直播時數統計"
+        aria-label="標題"
+    >
 
-        <input
-            id="titleInput"
-            class="title-input"
-            value="SUGO｜視頻直播時數統計"
-            aria-label="標題"
+    <div class="subtitle">
+        一個月歸一個月｜資料獨立保存
+    </div>
+
+    <div id="saveStatus" class="save-status">
+        🔒 資料保存在此裝置
+    </div>
+
+</header>
+
+
+<!-- =========================
+     月份
+========================= -->
+
+<section class="card">
+
+    <div class="card-title">
+        📅 月份
+    </div>
+
+    <div class="month-selector">
+
+        <button
+            class="month-arrow"
+            id="prevMonth"
+            type="button"
         >
-
-        <div class="subtitle">
-            一個月歸一個月｜資料獨立保存
-        </div>
-
-        <div id="saveStatus" class="save-status">
-            🔒 資料保存在此裝置
-        </div>
-
-    </header>
-
-
-    <!-- =========================
-         月份
-    ========================== -->
-
-    <section class="card">
-
-        <div class="card-title">
-            📅 月份
-        </div>
-
-        <div class="month-selector">
-
-            <button
-                class="month-arrow"
-                id="prevMonth"
-                type="button"
-            >
-                ‹
-            </button>
-
-            <div
-                class="current-month"
-                id="currentMonth"
-            ></div>
-
-            <button
-                class="month-arrow"
-                id="nextMonth"
-                type="button"
-            >
-                ›
-            </button>
-
-        </div>
-
-        <div class="month-notice">
-
-            <strong id="monthNotice"></strong>
-
-            的資料只屬於本月份，
-            不會與其他月份合併或覆蓋。
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================
-         新增 / 修改
-    ========================== -->
-
-    <section class="card">
-
-        <div class="card-title">
-            ➕ 新增／修改紀錄
-        </div>
+            ‹
+        </button>
 
         <div
-            id="editingBanner"
-            class="editing-banner"
+            class="current-month"
+            id="currentMonth"
+        ></div>
+
+        <button
+            class="month-arrow"
+            id="nextMonth"
+            type="button"
         >
-            ✏️ 正在修改既有紀錄｜
-            修改完成後請按「💾 儲存修改」
-        </div>
+            ›
+        </button>
+
+    </div>
+
+    <div class="month-notice">
+
+        <strong id="monthNotice"></strong>
+
+        的資料只屬於本月份，
+        不會與其他月份合併或覆蓋。
+
+    </div>
+
+</section>
 
 
-        <div class="form-grid">
+<!-- =========================
+     新增 / 修改
+========================= -->
 
-            <div>
+<section class="card">
 
-                <label
-                    class="form-label"
-                    for="dateInput"
-                >
-                    直播日期
-                </label>
+    <div class="card-title">
+        ➕ 新增／修改紀錄
+    </div>
 
-                <input
-                    id="dateInput"
-                    class="input-box"
-                    type="date"
-                >
+    <div
+        id="editingBanner"
+        class="editing-banner"
+    >
+        ✏️ 正在修改既有紀錄｜
+        修改完成後請按「💾 儲存修改」
+    </div>
 
-            </div>
+    <div class="form-grid">
 
-
-            <div>
-
-                <label
-                    class="form-label"
-                    for="hoursInput"
-                >
-                    直播時數
-                </label>
-
-                <input
-                    id="hoursInput"
-                    class="input-box"
-                    type="number"
-                    min="0"
-                    step="0.1"
-                    placeholder="例如 3.5"
-                >
-
-            </div>
-
-        </div>
-
-
-        <div style="margin-top:16px">
+        <div>
 
             <label
                 class="form-label"
-                for="noteInput"
+                for="dateInput"
             >
-                備註（可選）
+                直播日期
             </label>
 
-            <textarea
-                id="noteInput"
+            <input
+                id="dateInput"
                 class="input-box"
-                placeholder="例如：晚上直播、活動場、休息日……"
-            ></textarea>
+                type="date"
+            >
 
         </div>
 
+        <div>
 
-        <div class="button-row">
-
-            <button
-                id="addBtn"
-                class="primary-btn"
-                type="button"
+            <label
+                class="form-label"
+                for="hoursInput"
             >
-                ＋ 新增直播紀錄
-            </button>
+                直播時數
+            </label>
 
-
-            <button
-                id="saveEditBtn"
-                class="secondary-btn"
-                type="button"
-                style="display:none"
+            <input
+                id="hoursInput"
+                class="input-box"
+                type="number"
+                min="0"
+                step="0.1"
+                placeholder="例如 3.5"
             >
-                💾 儲存修改
-            </button>
 
         </div>
 
+    </div>
+
+    <div style="margin-top:16px">
+
+        <label
+            class="form-label"
+            for="noteInput"
+        >
+            備註（可選）
+        </label>
+
+        <textarea
+            id="noteInput"
+            class="input-box"
+            placeholder="例如：晚上直播、活動場、休息日……"
+        ></textarea>
+
+    </div>
+
+    <div class="button-row">
 
         <button
-            id="cancelEditBtn"
-            class="danger-btn"
+            id="addBtn"
+            class="primary-btn"
             type="button"
-            style="display:none;margin-top:10px"
         >
-            取消修改
+            ＋ 新增直播紀錄
         </button>
 
-    </section>
-
-
-    <!-- =========================
-         統計
-    ========================== -->
-
-    <section class="card">
-
-        <div class="card-title">
-            📊 本月統計
-        </div>
-
-
-        <div class="stats-grid">
-
-            <div class="stat">
-
-                <div class="stat-icon">
-                    🎥
-                </div>
-
-                <div
-                    id="daysStat"
-                    class="stat-number"
-                >
-                    0
-                </div>
-
-                <div class="stat-label">
-                    直播天數
-                </div>
-
-            </div>
-
-
-            <div class="stat">
-
-                <div class="stat-icon">
-                    ⏱️
-                </div>
-
-                <div
-                    id="hoursStat"
-                    class="stat-number"
-                >
-                    0
-                </div>
-
-                <div class="stat-label">
-                    總直播時數
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <div class="summary">
-
-            <div class="summary-row">
-
-                <span>
-                    平均每日直播
-                </span>
-
-                <strong id="avgStat">
-                    0 小時
-                </strong>
-
-            </div>
-
-
-            <div class="summary-row">
-
-                <span>
-                    目前月份
-                </span>
-
-                <strong id="summaryMonth"></strong>
-
-            </div>
-
-
-            <div class="summary-row">
-
-                <span>
-                    最後儲存
-                </span>
-
-                <strong id="lastSaved">
-                    尚未儲存
-                </strong>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================
-         紀錄
-    ========================== -->
-
-    <section class="card">
-
-        <div class="card-title">
-            📋 本月紀錄
-        </div>
-
-        <div
-            id="recordList"
-            class="record-list"
-        ></div>
-
-    </section>
-
-
-    <!-- =========================
-         資料保護
-    ========================== -->
-
-    <section class="card">
-
-        <div class="card-title">
-            🛡️ 資料保護
-        </div>
-
-
-        <div class="backup-box">
-
-            每個月份使用完全獨立的儲存空間。
-
-            <br>
-
-            新增今天的紀錄會立即自動儲存；
-
-            <br>
-
-            修改既有紀錄則必須按
-            「💾 儲存修改」才會寫入。
-
-            <br>
-
-            建議定期使用下方備份功能保存一份檔案。
-
-        </div>
-
-
-        <div class="button-row">
-
-            <button
-                id="exportBtn"
-                class="secondary-btn"
-                type="button"
-            >
-                📤 匯出目前月份
-            </button>
-
-
-            <button
-                id="importBtn"
-                class="secondary-btn"
-                type="button"
-            >
-                📥 匯入備份
-            </button>
-
-        </div>
-
-
-        <input
-            id="fileInput"
-            type="file"
-            accept=".json,application/json"
+        <button
+            id="saveEditBtn"
+            class="secondary-btn"
+            type="button"
             style="display:none"
         >
-
-
-        <button
-            id="clearBtn"
-            class="danger-btn"
-            type="button"
-            style="margin-top:10px"
-        >
-            🗑️ 清除目前月份資料
+            💾 儲存修改
         </button>
 
-    </section>
+    </div>
+
+    <button
+        id="cancelEditBtn"
+        class="danger-btn"
+        type="button"
+        style="display:none;margin-top:10px"
+    >
+        取消修改
+    </button>
+
+</section>
+
+
+<!-- =========================
+     統計
+========================= -->
+
+<section class="card">
+
+    <div class="card-title">
+        📊 本月統計
+    </div>
+
+    <div class="stats-grid">
+
+        <div class="stat">
+
+            <div class="stat-icon">
+                🎥
+            </div>
+
+            <div
+                id="daysStat"
+                class="stat-number"
+            >
+                0
+            </div>
+
+            <div class="stat-label">
+                直播天數
+            </div>
+
+        </div>
+
+        <div class="stat">
+
+            <div class="stat-icon">
+                ⏱️
+            </div>
+
+            <div
+                id="hoursStat"
+                class="stat-number"
+            >
+                0
+            </div>
+
+            <div class="stat-label">
+                總直播時數
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="summary">
+
+        <div class="summary-row">
+
+            <span>
+                平均每日直播
+            </span>
+
+            <strong id="avgStat">
+                0 小時
+            </strong>
+
+        </div>
+
+        <div class="summary-row">
+
+            <span>
+                目前月份
+            </span>
+
+            <strong id="summaryMonth"></strong>
+
+        </div>
+
+        <div class="summary-row">
+
+            <span>
+                最後儲存
+            </span>
+
+            <strong id="lastSaved">
+                尚未儲存
+            </strong>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     紀錄
+========================= -->
+
+<section class="card">
+
+    <div class="card-title">
+        📋 本月紀錄
+    </div>
+
+    <div
+        id="recordList"
+        class="record-list"
+    ></div>
+
+</section>
+
+
+<!-- =========================
+     資料保護
+========================= -->
+
+<section class="card">
+
+    <div class="card-title">
+        🛡️ 資料保護
+    </div>
+
+    <div class="backup-box">
+
+        每個月份使用完全獨立的儲存空間。
+
+        <br>
+
+        ➕ 新增紀錄會立即自動儲存。
+
+        <br>
+
+        ✏️ 修改既有紀錄必須按
+        「💾 儲存修改」才會寫入。
+
+        <br>
+
+        ↩️ 取消修改不會影響原本資料。
+
+        <br>
+
+        🛡️ 建議每月結算後匯出一份備份。
+
+    </div>
+
+    <div class="button-row">
+
+        <button
+            id="exportBtn"
+            class="secondary-btn"
+            type="button"
+        >
+            📤 匯出目前月份
+        </button>
+
+        <button
+            id="importBtn"
+            class="secondary-btn"
+            type="button"
+        >
+            📥 匯入備份
+        </button>
+
+    </div>
+
+    <input
+        id="fileInput"
+        type="file"
+        accept=".json,application/json"
+        style="display:none"
+    >
+
+    <button
+        id="clearBtn"
+        class="danger-btn"
+        type="button"
+        style="margin-top:10px"
+    >
+        🗑️ 清除目前月份資料
+    </button>
+
+</section>
 
 </div>
 
@@ -860,52 +840,77 @@ textarea.input-box{
 /* =====================================================
    SUGO 月份獨立儲存系統
 
-   重要規則：
+   儲存規則：
 
-   ① 2026/08 與 2026/09 完全分開
+   ① 每個月份完全獨立
 
-   ② 新增今天 → 立即儲存
+   ② 新增紀錄 → 自動儲存
 
-   ③ 新增其他日期 → 立即儲存
+   ③ 修改既有紀錄 → 手動儲存
 
-   ④ 修改既有紀錄 → 只修改畫面
+   ④ 修改中 → 只存在草稿
 
-   ⑤ 按「儲存修改」 → 才正式保存
+   ⑤ 取消修改 → 原資料完全不變
 
-   ⑥ 不使用 localStorage.clear()
+   ⑥ 刪除 → 確認後立即儲存
 
-   ⑦ 清除只清除目前月份
+   ⑦ 清除 → 只清除目前月份
+
+   ⑧ 絕不使用 localStorage.clear()
 
 ===================================================== */
 
 
+/* =====================================================
+   儲存 KEY
+===================================================== */
+
 const STORAGE_PREFIX =
     "sugo_records_";
 
-
 const TITLE_KEY =
     "sugo_page_title_v2";
-
 
 const MONTH_KEY =
     "sugo_current_month_v2";
 
 
-const TODAY =
-    new Date();
+/* =====================================================
+   目前月份
+===================================================== */
 
+const NOW =
+    new Date();
 
 let currentMonth =
     localStorage.getItem(MONTH_KEY)
     ||
-    `${TODAY.getFullYear()}-${String(TODAY.getMonth()+1).padStart(2,"0")}`;
+    `${NOW.getFullYear()}-${String(NOW.getMonth()+1).padStart(2,"0")}`;
 
+
+/* =====================================================
+   正式資料
+===================================================== */
 
 let records = [];
 
 
+/* =====================================================
+   編輯狀態
+
+   editingId：
+   正在修改哪一筆
+
+   editDraft：
+   修改中的暫存副本
+
+   dirtyEdit：
+   是否已經修改但尚未儲存
+===================================================== */
+
 let editingId = null;
 
+let editDraft = null;
 
 let dirtyEdit = false;
 
@@ -934,30 +939,27 @@ function monthKey(month){
    例如：
 
    2026-08
-
-   會變成：
-
+   ↓
    sugo_records_2026_08
 
-
    2026-09
-
-   會變成：
-
+   ↓
    sugo_records_2026_09
 
    完全不同。
-
 */
 
 
 /* =====================================================
-   月份顯示
+   月份名稱
 ===================================================== */
 
 function monthLabel(month){
 
-    const [year,monthNumber] =
+    const [
+        year,
+        monthNumber
+    ] =
         month.split("-");
 
     return `${year} 年 ${Number(monthNumber)} 月`;
@@ -966,7 +968,7 @@ function monthLabel(month){
 
 
 /* =====================================================
-   今天日期
+   今天
 ===================================================== */
 
 function todayString(){
@@ -980,7 +982,7 @@ function todayString(){
 
 
 /* =====================================================
-   JSON 安全解析
+   安全解析 JSON
 ===================================================== */
 
 function safeParse(raw){
@@ -997,7 +999,7 @@ function safeParse(raw){
     }catch(error){
 
         console.error(
-            "資料解析失敗",
+            "JSON 解析失敗：",
             error
         );
 
@@ -1034,23 +1036,23 @@ function loadMonth(month){
 
 
     /*
-       額外保護：
-
-       即使儲存資料中混入其他月份，
-       也只保留目前月份。
+       防止錯月份資料混進來
     */
 
     records =
-        records
-        .filter(record => {
+        records.filter(
+            record => {
 
-            return record
-                &&
-                record.date
-                &&
-                record.date.startsWith(month);
+                return (
+                    record
+                    &&
+                    record.date
+                    &&
+                    record.date.startsWith(month)
+                );
 
-        });
+            }
+        );
 
 
     records.sort(
@@ -1073,6 +1075,12 @@ function loadMonth(month){
 
 /* =====================================================
    儲存月份
+
+   重要：
+
+   只有正式 records 才會進來。
+
+   editDraft 不會被儲存。
 ===================================================== */
 
 function saveMonth(
@@ -1086,21 +1094,20 @@ function saveMonth(
 
     try{
 
-        /*
-           只儲存目前月份。
-
-           再次保護一次，
-           避免其他月份混入。
-        */
-
         const monthRecords =
-            records.filter(record => {
+            records.filter(
+                record => {
 
-                return record.date
-                    &&
-                    record.date.startsWith(month);
+                    return (
+                        record
+                        &&
+                        record.date
+                        &&
+                        record.date.startsWith(month)
+                    );
 
-            });
+                }
+            );
 
 
         localStorage.setItem(
@@ -1143,11 +1150,10 @@ function saveMonth(
 
         return true;
 
-
     }catch(error){
 
         console.error(
-            "儲存失敗",
+            "儲存失敗：",
             error
         );
 
@@ -1165,7 +1171,7 @@ function saveMonth(
 
 
 /* =====================================================
-   儲存狀態
+   儲存提示
 ===================================================== */
 
 function showStatusMsg(message){
@@ -1180,12 +1186,15 @@ function showStatusMsg(message){
 
 
     showStatusMsg.timer =
-        setTimeout(()=>{
+        setTimeout(
+            () => {
 
-            $("saveStatus").textContent =
-                "🔒 資料保存在此裝置";
+                $("saveStatus").textContent =
+                    "🔒 資料保存在此裝置";
 
-        },3000);
+            },
+            3000
+        );
 
 }
 
@@ -1245,7 +1254,7 @@ function render(){
 
 
     /*
-       統計只計算目前月份
+       統計只使用目前月份正式資料
     */
 
     const totalHours =
@@ -1272,13 +1281,11 @@ function render(){
 
 
     $("hoursStat").textContent =
-        totalHours
-        .toFixed(1)
-        .replace(".0","");
+        formatNumber(totalHours);
 
 
     $("avgStat").textContent =
-        `${average.toFixed(1).replace(".0","")} 小時`;
+        `${formatNumber(average)} 小時`;
 
 
     const list =
@@ -1305,99 +1312,114 @@ function render(){
     list.innerHTML =
 
         records
-
         .slice()
-
         .sort(
             (a,b) =>
                 b.date.localeCompare(a.date)
         )
 
-        .map(record => {
+        .map(
+            record => {
 
-            const isToday =
-                record.date === today;
+                const isToday =
+                    record.date === today;
 
 
-            return `
+                return `
 
-                <div
-                    class="record ${isToday ? "today" : ""}"
-                >
+                    <div
+                        class="record ${isToday ? "today" : ""}"
+                    >
 
-                    <div class="record-head">
+                        <div class="record-head">
 
-                        <div class="record-date">
+                            <div class="record-date">
 
-                            ${record.date}
+                                ${escapeHtml(record.date)}
 
-                            ${isToday
-                                ? "　🟢 今天"
-                                : ""
-                            }
+                                ${
+                                    isToday
+                                        ? "　🟢 今天"
+                                        : ""
+                                }
+
+                            </div>
+
+
+                            <div class="record-hours">
+
+                                ${formatNumber(record.hours)}
+
+                                小時
+
+                            </div>
 
                         </div>
 
 
-                        <div class="record-hours">
+                        ${
+                            record.note
 
-                            ${Number(record.hours)
-                                .toFixed(1)
-                                .replace(".0","")
-                            }
+                            ?
 
-                            小時
+                            `
+                            <div class="record-note">
+                                ${escapeHtml(record.note)}
+                            </div>
+                            `
+
+                            :
+
+                            ""
+                        }
+
+
+                        <div class="record-actions">
+
+                            <button
+                                class="small-btn edit-btn"
+                                type="button"
+                                onclick="startEdit('${record.id}')"
+                            >
+                                ✏️ 修改
+                            </button>
+
+
+                            <button
+                                class="small-btn delete-btn"
+                                type="button"
+                                onclick="deleteRecord('${record.id}')"
+                            >
+                                🗑️ 刪除
+                            </button>
 
                         </div>
 
                     </div>
 
+                `;
 
-                    ${
-                        record.note
-
-                        ?
-
-                        `
-                        <div class="record-note">
-                            ${escapeHtml(record.note)}
-                        </div>
-                        `
-
-                        :
-
-                        ""
-                    }
-
-
-                    <div class="record-actions">
-
-                        <button
-                            class="small-btn edit-btn"
-                            type="button"
-                            onclick="startEdit('${record.id}')"
-                        >
-                            ✏️ 修改
-                        </button>
-
-
-                        <button
-                            class="small-btn delete-btn"
-                            type="button"
-                            onclick="deleteRecord('${record.id}')"
-                        >
-                            🗑️ 刪除
-                        </button>
-
-                    </div>
-
-                </div>
-
-            `;
-
-        })
+            }
+        )
 
         .join("");
+
+}
+
+
+/* =====================================================
+   數字格式
+===================================================== */
+
+function formatNumber(value){
+
+    const number =
+        Number(value || 0);
+
+
+    return number
+        .toFixed(1)
+        .replace(".0","");
 
 }
 
@@ -1408,28 +1430,14 @@ function render(){
 
 function clearForm(){
 
-    /*
-       如果目前查看的是當月，
-       預設今天。
-
-       如果查看歷史月份，
-       預設該月 1 號。
-    */
-
     const thisMonth =
-        `${TODAY.getFullYear()}-${String(TODAY.getMonth()+1).padStart(2,"0")}`;
+        `${NOW.getFullYear()}-${String(NOW.getMonth()+1).padStart(2,"0")}`;
 
 
     $("dateInput").value =
         currentMonth === thisMonth
-
-            ?
-
-            todayString()
-
-            :
-
-            `${currentMonth}-01`;
+            ? todayString()
+            : `${currentMonth}-01`;
 
 
     $("hoursInput").value =
@@ -1443,21 +1451,22 @@ function clearForm(){
 
 
 /* =====================================================
-   判斷是否今天
-===================================================== */
-
-function isToday(date){
-
-    return date === todayString();
-
-}
-
-
-/* =====================================================
    新增紀錄
 ===================================================== */
 
 function addRecord(){
+
+    /*
+       如果正在修改，
+       不允許同時新增。
+    */
+
+    if(editingId !== null){
+
+        return;
+
+    }
+
 
     const date =
         $("dateInput").value;
@@ -1476,7 +1485,7 @@ function addRecord(){
 
 
     /*
-       日期檢查
+       日期
     */
 
     if(
@@ -1495,7 +1504,7 @@ function addRecord(){
 
 
     /*
-       時數檢查
+       時數
     */
 
     if(
@@ -1514,20 +1523,20 @@ function addRecord(){
 
 
     /*
-       防止同一天重複
+       同一天不可重複
     */
 
-    const existingIndex =
-        records.findIndex(
+    const duplicate =
+        records.some(
             record =>
                 record.date === date
         );
 
 
-    if(existingIndex >= 0){
+    if(duplicate){
 
         alert(
-            "這一天已經有紀錄。\n\n請使用「修改」功能，再按「儲存修改」。"
+            "這一天已經有紀錄。\n\n請按「✏️ 修改」，再按「💾 儲存修改」。"
         );
 
         return;
@@ -1536,24 +1545,15 @@ function addRecord(){
 
 
     /*
-       建立新紀錄
+       建立正式新紀錄
     */
 
     const newRecord = {
 
         id:
-            (
-                crypto.randomUUID
-                ?
-
-                crypto.randomUUID()
-
-                :
-
-                String(
-                    Date.now()
-                )
-            ),
+            crypto.randomUUID
+            ? crypto.randomUUID()
+            : `${Date.now()}_${Math.random()}`,
 
         date:
             date,
@@ -1573,43 +1573,78 @@ function addRecord(){
     };
 
 
-    records.push(
-        newRecord
-    );
+    /*
+       先建立新的正式陣列
+    */
+
+    const nextRecords =
+        [
+            ...records,
+            newRecord
+        ];
 
 
-    records.sort(
+    nextRecords.sort(
         (a,b) =>
             a.date.localeCompare(b.date)
     );
 
 
+    const oldRecords =
+        records;
+
+
+    records =
+        nextRecords;
+
+
     /*
-       新增後立即儲存。
-
-       今天：
-       自動儲存。
-
-       歷史日期：
-       也直接儲存，
-       防止離開頁面造成資料遺失。
+       ⭐ 新增立即自動儲存
     */
 
-    if(
-        saveMonth(currentMonth)
-    ){
+    const saved =
+        saveMonth(
+            currentMonth
+        );
+
+
+    /*
+       如果儲存失敗，
+       恢復原本資料。
+    */
+
+    if(!saved){
+
+        records =
+            oldRecords;
 
         render();
 
-        clearForm();
+        return;
 
     }
+
+
+    render();
+
+    clearForm();
+
+
+    showStatusMsg(
+        "🟢 新增紀錄並已自動儲存"
+    );
 
 }
 
 
 /* =====================================================
    開始修改
+
+   ⭐ 重點：
+
+   不直接修改 records。
+
+   先複製成 editDraft。
 ===================================================== */
 
 function startEdit(id){
@@ -1632,20 +1667,26 @@ function startEdit(id){
         id;
 
 
+    editDraft =
+        {
+            ...record
+        };
+
+
     dirtyEdit =
         false;
 
 
     $("dateInput").value =
-        record.date;
+        editDraft.date;
 
 
     $("hoursInput").value =
-        record.hours;
+        editDraft.hours;
 
 
     $("noteInput").value =
-        record.note || "";
+        editDraft.note || "";
 
 
     $("editingBanner")
@@ -1701,35 +1742,10 @@ function startEdit(id){
 
 
 /* =====================================================
-   修改內容時標記未儲存
+   修改標記
 ===================================================== */
 
 function markDirty(){
-
-    if(
-        editingId !== null
-    ){
-
-        dirtyEdit =
-            true;
-
-
-        $("editingBanner").textContent =
-            "🟡 已修改但尚未儲存｜請按「💾 儲存修改」";
-
-        $("saveStatus").textContent =
-            "🟡 有修改尚未儲存";
-
-    }
-
-}
-
-
-/* =====================================================
-   儲存修改
-===================================================== */
-
-function saveEdit(){
 
     if(
         editingId === null
@@ -1740,14 +1756,43 @@ function saveEdit(){
     }
 
 
-    const record =
-        records.find(
-            item =>
-                item.id === editingId
-        );
+    dirtyEdit =
+        true;
 
 
-    if(!record){
+    $("editingBanner").textContent =
+        "🟡 已修改但尚未儲存｜請按「💾 儲存修改」";
+
+
+    $("saveStatus").textContent =
+        "🟡 有修改尚未儲存";
+
+}
+
+
+/* =====================================================
+   儲存修改
+
+   ⭐ 核心安全機制：
+
+   ① 先讀取表單
+   ② 驗證
+   ③ 建立 updatedRecord
+   ④ 建立 nextRecords
+   ⑤ 寫入 localStorage
+   ⑥ 成功後才視為正式修改
+
+   沒按這個按鈕：
+   records 完全不會被修改。
+===================================================== */
+
+function saveEdit(){
+
+    if(
+        editingId === null
+        ||
+        !editDraft
+    ){
 
         return;
 
@@ -1771,7 +1816,7 @@ function saveEdit(){
 
 
     /*
-       日期不可跑到其他月份
+       日期必須屬於目前月份
     */
 
     if(
@@ -1790,7 +1835,7 @@ function saveEdit(){
 
 
     /*
-       時數檢查
+       時數
     */
 
     if(
@@ -1809,7 +1854,7 @@ function saveEdit(){
 
 
     /*
-       防止修改成已存在的日期
+       防止改成重複日期
     */
 
     const duplicate =
@@ -1833,51 +1878,145 @@ function saveEdit(){
 
 
     /*
-       更新記憶體中的紀錄
+       建立新的修改副本
+
+       注意：
+
+       此時正式 records 還完全沒動。
     */
 
-    record.date =
-        date;
+    const updatedRecord = {
 
+        ...editDraft,
 
-    record.hours =
-        hours;
+        date:
+            date,
 
+        hours:
+            hours,
 
-    record.note =
-        note;
+        note:
+            note,
 
+        updatedAt:
+            new Date().toISOString()
 
-    record.updatedAt =
-        new Date().toISOString();
+    };
 
 
     /*
-       ⭐ 最重要：
-
-       只有按「儲存修改」
-       才正式寫入 localStorage。
+       建立修改後陣列
     */
 
-    if(
-        saveMonth(currentMonth)
-    ){
+    const nextRecords =
+        records.map(
+            item =>
+                item.id === editingId
+                    ? updatedRecord
+                    : item
+        );
 
-        cancelEdit(false);
+
+    const oldRecords =
+        records;
+
+
+    /*
+       暫時使用 nextRecords
+       嘗試寫入 localStorage
+    */
+
+    records =
+        nextRecords;
+
+
+    const saved =
+        saveMonth(
+            currentMonth
+        );
+
+
+    /*
+       ⭐ 儲存失敗：
+
+       完整恢復原本 records。
+    */
+
+    if(!saved){
+
+        records =
+            oldRecords;
 
         render();
 
-        showStatusMsg(
-            "🟢 修改已儲存"
-        );
+        return;
 
     }
+
+
+    /*
+       儲存成功：
+
+       才正式結束編輯。
+    */
+
+    editingId =
+        null;
+
+
+    editDraft =
+        null;
+
+
+    dirtyEdit =
+        false;
+
+
+    $("editingBanner")
+        .classList
+        .remove("show");
+
+
+    $("addBtn").style.display =
+        "block";
+
+
+    $("saveEditBtn").style.display =
+        "none";
+
+
+    $("cancelEditBtn").style.display =
+        "none";
+
+
+    $("dateInput").oninput =
+        null;
+
+
+    $("hoursInput").oninput =
+        null;
+
+
+    $("noteInput").oninput =
+        null;
+
+
+    render();
+
+    clearForm();
+
+
+    showStatusMsg(
+        "🟢 修改已儲存"
+    );
 
 }
 
 
 /* =====================================================
    取消修改
+
+   ⭐ 不碰正式 records。
 ===================================================== */
 
 function cancelEdit(
@@ -1885,6 +2024,10 @@ function cancelEdit(
 ){
 
     editingId =
+        null;
+
+
+    editDraft =
         null;
 
 
@@ -1953,9 +2096,29 @@ function deleteRecord(id){
     }
 
 
+    /*
+       如果正在修改同一筆，
+       不允許直接刪除。
+    */
+
+    if(
+        editingId === id
+        &&
+        dirtyEdit
+    ){
+
+        alert(
+            "目前正在修改這筆紀錄，請先儲存或取消修改。"
+        );
+
+        return;
+
+    }
+
+
     const confirmed =
         confirm(
-            `確定刪除 ${record.date} 的 ${record.hours} 小時紀錄嗎？`
+            `確定刪除 ${record.date} 的 ${formatNumber(record.hours)} 小時紀錄嗎？`
         );
 
 
@@ -1966,23 +2129,45 @@ function deleteRecord(id){
     }
 
 
-    records =
+    const oldRecords =
+        records;
+
+
+    const nextRecords =
         records.filter(
             item =>
                 item.id !== id
         );
 
 
+    records =
+        nextRecords;
+
+
     /*
        刪除後立即儲存
     */
 
-    saveMonth(
-        currentMonth
-    );
+    const saved =
+        saveMonth(
+            currentMonth
+        );
 
 
-    render();
+    /*
+       儲存失敗恢復
+    */
+
+    if(!saved){
+
+        records =
+            oldRecords;
+
+        render();
+
+        return;
+
+    }
 
 
     if(
@@ -1992,6 +2177,14 @@ function deleteRecord(id){
         cancelEdit(false);
 
     }
+
+
+    render();
+
+
+    showStatusMsg(
+        "🟢 紀錄已刪除並儲存"
+    );
 
 }
 
@@ -2003,8 +2196,8 @@ function deleteRecord(id){
 function changeMonth(delta){
 
     /*
-       如果正在修改且尚未儲存，
-       先提醒。
+       有未儲存修改：
+       先確認是否放棄。
     */
 
     if(
@@ -2063,7 +2256,7 @@ function changeMonth(delta){
 
 
     /*
-       儲存目前月份位置。
+       記住目前月份
     */
 
     localStorage.setItem(
@@ -2073,14 +2266,17 @@ function changeMonth(delta){
 
 
     /*
-       清除修改狀態。
+       清掉編輯草稿
+
+       注意：
+       不會碰其他月份資料。
     */
 
     cancelEdit(false);
 
 
     /*
-       ⭐ 重新讀取新月份自己的資料
+       載入新月份自己的資料
     */
 
     loadMonth(
@@ -2102,7 +2298,7 @@ function changeMonth(delta){
 
 
 /* =====================================================
-   匯出目前月份
+   匯出
 ===================================================== */
 
 function exportMonth(){
@@ -2113,7 +2309,7 @@ function exportMonth(){
             "SUGO Live Hours",
 
         version:
-            2,
+            3,
 
         month:
             currentMonth,
@@ -2185,7 +2381,7 @@ function exportMonth(){
 
 
 /* =====================================================
-   匯入備份
+   匯入
 ===================================================== */
 
 function importMonth(file){
@@ -2194,7 +2390,7 @@ function importMonth(file){
         new FileReader();
 
 
-    reader.onload = ()=>{
+    reader.onload = () => {
 
         try{
 
@@ -2205,13 +2401,11 @@ function importMonth(file){
 
 
             /*
-               防止把錯月份匯進來
+               必須是目前月份
             */
 
             if(
-                payload.month
-                !==
-                currentMonth
+                payload.month !== currentMonth
             ){
 
                 alert(
@@ -2236,7 +2430,11 @@ function importMonth(file){
             }
 
 
-            records =
+            /*
+               過濾目前月份
+            */
+
+            const importedRecords =
                 payload.records.filter(
                     record =>
                         record
@@ -2249,10 +2447,42 @@ function importMonth(file){
                 );
 
 
-            saveMonth(
-                currentMonth
-            );
+            /*
+               匯入前先保留舊資料
+            */
 
+            const oldRecords =
+                records;
+
+
+            records =
+                importedRecords;
+
+
+            const saved =
+                saveMonth(
+                    currentMonth
+                );
+
+
+            /*
+               匯入儲存失敗
+               恢復原資料
+            */
+
+            if(!saved){
+
+                records =
+                    oldRecords;
+
+                render();
+
+                return;
+
+            }
+
+
+            cancelEdit(false);
 
             render();
 
@@ -2293,7 +2523,7 @@ function clearCurrentMonth(){
 
     const confirmed =
         confirm(
-            `確定要清除 ${monthLabel(currentMonth)} 的全部紀錄嗎？\n\n⚠️ 只有目前月份會被清除。\n其他月份完全不會受到影響。`
+            `⚠️ 確定要清除 ${monthLabel(currentMonth)} 的全部紀錄嗎？\n\n只有目前月份會被清除。\n其他月份完全不會受到影響。`
         );
 
 
@@ -2305,12 +2535,10 @@ function clearCurrentMonth(){
 
 
     /*
-       ⭐ 只刪除目前月份
+       只刪目前月份
 
        絕對不使用：
-
        localStorage.clear()
-
     */
 
     localStorage.removeItem(
@@ -2329,9 +2557,7 @@ function clearCurrentMonth(){
         [];
 
 
-    cancelEdit(
-        false
-    );
+    cancelEdit(false);
 
 
     render();
@@ -2342,6 +2568,40 @@ function clearCurrentMonth(){
     );
 
 }
+
+
+/* =====================================================
+   標題
+===================================================== */
+
+$("titleInput").value =
+    localStorage.getItem(
+        TITLE_KEY
+    )
+    ||
+    "SUGO｜視頻直播時數統計";
+
+
+$("titleInput")
+    .addEventListener(
+        "change",
+        () => {
+
+            const title =
+                $("titleInput")
+                .value
+                .trim();
+
+
+            localStorage.setItem(
+                TITLE_KEY,
+                title
+                ||
+                "SUGO｜視頻直播時數統計"
+            );
+
+        }
+    );
 
 
 /* =====================================================
@@ -2406,20 +2666,19 @@ $("fileInput")
         "change",
         event => {
 
-            if(
-                event.target.files[0]
-            ){
+            const file =
+                event.target.files[0];
 
-                importMonth(
-                    event.target.files[0]
-                );
+
+            if(file){
+
+                importMonth(file);
 
             }
 
 
             /*
-               清除 file input，
-               讓同一個檔案可以再次選擇。
+               讓同一個檔案可以再次選取
             */
 
             event.target.value =
@@ -2437,41 +2696,7 @@ $("clearBtn")
 
 
 /* =====================================================
-   標題儲存
-===================================================== */
-
-$("titleInput").value =
-    localStorage.getItem(
-        TITLE_KEY
-    )
-    ||
-    "SUGO｜視頻直播時數統計";
-
-
-$("titleInput")
-    .addEventListener(
-        "change",
-        ()=>{
-
-            const title =
-                $("titleInput")
-                .value
-                .trim();
-
-
-            localStorage.setItem(
-                TITLE_KEY,
-                title
-                ||
-                "SUGO｜視頻直播時數統計"
-            );
-
-        }
-    );
-
-
-/* =====================================================
-   防止修改未儲存時直接離開頁面
+   離開頁面保護
 ===================================================== */
 
 window.addEventListener(
@@ -2508,7 +2733,6 @@ clearForm();
 
 
 render();
-
 
 </script>
 
