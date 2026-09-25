@@ -311,6 +311,10 @@ textarea.input-box{
     margin-top:7px;
 }
 
+/* =========================
+   總結
+========================= */
+
 .summary{
     background:#edf4ff;
     border-radius:24px;
@@ -575,6 +579,7 @@ textarea.input-box{
 
         </div>
 
+
         <div>
 
             <label
@@ -597,6 +602,7 @@ textarea.input-box{
 
     </div>
 
+
     <div style="margin-top:16px">
 
         <label
@@ -614,6 +620,7 @@ textarea.input-box{
 
     </div>
 
+
     <div class="button-row">
 
         <button
@@ -623,6 +630,7 @@ textarea.input-box{
         >
             ＋ 新增直播紀錄
         </button>
+
 
         <button
             id="saveEditBtn"
@@ -634,6 +642,7 @@ textarea.input-box{
         </button>
 
     </div>
+
 
     <button
         id="cancelEditBtn"
@@ -657,6 +666,7 @@ textarea.input-box{
         📊 本月統計
     </div>
 
+
     <div class="stats-grid">
 
         <div class="stat">
@@ -677,6 +687,7 @@ textarea.input-box{
             </div>
 
         </div>
+
 
         <div class="stat">
 
@@ -699,6 +710,7 @@ textarea.input-box{
 
     </div>
 
+
     <div class="summary">
 
         <div class="summary-row">
@@ -713,6 +725,7 @@ textarea.input-box{
 
         </div>
 
+
         <div class="summary-row">
 
             <span>
@@ -722,6 +735,7 @@ textarea.input-box{
             <strong id="summaryMonth"></strong>
 
         </div>
+
 
         <div class="summary-row">
 
@@ -768,6 +782,7 @@ textarea.input-box{
         🛡️ 資料保護
     </div>
 
+
     <div class="backup-box">
 
         每個月份使用完全獨立的儲存空間。
@@ -791,6 +806,7 @@ textarea.input-box{
 
     </div>
 
+
     <div class="button-row">
 
         <button
@@ -800,6 +816,7 @@ textarea.input-box{
         >
             📤 匯出目前月份
         </button>
+
 
         <button
             id="importBtn"
@@ -811,12 +828,14 @@ textarea.input-box{
 
     </div>
 
+
     <input
         id="fileInput"
         type="file"
         accept=".json,application/json"
         style="display:none"
     >
+
 
     <button
         id="clearBtn"
@@ -840,15 +859,13 @@ textarea.input-box{
 /* =====================================================
    SUGO 月份獨立儲存系統
 
-   儲存規則：
-
    ① 每個月份完全獨立
 
    ② 新增紀錄 → 自動儲存
 
    ③ 修改既有紀錄 → 手動儲存
 
-   ④ 修改中 → 只存在草稿
+   ④ 修改中 → 只是暫存草稿
 
    ⑤ 取消修改 → 原資料完全不變
 
@@ -862,7 +879,7 @@ textarea.input-box{
 
 
 /* =====================================================
-   儲存 KEY
+   KEY
 ===================================================== */
 
 const STORAGE_PREFIX =
@@ -897,15 +914,6 @@ let records = [];
 
 /* =====================================================
    編輯狀態
-
-   editingId：
-   正在修改哪一筆
-
-   editDraft：
-   修改中的暫存副本
-
-   dirtyEdit：
-   是否已經修改但尚未儲存
 ===================================================== */
 
 let editingId = null;
@@ -935,23 +943,8 @@ function monthKey(month){
 }
 
 
-/*
-   例如：
-
-   2026-08
-   ↓
-   sugo_records_2026_08
-
-   2026-09
-   ↓
-   sugo_records_2026_09
-
-   完全不同。
-*/
-
-
 /* =====================================================
-   月份名稱
+   月份顯示
 ===================================================== */
 
 function monthLabel(month){
@@ -982,7 +975,7 @@ function todayString(){
 
 
 /* =====================================================
-   安全解析 JSON
+   安全 JSON
 ===================================================== */
 
 function safeParse(raw){
@@ -1036,22 +1029,17 @@ function loadMonth(month){
 
 
     /*
-       防止錯月份資料混進來
+       只接受目前月份資料
     */
 
     records =
         records.filter(
-            record => {
-
-                return (
-                    record
-                    &&
-                    record.date
-                    &&
-                    record.date.startsWith(month)
-                );
-
-            }
+            record =>
+                record
+                &&
+                record.date
+                &&
+                record.date.startsWith(month)
         );
 
 
@@ -1075,12 +1063,6 @@ function loadMonth(month){
 
 /* =====================================================
    儲存月份
-
-   重要：
-
-   只有正式 records 才會進來。
-
-   editDraft 不會被儲存。
 ===================================================== */
 
 function saveMonth(
@@ -1096,17 +1078,12 @@ function saveMonth(
 
         const monthRecords =
             records.filter(
-                record => {
-
-                    return (
-                        record
-                        &&
-                        record.date
-                        &&
-                        record.date.startsWith(month)
-                    );
-
-                }
+                record =>
+                    record
+                    &&
+                    record.date
+                    &&
+                    record.date.startsWith(month)
             );
 
 
@@ -1116,12 +1093,8 @@ function saveMonth(
         );
 
 
-        const now =
-            new Date();
-
-
         const stamp =
-            now.toLocaleString(
+            new Date().toLocaleString(
                 "zh-TW",
                 {
                     hour12:false
@@ -1171,7 +1144,7 @@ function saveMonth(
 
 
 /* =====================================================
-   儲存提示
+   狀態
 ===================================================== */
 
 function showStatusMsg(message){
@@ -1207,30 +1180,24 @@ function escapeHtml(str){
 
     return String(str)
 
-        .replaceAll(
-            "&",
-            "&amp;"
-        )
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
 
-        .replaceAll(
-            "<",
-            "&lt;"
-        )
+}
 
-        .replaceAll(
-            ">",
-            "&gt;"
-        )
 
-        .replaceAll(
-            '"',
-            "&quot;"
-        )
+/* =====================================================
+   數字
+===================================================== */
 
-        .replaceAll(
-            "'",
-            "&#039;"
-        );
+function formatNumber(value){
+
+    return Number(value || 0)
+        .toFixed(1)
+        .replace(".0","");
 
 }
 
@@ -1252,10 +1219,6 @@ function render(){
     $("summaryMonth").textContent =
         monthLabel(currentMonth);
 
-
-    /*
-       統計只使用目前月份正式資料
-    */
 
     const totalHours =
         records.reduce(
@@ -1317,7 +1280,6 @@ function render(){
             (a,b) =>
                 b.date.localeCompare(a.date)
         )
-
         .map(
             record => {
 
@@ -1401,25 +1363,7 @@ function render(){
 
             }
         )
-
         .join("");
-
-}
-
-
-/* =====================================================
-   數字格式
-===================================================== */
-
-function formatNumber(value){
-
-    const number =
-        Number(value || 0);
-
-
-    return number
-        .toFixed(1)
-        .replace(".0","");
 
 }
 
@@ -1451,15 +1395,10 @@ function clearForm(){
 
 
 /* =====================================================
-   新增紀錄
+   新增
 ===================================================== */
 
 function addRecord(){
-
-    /*
-       如果正在修改，
-       不允許同時新增。
-    */
 
     if(editingId !== null){
 
@@ -1484,10 +1423,6 @@ function addRecord(){
         .trim();
 
 
-    /*
-       日期
-    */
-
     if(
         !date
         ||
@@ -1502,10 +1437,6 @@ function addRecord(){
 
     }
 
-
-    /*
-       時數
-    */
 
     if(
         !Number.isFinite(hours)
@@ -1522,10 +1453,6 @@ function addRecord(){
     }
 
 
-    /*
-       同一天不可重複
-    */
-
     const duplicate =
         records.some(
             record =>
@@ -1536,17 +1463,13 @@ function addRecord(){
     if(duplicate){
 
         alert(
-            "這一天已經有紀錄。\n\n請按「✏️ 修改」，再按「💾 儲存修改」。"
+            "這一天已經有紀錄。\n\n請使用「✏️ 修改」。"
         );
 
         return;
 
     }
 
-
-    /*
-       建立正式新紀錄
-    */
 
     const newRecord = {
 
@@ -1573,33 +1496,25 @@ function addRecord(){
     };
 
 
-    /*
-       先建立新的正式陣列
-    */
+    const oldRecords =
+        records;
 
-    const nextRecords =
+
+    records =
         [
             ...records,
             newRecord
         ];
 
 
-    nextRecords.sort(
+    records.sort(
         (a,b) =>
             a.date.localeCompare(b.date)
     );
 
 
-    const oldRecords =
-        records;
-
-
-    records =
-        nextRecords;
-
-
     /*
-       ⭐ 新增立即自動儲存
+       ⭐ 新增自動儲存
     */
 
     const saved =
@@ -1607,11 +1522,6 @@ function addRecord(){
             currentMonth
         );
 
-
-    /*
-       如果儲存失敗，
-       恢復原本資料。
-    */
 
     if(!saved){
 
@@ -1639,12 +1549,6 @@ function addRecord(){
 
 /* =====================================================
    開始修改
-
-   ⭐ 重點：
-
-   不直接修改 records。
-
-   先複製成 editDraft。
 ===================================================== */
 
 function startEdit(id){
@@ -1666,6 +1570,10 @@ function startEdit(id){
     editingId =
         id;
 
+
+    /*
+       ⭐ 建立獨立草稿
+    */
 
     editDraft =
         {
@@ -1742,7 +1650,7 @@ function startEdit(id){
 
 
 /* =====================================================
-   修改標記
+   標記修改
 ===================================================== */
 
 function markDirty(){
@@ -1773,17 +1681,7 @@ function markDirty(){
 /* =====================================================
    儲存修改
 
-   ⭐ 核心安全機制：
-
-   ① 先讀取表單
-   ② 驗證
-   ③ 建立 updatedRecord
-   ④ 建立 nextRecords
-   ⑤ 寫入 localStorage
-   ⑥ 成功後才視為正式修改
-
-   沒按這個按鈕：
-   records 完全不會被修改。
+   ⭐ 正式覆蓋只發生在這裡
 ===================================================== */
 
 function saveEdit(){
@@ -1815,10 +1713,6 @@ function saveEdit(){
         .trim();
 
 
-    /*
-       日期必須屬於目前月份
-    */
-
     if(
         !date
         ||
@@ -1834,10 +1728,6 @@ function saveEdit(){
     }
 
 
-    /*
-       時數
-    */
-
     if(
         !Number.isFinite(hours)
         ||
@@ -1852,10 +1742,6 @@ function saveEdit(){
 
     }
 
-
-    /*
-       防止改成重複日期
-    */
 
     const duplicate =
         records.find(
@@ -1878,11 +1764,7 @@ function saveEdit(){
 
 
     /*
-       建立新的修改副本
-
-       注意：
-
-       此時正式 records 還完全沒動。
+       建立修改後副本
     */
 
     const updatedRecord = {
@@ -1905,7 +1787,7 @@ function saveEdit(){
 
 
     /*
-       建立修改後陣列
+       建立新資料陣列
     */
 
     const nextRecords =
@@ -1922,8 +1804,8 @@ function saveEdit(){
 
 
     /*
-       暫時使用 nextRecords
-       嘗試寫入 localStorage
+       暫時套用，
+       嘗試寫入 localStorage。
     */
 
     records =
@@ -1937,9 +1819,8 @@ function saveEdit(){
 
 
     /*
-       ⭐ 儲存失敗：
-
-       完整恢復原本 records。
+       儲存失敗：
+       恢復原資料。
     */
 
     if(!saved){
@@ -1955,9 +1836,7 @@ function saveEdit(){
 
 
     /*
-       儲存成功：
-
-       才正式結束編輯。
+       ⭐ 儲存成功才正式結束修改
     */
 
     editingId =
@@ -2015,8 +1894,6 @@ function saveEdit(){
 
 /* =====================================================
    取消修改
-
-   ⭐ 不碰正式 records。
 ===================================================== */
 
 function cancelEdit(
@@ -2096,11 +1973,6 @@ function deleteRecord(id){
     }
 
 
-    /*
-       如果正在修改同一筆，
-       不允許直接刪除。
-    */
-
     if(
         editingId === id
         &&
@@ -2133,19 +2005,15 @@ function deleteRecord(id){
         records;
 
 
-    const nextRecords =
+    records =
         records.filter(
             item =>
                 item.id !== id
         );
 
 
-    records =
-        nextRecords;
-
-
     /*
-       刪除後立即儲存
+       ⭐ 刪除後自動儲存
     */
 
     const saved =
@@ -2153,10 +2021,6 @@ function deleteRecord(id){
             currentMonth
         );
 
-
-    /*
-       儲存失敗恢復
-    */
 
     if(!saved){
 
@@ -2194,11 +2058,6 @@ function deleteRecord(id){
 ===================================================== */
 
 function changeMonth(delta){
-
-    /*
-       有未儲存修改：
-       先確認是否放棄。
-    */
 
     if(
         editingId !== null
@@ -2255,10 +2114,6 @@ function changeMonth(delta){
         `${year}-${String(month).padStart(2,"0")}`;
 
 
-    /*
-       記住目前月份
-    */
-
     localStorage.setItem(
         MONTH_KEY,
         currentMonth
@@ -2266,17 +2121,14 @@ function changeMonth(delta){
 
 
     /*
-       清掉編輯草稿
-
-       注意：
-       不會碰其他月份資料。
+       放棄編輯草稿
     */
 
     cancelEdit(false);
 
 
     /*
-       載入新月份自己的資料
+       載入新月份
     */
 
     loadMonth(
@@ -2285,7 +2137,6 @@ function changeMonth(delta){
 
 
     clearForm();
-
 
     render();
 
@@ -2298,7 +2149,7 @@ function changeMonth(delta){
 
 
 /* =====================================================
-   匯出
+   匯出目前月份
 ===================================================== */
 
 function exportMonth(){
@@ -2381,7 +2232,7 @@ function exportMonth(){
 
 
 /* =====================================================
-   匯入
+   匯入備份
 ===================================================== */
 
 function importMonth(file){
@@ -2399,10 +2250,6 @@ function importMonth(file){
                     reader.result
                 );
 
-
-            /*
-               必須是目前月份
-            */
 
             if(
                 payload.month !== currentMonth
@@ -2430,10 +2277,6 @@ function importMonth(file){
             }
 
 
-            /*
-               過濾目前月份
-            */
-
             const importedRecords =
                 payload.records.filter(
                     record =>
@@ -2446,10 +2289,6 @@ function importMonth(file){
                         )
                 );
 
-
-            /*
-               匯入前先保留舊資料
-            */
 
             const oldRecords =
                 records;
@@ -2464,11 +2303,6 @@ function importMonth(file){
                     currentMonth
                 );
 
-
-            /*
-               匯入儲存失敗
-               恢復原資料
-            */
 
             if(!saved){
 
@@ -2535,7 +2369,7 @@ function clearCurrentMonth(){
 
 
     /*
-       只刪目前月份
+       ⭐ 只清目前月份
 
        絕對不使用：
        localStorage.clear()
@@ -2571,7 +2405,7 @@ function clearCurrentMonth(){
 
 
 /* =====================================================
-   標題
+   標題儲存
 ===================================================== */
 
 $("titleInput").value =
@@ -2677,10 +2511,6 @@ $("fileInput")
             }
 
 
-            /*
-               讓同一個檔案可以再次選取
-            */
-
             event.target.value =
                 "";
 
@@ -2728,9 +2558,7 @@ loadMonth(
     currentMonth
 );
 
-
 clearForm();
-
 
 render();
 
