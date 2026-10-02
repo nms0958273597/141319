@@ -1,0 +1,11642 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#080a0c">
+
+<title>m1491｜動態台股法人籌碼與突破分析 V1491</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+:root{
+  --bg:#080a0c;
+  --panel:#101419;
+  --panel2:#151a20;
+  --panel3:#1b222a;
+  --line:#28313a;
+  --text:#f2f5f7;
+  --muted:#8e9aa5;
+  --green:#21d07a;
+  --red:#ff5263;
+  --yellow:#ffc857;
+  --blue:#4da3ff;
+  --cyan:#35d6e7;
+  --orange:#ff9f43;
+  --purple:#a77bff;
+  --shadow:0 10px 30px rgba(0,0,0,.28);
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  margin:0;
+  padding:0;
+  background:
+    radial-gradient(circle at top,#141a20 0,#080a0c 42%);
+  color:var(--text);
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "PingFang TC",
+    "Noto Sans TC",
+    "Microsoft JhengHei",
+    sans-serif;
+  min-height:100vh;
+}
+
+button,
+input,
+select{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+button:disabled{
+  cursor:not-allowed;
+  opacity:.5;
+}
+
+/* =========================
+   頂部
+========================= */
+
+.topbar{
+  position:sticky;
+  top:0;
+  z-index:1000;
+  padding:
+    calc(10px + env(safe-area-inset-top))
+    14px
+    10px;
+  background:rgba(8,10,12,.94);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+
+.topbar-inner{
+  max-width:1180px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+
+.brand{
+  min-width:0;
+}
+
+.brand-title{
+  font-size:20px;
+  font-weight:900;
+  letter-spacing:.5px;
+}
+
+.brand-sub{
+  margin-top:3px;
+  color:var(--muted);
+  font-size:11px;
+}
+
+.status{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  white-space:nowrap;
+  font-size:11px;
+  color:var(--muted);
+}
+
+.status-dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:var(--green);
+  box-shadow:0 0 10px rgba(33,208,122,.7);
+}
+
+/* =========================
+   主容器
+========================= */
+
+.container{
+  width:min(1180px,calc(100% - 20px));
+  margin:14px auto 50px;
+}
+
+/* =========================
+   搜尋區
+========================= */
+
+.search-panel{
+  position:relative;
+  background:linear-gradient(
+    145deg,
+    rgba(21,26,32,.98),
+    rgba(13,17,21,.98)
+  );
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:14px;
+  box-shadow:var(--shadow);
+}
+
+.search-row{
+  display:flex;
+  gap:8px;
+}
+
+.search-input-wrap{
+  position:relative;
+  flex:1;
+}
+
+#searchInput{
+  width:100%;
+  height:46px;
+  padding:0 14px;
+  border-radius:12px;
+  border:1px solid #313b45;
+  outline:none;
+  color:var(--text);
+  background:#090c0f;
+  transition:.2s;
+}
+
+#searchInput:focus{
+  border-color:var(--blue);
+  box-shadow:0 0 0 3px rgba(77,163,255,.12);
+}
+
+#searchInput::placeholder{
+  color:#65717d;
+}
+
+.primary-btn{
+  min-width:82px;
+  height:46px;
+  border:0;
+  border-radius:12px;
+  padding:0 16px;
+  color:#fff;
+  font-weight:800;
+  background:linear-gradient(135deg,#1677ff,#315dff);
+  box-shadow:0 7px 18px rgba(49,93,255,.22);
+}
+
+.primary-btn:active{
+  transform:translateY(1px);
+}
+
+.search-candidates{
+  display:none;
+  margin-top:8px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  overflow:hidden;
+  background:#0b0f13;
+}
+
+.search-candidates.show{
+  display:block;
+}
+
+.search-candidate{
+  width:100%;
+  border:0;
+  border-bottom:1px solid rgba(255,255,255,.06);
+  padding:11px 13px;
+  text-align:left;
+  color:var(--text);
+  background:transparent;
+}
+
+.search-candidate:last-child{
+  border-bottom:0;
+}
+
+.search-candidate:active,
+.search-candidate:hover{
+  background:#151c23;
+}
+
+.candidate-code{
+  display:inline-block;
+  min-width:58px;
+  color:var(--cyan);
+  font-weight:800;
+}
+
+.candidate-name{
+  color:#e9edf0;
+}
+
+/* =========================
+   快速按鈕
+========================= */
+
+.quick-panel{
+  margin-top:12px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+
+.quick-btn{
+  border:1px solid #303943;
+  background:#11161b;
+  color:#dce2e7;
+  border-radius:10px;
+  min-height:38px;
+  padding:0 13px;
+  font-size:13px;
+  font-weight:700;
+}
+
+.quick-btn:hover{
+  border-color:#4b5966;
+  background:#182027;
+}
+
+.quick-btn:active{
+  transform:scale(.98);
+}
+
+/* =========================
+   熱門20
+========================= */
+
+.hot20-wrap{
+  margin-top:12px;
+}
+
+.hot20-btn{
+  width:100%;
+  min-height:48px;
+  border:1px solid rgba(255,159,67,.45);
+  border-radius:13px;
+  color:#fff;
+  font-weight:900;
+  font-size:15px;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,87,34,.95),
+      rgba(255,159,67,.9)
+    );
+  box-shadow:
+    0 8px 22px rgba(255,100,30,.18);
+}
+
+.hot20-btn:active{
+  transform:translateY(1px);
+}
+
+.hot20-btn.loading{
+  opacity:.72;
+  pointer-events:none;
+}
+
+/* =========================
+   Loading
+========================= */
+
+.loading-box{
+  display:none;
+  margin-top:12px;
+  padding:14px;
+  border:1px solid var(--line);
+  border-radius:13px;
+  background:#0d1217;
+  color:var(--muted);
+  text-align:center;
+  font-size:13px;
+}
+
+.loading-box.show{
+  display:block;
+}
+
+.loading-dot{
+  display:inline-block;
+  width:7px;
+  height:7px;
+  margin-right:5px;
+  border-radius:50%;
+  background:var(--cyan);
+  animation:pulse 1s infinite alternate;
+}
+
+@keyframes pulse{
+  from{opacity:.25}
+  to{opacity:1}
+}
+
+/* =========================
+   股票主資訊
+========================= */
+
+.stock-card{
+  margin-top:14px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(20,25,31,.98),
+      rgba(12,16,20,.98)
+    );
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:16px;
+  box-shadow:var(--shadow);
+}
+
+.stock-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:12px;
+}
+
+.stock-name{
+  font-size:25px;
+  font-weight:950;
+  line-height:1.2;
+}
+
+.stock-code{
+  color:var(--cyan);
+  font-size:13px;
+  font-weight:800;
+  margin-top:5px;
+}
+
+.stock-market{
+  color:var(--muted);
+  font-size:11px;
+  margin-top:3px;
+}
+
+.price-box{
+  text-align:right;
+}
+
+.current-price{
+  font-size:30px;
+  line-height:1;
+  font-weight:950;
+}
+
+.price-change{
+  margin-top:6px;
+  font-size:13px;
+  font-weight:800;
+}
+
+.up{
+  color:var(--red);
+}
+
+.down{
+  color:var(--green);
+}
+
+.flat{
+  color:var(--muted);
+}
+
+/* =========================
+   資訊格
+========================= */
+
+.info-grid{
+  margin-top:15px;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+}
+
+.info-item{
+  min-height:65px;
+  padding:10px;
+  border-radius:11px;
+  border:1px solid rgba(255,255,255,.055);
+  background:#0b0f13;
+}
+
+.info-label{
+  color:var(--muted);
+  font-size:10px;
+  margin-bottom:5px;
+}
+
+.info-value{
+  color:#f1f4f6;
+  font-size:14px;
+  font-weight:850;
+}
+
+/* =========================
+   區塊標題
+========================= */
+
+.section-title{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  margin:18px 0 9px;
+  font-size:16px;
+  font-weight:900;
+}
+
+.section-title::before{
+  content:"";
+  width:4px;
+  height:18px;
+  border-radius:3px;
+  background:var(--blue);
+}
+
+.section-title.orange::before{
+  background:var(--orange);
+}
+
+.section-title.green::before{
+  background:var(--green);
+}
+
+.section-title.red::before{
+  background:var(--red);
+}
+
+/* =========================
+   技術分析
+========================= */
+
+.level-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+}
+
+.level-card{
+  padding:13px 10px;
+  border-radius:13px;
+  border:1px solid var(--line);
+  background:#0d1217;
+  text-align:center;
+}
+
+.level-label{
+  color:var(--muted);
+  font-size:11px;
+  margin-bottom:6px;
+}
+
+.level-value{
+  font-size:18px;
+  font-weight:950;
+}
+
+.support1{
+  color:#48d6a0;
+}
+
+.support2{
+  color:#22b981;
+}
+
+.resistance1{
+  color:#ffbd69;
+}
+
+.resistance2{
+  color:#ff6f78;
+}
+
+/* =========================
+   交易策略
+========================= */
+
+.trade-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+}
+
+.trade-card{
+  padding:13px 10px;
+  border-radius:13px;
+  background:#0d1217;
+  border:1px solid var(--line);
+  text-align:center;
+}
+
+.trade-label{
+  color:var(--muted);
+  font-size:11px;
+}
+
+.trade-value{
+  margin-top:6px;
+  font-size:19px;
+  font-weight:950;
+}
+
+.entry{
+  color:var(--blue);
+}
+
+.stop{
+  color:var(--red);
+}
+
+.tp1{
+  color:var(--yellow);
+}
+
+.tp2{
+  color:var(--green);
+}
+
+/* =========================
+   法人籌碼
+========================= */
+
+.chip-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+}
+
+.chip-card{
+  padding:12px 10px;
+  border:1px solid var(--line);
+  border-radius:13px;
+  background:#0d1217;
+}
+
+.chip-label{
+  color:var(--muted);
+  font-size:11px;
+}
+
+.chip-value{
+  margin-top:6px;
+  font-size:17px;
+  font-weight:900;
+}
+
+.chip-sub{
+  margin-top:4px;
+  font-size:10px;
+  color:#697681;
+}
+
+/* =========================
+   熱門20結果
+========================= */
+
+.hot20-panel{
+  margin-top:14px;
+  display:none;
+  background:#0d1217;
+  border:1px solid var(--line);
+  border-radius:16px;
+  overflow:hidden;
+}
+
+.hot20-panel.show{
+  display:block;
+}
+
+.hot20-head{
+  padding:13px 14px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-bottom:1px solid var(--line);
+}
+
+.hot20-title{
+  font-weight:900;
+}
+
+.hot20-time{
+  color:var(--muted);
+  font-size:10px;
+}
+
+.hot20-list{
+  display:flex;
+  flex-direction:column;
+}
+
+.hot-row{
+  display:grid;
+  grid-template-columns:38px 1fr 72px 72px;
+  gap:8px;
+  align-items:center;
+  padding:11px 12px;
+  border-bottom:1px solid rgba(255,255,255,.05);
+}
+
+.hot-row:last-child{
+  border-bottom:0;
+}
+
+.hot-rank{
+  color:var(--yellow);
+  font-weight:950;
+  text-align:center;
+}
+
+.hot-name{
+  min-width:0;
+}
+
+.hot-name strong{
+  display:block;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.hot-name small{
+  color:var(--muted);
+  font-size:10px;
+}
+
+.hot-price{
+  text-align:right;
+  font-weight:850;
+}
+
+.hot-change{
+  text-align:right;
+  font-weight:850;
+}
+
+/* =========================
+   錯誤提示
+========================= */
+
+.message{
+  display:none;
+  margin-top:12px;
+  padding:12px 14px;
+  border-radius:12px;
+  border:1px solid rgba(255,82,99,.28);
+  background:rgba(255,82,99,.08);
+  color:#ff9aa5;
+  font-size:13px;
+  line-height:1.6;
+}
+
+.message.show{
+  display:block;
+}
+
+.empty{
+  padding:25px 15px;
+  text-align:center;
+  color:var(--muted);
+}
+
+/* =========================
+   Footer
+========================= */
+
+.footer{
+  margin-top:25px;
+  padding:18px 8px 35px;
+  color:#58636d;
+  font-size:10px;
+  line-height:1.7;
+  text-align:center;
+}
+
+/* =========================
+   RWD
+========================= */
+
+@media(max-width:760px){
+
+  .container{
+    width:calc(100% - 12px);
+    margin-top:9px;
+  }
+
+  .topbar{
+    padding-left:10px;
+    padding-right:10px;
+  }
+
+  .brand-title{
+    font-size:17px;
+  }
+
+  .brand-sub{
+    font-size:9px;
+  }
+
+  .search-panel{
+    padding:10px;
+    border-radius:15px;
+  }
+
+  .search-row{
+    gap:6px;
+  }
+
+  #searchInput{
+    height:44px;
+    padding:0 11px;
+    font-size:14px;
+  }
+
+  .primary-btn{
+    min-width:70px;
+    padding:0 11px;
+  }
+
+  .quick-panel{
+    gap:6px;
+  }
+
+  .quick-btn{
+    min-height:35px;
+    padding:0 10px;
+    font-size:12px;
+  }
+
+  .stock-card{
+    padding:13px;
+    border-radius:15px;
+  }
+
+  .stock-name{
+    font-size:21px;
+  }
+
+  .current-price{
+    font-size:25px;
+  }
+
+  .info-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .level-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .trade-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .chip-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .hot-row{
+    grid-template-columns:32px 1fr 64px 64px;
+    gap:5px;
+    padding:10px 8px;
+  }
+
+}
+
+@media(max-width:390px){
+
+  .info-item{
+    padding:9px;
+  }
+
+  .info-value{
+    font-size:13px;
+  }
+
+  .level-value,
+  .trade-value{
+    font-size:17px;
+  }
+
+  .hot-row{
+    grid-template-columns:28px 1fr 58px 58px;
+    font-size:12px;
+  }
+
+}
+</style>
+</head><body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+
+    <div class="brand">
+      <div class="brand-title">
+        m1491｜台股專業分析
+      </div>
+
+      <div class="brand-sub">
+        動態法人籌碼 × 支撐壓力 × 突破分析 V1491
+      </div>
+    </div>
+
+    <div class="status">
+      <span class="status-dot"></span>
+      <span id="systemStatus">系統待命</span>
+    </div>
+
+  </div>
+</header>
+
+
+<main class="container">
+
+  <!-- =========================
+       搜尋區
+  ========================== -->
+
+  <section class="search-panel">
+
+    <div class="search-row">
+
+      <div class="search-input-wrap">
+
+        <input
+          id="searchInput"
+          type="search"
+          autocomplete="off"
+          autocorrect="off"
+          autocapitalize="off"
+          spellcheck="false"
+          placeholder="輸入股票代號或名稱，例如 2330、台積電、友達"
+        >
+
+      </div>
+
+      <button
+        id="searchBtn"
+        class="primary-btn"
+        type="button"
+      >
+        搜尋
+      </button>
+
+    </div>
+
+
+    <!-- 搜尋候選 -->
+    <div
+      id="searchCandidates"
+      class="search-candidates"
+    ></div>
+
+
+    <!-- =========================
+         快速股票
+    ========================== -->
+
+    <div
+      id="quickButtons"
+      class="quick-panel"
+    >
+
+      <button
+        class="quick-btn"
+        type="button"
+        data-code="2330"
+      >
+        台積電 2330
+      </button>
+
+      <button
+        class="quick-btn"
+        type="button"
+        data-code="2317"
+      >
+        鴻海 2317
+      </button>
+
+      <button
+        class="quick-btn"
+        type="button"
+        data-code="2303"
+      >
+        聯電 2303
+      </button>
+
+      <button
+        class="quick-btn"
+        type="button"
+        data-code="2409"
+      >
+        友達 2409
+      </button>
+
+      <button
+        class="quick-btn"
+        type="button"
+        data-code="2426"
+      >
+        鼎元 2426
+      </button>
+
+    </div>
+
+
+    <!-- =========================
+         五大掃描功能
+         
+         注意：
+         這五顆按鈕先建立 UI，
+         第 8 段才統一綁定事件。
+    ========================== -->
+
+    <div
+      class="quick-panel"
+      id="scanButtons"
+      style="margin-top:10px;"
+    >
+
+      <button
+        id="original30ScanBtn"
+        class="quick-btn"
+        type="button"
+      >
+        📋 原始30檔
+      </button>
+
+
+      <button
+        id="hot20DynamicBtn"
+        class="quick-btn"
+        type="button"
+      >
+        🔥 熱門股票推薦20檔
+      </button>
+
+
+      <button
+        id="confirmedBreakoutBtn"
+        class="quick-btn"
+        type="button"
+      >
+        🚀 確認突破股票推薦
+      </button>
+
+
+      <button
+        id="readyBreakoutBtn"
+        class="quick-btn"
+        type="button"
+      >
+        👀 準備突破股票觀察
+      </button>
+
+
+      <button
+        id="bullishScanBtn"
+        class="quick-btn"
+        type="button"
+      >
+        📈 多頭股票推薦
+      </button>
+
+    </div>
+
+
+    <!-- =========================
+         舊版熱門20入口
+         保留相容性
+    ========================== -->
+
+    <div class="hot20-wrap">
+
+      <button
+        id="hot20ScanBtn"
+        class="hot20-btn"
+        type="button"
+      >
+        🔥 掃描熱門20檔
+      </button>
+
+    </div>
+
+
+    <!-- =========================
+         Loading
+    ========================== -->
+
+    <div
+      id="loadingBox"
+      class="loading-box"
+    >
+
+      <span class="loading-dot"></span>
+
+      <span id="loadingText">
+        資料載入中…
+      </span>
+
+    </div>
+
+
+    <!-- =========================
+         錯誤／提示
+    ========================== -->
+
+    <div
+      id="message"
+      class="message"
+    ></div>
+
+  </section>
+
+
+  <!-- =====================================================
+       動態掃描結果區
+  ====================================================== -->
+
+  <section
+    id="scanResultPanel"
+    class="hot20-panel"
+  >
+
+    <div class="hot20-head">
+
+      <div
+        id="scanResultTitle"
+        class="hot20-title"
+      >
+        📊 掃描結果
+      </div>
+
+      <div
+        id="scanResultTime"
+        class="hot20-time"
+      >
+        尚未掃描
+      </div>
+
+    </div>
+
+
+    <div
+      id="scanResultList"
+      class="hot20-list"
+    >
+
+      <div class="empty">
+        請選擇上方掃描功能。
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       舊熱門20結果
+  ====================================================== -->
+
+  <section
+    id="hot20Panel"
+    class="hot20-panel"
+  >
+
+    <div class="hot20-head">
+
+      <div class="hot20-title">
+        🔥 當日熱門20檔
+      </div>
+
+      <div
+        id="hot20Time"
+        class="hot20-time"
+      >
+        尚未掃描
+      </div>
+
+    </div>
+
+    <div
+      id="hot20List"
+      class="hot20-list"
+    ></div>
+
+  </section>
+
+
+  <!-- =====================================================
+       股票主資訊
+  ====================================================== -->
+
+  <section
+    id="stockCard"
+    class="stock-card"
+  >
+
+    <div class="empty">
+      請輸入股票代號或名稱開始分析
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       Footer
+  ====================================================== -->
+
+  <footer class="footer">
+
+    m1491 V1491｜台股資料分析工具<br>
+
+    上市／上櫃／ETF 動態搜尋與技術分析<br>
+
+    實際交易前請自行確認即時行情與市場資訊。
+
+  </footer>
+
+</main>
+
+
+<!-- =========================================================
+     JavaScript 開始
+========================================================= -->
+
+<script>
+
+"use strict";
+
+
+/* =========================================================
+   DOM
+========================================================= */
+
+const $ = id =>
+  document.getElementById(id);
+
+
+const searchInput =
+  $("searchInput");
+
+const searchBtn =
+  $("searchBtn");
+
+const searchCandidates =
+  $("searchCandidates");
+
+const hot20ScanBtn =
+  $("hot20ScanBtn");
+
+const hot20DynamicBtn =
+  $("hot20DynamicBtn");
+
+const original30ScanBtn =
+  $("original30ScanBtn");
+
+const confirmedBreakoutBtn =
+  $("confirmedBreakoutBtn");
+
+const readyBreakoutBtn =
+  $("readyBreakoutBtn");
+
+const bullishScanBtn =
+  $("bullishScanBtn");
+
+const scanResultPanel =
+  $("scanResultPanel");
+
+const scanResultTitle =
+  $("scanResultTitle");
+
+const scanResultTime =
+  $("scanResultTime");
+
+const scanResultList =
+  $("scanResultList");
+
+const hot20Panel =
+  $("hot20Panel");
+
+const hot20List =
+  $("hot20List");
+
+const hot20Time =
+  $("hot20Time");
+
+const stockCard =
+  $("stockCard");
+
+const loadingBox =
+  $("loadingBox");
+
+const loadingText =
+  $("loadingText");
+
+const messageBox =
+  $("message");
+
+const systemStatus =
+  $("systemStatus");
+
+
+/* =========================================================
+   官方資料來源
+   ---------------------------------------------------------
+   這裡不把股票寫死。
+   
+   後面的搜尋與掃描會透過資料來源建立市場清單。
+========================================================= */
+
+const API = {
+
+  /*
+   * TWSE MIS 即時行情
+   */
+  quote:
+    "https://mis.twse.com.tw/stock/api/getStockInfo.jsp",
+
+
+  /*
+   * TWSE 個股日成交
+   */
+  day:
+    "https://www.twse.com.tw/rwd/zh/afterTrading/STOCK_DAY",
+
+
+  /*
+   * TWSE 三大法人
+   */
+  institution:
+    "https://www.twse.com.tw/rwd/zh/fund/T86",
+
+
+  /*
+   * TWSE 融資融券
+   */
+  margin:
+    "https://www.twse.com.tw/rwd/zh/marginTrading/MI_MARGN",
+
+
+  /*
+   * TWSE 全市場日行情
+   */
+  twseAll:
+    "https://openapi.twse.com.tw/v1/exchangeReport/STOCK_DAY_ALL",
+
+
+  /*
+   * TPEx 上櫃全市場行情
+   */
+  tpexAll:
+    "https://www.tpex.org.tw/openapi/v1/tpex_mainboard_daily",
+
+
+  /*
+   * TWSE 股票基本資料
+   */
+  twseInfo:
+    "https://openapi.twse.com.tw/v1/opendata/t187ap03_L",
+
+
+  /*
+   * TPEx 股票基本資料
+   *
+   * 這個來源專門補上櫃市場。
+   */
+  tpexInfo:
+    "https://www.tpex.org.tw/openapi/v1/mopsfin_t187ap03_O"
+};
+
+
+/* =========================================================
+   固定原始30檔
+   ---------------------------------------------------------
+   ⚠️ 這裡與動態推薦完全分開。
+   
+   📋 原始30檔：
+   只使用這份清單。
+   
+   🔥 / 🚀 / 👀 / 📈：
+   不使用這份清單。
+========================================================= */
+
+const SCAN_CODES = [
+
+  "1301",
+  "1303",
+  "1326",
+  "2002",
+  "2303",
+  "2308",
+  "2312",
+  "2313",
+  "2317",
+  "2330",
+  "2367",
+  "2481",
+  "2606",
+  "2618",
+  "2891",
+  "3324",
+  "3481",
+  "3711",
+  "5314",
+  "5425",
+  "6244",
+  "6770",
+  "8046",
+  "0050",
+  "0056",
+  "00631L",
+  "00685L",
+  "00891",
+  "00919",
+  "00981A"
+
+];
+
+
+/* =========================================================
+   KNOWN
+   ---------------------------------------------------------
+   只是快速辨識資料。
+   
+   ⚠️ 絕對不是搜尋限制。
+   ⚠️ 不在 KNOWN 的股票仍然可以搜尋。
+========================================================= */
+
+const KNOWN = {
+
+  "1301":{
+    code:"1301",
+    name:"台塑",
+    market:"上市"
+  },
+
+  "1303":{
+    code:"1303",
+    name:"南亞",
+    market:"上市"
+  },
+
+  "1326":{
+    code:"1326",
+    name:"台化",
+    market:"上市"
+  },
+
+  "2002":{
+    code:"2002",
+    name:"中鋼",
+    market:"上市"
+  },
+
+  "2303":{
+    code:"2303",
+    name:"聯電",
+    market:"上市"
+  },
+
+  "2308":{
+    code:"2308",
+    name:"台達電",
+    market:"上市"
+  },
+
+  "2312":{
+    code:"2312",
+    name:"金寶",
+    market:"上市"
+  },
+
+  "2313":{
+    code:"2313",
+    name:"華通",
+    market:"上市"
+  },
+
+  "2317":{
+    code:"2317",
+    name:"鴻海",
+    market:"上市"
+  },
+
+  "2330":{
+    code:"2330",
+    name:"台積電",
+    market:"上市"
+  },
+
+  "2367":{
+    code:"2367",
+    name:"燿華",
+    market:"上市"
+  },
+
+  "2409":{
+    code:"2409",
+    name:"友達",
+    market:"上市"
+  },
+
+  "2481":{
+    code:"2481",
+    name:"強茂",
+    market:"上市"
+  },
+
+  "2606":{
+    code:"2606",
+    name:"裕民",
+    market:"上市"
+  },
+
+  "2618":{
+    code:"2618",
+    name:"長榮航",
+    market:"上市"
+  },
+
+  "2891":{
+    code:"2891",
+    name:"中信金",
+    market:"上市"
+  },
+
+  "3324":{
+    code:"3324",
+    name:"雙鴻",
+    market:"上市"
+  },
+
+  "3481":{
+    code:"3481",
+    name:"群創",
+    market:"上市"
+  },
+
+  "3711":{
+    code:"3711",
+    name:"日月光投控",
+    market:"上市"
+  },
+
+  "5314":{
+    code:"5314",
+    name:"世紀",
+    market:"上櫃"
+  },
+
+  "5425":{
+    code:"5425",
+    name:"台半",
+    market:"上櫃"
+  },
+
+  "6244":{
+    code:"6244",
+    name:"茂迪",
+    market:"上市"
+  },
+
+  "6770":{
+    code:"6770",
+    name:"力積電",
+    market:"上市"
+  },
+
+  "8046":{
+    code:"8046",
+    name:"南電",
+    market:"上市"
+  },
+
+  "0050":{
+    code:"0050",
+    name:"元大台灣50",
+    market:"ETF"
+  },
+
+  "0056":{
+    code:"0056",
+    name:"元大高股息",
+    market:"ETF"
+  },
+
+  "00631L":{
+    code:"00631L",
+    name:"元大台灣50正2",
+    market:"ETF"
+  },
+
+  "00685L":{
+    code:"00685L",
+    name:"群益臺灣加權正2",
+    market:"ETF"
+  },
+
+  "00891":{
+    code:"00891",
+    name:"中信關鍵半導體",
+    market:"ETF"
+  },
+
+  "00919":{
+    code:"00919",
+    name:"群益台灣精選高息",
+    market:"ETF"
+  },
+
+  "00981A":{
+    code:"00981A",
+    name:"主動野村臺灣優選",
+    market:"ETF"
+  }
+
+};
+
+
+/* =========================================================
+   全域狀態
+========================================================= */
+
+const state = {
+
+  /*
+   * 目前股票
+   */
+  currentCode:"",
+  currentName:"",
+  currentData:null,
+
+
+  /*
+   * 完整市場搜尋資料
+   */
+  universe:[],
+
+  universeLoaded:false,
+
+  universeLoading:false,
+
+
+  /*
+   * 動態市場行情
+   */
+  marketRows:[],
+
+  marketLoaded:false,
+
+  marketLoading:false,
+
+  marketLoadedAt:0,
+
+
+  /*
+   * 動態推薦
+   */
+  hot20:[],
+  confirmed:[],
+  ready:[],
+  bullish:[],
+
+
+  /*
+   * 掃描狀態
+   */
+  scanRunning:false,
+
+
+  /*
+   * 防止舊請求覆蓋新請求
+   */
+  requestSerial:0
+
+};
+
+
+/* =========================================================
+   快取時間
+========================================================= */
+
+const CACHE = {
+
+  /*
+   * 股票名稱／代號資料
+   * 10分鐘更新一次。
+   */
+  universeTTL:
+    10 * 60 * 1000,
+
+
+  /*
+   * 當日行情
+   * 60秒更新一次。
+   *
+   * 使用者按掃描時，
+   * 超過60秒就重新抓。
+   */
+  marketTTL:
+    60 * 1000
+
+};
+
+
+/* =========================================================
+   工具：數字
+========================================================= */
+
+function num(value){
+
+  if(
+    value === null ||
+    value === undefined ||
+    value === "" ||
+    value === "--" ||
+    value === "-"
+  ){
+
+    return NaN;
+
+  }
+
+
+  const n =
+    Number(
+      String(value)
+        .replace(/,/g,"")
+        .replace(/%/g,"")
+        .trim()
+    );
+
+
+  return Number.isFinite(n)
+    ? n
+    : NaN;
+
+}
+
+
+/* =========================================================
+   工具：安全數字
+========================================================= */
+
+function safeNum(
+  value,
+  fallback=0
+){
+
+  const n =
+    num(value);
+
+  return Number.isFinite(n)
+    ? n
+    : fallback;
+
+}
+
+
+/* =========================================================
+   工具：格式化
+========================================================= */
+
+function fmt(
+  value,
+  digits=2
+){
+
+  const n =
+    num(value);
+
+
+  if(
+    !Number.isFinite(n)
+  ){
+
+    return "--";
+
+  }
+
+
+  return n.toLocaleString(
+    "zh-TW",
+    {
+      minimumFractionDigits:
+        digits,
+
+      maximumFractionDigits:
+        digits
+    }
+  );
+
+}
+
+
+function fmtInt(value){
+
+  const n =
+    num(value);
+
+
+  if(
+    !Number.isFinite(n)
+  ){
+
+    return "--";
+
+  }
+
+
+  return Math.round(n)
+    .toLocaleString(
+      "zh-TW"
+    );
+
+}
+
+
+/* =========================================================
+   工具：百分比
+========================================================= */
+
+function pct(
+  value,
+  digits=2
+){
+
+  const n =
+    num(value);
+
+
+  if(
+    !Number.isFinite(n)
+  ){
+
+    return "--";
+
+  }
+
+
+  return (
+    n.toFixed(digits) +
+    "%"
+  );
+
+}
+
+
+/* =========================================================
+   工具：HTML Escape
+========================================================= */
+
+function esc(value){
+
+  return String(
+    value ?? ""
+  )
+  .replace(/&/g,"&amp;")
+  .replace(/</g,"&lt;")
+  .replace(/>/g,"&gt;")
+  .replace(/"/g,"&quot;")
+  .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================================================
+   工具：股票代號
+========================================================= */
+
+function normalizeCode(
+  value
+){
+
+  return String(
+    value ?? ""
+  )
+  .trim()
+  .toUpperCase()
+  .replace(/\s+/g,"");
+
+}
+
+
+/* =========================================================
+   工具：股票名稱
+========================================================= */
+
+function normalizeName(
+  value
+){
+
+  return String(
+    value ?? ""
+  )
+  .trim()
+  .replace(/\s+/g,"");
+
+}
+
+
+/* =========================================================
+   判斷股票代號
+   ---------------------------------------------------------
+   台股一般股票：
+   4碼。
+   
+   ETF／槓桿ETF：
+   4～6碼＋可能英文字尾。
+========================================================= */
+
+function isStockCode(
+  value
+){
+
+  return /^\d{4,6}[A-Z]*$/
+    .test(
+      normalizeCode(value)
+    );
+
+}
+
+
+/* =========================================================
+   API Fetch
+========================================================= */
+
+async function fetchJSON(
+  url,
+  options={}
+){
+
+  const controller =
+    new AbortController();
+
+
+  const timeout =
+    setTimeout(
+      ()=>{
+        controller.abort();
+      },
+      options.timeout || 15000
+    );
+
+
+  try{
+
+    const response =
+      await fetch(
+        url,
+        {
+          ...options,
+          signal:
+            controller.signal,
+          cache:"no-store"
+        }
+      );
+
+
+    if(
+      !response.ok
+    ){
+
+      throw new Error(
+        `HTTP ${response.status}`
+      );
+
+    }
+
+
+    return await response.json();
+
+  }
+  finally{
+
+    clearTimeout(
+      timeout
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   API URL 建立
+========================================================= */
+
+function apiURL(
+  base,
+  params={}
+){
+
+  const url =
+    new URL(base);
+
+
+  Object.entries(
+    params
+  )
+  .forEach(
+    ([key,value])=>{
+
+      if(
+        value !== undefined &&
+        value !== null &&
+        value !== ""
+      ){
+
+        url.searchParams.set(
+          key,
+          value
+        );
+
+      }
+
+    }
+  );
+
+
+  /*
+   * 防止瀏覽器快取舊資料。
+   */
+
+  url.searchParams.set(
+    "_",
+    Date.now().toString()
+  );
+
+
+  return url.toString();
+
+}
+
+
+/* =========================================================
+   日期
+========================================================= */
+
+function pad2(
+  value
+){
+
+  return String(
+    value
+  ).padStart(
+    2,
+    "0"
+  );
+
+}
+
+
+function nowText(){
+
+  const d =
+    new Date();
+
+
+  return (
+    d.getFullYear() +
+    "/" +
+    pad2(
+      d.getMonth()+1
+    ) +
+    "/" +
+    pad2(
+      d.getDate()
+    ) +
+    " " +
+    pad2(
+      d.getHours()
+    ) +
+    ":" +
+    pad2(
+      d.getMinutes()
+    ) +
+    ":" +
+    pad2(
+      d.getSeconds()
+    )
+  );
+
+}
+
+
+/* =========================================================
+   狀態
+========================================================= */
+
+function setStatus(
+  text,
+  type="normal"
+){
+
+  if(
+    systemStatus
+  ){
+
+    systemStatus.textContent =
+      text;
+
+  }
+
+
+  const dot =
+    systemStatus
+      ?.previousElementSibling;
+
+
+  if(!dot){
+    return;
+  }
+
+
+  if(
+    type === "error"
+  ){
+
+    dot.style.background =
+      "var(--red)";
+
+    dot.style.boxShadow =
+      "0 0 10px rgba(255,82,99,.7)";
+
+  }
+  else if(
+    type === "loading"
+  ){
+
+    dot.style.background =
+      "var(--yellow)";
+
+    dot.style.boxShadow =
+      "0 0 10px rgba(255,200,87,.7)";
+
+  }
+  else{
+
+    dot.style.background =
+      "var(--green)";
+
+    dot.style.boxShadow =
+      "0 0 10px rgba(33,208,122,.7)";
+
+  }
+
+}
+
+
+/* =========================================================
+   Loading
+========================================================= */
+
+function showLoading(
+  text="資料載入中…"
+){
+
+  if(
+    loadingText
+  ){
+
+    loadingText.textContent =
+      text;
+
+  }
+
+
+  if(
+    loadingBox
+  ){
+
+    loadingBox.classList.add(
+      "show"
+    );
+
+  }
+
+
+  setStatus(
+    "資料載入中",
+    "loading"
+  );
+
+}
+
+
+function hideLoading(){
+
+  if(
+    loadingBox
+  ){
+
+    loadingBox.classList.remove(
+      "show"
+    );
+
+  }
+
+
+  setStatus(
+    "系統待命",
+    "normal"
+  );
+
+}
+
+
+/* =========================================================
+   Message
+========================================================= */
+
+function showMessage(
+  text
+){
+
+  if(
+    !messageBox
+  ){
+
+    return;
+
+  }
+
+
+  messageBox.textContent =
+    text;
+
+
+  messageBox.classList.add(
+    "show"
+  );
+
+}
+
+
+function hideMessage(){
+
+  if(
+    !messageBox
+  ){
+
+    return;
+
+  }
+
+
+  messageBox.textContent =
+    "";
+
+
+  messageBox.classList.remove(
+    "show"
+  );
+
+}
+
+
+/* =========================================================
+   官方資料欄位工具
+========================================================= */
+
+function pick(
+  obj,
+  ...keys
+){
+
+  if(!obj){
+    return undefined;
+  }
+
+
+  for(
+    const key of keys
+  ){
+
+    if(
+      Object.prototype.hasOwnProperty.call(
+        obj,
+        key
+      )
+    ){
+
+      const value =
+        obj[key];
+
+
+      if(
+        value !== undefined &&
+        value !== null &&
+        value !== ""
+      ){
+
+        return value;
+
+      }
+
+    }
+
+  }
+
+
+  return undefined;
+
+}
+
+
+/* =========================================================
+   股票代號欄位
+========================================================= */
+
+function getCode(
+  obj
+){
+
+  return String(
+    pick(
+      obj,
+      "Code",
+      "code",
+      "股票代號",
+      "證券代號",
+      "SecuritiesCompanyCode",
+      "c"
+    ) ?? ""
+  ).trim();
+
+}
+
+
+/* =========================================================
+   股票名稱欄位
+========================================================= */
+
+function getName(
+  obj
+){
+
+  return String(
+    pick(
+      obj,
+      "Name",
+      "name",
+      "股票名稱",
+      "證券名稱",
+      "SecuritiesCompanyName",
+      "n"
+    ) ?? ""
+  ).trim();
+
+}
+
+
+/* =========================================================
+   第 2 段結束
+========================================================= */
+
+console.log(
+  "m1491 V1491｜第 2 段載入完成"
+);
+
+</script><script>
+
+/* =========================================================
+   第三段
+   股票市場資料庫
+   ---------------------------------------------------------
+   目的：
+   1. 建立上市／上櫃／ETF搜尋庫
+   2. 不限制 KNOWN
+   3. 股票代號可以直接搜尋
+   4. 中文名稱可以搜尋
+   5. 支援 2409、2426 等不在 KNOWN 的股票
+   6. 動態推薦不使用 SCAN_CODES
+========================================================= */
+
+
+/* =========================================================
+   建立搜尋資料
+========================================================= */
+
+function makeUniverseItem(
+  row,
+  market=""
+){
+
+  const code =
+    normalizeCode(
+      getCode(row)
+    );
+
+
+  const name =
+    normalizeName(
+      getName(row)
+    );
+
+
+  if(
+    !code ||
+    !isStockCode(code)
+  ){
+
+    return null;
+
+  }
+
+
+  return {
+
+    code,
+    name,
+    market:
+      market ||
+      pick(
+        row,
+        "market",
+        "Market",
+        "市場別"
+      ) ||
+      "",
+
+    raw:row
+
+  };
+
+}
+
+
+/* =========================================================
+   合併 KNOWN
+   ---------------------------------------------------------
+   KNOWN 只能當補充。
+   不能把搜尋範圍限制在 KNOWN。
+========================================================= */
+
+function mergeKnownUniverse(
+  list
+){
+
+  const map =
+    new Map();
+
+
+  for(
+    const item of list || []
+  ){
+
+    if(
+      !item ||
+      !item.code
+    ){
+
+      continue;
+
+    }
+
+
+    const old =
+      map.get(
+        item.code
+      );
+
+
+    if(!old){
+
+      map.set(
+        item.code,
+        item
+      );
+
+      continue;
+
+    }
+
+
+    /*
+     * 如果官方資料沒有名稱，
+     * 用 KNOWN 補名稱。
+     */
+
+    if(
+      (!old.name ||
+       old.name === old.code) &&
+      item.name
+    ){
+
+      old.name =
+        item.name;
+
+    }
+
+  }
+
+
+  Object.values(
+    KNOWN
+  )
+  .forEach(
+    known=>{
+
+      if(
+        !known ||
+        !known.code
+      ){
+
+        return;
+
+      }
+
+
+      const code =
+        normalizeCode(
+          known.code
+        );
+
+
+      const old =
+        map.get(
+          code
+        );
+
+
+      if(!old){
+
+        map.set(
+          code,
+          {
+            ...known,
+            code
+          }
+        );
+
+        return;
+
+      }
+
+
+      if(
+        !old.name &&
+        known.name
+      ){
+
+        old.name =
+          known.name;
+
+      }
+
+
+      if(
+        !old.market &&
+        known.market
+      ){
+
+        old.market =
+          known.market;
+
+      }
+
+    }
+  );
+
+
+  return Array.from(
+    map.values()
+  );
+
+}
+
+
+/* =========================================================
+   取得 TWSE 股票清單
+========================================================= */
+
+async function getTWSEUniverse(){
+
+  try{
+
+    const data =
+      await fetchJSON(
+        apiURL(
+          API.twseInfo
+        )
+      );
+
+
+    if(
+      !Array.isArray(data)
+    ){
+
+      return [];
+
+    }
+
+
+    const result = [];
+
+
+    for(
+      const row of data
+    ){
+
+      const item =
+        makeUniverseItem(
+          row,
+          "上市"
+        );
+
+
+      if(
+        item
+      ){
+
+        result.push(
+          item
+        );
+
+      }
+
+    }
+
+
+    return result;
+
+  }
+  catch(error){
+
+    console.warn(
+      "TWSE universe error:",
+      error
+    );
+
+
+    return [];
+
+  }
+
+}
+
+
+/* =========================================================
+   取得 TPEx 上櫃股票清單
+========================================================= */
+
+async function getTPExUniverse(){
+
+  try{
+
+    const data =
+      await fetchJSON(
+        apiURL(
+          API.tpexInfo
+        )
+      );
+
+
+    if(
+      !Array.isArray(data)
+    ){
+
+      return [];
+
+    }
+
+
+    const result = [];
+
+
+    for(
+      const row of data
+    ){
+
+      const item =
+        makeUniverseItem(
+          row,
+          "上櫃"
+        );
+
+
+      if(
+        item
+      ){
+
+        result.push(
+          item
+        );
+
+      }
+
+    }
+
+
+    return result;
+
+  }
+  catch(error){
+
+    console.warn(
+      "TPEx universe error:",
+      error
+    );
+
+
+    return [];
+
+  }
+
+}
+
+
+/* =========================================================
+   ETF 補充辨識
+========================================================= */
+
+function isETFCode(
+  code
+){
+
+  const c =
+    normalizeCode(code);
+
+
+  /*
+   * 常見 ETF 代號。
+   *
+   * 真正市場清單仍以官方資料為主。
+   */
+
+  return (
+    /^00\d{2,4}[A-Z]*$/.test(c)
+  );
+
+}
+
+
+/* =========================================================
+   建立完整搜尋資料庫
+========================================================= */
+
+async function getStockUniverse(
+  force=false
+){
+
+  /*
+   * 已有資料且沒有超過快取時間，
+   * 直接使用。
+   */
+
+  if(
+    !force &&
+    state.universeLoaded &&
+    state.universe.length &&
+    state.universeLoadedAt &&
+    (
+      Date.now() -
+      state.universeLoadedAt <
+      CACHE.universeTTL
+    )
+  ){
+
+    return state.universe;
+
+  }
+
+
+  if(
+    state.universeLoading
+  ){
+
+    return state.universe;
+
+  }
+
+
+  state.universeLoading =
+    true;
+
+
+  try{
+
+    showLoading(
+      "建立台股搜尋資料庫…"
+    );
+
+
+    /*
+     * 上市＋上櫃
+     *
+     * 平行抓取，
+     * 不要讓單一市場失敗就整個搜尋失效。
+     */
+
+    const [
+      twse,
+      tpex
+    ] =
+      await Promise.all([
+        getTWSEUniverse(),
+        getTPExUniverse()
+      ]);
+
+
+    let list = [
+      ...twse,
+      ...tpex
+    ];
+
+
+    /*
+     * 補入 KNOWN。
+     *
+     * 這是 fallback，
+     * 不是主要搜尋來源。
+     */
+
+    list =
+      mergeKnownUniverse(
+        list
+      );
+
+
+    /*
+     * 補 ETF 標籤
+     */
+
+    list.forEach(
+      item=>{
+
+        if(
+          isETFCode(
+            item.code
+          )
+        ){
+
+          item.market =
+            item.market ||
+            "ETF";
+
+        }
+
+      }
+    );
+
+
+    /*
+     * 排序：
+     *
+     * 先代號，
+     * 再名稱。
+     */
+
+    list.sort(
+      (a,b)=>{
+
+        const ac =
+          a.code || "";
+
+        const bc =
+          b.code || "";
+
+
+        return ac.localeCompare(
+          bc,
+          "zh-Hant"
+        );
+
+      }
+    );
+
+
+    state.universe =
+      list;
+
+
+    state.universeLoaded =
+      true;
+
+
+    state.universeLoadedAt =
+      Date.now();
+
+
+    console.log(
+      "V1491 搜尋資料庫：",
+      list.length,
+      "筆"
+    );
+
+
+    return list;
+
+  }
+  finally{
+
+    state.universeLoading =
+      false;
+
+
+    hideLoading();
+
+  }
+
+}
+
+
+/* =========================================================
+   快速取得 KNOWN
+========================================================= */
+
+function getKnownStock(
+  code
+){
+
+  const c =
+    normalizeCode(
+      code
+    );
+
+
+  return KNOWN[c] ||
+    null;
+
+}
+
+
+/* =========================================================
+   精準搜尋
+========================================================= */
+
+function exactFindStock(
+  query,
+  universe
+){
+
+  const q =
+    normalizeName(
+      query
+    );
+
+
+  if(!q){
+    return null;
+  }
+
+
+  /*
+   * 1. 完全符合代號
+   */
+
+  const codeHit =
+    universe.find(
+      item =>
+        normalizeCode(
+          item.code
+        ) ===
+        normalizeCode(q)
+    );
+
+
+  if(
+    codeHit
+  ){
+
+    return codeHit;
+
+  }
+
+
+  /*
+   * 2. 完全符合中文名稱
+   */
+
+  const nameHit =
+    universe.find(
+      item =>
+        normalizeName(
+          item.name
+        ) === q
+    );
+
+
+  if(
+    nameHit
+  ){
+
+    return nameHit;
+
+  }
+
+
+  /*
+   * 3. KNOWN 補充
+   *
+   * 即使官方名稱資料尚未載入，
+   * 常用股票仍可直接搜尋。
+   */
+
+  const known =
+    getKnownStock(
+      q
+    );
+
+
+  if(
+    known
+  ){
+
+    return {
+      ...known
+    };
+
+  }
+
+
+  return null;
+
+}
+
+
+/* =========================================================
+   模糊搜尋
+========================================================= */
+
+function searchUniverse(
+  query,
+  universe,
+  limit=20
+){
+
+  const q =
+    normalizeName(
+      query
+    );
+
+
+  if(!q){
+    return [];
+  }
+
+
+  const qUpper =
+    normalizeCode(q);
+
+
+  const result = [];
+
+
+  /*
+   * 先代號開頭
+   */
+
+  for(
+    const item of universe
+  ){
+
+    const code =
+      normalizeCode(
+        item.code
+      );
+
+
+    if(
+      code.startsWith(
+        qUpper
+      )
+    ){
+
+      result.push({
+        item,
+        score:10
+      });
+
+    }
+
+  }
+
+
+  /*
+   * 名稱開頭
+   */
+
+  for(
+    const item of universe
+  ){
+
+    const name =
+      normalizeName(
+        item.name
+      );
+
+
+    if(
+      name.startsWith(q)
+    ){
+
+      result.push({
+        item,
+        score:9
+      });
+
+    }
+
+  }
+
+
+  /*
+   * 名稱包含
+   */
+
+  for(
+    const item of universe
+  ){
+
+    const name =
+      normalizeName(
+        item.name
+      );
+
+
+    if(
+      name.includes(q)
+    ){
+
+      result.push({
+        item,
+        score:7
+      });
+
+    }
+
+  }
+
+
+  /*
+   * 代號包含
+   */
+
+  for(
+    const item of universe
+  ){
+
+    const code =
+      normalizeCode(
+        item.code
+      );
+
+
+    if(
+      code.includes(qUpper)
+    ){
+
+      result.push({
+        item,
+        score:6
+      });
+
+    }
+
+  }
+
+
+  /*
+   * 去重
+   */
+
+  const map =
+    new Map();
+
+
+  for(
+    const row of result
+  ){
+
+    const code =
+      row.item.code;
+
+
+    if(
+      !map.has(code) ||
+      map.get(code).score <
+      row.score
+    ){
+
+      map.set(
+        code,
+        row
+      );
+
+    }
+
+  }
+
+
+  return Array.from(
+    map.values()
+  )
+  .sort(
+    (a,b)=>{
+
+      if(
+        b.score !==
+        a.score
+      ){
+
+        return (
+          b.score -
+          a.score
+        );
+
+      }
+
+
+      return (
+        a.item.code
+          .localeCompare(
+            b.item.code
+          )
+      );
+
+    }
+  )
+  .slice(
+    0,
+    limit
+  )
+  .map(
+    row=>row.item
+  );
+
+}
+
+
+/* =========================================================
+   對外搜尋函式
+========================================================= */
+
+async function findStock(
+  query
+){
+
+  const q =
+    String(
+      query ?? ""
+    ).trim();
+
+
+  if(!q){
+
+    return null;
+
+  }
+
+
+  /*
+   * 先用目前已有資料找。
+   */
+
+  let universe =
+    state.universe;
+
+
+  /*
+   * 沒資料才建立完整資料庫。
+   */
+
+  if(
+    !universe.length
+  ){
+
+    universe =
+      await getStockUniverse();
+
+  }
+
+
+  /*
+   * 精準搜尋。
+   */
+
+  const exact =
+    exactFindStock(
+      q,
+      universe
+    );
+
+
+  if(
+    exact
+  ){
+
+    return exact;
+
+  }
+
+
+  /*
+   * 如果使用者直接輸入4～6碼，
+   * 優先直接建立查詢項目。
+   *
+   * 這樣即使名稱清單暫時失敗，
+   * 仍然可以往即時行情查詢。
+   */
+
+  if(
+    isStockCode(q)
+  ){
+
+    const known =
+      getKnownStock(q);
+
+
+    return {
+
+      code:
+        normalizeCode(q),
+
+      name:
+        known?.name ||
+        normalizeCode(q),
+
+      market:
+        known?.market ||
+        "",
+
+      raw:null
+
+    };
+
+  }
+
+
+  /*
+   * 模糊搜尋。
+   */
+
+  const fuzzy =
+    searchUniverse(
+      q,
+      universe,
+      20
+    );
+
+
+  return fuzzy[0] ||
+    null;
+
+}
+
+
+/* =========================================================
+   搜尋候選清單
+========================================================= */
+
+async function renderSearchCandidates(
+  query
+){
+
+  if(
+    !searchCandidates
+  ){
+
+    return;
+
+  }
+
+
+  const q =
+    String(
+      query ?? ""
+    ).trim();
+
+
+  if(
+    q.length < 1
+  ){
+
+    searchCandidates.innerHTML =
+      "";
+
+    searchCandidates.classList.remove(
+      "show"
+    );
+
+    return;
+
+  }
+
+
+  const universe =
+    await getStockUniverse();
+
+
+  const list =
+    searchUniverse(
+      q,
+      universe,
+      8
+    );
+
+
+  /*
+   * 如果沒有名稱資料，
+   * 但輸入的是代號，
+   * 仍然顯示直接查詢。
+   */
+
+  if(
+    !list.length &&
+    isStockCode(q)
+  ){
+
+    const code =
+      normalizeCode(q);
+
+
+    searchCandidates.innerHTML = `
+
+      <button
+        type="button"
+        class="candidate-btn"
+        data-code="${esc(code)}"
+      >
+
+        <strong>
+          ${esc(code)}
+        </strong>
+
+        <span>
+          直接查詢此股票
+        </span>
+
+      </button>
+
+    `;
+
+
+    searchCandidates.classList.add(
+      "show"
+    );
+
+
+    return;
+
+  }
+
+
+  if(
+    !list.length
+  ){
+
+    searchCandidates.innerHTML = `
+
+      <div class="candidate-empty">
+        找不到「${esc(q)}」
+      </div>
+
+    `;
+
+
+    searchCandidates.classList.add(
+      "show"
+    );
+
+
+    return;
+
+  }
+
+
+  searchCandidates.innerHTML =
+    list
+      .map(
+        item=>`
+
+          <button
+            type="button"
+            class="candidate-btn"
+            data-code="${esc(item.code)}"
+          >
+
+            <strong>
+              ${esc(item.code)}
+            </strong>
+
+            <span>
+              ${esc(item.name)}
+            </span>
+
+            ${
+              item.market
+                ? `
+                  <small>
+                    ${esc(item.market)}
+                  </small>
+                `
+                : ""
+            }
+
+          </button>
+
+        `
+      )
+      .join("");
+
+
+  searchCandidates.classList.add(
+    "show"
+  );
+
+}
+
+
+/* =========================================================
+   關閉搜尋候選
+========================================================= */
+
+function closeSearchCandidates(){
+
+  if(
+    !searchCandidates
+  ){
+
+    return;
+
+  }
+
+
+  searchCandidates.classList.remove(
+    "show"
+  );
+
+}
+
+
+/* =========================================================
+   顯示搜尋結果
+========================================================= */
+
+async function doSearch(
+  query
+){
+
+  const q =
+    String(
+      query ??
+      searchInput?.value ??
+      ""
+    ).trim();
+
+
+  if(!q){
+
+    showMessage(
+      "請輸入股票代號或名稱。"
+    );
+
+    return;
+
+  }
+
+
+  hideMessage();
+
+
+  closeSearchCandidates();
+
+
+  const serial =
+    ++state.requestSerial;
+
+
+  showLoading(
+    `正在搜尋 ${q}…`
+  );
+
+
+  try{
+
+    const stock =
+      await findStock(q);
+
+
+    /*
+     * 如果搜尋期間使用者又做了新的操作，
+     * 舊結果不要覆蓋。
+     */
+
+    if(
+      serial !==
+      state.requestSerial
+    ){
+
+      return;
+
+    }
+
+
+    if(
+      !stock
+    ){
+
+      throw new Error(
+        `找不到股票「${q}」`
+      );
+
+    }
+
+
+    await loadStockInfo(
+      stock.code,
+      stock.name
+    );
+
+  }
+  catch(error){
+
+    console.error(
+      "搜尋失敗：",
+      error
+    );
+
+
+    showMessage(
+      error.message ||
+      "股票資料取得失敗，請稍後再試。"
+    );
+
+  }
+  finally{
+
+    if(
+      serial ===
+      state.requestSerial
+    ){
+
+      hideLoading();
+
+    }
+
+  }
+
+}
+
+
+/* =========================================================
+   搜尋框事件
+========================================================= */
+
+let searchTimer = null;
+
+
+if(
+  searchInput
+){
+
+  searchInput.addEventListener(
+    "input",
+    ()=>{
+
+      clearTimeout(
+        searchTimer
+      );
+
+
+      const value =
+        searchInput.value;
+
+
+      searchTimer =
+        setTimeout(
+          ()=>{
+
+            renderSearchCandidates(
+              value
+            )
+            .catch(
+              error=>{
+                console.warn(
+                  "搜尋候選錯誤：",
+                  error
+                );
+              }
+            );
+
+          },
+          300
+        );
+
+    }
+  );
+
+
+  searchInput.addEventListener(
+    "keydown",
+    event=>{
+
+      if(
+        event.key ===
+        "Enter"
+      ){
+
+        event.preventDefault();
+
+
+        doSearch(
+          searchInput.value
+        );
+
+      }
+
+
+      if(
+        event.key ===
+        "Escape"
+      ){
+
+        closeSearchCandidates();
+
+      }
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   搜尋按鈕
+========================================================= */
+
+if(
+  searchBtn
+){
+
+  searchBtn.addEventListener(
+    "click",
+    ()=>{
+
+      doSearch(
+        searchInput?.value
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   搜尋候選點擊
+========================================================= */
+
+if(
+  searchCandidates
+){
+
+  searchCandidates.addEventListener(
+    "click",
+    event=>{
+
+      const btn =
+        event.target.closest(
+          "[data-code]"
+        );
+
+
+      if(!btn){
+        return;
+      }
+
+
+      const code =
+        btn.dataset.code;
+
+
+      if(
+        searchInput
+      ){
+
+        searchInput.value =
+          code;
+
+      }
+
+
+      closeSearchCandidates();
+
+
+      doSearch(
+        code
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   點擊頁面其他地方
+========================================================= */
+
+document.addEventListener(
+  "click",
+  event=>{
+
+    if(
+      !event.target.closest(
+        ".search-panel"
+      )
+    ){
+
+      closeSearchCandidates();
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   快速按鈕
+========================================================= */
+
+document
+  .querySelectorAll(
+    "[data-code]"
+  )
+  .forEach(
+    btn=>{
+
+      /*
+       * 搜尋候選也有 data-code，
+       * 因此只處理 quick-btn。
+       */
+
+      if(
+        !btn.classList.contains(
+          "quick-btn"
+        )
+      ){
+
+        return;
+
+      }
+
+
+      btn.addEventListener(
+        "click",
+        ()=>{
+
+          const code =
+            btn.dataset.code;
+
+
+          if(
+            searchInput
+          ){
+
+            searchInput.value =
+              code;
+
+          }
+
+
+          doSearch(
+            code
+          );
+
+        }
+      );
+
+    }
+  );
+
+
+console.log(
+  "m1491 V1491｜第 3 段載入完成"
+);
+
+</script><script>
+
+/* =========================================================
+   第四段
+   即時行情 × 日K × 均線 × 成交量
+========================================================= */
+
+
+/* =========================================================
+   TWSE / TPEx 即時行情
+========================================================= */
+
+async function getQuoteByCode(
+  code
+){
+
+  const c =
+    normalizeCode(code);
+
+
+  if(!c){
+
+    throw new Error(
+      "缺少股票代號"
+    );
+
+  }
+
+
+  /*
+   * 上市股票
+   */
+  const targets = [
+
+    `tse_${c}.tw`,
+
+    `otc_${c}.tw`
+
+  ];
+
+
+  for(
+    const target of targets
+  ){
+
+    try{
+
+      const url =
+        apiURL(
+          API.quote,
+          {
+            ex_ch:target
+          }
+        );
+
+
+      const data =
+        await fetchJSON(
+          url
+        );
+
+
+      if(
+        data &&
+        Array.isArray(
+          data.msgArray
+        ) &&
+        data.msgArray.length
+      ){
+
+        const row =
+          data.msgArray[0];
+
+
+        /*
+         * MIS 有時候會回傳不同市場的資料，
+         * 只要代號符合即可。
+         */
+
+        const returnedCode =
+          normalizeCode(
+            pick(
+              row,
+              "c",
+              "Code"
+            ) ||
+            c
+          );
+
+
+        if(
+          returnedCode === c ||
+          !returnedCode
+        ){
+
+          return row;
+
+        }
+
+      }
+
+    }
+    catch(error){
+
+      console.warn(
+        "即時行情來源失敗：",
+        target,
+        error
+      );
+
+    }
+
+  }
+
+
+  return null;
+
+}
+
+
+/* =========================================================
+   取得即時股票資料
+========================================================= */
+
+async function getRealtimeStock(
+  code,
+  name=""
+){
+
+  const c =
+    normalizeCode(code);
+
+
+  const quote =
+    await getQuoteByCode(
+      c
+    );
+
+
+  if(
+    quote
+  ){
+
+    return {
+
+      code:c,
+
+      name:
+        name ||
+        getName(quote) ||
+        getKnownStock(c)?.name ||
+        c,
+
+      market:
+        getKnownStock(c)?.market ||
+        "",
+
+      raw:quote,
+
+      price:
+        safeNum(
+          pick(
+            quote,
+            "z",
+            "price",
+            "Close"
+          )
+        ),
+
+      open:
+        safeNum(
+          pick(
+            quote,
+            "o",
+            "Open"
+          )
+        ),
+
+      high:
+        safeNum(
+          pick(
+            quote,
+            "h",
+            "High"
+          )
+        ),
+
+      low:
+        safeNum(
+          pick(
+            quote,
+            "l",
+            "Low"
+          )
+        ),
+
+      previous:
+        safeNum(
+          pick(
+            quote,
+            "y",
+            "PreviousClose"
+          )
+        ),
+
+      volume:
+        safeNum(
+          pick(
+            quote,
+            "v",
+            "Volume"
+          )
+        ) * 1000,
+
+      time:
+        pick(
+          quote,
+          "t",
+          "Time"
+        ) || ""
+
+    };
+
+  }
+
+
+  /*
+   * 即時 MIS 沒資料時，
+   * 不直接假造價格。
+   *
+   * 後面會嘗試日K資料。
+   */
+
+  return {
+
+    code:c,
+
+    name:
+      name ||
+      getKnownStock(c)?.name ||
+      c,
+
+    market:
+      getKnownStock(c)?.market ||
+      "",
+
+    raw:null,
+
+    price:NaN,
+
+    open:NaN,
+
+    high:NaN,
+
+    low:NaN,
+
+    previous:NaN,
+
+    volume:NaN,
+
+    time:""
+
+  };
+
+}
+
+
+/* =========================================================
+   TWSE 日K
+========================================================= */
+
+async function getDailyK(
+  code,
+  months=4
+){
+
+  const c =
+    normalizeCode(code);
+
+
+  const all = [];
+
+
+  const now =
+    new Date();
+
+
+  for(
+    let i=0;
+    i<months;
+    i++
+  ){
+
+    const d =
+      new Date(
+        now.getFullYear(),
+        now.getMonth() - i,
+        1
+      );
+
+
+    const year =
+      d.getFullYear();
+
+
+    const month =
+      d.getMonth()+1;
+
+
+    const rocYear =
+      year - 1911;
+
+
+    try{
+
+      const url =
+        apiURL(
+          API.day,
+          {
+            response:"json",
+
+            date:
+              `${year}${pad2(month)}01`,
+
+            stockNo:c,
+
+            type:"ALL"
+          }
+        );
+
+
+      const data =
+        await fetchJSON(
+          url
+        );
+
+
+      if(
+        !data ||
+        !Array.isArray(
+          data.data
+        )
+      ){
+
+        continue;
+
+      }
+
+
+      /*
+       * TWSE STOCK_DAY：
+       *
+       * 日期
+       * 成交股數
+       * 成交金額
+       * 開盤價
+       * 最高價
+       * 最低價
+       * 收盤價
+       * 漲跌價差
+       * 成交筆數
+       */
+
+      for(
+        const row of data.data
+      ){
+
+        if(
+          !Array.isArray(row) ||
+          row.length < 7
+        ){
+
+          continue;
+
+        }
+
+
+        const date =
+          parseTWSEDate(
+            row[0],
+            year
+          );
+
+
+        const volume =
+          num(row[1]);
+
+
+        const open =
+          num(row[3]);
+
+
+        const high =
+          num(row[4]);
+
+
+        const low =
+          num(row[5]);
+
+
+        const close =
+          num(row[6]);
+
+
+        if(
+          !date ||
+          !Number.isFinite(close)
+        ){
+
+          continue;
+
+        }
+
+
+        all.push({
+
+          date,
+
+          volume:
+
+            Number.isFinite(
+              volume
+            )
+              ? volume
+              : 0,
+
+          open,
+
+          high,
+
+          low,
+
+          close,
+
+          change:
+            num(row[7]),
+
+          trades:
+            num(row[8])
+
+        });
+
+      }
+
+    }
+    catch(error){
+
+      console.warn(
+        "日K資料取得失敗：",
+        c,
+        rocYear,
+        month,
+        error
+      );
+
+    }
+
+  }
+
+
+  return cleanKLines(
+    all
+  );
+
+}
+
+
+/* =========================================================
+   TPEx 日K fallback
+   ---------------------------------------------------------
+   當股票不是上市市場時，
+   再嘗試上櫃日資料。
+========================================================= */
+
+async function getTPExDailyK(
+  code
+){
+
+  const c =
+    normalizeCode(code);
+
+
+  /*
+   * 部分上櫃商品可以透過 TPEx
+   * daily stock API取得。
+   *
+   * 如果來源格式不同，
+   * 不會讓整個程式中斷。
+   */
+
+  try{
+
+    const url =
+      `https://www.tpex.org.tw/openapi/v1/tpex_mainboard_daily_close_quotes`;
+
+
+    const data =
+      await fetchJSON(
+        apiURL(
+          url
+        )
+      );
+
+
+    if(
+      !Array.isArray(data)
+    ){
+
+      return [];
+
+    }
+
+
+    const rows =
+      data.filter(
+        row=>{
+
+          const rowCode =
+            normalizeCode(
+              pick(
+                row,
+                "SecuritiesCompanyCode",
+                "Code",
+                "代號",
+                "股票代號"
+              )
+            );
+
+
+          return rowCode === c;
+
+        }
+      );
+
+
+    return rows
+      .map(
+        row=>({
+
+          date:
+            pick(
+              row,
+              "Date",
+              "日期"
+            ) || "",
+
+          volume:
+            safeNum(
+              pick(
+                row,
+                "TradeVolume",
+                "成交股數",
+                "成交量"
+              )
+            ),
+
+          open:
+            safeNum(
+              pick(
+                row,
+                "Open",
+                "開盤價"
+              )
+            ),
+
+          high:
+            safeNum(
+              pick(
+                row,
+                "High",
+                "最高價"
+              )
+            ),
+
+          low:
+            safeNum(
+              pick(
+                row,
+                "Low",
+                "最低價"
+              )
+            ),
+
+          close:
+            safeNum(
+              pick(
+                row,
+                "Close",
+                "收盤價"
+              )
+            )
+
+        })
+      )
+      .filter(
+        row =>
+          Number.isFinite(
+            row.close
+          )
+      );
+
+  }
+  catch(error){
+
+    console.warn(
+      "TPEx 日K fallback失敗：",
+      c,
+      error
+    );
+
+
+    return [];
+
+  }
+
+}
+
+
+/* =========================================================
+   TWSE 日期解析
+========================================================= */
+
+function parseTWSEDate(
+  value,
+  fallbackYear
+){
+
+  if(
+    !value
+  ){
+
+    return "";
+
+  }
+
+
+  const text =
+    String(value)
+      .trim();
+
+
+  /*
+   * 115/10/02
+   */
+
+  let m =
+    text.match(
+      /^(\d{2,3})[\/\-](\d{1,2})[\/\-](\d{1,2})$/
+    );
+
+
+  if(m){
+
+    const year =
+      Number(m[1]) + 1911;
+
+
+    return (
+      year +
+      "-" +
+      pad2(m[2]) +
+      "-" +
+      pad2(m[3])
+    );
+
+  }
+
+
+  /*
+   * YYYY/MM/DD
+   */
+
+  m =
+    text.match(
+      /^(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})$/
+    );
+
+
+  if(m){
+
+    return (
+      m[1] +
+      "-" +
+      pad2(m[2]) +
+      "-" +
+      pad2(m[3])
+    );
+
+  }
+
+
+  /*
+   * 其他情況直接交給 Date
+   */
+
+  const d =
+    new Date(text);
+
+
+  if(
+    !Number.isNaN(
+      d.getTime()
+    )
+  ){
+
+    return (
+      d.getFullYear() +
+      "-" +
+      pad2(
+        d.getMonth()+1
+      ) +
+      "-" +
+      pad2(
+        d.getDate()
+      )
+    );
+
+  }
+
+
+  return "";
+
+}
+
+
+/* =========================================================
+   清理日K
+========================================================= */
+
+function cleanKLines(
+  rows
+){
+
+  const map =
+    new Map();
+
+
+  for(
+    const row of rows || []
+  ){
+
+    if(
+      !row ||
+      !row.date
+    ){
+
+      continue;
+
+    }
+
+
+    if(
+      !Number.isFinite(
+        num(row.close)
+      )
+    ){
+
+      continue;
+
+    }
+
+
+    map.set(
+      row.date,
+      {
+
+        date:
+          row.date,
+
+        volume:
+          safeNum(
+            row.volume
+          ),
+
+        open:
+          safeNum(
+            row.open
+          ),
+
+        high:
+          safeNum(
+            row.high
+          ),
+
+        low:
+          safeNum(
+            row.low
+          ),
+
+        close:
+          safeNum(
+            row.close
+          ),
+
+        change:
+          safeNum(
+            row.change
+          ),
+
+        trades:
+          safeNum(
+            row.trades
+          )
+
+      }
+    );
+
+  }
+
+
+  return Array.from(
+    map.values()
+  )
+  .sort(
+    (a,b)=>
+      a.date.localeCompare(
+        b.date
+      )
+  );
+
+}
+
+
+/* =========================================================
+   SMA
+========================================================= */
+
+function sma(
+  rows,
+  field,
+  period
+){
+
+  const values =
+    rows
+      .map(
+        row =>
+          num(
+            row[field]
+          )
+      )
+      .filter(
+        Number.isFinite
+      );
+
+
+  if(
+    values.length <
+    period
+  ){
+
+    return NaN;
+
+  }
+
+
+  const slice =
+    values.slice(
+      -period
+    );
+
+
+  const sum =
+    slice.reduce(
+      (a,b)=>
+        a+b,
+      0
+    );
+
+
+  return sum /
+    slice.length;
+
+}
+
+
+/* =========================================================
+   建立均線
+========================================================= */
+
+function buildMA(
+  rows
+){
+
+  return {
+
+    ma5:
+      sma(
+        rows,
+        "close",
+        5
+      ),
+
+    ma10:
+      sma(
+        rows,
+        "close",
+        10
+      ),
+
+    ma20:
+      sma(
+        rows,
+        "close",
+        20
+      ),
+
+    ma60:
+      sma(
+        rows,
+        "close",
+        60
+      )
+
+  };
+
+}
+
+
+/* =========================================================
+   最新K
+========================================================= */
+
+function latestK(
+  rows
+){
+
+  if(
+    !rows ||
+    !rows.length
+  ){
+
+    return null;
+
+  }
+
+
+  return rows[
+    rows.length-1
+  ];
+
+}
+
+
+/* =========================================================
+   前一根K
+========================================================= */
+
+function previousK(
+  rows
+){
+
+  if(
+    !rows ||
+    rows.length < 2
+  ){
+
+    return null;
+
+  }
+
+
+  return rows[
+    rows.length-2
+  ];
+
+}
+
+
+/* =========================================================
+   近期高點
+========================================================= */
+
+function recentHigh(
+  rows,
+  period=20
+){
+
+  const list =
+    rows
+      .slice(
+        -period
+      )
+      .map(
+        row =>
+          num(row.high)
+      )
+      .filter(
+        Number.isFinite
+      );
+
+
+  if(
+    !list.length
+  ){
+
+    return NaN;
+
+  }
+
+
+  return Math.max(
+    ...list
+  );
+
+}
+
+
+/* =========================================================
+   近期低點
+========================================================= */
+
+function recentLow(
+  rows,
+  period=20
+){
+
+  const list =
+    rows
+      .slice(
+        -period
+      )
+      .map(
+        row =>
+          num(row.low)
+      )
+      .filter(
+        Number.isFinite
+      );
+
+
+  if(
+    !list.length
+  ){
+
+    return NaN;
+
+  }
+
+
+  return Math.min(
+    ...list
+  );
+
+}
+
+
+/* =========================================================
+   平均成交量
+========================================================= */
+
+function averageVolume(
+  rows,
+  period=20
+){
+
+  const list =
+    rows
+      .slice(
+        -period
+      )
+      .map(
+        row =>
+          num(
+            row.volume
+          )
+      )
+      .filter(
+        Number.isFinite
+      );
+
+
+  if(
+    !list.length
+  ){
+
+    return NaN;
+
+  }
+
+
+  return (
+    list.reduce(
+      (a,b)=>
+        a+b,
+      0
+    ) /
+    list.length
+  );
+
+}
+
+
+/* =========================================================
+   價格四捨五入
+========================================================= */
+
+function roundPrice(
+  value
+){
+
+  const n =
+    num(value);
+
+
+  if(
+    !Number.isFinite(n)
+  ){
+
+    return NaN;
+
+  }
+
+
+  if(
+    n < 10
+  ){
+
+    return Math.round(
+      n * 100
+    ) / 100;
+
+  }
+
+
+  if(
+    n < 100
+  ){
+
+    return Math.round(
+      n * 20
+    ) / 20;
+
+  }
+
+
+  return Math.round(
+    n * 10
+  ) / 10;
+
+}
+
+
+/* =========================================================
+   計算漲跌
+========================================================= */
+
+function calculateChange(
+  price,
+  previous
+){
+
+  if(
+    !Number.isFinite(price) ||
+    !Number.isFinite(previous) ||
+    previous === 0
+  ){
+
+    return {
+
+      change:NaN,
+
+      changePct:NaN
+
+    };
+
+  }
+
+
+  const change =
+    price -
+    previous;
+
+
+  return {
+
+    change,
+
+    changePct:
+      change /
+      previous *
+      100
+
+  };
+
+}
+
+
+/* =========================================================
+   建立完整股票資料
+========================================================= */
+
+async function buildStockData(
+  code,
+  name=""
+){
+
+  const c =
+    normalizeCode(code);
+
+
+  /*
+   * 即時行情與日K同時抓。
+   */
+
+  const [
+    realtime,
+    daily
+  ] =
+    await Promise.all([
+
+      getRealtimeStock(
+        c,
+        name
+      ),
+
+      getDailyK(
+        c,
+        4
+      )
+
+    ]);
+
+
+  let kLines =
+    daily;
+
+
+  /*
+   * 如果上市日K沒有資料，
+   * 再嘗試TPEx。
+   */
+
+  if(
+    !kLines.length
+  ){
+
+    kLines =
+      await getTPExDailyK(
+        c
+      );
+
+  }
+
+
+  const latest =
+    latestK(
+      kLines
+    );
+
+
+  const previous =
+    previousK(
+      kLines
+    );
+
+
+  /*
+   * 即時價格優先。
+   *
+   * 如果即時行情暫時沒有，
+   * 才使用最後一根日K。
+   */
+
+  let price =
+    realtime.price;
+
+
+  if(
+    !Number.isFinite(price) ||
+    price <= 0
+  ){
+
+    price =
+      latest?.close ??
+      NaN;
+
+  }
+
+
+  let previousPrice =
+    realtime.previous;
+
+
+  if(
+    !Number.isFinite(previousPrice) ||
+    previousPrice <= 0
+  ){
+
+    previousPrice =
+      previous?.close ??
+      NaN;
+
+  }
+
+
+  let open =
+    realtime.open;
+
+
+  let high =
+    realtime.high;
+
+
+  let low =
+    realtime.low;
+
+
+  let volume =
+    realtime.volume;
+
+
+  /*
+   * 如果即時資料沒有，
+   * 用最後日K補。
+   */
+
+  if(
+    !Number.isFinite(open)
+  ){
+
+    open =
+      latest?.open ??
+      NaN;
+
+  }
+
+
+  if(
+    !Number.isFinite(high)
+  ){
+
+    high =
+      latest?.high ??
+      NaN;
+
+  }
+
+
+  if(
+    !Number.isFinite(low)
+  ){
+
+    low =
+      latest?.low ??
+      NaN;
+
+  }
+
+
+  if(
+    !Number.isFinite(volume)
+  ){
+
+    volume =
+      latest?.volume ??
+      NaN;
+
+  }
+
+
+  const change =
+    calculateChange(
+      price,
+      previousPrice
+    );
+
+
+  const ma =
+    buildMA(
+      kLines
+    );
+
+
+  const avgVolume20 =
+    averageVolume(
+      kLines,
+      20
+    );
+
+
+  const volumeRatio =
+    Number.isFinite(volume) &&
+    Number.isFinite(avgVolume20) &&
+    avgVolume20 > 0
+
+      ? volume /
+        avgVolume20
+
+      : NaN;
+
+
+  return {
+
+    code:c,
+
+    name:
+      name ||
+      realtime.name ||
+      getKnownStock(c)?.name ||
+      c,
+
+    market:
+      realtime.market ||
+      getKnownStock(c)?.market ||
+      "",
+
+
+    price,
+
+    open,
+
+    high,
+
+    low,
+
+    previous:
+      previousPrice,
+
+
+    change:
+      change.change,
+
+    changePct:
+      change.changePct,
+
+
+    volume,
+
+    avgVolume20,
+
+    volumeRatio,
+
+
+    ma5:
+      ma.ma5,
+
+    ma10:
+      ma.ma10,
+
+    ma20:
+      ma.ma20,
+
+    ma60:
+      ma.ma60,
+
+
+    latestDate:
+      latest?.date ||
+      "",
+
+
+    kLines,
+
+
+    realtime,
+
+
+    latest,
+
+    previous
+
+  };
+
+}
+
+
+/* =========================================================
+   載入股票
+========================================================= */
+
+async function loadStockInfo(
+  code,
+  name=""
+){
+
+  const c =
+    normalizeCode(code);
+
+
+  if(!c){
+
+    throw new Error(
+      "股票代號無效"
+    );
+
+  }
+
+
+  const serial =
+    ++state.requestSerial;
+
+
+  showLoading(
+    `正在分析 ${name || c}…`
+  );
+
+
+  try{
+
+    const data =
+      await buildStockData(
+        c,
+        name
+      );
+
+
+    if(
+      serial !==
+      state.requestSerial
+    ){
+
+      return null;
+
+    }
+
+
+    state.currentCode =
+      c;
+
+
+    state.currentName =
+      data.name;
+
+
+    state.currentData =
+      data;
+
+
+    renderStockData(
+      data
+    );
+
+
+    return data;
+
+  }
+  catch(error){
+
+    console.error(
+      "loadStockInfo error:",
+      error
+    );
+
+
+    if(
+      serial ===
+      state.requestSerial
+    ){
+
+      showMessage(
+        `${c} 資料取得失敗：${
+          error.message ||
+          "請稍後再試"
+        }`
+      );
+
+    }
+
+
+    throw error;
+
+  }
+  finally{
+
+    if(
+      serial ===
+      state.requestSerial
+    ){
+
+      hideLoading();
+
+    }
+
+  }
+
+}
+
+
+/* =========================================================
+   第四段結束
+========================================================= */
+
+console.log(
+  "m1491 V1491｜第 4 段載入完成"
+);
+
+</script><script>
+
+/* =========================================================
+   第五段
+   支撐壓力 × 交易計畫 × 趨勢判斷 × 個股畫面
+========================================================= */
+
+
+/* =========================================================
+   計算支撐／壓力
+   ---------------------------------------------------------
+   第一支撐
+   第二支撐
+   第一壓力
+   第二壓力
+========================================================= */
+
+function calculateLevels(
+  data
+){
+
+  if(!data){
+
+    return {
+
+      support1:NaN,
+      support2:NaN,
+
+      resistance1:NaN,
+      resistance2:NaN
+
+    };
+
+  }
+
+
+  const price =
+    num(data.price);
+
+
+  const rows =
+    Array.isArray(data.kLines)
+      ? data.kLines
+      : [];
+
+
+  /*
+   * 近期高低點
+   */
+
+  const low5 =
+    recentLow(
+      rows,
+      5
+    );
+
+
+  const low10 =
+    recentLow(
+      rows,
+      10
+    );
+
+
+  const low20 =
+    recentLow(
+      rows,
+      20
+    );
+
+
+  const high5 =
+    recentHigh(
+      rows,
+      5
+    );
+
+
+  const high10 =
+    recentHigh(
+      rows,
+      10
+    );
+
+
+  const high20 =
+    recentHigh(
+      rows,
+      20
+    );
+
+
+  /*
+   * 均線
+   */
+
+  const ma5 =
+    num(data.ma5);
+
+
+  const ma20 =
+    num(data.ma20);
+
+
+  const ma60 =
+    num(data.ma60);
+
+
+  /*
+   * -----------------------------
+   * 支撐候選
+   * -----------------------------
+   *
+   * 只取低於目前價格的價格。
+   */
+
+  const supportCandidates = [
+
+    low5,
+
+    low10,
+
+    low20,
+
+    ma5,
+
+    ma20,
+
+    ma60
+
+  ]
+  .filter(
+    Number.isFinite
+  )
+  .filter(
+    value =>
+      !Number.isFinite(price) ||
+      value < price
+  )
+  .sort(
+    (a,b)=>
+      b-a
+  );
+
+
+  /*
+   * 第一支撐：
+   * 最靠近現價、且位於現價下方
+   */
+
+  let support1 =
+    supportCandidates[0];
+
+
+  /*
+   * 第二支撐：
+   * 下一個有效支撐
+   */
+
+  let support2 =
+    supportCandidates.find(
+      value =>
+        Number.isFinite(
+          support1
+        )
+        ? value < support1
+        : true
+    );
+
+
+  /*
+   * -----------------------------
+   * 壓力候選
+   * -----------------------------
+   */
+
+  const resistanceCandidates = [
+
+    high5,
+
+    high10,
+
+    high20,
+
+    ma5,
+
+    ma20,
+
+    ma60
+
+  ]
+  .filter(
+    Number.isFinite
+  )
+  .filter(
+    value =>
+      !Number.isFinite(price) ||
+      value > price
+  )
+  .sort(
+    (a,b)=>
+      a-b
+  );
+
+
+  /*
+   * 第一壓力：
+   * 最靠近現價、且位於現價上方
+   */
+
+  let resistance1 =
+    resistanceCandidates[0];
+
+
+  /*
+   * 第二壓力：
+   * 下一個有效壓力
+   */
+
+  let resistance2 =
+    resistanceCandidates.find(
+      value =>
+        Number.isFinite(
+          resistance1
+        )
+        ? value > resistance1
+        : true
+    );
+
+
+  /*
+   * -----------------------------
+   * 如果市場資料不足
+   * -----------------------------
+   *
+   * 不讓畫面出現 NaN。
+   *
+   * 使用現價百分比作為最後 fallback。
+   */
+
+  if(
+    !Number.isFinite(support1) &&
+    Number.isFinite(price)
+  ){
+
+    support1 =
+      price * 0.97;
+
+  }
+
+
+  if(
+    !Number.isFinite(support2) &&
+    Number.isFinite(price)
+  ){
+
+    support2 =
+      price * 0.94;
+
+  }
+
+
+  if(
+    !Number.isFinite(resistance1) &&
+    Number.isFinite(price)
+  ){
+
+    resistance1 =
+      price * 1.03;
+
+  }
+
+
+  if(
+    !Number.isFinite(resistance2) &&
+    Number.isFinite(price)
+  ){
+
+    resistance2 =
+      price * 1.06;
+
+  }
+
+
+  return {
+
+    support1:
+      roundPrice(
+        support1
+      ),
+
+    support2:
+      roundPrice(
+        support2
+      ),
+
+    resistance1:
+      roundPrice(
+        resistance1
+      ),
+
+    resistance2:
+      roundPrice(
+        resistance2
+      )
+
+  };
+
+}
+
+
+/* =========================================================
+   交易計畫
+   ---------------------------------------------------------
+   Entry
+   Stop
+   TP1
+   TP2
+========================================================= */
+
+function calculateTradePlan(
+  data,
+  levels
+){
+
+  const price =
+    num(data?.price);
+
+
+  const s1 =
+    num(levels?.support1);
+
+
+  const s2 =
+    num(levels?.support2);
+
+
+  const r1 =
+    num(levels?.resistance1);
+
+
+  const r2 =
+    num(levels?.resistance2);
+
+
+  /*
+   * 進場：
+   *
+   * 有第一支撐時，
+   * 使用現價與支撐之間的合理區間。
+   *
+   * 若現價已經接近突破，
+   * 不強行把 Entry 壓到支撐。
+   */
+
+  let entry =
+    price;
+
+
+  if(
+    Number.isFinite(price) &&
+    Number.isFinite(s1)
+  ){
+
+    const distance =
+      price - s1;
+
+
+    if(
+      distance > 0 &&
+      distance / price < 0.08
+    ){
+
+      entry =
+        s1 +
+        distance * 0.35;
+
+    }
+
+  }
+
+
+  /*
+   * 防守：
+   * 第一支撐下方約 2%。
+   */
+
+  let stop =
+    Number.isFinite(s1)
+      ? s1 * 0.98
+      : price * 0.95;
+
+
+  /*
+   * TP1：
+   * 第一壓力
+   */
+
+  let tp1 =
+    Number.isFinite(r1)
+      ? r1
+      : price * 1.05;
+
+
+  /*
+   * TP2：
+   * 第二壓力
+   */
+
+  let tp2 =
+    Number.isFinite(r2)
+      ? r2
+      : price * 1.10;
+
+
+  /*
+   * 如果壓力低於進場，
+   * 代表目前壓力資料不合理，
+   * 改用百分比目標。
+   */
+
+  if(
+    Number.isFinite(entry) &&
+    Number.isFinite(tp1) &&
+    tp1 <= entry
+  ){
+
+    tp1 =
+      entry * 1.05;
+
+  }
+
+
+  if(
+    Number.isFinite(entry) &&
+    Number.isFinite(tp2) &&
+    tp2 <= tp1
+  ){
+
+    tp2 =
+      tp1 * 1.05;
+
+  }
+
+
+  return {
+
+    entry:
+      roundPrice(
+        entry
+      ),
+
+    stop:
+      roundPrice(
+        stop
+      ),
+
+    tp1:
+      roundPrice(
+        tp1
+      ),
+
+    tp2:
+      roundPrice(
+        tp2
+      )
+
+  };
+
+}
+
+
+/* =========================================================
+   趨勢狀態
+========================================================= */
+
+function getTrendState(
+  data
+){
+
+  const price =
+    num(data?.price);
+
+  const ma5 =
+    num(data?.ma5);
+
+  const ma20 =
+    num(data?.ma20);
+
+  const ma60 =
+    num(data?.ma60);
+
+
+  let bullish = 0;
+
+
+  if(
+    Number.isFinite(price) &&
+    Number.isFinite(ma5) &&
+    price > ma5
+  ){
+
+    bullish++;
+
+  }
+
+
+  if(
+    Number.isFinite(price) &&
+    Number.isFinite(ma20) &&
+    price > ma20
+  ){
+
+    bullish++;
+
+  }
+
+
+  if(
+    Number.isFinite(price) &&
+    Number.isFinite(ma60) &&
+    price > ma60
+  ){
+
+    bullish++;
+
+  }
+
+
+  if(
+    Number.isFinite(ma5) &&
+    Number.isFinite(ma20) &&
+    ma5 > ma20
+  ){
+
+    bullish++;
+
+  }
+
+
+  if(
+    Number.isFinite(ma20) &&
+    Number.isFinite(ma60) &&
+    ma20 > ma60
+  ){
+
+    bullish++;
+
+  }
+
+
+  if(
+    bullish >= 5
+  ){
+
+    return {
+
+      state:"多頭排列",
+
+      className:"bullish",
+
+      score:100
+
+    };
+
+  }
+
+
+  if(
+    bullish >= 3
+  ){
+
+    return {
+
+      state:"偏多",
+
+      className:"bullish",
+
+      score:70
+
+    };
+
+  }
+
+
+  if(
+    bullish >= 2
+  ){
+
+    return {
+
+      state:"震盪偏多",
+
+      className:"neutral",
+
+      score:55
+
+    };
+
+  }
+
+
+  if(
+    bullish === 1
+  ){
+
+    return {
+
+      state:"震盪",
+
+      className:"neutral",
+
+      score:40
+
+    };
+
+  }
+
+
+  return {
+
+    state:"偏弱",
+
+    className:"bearish",
+
+    score:20
+
+  };
+
+}
+
+
+/* =========================================================
+   成交量狀態
+========================================================= */
+
+function getVolumeState(
+  data
+){
+
+  const ratio =
+    num(data?.volumeRatio);
+
+
+  if(
+    !Number.isFinite(ratio)
+  ){
+
+    return {
+
+      text:"成交量資料不足",
+
+      className:"neutral",
+
+      score:0
+
+    };
+
+  }
+
+
+  if(
+    ratio >= 2
+  ){
+
+    return {
+
+      text:"爆量",
+
+      className:"bullish",
+
+      score:100
+
+    };
+
+  }
+
+
+  if(
+    ratio >= 1.3
+  ){
+
+    return {
+
+      text:"量增",
+
+      className:"bullish",
+
+      score:80
+
+    };
+
+  }
+
+
+  if(
+    ratio >= 0.8
+  ){
+
+    return {
+
+      text:"正常",
+
+      className:"neutral",
+
+      score:50
+
+    };
+
+  }
+
+
+  return {
+
+    text:"量縮",
+
+    className:"bearish",
+
+    score:25
+
+  };
+
+}
+
+
+/* =========================================================
+   報酬率
+========================================================= */
+
+function calcReturn(
+  entry,
+  target
+){
+
+  const e =
+    num(entry);
+
+
+  const t =
+    num(target);
+
+
+  if(
+    !Number.isFinite(e) ||
+    !Number.isFinite(t) ||
+    e === 0
+  ){
+
+    return NaN;
+
+  }
+
+
+  return (
+    (t-e) /
+    e *
+    100
+  );
+
+}
+
+
+/* =========================================================
+   資訊卡
+========================================================= */
+
+function infoItem(
+  label,
+  value,
+  sub="",
+  className=""
+){
+
+  return `
+
+    <div class="info-item">
+
+      <div class="info-label">
+        ${esc(label)}
+      </div>
+
+      <div
+        class="info-value ${esc(className)}"
+      >
+        ${esc(value)}
+      </div>
+
+      ${
+        sub
+          ? `
+            <div class="info-sub">
+              ${esc(sub)}
+            </div>
+          `
+          : ""
+      }
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   支撐／壓力卡
+========================================================= */
+
+function levelCard(
+  label,
+  value,
+  className,
+  sub=""
+){
+
+  const valid =
+    Number.isFinite(
+      num(value)
+    );
+
+
+  return `
+
+    <div
+      class="level-card ${esc(className)}"
+    >
+
+      <div class="level-label">
+        ${esc(label)}
+      </div>
+
+      <div class="level-value">
+
+        ${
+          valid
+            ? fmt(
+                value,
+                2
+              )
+            : "--"
+        }
+
+      </div>
+
+      ${
+        sub
+          ? `
+            <div class="level-sub">
+              ${esc(sub)}
+            </div>
+          `
+          : ""
+      }
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   交易計畫卡
+========================================================= */
+
+function tradeCard(
+  label,
+  value,
+  className,
+  returnPct=NaN
+){
+
+  const valid =
+    Number.isFinite(
+      num(value)
+    );
+
+
+  return `
+
+    <div
+      class="trade-card ${esc(className)}"
+    >
+
+      <div class="trade-label">
+        ${esc(label)}
+      </div>
+
+      <div class="trade-value">
+
+        ${
+          valid
+            ? fmt(
+                value,
+                2
+              )
+            : "--"
+        }
+
+      </div>
+
+      ${
+        Number.isFinite(
+          num(returnPct)
+        )
+          ? `
+            <div class="trade-return">
+              ${pct(
+                returnPct,
+                2
+              )}
+            </div>
+          `
+          : ""
+      }
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   法人空資料
+========================================================= */
+
+function emptyChipData(){
+
+  return {
+
+    foreign:NaN,
+
+    trust:NaN,
+
+    dealer:NaN,
+
+    total:NaN
+
+  };
+
+}
+
+
+/* =========================================================
+   法人卡
+========================================================= */
+
+function chipCard(
+  label,
+  value,
+  className=""
+){
+
+  const n =
+    num(value);
+
+
+  let display =
+    "--";
+
+
+  if(
+    Number.isFinite(n)
+  ){
+
+    display =
+      fmtInt(n);
+
+  }
+
+
+  let cls =
+    className;
+
+
+  if(
+    Number.isFinite(n)
+  ){
+
+    if(
+      n > 0
+    ){
+
+      cls +=
+        " chip-up";
+
+    }
+    else if(
+      n < 0
+    ){
+
+      cls +=
+        " chip-down";
+
+    }
+
+  }
+
+
+  return `
+
+    <div
+      class="chip-card ${esc(cls)}"
+    >
+
+      <div class="chip-label">
+        ${esc(label)}
+      </div>
+
+      <div class="chip-value">
+        ${esc(display)}
+      </div>
+
+      <div class="chip-unit">
+        張
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   Render 股票資料
+========================================================= */
+
+function renderStockData(
+  data
+){
+
+  if(
+    !stockCard ||
+    !data
+  ){
+
+    return;
+
+  }
+
+
+  const levels =
+    calculateLevels(
+      data
+    );
+
+
+  const trade =
+    calculateTradePlan(
+      data,
+      levels
+    );
+
+
+  const trend =
+    getTrendState(
+      data
+    );
+
+
+  const volumeState =
+    getVolumeState(
+      data
+    );
+
+
+  const price =
+    num(data.price);
+
+
+  const change =
+    num(data.change);
+
+
+  const changePct =
+    num(data.changePct);
+
+
+  let priceClass =
+    "";
+
+
+  if(
+    change > 0
+  ){
+
+    priceClass =
+      "up";
+
+  }
+  else if(
+    change < 0
+  ){
+
+    priceClass =
+      "down";
+
+  }
+
+
+  /*
+   * -----------------------------
+   * 股票主卡
+   * -----------------------------
+   */
+
+  stockCard.innerHTML = `
+
+    <div class="stock-head">
+
+      <div>
+
+        <div class="stock-code">
+          ${esc(data.code)}
+        </div>
+
+        <div class="stock-name">
+          ${esc(data.name)}
+        </div>
+
+        ${
+          data.market
+            ? `
+              <div class="stock-market">
+                ${esc(data.market)}
+              </div>
+            `
+            : ""
+        }
+
+      </div>
+
+
+      <div class="stock-price-wrap">
+
+        <div
+          class="stock-price ${priceClass}"
+        >
+
+          ${
+            Number.isFinite(price)
+              ? fmt(
+                  price,
+                  2
+                )
+              : "--"
+          }
+
+        </div>
+
+
+        <div
+          class="stock-change ${priceClass}"
+        >
+
+          ${
+            Number.isFinite(change)
+              ? (
+                  change >= 0
+                    ? "+"
+                    : ""
+                ) +
+                fmt(
+                  change,
+                  2
+                )
+              : "--"
+          }
+
+
+          ${
+            Number.isFinite(changePct)
+              ? `
+                （${
+                  changePct >= 0
+                    ? "+"
+                    : ""
+                }${pct(
+                  changePct,
+                  2
+                )}）
+              `
+              : ""
+          }
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- =========================
+         趨勢
+    ========================== -->
+
+    <div class="trend-row">
+
+      <div
+        class="trend-badge ${esc(
+          trend.className
+        )}"
+      >
+
+        趨勢：
+        ${esc(trend.state)}
+
+      </div>
+
+
+      <div
+        class="trend-badge ${esc(
+          volumeState.className
+        )}"
+      >
+
+        量能：
+        ${esc(volumeState.text)}
+
+      </div>
+
+    </div>
+
+
+    <!-- =========================
+         基本行情
+    ========================== -->
+
+    <div class="info-grid">
+
+      ${infoItem(
+        "開盤",
+        Number.isFinite(data.open)
+          ? fmt(data.open,2)
+          : "--"
+      )}
+
+      ${infoItem(
+        "最高",
+        Number.isFinite(data.high)
+          ? fmt(data.high,2)
+          : "--"
+      )}
+
+      ${infoItem(
+        "最低",
+        Number.isFinite(data.low)
+          ? fmt(data.low,2)
+          : "--"
+      )}
+
+      ${infoItem(
+        "昨收",
+        Number.isFinite(data.previous)
+          ? fmt(data.previous,2)
+          : "--"
+      )}
+
+      ${infoItem(
+        "5日均線",
+        Number.isFinite(data.ma5)
+          ? fmt(data.ma5,2)
+          : "--"
+      )}
+
+      ${infoItem(
+        "20日均線",
+        Number.isFinite(data.ma20)
+          ? fmt(data.ma20,2)
+          : "--"
+      )}
+
+      ${infoItem(
+        "60日均線",
+        Number.isFinite(data.ma60)
+          ? fmt(data.ma60,2)
+          : "--"
+      )}
+
+      ${infoItem(
+        "量比",
+        Number.isFinite(data.volumeRatio)
+          ? data.volumeRatio.toFixed(2)+"x"
+          : "--"
+      )}
+
+    </div>
+
+
+    <!-- =========================
+         支撐壓力
+    ========================== -->
+
+    <div class="section-title">
+      🎯 支撐／壓力
+    </div>
+
+
+    <div class="level-grid">
+
+      ${levelCard(
+        "第一支撐",
+        levels.support1,
+        "support"
+      )}
+
+      ${levelCard(
+        "第二支撐",
+        levels.support2,
+        "support"
+      )}
+
+      ${levelCard(
+        "第一壓力",
+        levels.resistance1,
+        "resistance"
+      )}
+
+      ${levelCard(
+        "第二壓力",
+        levels.resistance2,
+        "resistance"
+      )}
+
+    </div>
+
+
+    <!-- =========================
+         交易計畫
+    ========================== -->
+
+    <div class="section-title">
+      💰 交易計畫
+    </div>
+
+
+    <div class="trade-grid">
+
+      ${tradeCard(
+        "進場參考",
+        trade.entry,
+        "entry"
+      )}
+
+      ${tradeCard(
+        "防守／止損",
+        trade.stop,
+        "stop",
+        calcReturn(
+          trade.entry,
+          trade.stop
+        )
+      )}
+
+      ${tradeCard(
+        "目標 TP1",
+        trade.tp1,
+        "tp1",
+        calcReturn(
+          trade.entry,
+          trade.tp1
+        )
+      )}
+
+      ${tradeCard(
+        "目標 TP2",
+        trade.tp2,
+        "tp2",
+        calcReturn(
+          trade.entry,
+          trade.tp2
+        )
+      )}
+
+    </div>
+
+
+    <!-- =========================
+         法人籌碼
+         第六段會更新成真正資料
+    ========================== -->
+
+    <div class="section-title">
+      🏦 三大法人
+    </div>
+
+
+    <div
+      id="institutionGrid"
+      class="chip-grid"
+    >
+
+      ${chipCard(
+        "外資",
+        NaN
+      )}
+
+      ${chipCard(
+        "投信",
+        NaN
+      )}
+
+      ${chipCard(
+        "自營商",
+        NaN
+      )}
+
+      ${chipCard(
+        "三大法人合計",
+        NaN
+      )}
+
+    </div>
+
+
+    <!-- =========================
+         分析摘要
+    ========================== -->
+
+    <div class="analysis-box">
+
+      <div class="analysis-title">
+        📊 V1491 動態分析
+      </div>
+
+
+      <div class="analysis-text">
+
+        <div>
+          趨勢：
+          <strong>
+            ${esc(trend.state)}
+          </strong>
+        </div>
+
+
+        <div>
+          成交量：
+          <strong>
+            ${esc(volumeState.text)}
+          </strong>
+        </div>
+
+
+        <div>
+          第一支撐：
+          <strong>
+            ${
+              Number.isFinite(
+                levels.support1
+              )
+                ? fmt(
+                    levels.support1,
+                    2
+                  )
+                : "--"
+            }
+          </strong>
+        </div>
+
+
+        <div>
+          第一壓力：
+          <strong>
+            ${
+              Number.isFinite(
+                levels.resistance1
+              )
+                ? fmt(
+                    levels.resistance1,
+                    2
+                  )
+                : "--"
+            }
+          </strong>
+        </div>
+
+
+        <div>
+          TP1：
+          <strong>
+            ${
+              Number.isFinite(
+                trade.tp1
+              )
+                ? fmt(
+                    trade.tp1,
+                    2
+                  )
+                : "--"
+            }
+          </strong>
+        </div>
+
+
+        <div>
+          TP2：
+          <strong>
+            ${
+              Number.isFinite(
+                trade.tp2
+              )
+                ? fmt(
+                    trade.tp2,
+                    2
+                  )
+                : "--"
+            }
+          </strong>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    ${
+      data.latestDate
+        ? `
+          <div class="data-time">
+            日K資料：${esc(data.latestDate)}
+          </div>
+        `
+        : ""
+    }
+
+  `;
+
+
+  /*
+   * 把計算結果留在目前資料，
+   * 後面的突破掃描會直接使用。
+   */
+
+  data.levels =
+    levels;
+
+
+  data.trade =
+    trade;
+
+
+  data.trend =
+    trend;
+
+
+  data.volumeState =
+    volumeState;
+
+}
+
+
+/* =========================================================
+   第五段結束
+========================================================= */
+
+console.log(
+  "m1491 V1491｜第 5 段載入完成"
+);
+
+</script><script>
+
+/* =========================================================
+   第六段
+   三大法人 × 融資融券 × 籌碼分析
+========================================================= */
+
+
+/* =========================================================
+   TWSE 最新交易日
+========================================================= */
+
+function getLatestTradingDate(){
+
+  const d =
+    new Date();
+
+
+  /*
+   * 先使用目前日期。
+   * API 若回傳最新交易日，
+   * 後面會以實際資料為準。
+   */
+
+  return (
+    d.getFullYear() +
+    pad2(d.getMonth()+1) +
+    pad2(d.getDate())
+  );
+
+}
+
+
+/* =========================================================
+   日期轉 YYYY-MM-DD
+========================================================= */
+
+function twseDateToYYYYMMDD(
+  value
+){
+
+  const text =
+    String(
+      value || ""
+    ).trim();
+
+
+  if(
+    /^\d{8}$/.test(text)
+  ){
+
+    return (
+      text.slice(0,4) +
+      "-" +
+      text.slice(4,6) +
+      "-" +
+      text.slice(6,8)
+    );
+
+  }
+
+
+  if(
+    /^\d{4}[-/]\d{1,2}[-/]\d{1,2}$/
+      .test(text)
+  ){
+
+    const parts =
+      text.split(
+        /[-/]/
+      );
+
+
+    return (
+      parts[0] +
+      "-" +
+      pad2(parts[1]) +
+      "-" +
+      pad2(parts[2])
+    );
+
+  }
+
+
+  return text;
+
+}
+
+
+/* =========================================================
+   取得法人資料
+========================================================= */
+
+async function getInstitutionData(
+  code,
+  date=""
+){
+
+  const c =
+    normalizeCode(code);
+
+
+  const tradingDate =
+    date ||
+    getLatestTradingDate();
+
+
+  try{
+
+    const url =
+      apiURL(
+        API.institution,
+        {
+          date:
+            tradingDate,
+
+          selectType:"ALL"
+        }
+      );
+
+
+    const data =
+      await fetchJSON(
+        url
+      );
+
+
+    if(
+      !data ||
+      !Array.isArray(
+        data.data
+      )
+    ){
+
+      return null;
+
+    }
+
+
+    /*
+     * T86 的第一欄通常為證券代號。
+     */
+
+    const row =
+      data.data.find(
+        item => {
+
+          if(
+            !Array.isArray(item)
+          ){
+
+            return false;
+
+          }
+
+
+          return normalizeCode(
+            item[0]
+          ) === c;
+
+        }
+      );
+
+
+    if(
+      !row
+    ){
+
+      return null;
+
+    }
+
+
+    /*
+     * 不再單純寫死「第4欄就是外資」。
+     *
+     * T86 欄位可能因資料版本不同而變化，
+     * 因此先依官方欄位標題判斷。
+     */
+
+    const fields =
+      Array.isArray(
+        data.fields
+      )
+        ? data.fields
+        : [];
+
+
+    function findField(
+      keywords
+    ){
+
+      for(
+        let i=0;
+        i<fields.length;
+        i++
+      ){
+
+        const title =
+          String(
+            fields[i] || ""
+          );
+
+
+        if(
+          keywords.some(
+            keyword =>
+              title.includes(
+                keyword
+              )
+          )
+        ){
+
+          return i;
+
+        }
+
+      }
+
+
+      return -1;
+
+    }
+
+
+    /*
+     * 外資買賣超
+     */
+
+    let foreignIndex =
+      findField([
+        "外陸資",
+        "外資",
+        "外資及陸資"
+      ]);
+
+
+    /*
+     * 投信買賣超
+     */
+
+    let trustIndex =
+      findField([
+        "投信"
+      ]);
+
+
+    /*
+     * 自營商買賣超
+     */
+
+    let dealerIndex =
+      findField([
+        "自營商"
+      ]);
+
+
+    /*
+     * 若 API 沒有欄位名稱，
+     * 才使用常見 T86 欄位位置。
+     *
+     * 這是 fallback，不是主要解析方式。
+     */
+
+    if(
+      foreignIndex < 0
+    ){
+
+      foreignIndex = 4;
+
+    }
+
+
+    if(
+      trustIndex < 0
+    ){
+
+      trustIndex = 10;
+
+    }
+
+
+    if(
+      dealerIndex < 0
+    ){
+
+      dealerIndex = 11;
+
+    }
+
+
+    const foreign =
+      safeNum(
+        row[foreignIndex],
+        NaN
+      );
+
+
+    const trust =
+      safeNum(
+        row[trustIndex],
+        NaN
+      );
+
+
+    const dealer =
+      safeNum(
+        row[dealerIndex],
+        NaN
+      );
+
+
+    return {
+
+      code:c,
+
+      date:
+        tradingDate,
+
+      foreign,
+
+      trust,
+
+      dealer,
+
+      total:
+        (
+          Number.isFinite(foreign)
+            ? foreign
+            : 0
+        ) +
+
+        (
+          Number.isFinite(trust)
+            ? trust
+            : 0
+        ) +
+
+        (
+          Number.isFinite(dealer)
+            ? dealer
+            : 0
+        ),
+
+      raw:row,
+
+      fields
+
+    };
+
+  }
+  catch(error){
+
+    console.warn(
+      "三大法人資料取得失敗：",
+      c,
+      error
+    );
+
+
+    return null;
+
+  }
+
+}
+
+
+/* =========================================================
+   融資融券
+========================================================= */
+
+async function getMarginData(
+  code,
+  date=""
+){
+
+  const c =
+    normalizeCode(code);
+
+
+  const tradingDate =
+    date ||
+    getLatestTradingDate();
+
+
+  try{
+
+    const url =
+      apiURL(
+        API.margin,
+        {
+          date:
+            tradingDate,
+
+          selectType:"ALL"
+        }
+      );
+
+
+    const data =
+      await fetchJSON(
+        url
+      );
+
+
+    if(
+      !data ||
+      !Array.isArray(
+        data.data
+      )
+    ){
+
+      return null;
+
+    }
+
+
+    const row =
+      data.data.find(
+        item => {
+
+          if(
+            !Array.isArray(item)
+          ){
+
+            return false;
+
+          }
+
+
+          return normalizeCode(
+            item[0]
+          ) === c;
+
+        }
+      );
+
+
+    if(
+      !row
+    ){
+
+      return null;
+
+    }
+
+
+    /*
+     * 保留原始欄位，
+     * 避免不同 API 版本造成資料遺失。
+     */
+
+    return {
+
+      code:c,
+
+      date:
+        tradingDate,
+
+      raw:row,
+
+      fields:
+        data.fields || []
+
+    };
+
+  }
+  catch(error){
+
+    console.warn(
+      "融資融券取得失敗：",
+      c,
+      error
+    );
+
+
+    return null;
+
+  }
+
+}
+
+
+/* =========================================================
+   找法人欄位
+========================================================= */
+
+function findInstitutionValue(
+  institution,
+  type
+){
+
+  if(
+    !institution
+  ){
+
+    return NaN;
+
+  }
+
+
+  const fields =
+    institution.fields ||
+    [];
+
+
+  const row =
+    institution.raw ||
+    [];
+
+
+  let keywords = [];
+
+
+  if(
+    type === "foreign"
+  ){
+
+    keywords = [
+      "外陸資",
+      "外資",
+      "外資及陸資"
+    ];
+
+  }
+  else if(
+    type === "trust"
+  ){
+
+    keywords = [
+      "投信"
+    ];
+
+  }
+  else if(
+    type === "dealer"
+  ){
+
+    keywords = [
+      "自營商"
+    ];
+
+  }
+
+
+  for(
+    let i=0;
+    i<fields.length;
+    i++
+  ){
+
+    const title =
+      String(
+        fields[i] || ""
+      );
+
+
+    if(
+      keywords.some(
+        key =>
+          title.includes(key)
+      )
+    ){
+
+      return safeNum(
+        row[i],
+        NaN
+      );
+
+    }
+
+  }
+
+
+  /*
+   * fallback
+   */
+
+  if(
+    type === "foreign"
+  ){
+
+    return safeNum(
+      row[4],
+      NaN
+    );
+
+  }
+
+
+  if(
+    type === "trust"
+  ){
+
+    return safeNum(
+      row[10],
+      NaN
+    );
+
+  }
+
+
+  if(
+    type === "dealer"
+  ){
+
+    return safeNum(
+      row[11],
+      NaN
+    );
+
+  }
+
+
+  return NaN;
+
+}
+
+
+/* =========================================================
+   法人資料格式化
+========================================================= */
+
+function formatInstitution(
+  value
+){
+
+  const n =
+    num(value);
+
+
+  if(
+    !Number.isFinite(n)
+  ){
+
+    return "--";
+
+  }
+
+
+  const sign =
+    n > 0
+      ? "+"
+      : "";
+
+
+  return (
+    sign +
+    Math.round(n)
+      .toLocaleString(
+        "zh-TW"
+      )
+  );
+
+}
+
+
+/* =========================================================
+   法人顏色
+========================================================= */
+
+function institutionClass(
+  value
+){
+
+  const n =
+    num(value);
+
+
+  if(
+    !Number.isFinite(n)
+  ){
+
+    return "";
+
+  }
+
+
+  if(
+    n > 0
+  ){
+
+    return "up";
+
+  }
+
+
+  if(
+    n < 0
+  ){
+
+    return "down";
+
+  }
+
+
+  return "";
+
+}
+
+
+/* =========================================================
+   法人卡片
+========================================================= */
+
+function institutionCard(
+  title,
+  value,
+  subtitle=""
+){
+
+  const cls =
+    institutionClass(
+      value
+    );
+
+
+  return `
+
+    <div class="chip-card">
+
+      <div class="chip-title">
+        ${esc(title)}
+      </div>
+
+      <div class="chip-value ${cls}">
+        ${formatInstitution(value)}
+      </div>
+
+      <div class="chip-sub">
+        ${esc(subtitle)}
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   空白法人資料
+========================================================= */
+
+function emptyChipData(){
+
+  return {
+
+    foreign:NaN,
+
+    trust:NaN,
+
+    dealer:NaN,
+
+    total:NaN,
+
+    margin:null
+
+  };
+
+}
+
+
+/* =========================================================
+   渲染三大法人
+========================================================= */
+
+function renderInstitutionData(
+  institution,
+  margin=null
+){
+
+  const foreign =
+    findInstitutionValue(
+      institution,
+      "foreign"
+    );
+
+
+  const trust =
+    findInstitutionValue(
+      institution,
+      "trust"
+    );
+
+
+  const dealer =
+    findInstitutionValue(
+      institution,
+      "dealer"
+    );
+
+
+  const total =
+    (
+      Number.isFinite(foreign)
+        ? foreign
+        : 0
+    ) +
+
+    (
+      Number.isFinite(trust)
+        ? trust
+        : 0
+    ) +
+
+    (
+      Number.isFinite(dealer)
+        ? dealer
+        : 0
+    );
+
+
+  const target =
+    document.querySelector(
+      "#institutionGrid"
+    );
+
+
+  if(
+    !target
+  ){
+
+    return {
+
+      foreign,
+
+      trust,
+
+      dealer,
+
+      total,
+
+      margin
+
+    };
+
+  }
+
+
+  target.innerHTML =
+
+    institutionCard(
+      "外資",
+      foreign,
+      "買賣超"
+    ) +
+
+    institutionCard(
+      "投信",
+      trust,
+      "買賣超"
+    ) +
+
+    institutionCard(
+      "自營商",
+      dealer,
+      "買賣超"
+    ) +
+
+    institutionCard(
+      "三大法人合計",
+      total,
+      "外資＋投信＋自營商"
+    );
+
+
+  return {
+
+    foreign,
+
+    trust,
+
+    dealer,
+
+    total,
+
+    margin
+
+  };
+
+}
+
+
+/* =========================================================
+   融資融券顯示
+========================================================= */
+
+function renderMarginData(
+  margin
+){
+
+  const target =
+    document.querySelector(
+      "#marginInfo"
+    );
+
+
+  if(
+    !target
+  ){
+
+    return;
+
+  }
+
+
+  if(
+    !margin ||
+    !Array.isArray(
+      margin.raw
+    )
+  ){
+
+    target.innerHTML = `
+
+      <div class="margin-empty">
+        融資融券資料暫無
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  const row =
+    margin.raw;
+
+
+  /*
+   * 不同版本 API 欄位可能不同，
+   * 所以這裡同時保留原始資料。
+   */
+
+  const credit =
+    safeNum(
+      row[6],
+      NaN
+    );
+
+
+  const creditBalance =
+    safeNum(
+      row[7],
+      NaN
+    );
+
+
+  const shortSell =
+    safeNum(
+      row[14],
+      NaN
+    );
+
+
+  const shortBalance =
+    safeNum(
+      row[15],
+      NaN
+    );
+
+
+  target.innerHTML = `
+
+    <div class="margin-grid">
+
+      <div class="margin-item">
+
+        <span>
+          融資買進
+        </span>
+
+        <strong>
+          ${
+            Number.isFinite(credit)
+              ? fmtInt(credit)
+              : "--"
+          }
+        </strong>
+
+      </div>
+
+
+      <div class="margin-item">
+
+        <span>
+          融資餘額
+        </span>
+
+        <strong>
+          ${
+            Number.isFinite(creditBalance)
+              ? fmtInt(creditBalance)
+              : "--"
+          }
+        </strong>
+
+      </div>
+
+
+      <div class="margin-item">
+
+        <span>
+          融券賣出
+        </span>
+
+        <strong>
+          ${
+            Number.isFinite(shortSell)
+              ? fmtInt(shortSell)
+              : "--"
+          }
+        </strong>
+
+      </div>
+
+
+      <div class="margin-item">
+
+        <span>
+          融券餘額
+        </span>
+
+        <strong>
+          ${
+            Number.isFinite(shortBalance)
+              ? fmtInt(shortBalance)
+              : "--"
+          }
+        </strong>
+
+      </div>
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================================================
+   載入籌碼
+========================================================= */
+
+async function loadChipData(
+  code
+){
+
+  const c =
+    normalizeCode(code);
+
+
+  try{
+
+    /*
+     * 最新交易日法人
+     * 與融資融券平行抓取。
+     */
+
+    const [
+      institution,
+      margin
+    ] =
+      await Promise.all([
+
+        getInstitutionData(
+          c
+        ),
+
+        getMarginData(
+          c
+        )
+
+      ]);
+
+
+    const chip =
+      renderInstitutionData(
+        institution,
+        margin
+      );
+
+
+    renderMarginData(
+      margin
+    );
+
+
+    /*
+     * 把結果放回目前股票資料。
+     */
+
+    if(
+      state.currentData &&
+      state.currentCode === c
+    ){
+
+      state.currentData.institution =
+        chip;
+
+      state.currentData.margin =
+        margin;
+
+    }
+
+
+    return {
+
+      institution:chip,
+
+      margin
+
+    };
+
+  }
+  catch(error){
+
+    console.warn(
+      "籌碼載入失敗：",
+      c,
+      error
+    );
+
+
+    renderInstitutionData(
+      null,
+      null
+    );
+
+
+    renderMarginData(
+      null
+    );
+
+
+    return {
+
+      institution:null,
+
+      margin:null
+
+    };
+
+  }
+
+}
+
+
+/* =========================================================
+   將 loadStockInfo 接上法人
+   ---------------------------------------------------------
+   使用包裝方式，
+   不破壞第四段原本的行情流程。
+========================================================= */
+
+const _loadStockInfoWithoutChip =
+  loadStockInfo;
+
+
+loadStockInfo =
+  async function(
+    code,
+    name=""
+  ){
+
+    const data =
+      await _loadStockInfoWithoutChip(
+        code,
+        name
+      );
+
+
+    if(
+      data
+    ){
+
+      /*
+       * 個股行情先顯示，
+       * 法人資料再補進去。
+       */
+
+      await loadChipData(
+        code
+      );
+
+    }
+
+
+    return data;
+
+  };
+
+
+/* =========================================================
+   法人方向判斷
+========================================================= */
+
+function institutionDirection(
+  value
+){
+
+  const n =
+    num(value);
+
+
+  if(
+    !Number.isFinite(n)
+  ){
+
+    return "未知";
+
+  }
+
+
+  if(
+    n > 0
+  ){
+
+    return "偏多";
+
+  }
+
+
+  if(
+    n < 0
+  ){
+
+    return "偏空";
+
+  }
+
+
+  return "中性";
+
+}
+
+
+/* =========================================================
+   三大法人總方向
+========================================================= */
+
+function getInstitutionBias(
+  data
+){
+
+  if(
+    !data
+  ){
+
+    return {
+
+      state:"未知",
+
+      score:0
+
+    };
+
+  }
+
+
+  const foreign =
+    num(
+      data.foreign
+    );
+
+
+  const trust =
+    num(
+      data.trust
+    );
+
+
+  const dealer =
+    num(
+      data.dealer
+    );
+
+
+  let score = 0;
+
+
+  if(
+    Number.isFinite(foreign)
+  ){
+
+    score +=
+      foreign > 0
+        ? 1
+        : foreign < 0
+          ? -1
+          : 0;
+
+  }
+
+
+  if(
+    Number.isFinite(trust)
+  ){
+
+    score +=
+      trust > 0
+        ? 1
+        : trust < 0
+          ? -1
+          : 0;
+
+  }
+
+
+  if(
+    Number.isFinite(dealer)
+  ){
+
+    score +=
+      dealer > 0
+        ? 1
+        : dealer < 0
+          ? -1
+          : 0;
+
+  }
+
+
+  let stateText =
+    "中性";
+
+
+  if(
+    score >= 2
+  ){
+
+    stateText =
+      "法人偏多";
+
+  }
+  else if(
+    score <= -2
+  ){
+
+    stateText =
+      "法人偏空";
+
+  }
+
+
+  return {
+
+    state:
+      stateText,
+
+    score
+
+  };
+
+}
+
+
+/* =========================================================
+   第六段結束
+========================================================= */
+
+console.log(
+  "m1491 V1491｜第 6 段載入完成"
+);
+
+</script><script>
+
+/* =========================================================
+   第七段
+   動態市場掃描
+   ---------------------------------------------------------
+   📋 原始30檔
+   🔥 熱門股票推薦20檔
+   🚀 確認突破股票推薦
+   👀 準備突破股票觀察
+   📈 多頭股票推薦
+
+   重要：
+   🔥🚀👀📈 全部不使用 SCAN_CODES
+   ========================================================= */
+
+
+/* =========================================================
+   取得 TWSE 全市場行情
+========================================================= */
+
+async function getTWSEMarket(){
+
+  try{
+
+    const url =
+      apiURL(
+        API.twseAll
+      );
+
+
+    const data =
+      await fetchJSON(
+        url
+      );
+
+
+    if(
+      !Array.isArray(data)
+    ){
+
+      return [];
+
+    }
+
+
+    return data
+      .map(
+        row =>
+          normalizeMarketRow(
+            row,
+            "上市"
+          )
+      )
+      .filter(Boolean);
+
+  }
+  catch(error){
+
+    console.warn(
+      "TWSE 全市場資料失敗：",
+      error
+    );
+
+
+    return [];
+
+  }
+
+}
+
+
+/* =========================================================
+   取得 TPEx 全市場行情
+========================================================= */
+
+async function getTPExMarket(){
+
+  try{
+
+    const url =
+      apiURL(
+        API.tpexAll
+      );
+
+
+    const data =
+      await fetchJSON(
+        url
+      );
+
+
+    if(
+      !Array.isArray(data)
+    ){
+
+      return [];
+
+    }
+
+
+    return data
+      .map(
+        row =>
+          normalizeMarketRow(
+            row,
+            "上櫃"
+          )
+      )
+      .filter(Boolean);
+
+  }
+  catch(error){
+
+    console.warn(
+      "TPEx 全市場資料失敗：",
+      error
+    );
+
+
+    return [];
+
+  }
+
+}
+
+
+/* =========================================================
+   市場資料欄位正規化
+========================================================= */
+
+function normalizeMarketRow(
+  row,
+  market=""
+){
+
+  if(!row){
+
+    return null;
+
+  }
+
+
+  /*
+   * 官方 OpenAPI 通常是 object。
+   */
+
+  if(
+    !Array.isArray(row)
+  ){
+
+    const code =
+      normalizeCode(
+        pick(
+          row,
+          "Code",
+          "code",
+          "SecuritiesCompanyCode",
+          "股票代號",
+          "證券代號"
+        )
+      );
+
+
+    const name =
+      String(
+        pick(
+          row,
+          "Name",
+          "name",
+          "SecuritiesCompanyName",
+          "股票名稱",
+          "證券名稱"
+        ) || ""
+      ).trim();
+
+
+    if(
+      !code ||
+      !isStockCode(code)
+    ){
+
+      return null;
+
+    }
+
+
+    const close =
+      safeNum(
+        pick(
+          row,
+          "ClosingPrice",
+          "Close",
+          "收盤價",
+          "成交價"
+        ),
+        NaN
+      );
+
+
+    const change =
+      safeNum(
+        pick(
+          row,
+          "Change",
+          "漲跌價差",
+          "漲跌"
+        ),
+        NaN
+      );
+
+
+    const volume =
+      safeNum(
+        pick(
+          row,
+          "TradeVolume",
+          "Volume",
+          "成交股數",
+          "成交量"
+        ),
+        NaN
+      );
+
+
+    const tradeValue =
+      safeNum(
+        pick(
+          row,
+          "TransactionAmount",
+          "TradeValue",
+          "成交金額"
+        ),
+        NaN
+      );
+
+
+    const high =
+      safeNum(
+        pick(
+          row,
+          "High",
+          "最高價"
+        ),
+        NaN
+      );
+
+
+    const low =
+      safeNum(
+        pick(
+          row,
+          "Low",
+          "最低價"
+        ),
+        NaN
+      );
+
+
+    const open =
+      safeNum(
+        pick(
+          row,
+          "Open",
+          "開盤價"
+        ),
+        NaN
+      );
+
+
+    /*
+     * 如果 API 沒直接給漲跌幅，
+     * 嘗試用昨收計算。
+     */
+
+    const previous =
+      safeNum(
+        pick(
+          row,
+          "PreviousClose",
+          "PreviousClosingPrice",
+          "昨收"
+        ),
+        NaN
+      );
+
+
+    let changePct =
+      safeNum(
+        pick(
+          row,
+          "ChangePercent",
+          "漲跌幅"
+        ),
+        NaN
+      );
+
+
+    if(
+      !Number.isFinite(changePct) &&
+      Number.isFinite(close) &&
+      Number.isFinite(previous) &&
+      previous !== 0
+    ){
+
+      changePct =
+        (
+          close -
+          previous
+        ) /
+        previous *
+        100;
+
+    }
+
+
+    return {
+
+      code,
+
+      name:
+        name ||
+        getKnownStock(code)?.name ||
+        code,
+
+      market,
+
+      close,
+
+      change,
+
+      changePct,
+
+      volume,
+
+      tradeValue,
+
+      high,
+
+      low,
+
+      open,
+
+      previous,
+
+      raw:row
+
+    };
+
+  }
+
+
+  /*
+   * 如果 TPEx 回傳 array，
+   * 依常見欄位位置解析。
+   */
+
+  const code =
+    normalizeCode(
+      row[0]
+    );
+
+
+  if(
+    !code ||
+    !isStockCode(code)
+  ){
+
+    return null;
+
+  }
+
+
+  const name =
+    String(
+      row[1] || ""
+    ).trim();
+
+
+  const close =
+    safeNum(
+      row[2],
+      NaN
+    );
+
+
+  const change =
+    safeNum(
+      row[3],
+      NaN
+    );
+
+
+  const volume =
+    safeNum(
+      row[4],
+      NaN
+    );
+
+
+  return {
+
+    code,
+
+    name:
+      name ||
+      getKnownStock(code)?.name ||
+      code,
+
+    market,
+
+    close,
+
+    change,
+
+    changePct:
+      Number.isFinite(close) &&
+      Number.isFinite(change) &&
+      close !== change
+        ? (
+            change /
+            (close-change)
+          ) *
+          100
+        : NaN,
+
+    volume,
+
+    tradeValue:
+      safeNum(
+        row[5],
+        NaN
+      ),
+
+    high:
+      safeNum(
+        row[6],
+        NaN
+      ),
+
+    low:
+      safeNum(
+        row[7],
+        NaN
+      ),
+
+    open:
+      safeNum(
+        row[8],
+        NaN
+      ),
+
+    previous:NaN,
+
+    raw:row
+
+  };
+
+}
+
+
+/* =========================================================
+   取得全市場
+========================================================= */
+
+async function getMarketToday(
+  force=false
+){
+
+  if(
+    !force &&
+    state.marketLoaded &&
+    state.marketRows.length &&
+    (
+      Date.now() -
+      state.marketLoadedAt <
+      CACHE.marketTTL
+    )
+  ){
+
+    return state.marketRows;
+
+  }
+
+
+  if(
+    state.marketLoading
+  ){
+
+    return state.marketRows;
+
+  }
+
+
+  state.marketLoading =
+    true;
+
+
+  try{
+
+    showLoading(
+      "取得今日全市場行情…"
+    );
+
+
+    const [
+      twse,
+      tpex
+    ] =
+      await Promise.all([
+        getTWSEMarket(),
+        getTPExMarket()
+      ]);
+
+
+    /*
+     * 合併上市＋上櫃。
+     */
+
+    const map =
+      new Map();
+
+
+    [
+      ...twse,
+      ...tpex
+    ]
+    .forEach(
+      row=>{
+
+        if(
+          !row ||
+          !row.code
+        ){
+
+          return;
+
+        }
+
+
+        /*
+         * 同一代號只保留一筆。
+         */
+
+        if(
+          !map.has(
+            row.code
+          )
+        ){
+
+          map.set(
+            row.code,
+            row
+          );
+
+        }
+
+      }
+    );
+
+
+    state.marketRows =
+      Array.from(
+        map.values()
+      );
+
+
+    state.marketLoaded =
+      true;
+
+
+    state.marketLoadedAt =
+      Date.now();
+
+
+    console.log(
+      "V1491 全市場：",
+      state.marketRows.length,
+      "檔"
+    );
+
+
+    return state.marketRows;
+
+  }
+  finally{
+
+    state.marketLoading =
+      false;
+
+
+    hideLoading();
+
+  }
+
+}
+
+
+/* =========================================================
+   排除不適合技術掃描的商品
+========================================================= */
+
+function isScannableMarketRow(
+  row
+){
+
+  if(
+    !row ||
+    !row.code
+  ){
+
+    return false;
+
+  }
+
+
+  /*
+   * 必須有價格。
+   */
+
+  if(
+    !Number.isFinite(
+      num(row.close)
+    ) ||
+    num(row.close) <= 0
+  ){
+
+    return false;
+
+  }
+
+
+  /*
+   * 必須有成交量或成交金額。
+   */
+
+  if(
+    !Number.isFinite(
+      num(row.volume)
+    ) &&
+    !Number.isFinite(
+      num(row.tradeValue)
+    )
+  ){
+
+    return false;
+
+  }
+
+
+  return true;
+
+}
+
+
+/* =========================================================
+   排除 ETF
+   ---------------------------------------------------------
+   個股突破掃描不把 ETF 混進去。
+========================================================= */
+
+function isETFMarketRow(
+  row
+){
+
+  const code =
+    normalizeCode(
+      row?.code
+    );
+
+
+  if(
+    isETFCode(code)
+  ){
+
+    return true;
+
+  }
+
+
+  return (
+    String(
+      row?.name || ""
+    )
+    .includes("ETF")
+  );
+
+}
+
+
+/* =========================================================
+   動態熱門20
+   ---------------------------------------------------------
+   不使用 SCAN_CODES。
+========================================================= */
+
+function rankHot20(
+  rows
+){
+
+  const candidates =
+    (rows || [])
+      .filter(
+        isScannableMarketRow
+      )
+      .filter(
+        row =>
+          !isETFMarketRow(row)
+      )
+      .map(
+        row=>{
+
+          const value =
+            num(
+              row.tradeValue
+            );
+
+
+          const volume =
+            num(
+              row.volume
+            );
+
+
+          const changePct =
+            num(
+              row.changePct
+            );
+
+
+          /*
+           * 熱門程度：
+           *
+           * 成交金額
+           * ＋成交量
+           * ＋當日漲跌
+           *
+           * 不直接固定股票。
+           */
+
+          const valueScore =
+            Number.isFinite(value)
+              ? Math.log10(
+                  Math.max(
+                    value,
+                    1
+                  )
+                )
+              : 0;
+
+
+          const volumeScore =
+            Number.isFinite(volume)
+              ? Math.log10(
+                  Math.max(
+                    volume,
+                    1
+                  )
+                )
+              : 0;
+
+
+          const momentumScore =
+            Number.isFinite(changePct)
+              ? Math.max(
+                  -5,
+                  Math.min(
+                    10,
+                    changePct
+                  )
+                )
+              : 0;
+
+
+          const score =
+            valueScore * 5 +
+            volumeScore * 2 +
+            momentumScore;
+
+
+          return {
+
+            ...row,
+
+            hotScore:
+              score
+
+          };
+
+        }
+      )
+      .sort(
+        (a,b)=>
+          b.hotScore -
+          a.hotScore
+      );
+
+
+  return candidates.slice(
+    0,
+    20
+  );
+
+}
+
+
+/* =========================================================
+   建立市場掃描資料
+   ---------------------------------------------------------
+   每檔會補：
+   MA5 / MA20 / MA60
+   支撐 / 壓力
+   突破狀態
+========================================================= */
+
+async function enrichScanStock(
+  row
+){
+
+  try{
+
+    const data =
+      await buildStockData(
+        row.code,
+        row.name
+      );
+
+
+    if(!data){
+
+      return null;
+
+    }
+
+
+    const levels =
+      calculateLevels(
+        data
+      );
+
+
+    const trend =
+      getTrendState(
+        data
+      );
+
+
+    const volumeState =
+      getVolumeState(
+        data
+      );
+
+
+    return {
+
+      ...row,
+
+      data,
+
+      levels,
+
+      trend,
+
+      volumeState
+
+    };
+
+  }
+  catch(error){
+
+    console.warn(
+      "掃描個股失敗：",
+      row.code,
+      error
+    );
+
+
+    return null;
+
+  }
+
+}
+
+
+/* =========================================================
+   突破模型
+========================================================= */
+
+function breakoutModel(
+  item
+){
+
+  const data =
+    item?.data;
+
+
+  const levels =
+    item?.levels;
+
+
+  if(
+    !data ||
+    !levels
+  ){
+
+    return {
+
+      state:"資料不足",
+
+      score:0,
+
+      confirmed:false,
+
+      ready:false
+
+    };
+
+  }
+
+
+  const price =
+    num(data.price);
+
+
+  const r1 =
+    num(levels.resistance1);
+
+
+  const r2 =
+    num(levels.resistance2);
+
+
+  const volumeRatio =
+    num(data.volumeRatio);
+
+
+  const ma20 =
+    num(data.ma20);
+
+
+  const ma60 =
+    num(data.ma60);
+
+
+  let score = 0;
+
+
+  /*
+   * 價格站上第一壓力
+   */
+
+  if(
+    Number.isFinite(price) &&
+    Number.isFinite(r1) &&
+    price >= r1
+  ){
+
+    score += 30;
+
+  }
+  else if(
+    Number.isFinite(price) &&
+    Number.isFinite(r1) &&
+    price >= r1 * 0.985
+  ){
+
+    score += 20;
+
+  }
+
+
+  /*
+   * 站上第二壓力
+   */
+
+  if(
+    Number.isFinite(price) &&
+    Number.isFinite(r2) &&
+    price >= r2
+  ){
+
+    score += 20;
+
+  }
+
+
+  /*
+   * 量能
+   */
+
+  if(
+    Number.isFinite(volumeRatio)
+  ){
+
+    if(
+      volumeRatio >= 2
+    ){
+
+      score += 25;
+
+    }
+    else if(
+      volumeRatio >= 1.3
+    ){
+
+      score += 18;
+
+    }
+    else if(
+      volumeRatio >= 1
+    ){
+
+      score += 10;
+
+    }
+
+  }
+
+
+  /*
+   * 站上20日均線
+   */
+
+  if(
+    Number.isFinite(price) &&
+    Number.isFinite(ma20) &&
+    price > ma20
+  ){
+
+    score += 10;
+
+  }
+
+
+  /*
+   * 站上60日均線
+   */
+
+  if(
+    Number.isFinite(price) &&
+    Number.isFinite(ma60) &&
+    price > ma60
+  ){
+
+    score += 10;
+
+  }
+
+
+  /*
+   * 強勢狀態
+   */
+
+  let stateText =
+    "等待突破";
+
+
+  let confirmed =
+    false;
+
+
+  let ready =
+    false;
+
+
+  if(
+    score >= 75
+  ){
+
+    stateText =
+      "突破確認";
+
+    confirmed =
+      true;
+
+  }
+  else if(
+    score >= 55
+  ){
+
+    stateText =
+      "突破觀察";
+
+    ready =
+      true;
+
+  }
+  else if(
+    score >= 35
+  ){
+
+    stateText =
+      "接近突破";
+
+    ready =
+      true;
+
+  }
+
+
+  return {
+
+    state:
+      stateText,
+
+    score,
+
+    confirmed,
+
+    ready
+
+  };
+
+}
+
+
+/* =========================================================
+   多頭模型
+========================================================= */
+
+function bullishModel(
+  item
+){
+
+  const data =
+    item?.data;
+
+
+  if(!data){
+
+    return {
+
+      state:"資料不足",
+
+      score:0
+
+    };
+
+  }
+
+
+  const price =
+    num(data.price);
+
+
+  const ma5 =
+    num(data.ma5);
+
+
+  const ma20 =
+    num(data.ma20);
+
+
+  const ma60 =
+    num(data.ma60);
+
+
+  const volumeRatio =
+    num(data.volumeRatio);
+
+
+  let score = 0;
+
+
+  if(
+    Number.isFinite(price) &&
+    Number.isFinite(ma5) &&
+    price > ma5
+  ){
+
+    score += 20;
+
+  }
+
+
+  if(
+    Number.isFinite(price) &&
+    Number.isFinite(ma20) &&
+    price > ma20
+  ){
+
+    score += 25;
+
+  }
+
+
+  if(
+    Number.isFinite(price) &&
+    Number.isFinite(ma60) &&
+    price > ma60
+  ){
+
+    score += 25;
+
+  }
+
+
+  if(
+    Number.isFinite(ma5) &&
+    Number.isFinite(ma20) &&
+    ma5 > ma20
+  ){
+
+    score += 15;
+
+  }
+
+
+  if(
+    Number.isFinite(ma20) &&
+    Number.isFinite(ma60) &&
+    ma20 > ma60
+  ){
+
+    score += 15;
+
+  }
+
+
+  if(
+    Number.isFinite(volumeRatio) &&
+    volumeRatio >= 1
+  ){
+
+    score += 5;
+
+  }
+
+
+  return {
+
+    state:
+      score >= 80
+        ? "多頭排列"
+        : score >= 60
+          ? "偏多"
+          : "多頭觀察",
+
+    score
+
+  };
+
+}
+
+
+/* =========================================================
+   原始30檔
+   ---------------------------------------------------------
+   固定清單。
+========================================================= */
+
+async function scanOriginal30(){
+
+  showLoading(
+    "分析原始30檔…"
+  );
+
+
+  try{
+
+    const result = [];
+
+
+    /*
+     * 只使用 SCAN_CODES。
+     */
+
+    for(
+      const code of SCAN_CODES
+    ){
+
+      const known =
+        getKnownStock(
+          code
+        );
+
+
+      try{
+
+        const data =
+          await buildStockData(
+            code,
+            known?.name ||
+            code
+          );
+
+
+        if(
+          data
+        ){
+
+          const levels =
+            calculateLevels(
+              data
+            );
+
+
+          const breakout =
+            breakoutModel({
+              data,
+              levels
+            });
+
+
+          const bullish =
+            bullishModel({
+              data
+            });
+
+
+          result.push({
+
+            code,
+
+            name:
+              data.name,
+
+            market:
+              data.market,
+
+            data,
+
+            levels,
+
+            breakout,
+
+            bullish
+
+          });
+
+        }
+
+      }
+      catch(error){
+
+        console.warn(
+          "原始30檔失敗：",
+          code,
+          error
+        );
+
+      }
+
+    }
+
+
+    /*
+     * 原始30檔維持原本順序。
+     */
+
+    state.original30 =
+      result;
+
+
+    renderScanResults(
+      result,
+      "📋 原始30檔",
+      "固定30檔"
+    );
+
+
+    return result;
+
+  }
+  finally{
+
+    hideLoading();
+
+  }
+
+}
+
+
+/* =========================================================
+   動態熱門20
+========================================================= */
+
+async function scanDynamicHot20(){
+
+  showLoading(
+    "重新取得今日熱門行情…"
+  );
+
+
+  try{
+
+    /*
+     * 強制抓最新市場資料。
+     */
+
+    const market =
+      await getMarketToday(
+        true
+      );
+
+
+    /*
+     * ⚠️ 不使用 SCAN_CODES。
+     */
+
+    const hot20 =
+      rankHot20(
+        market
+      );
+
+
+    state.hot20 =
+      hot20;
+
+
+    /*
+     * 熱門20先顯示市場即時資料，
+     * 再逐步補技術分析。
+     */
+
+    const enriched = [];
+
+
+    for(
+      const row of hot20
+    ){
+
+      const item =
+        await enrichScanStock(
+          row
+        );
+
+
+      if(
+        item
+      ){
+
+        enriched.push(
+          item
+        );
+
+      }
+
+    }
+
+
+    state.hot20 =
+      enriched;
+
+
+    renderScanResults(
+      enriched,
+      "🔥 熱門股票推薦20檔",
+      "依當日市場資料動態計算"
+    );
+
+
+    return enriched;
+
+  }
+  finally{
+
+    hideLoading();
+
+  }
+
+}
+
+
+/* =========================================================
+   確認突破掃描
+========================================================= */
+
+async function scanConfirmedBreakout(){
+
+  showLoading(
+    "搜尋目前突破確認股票…"
+  );
+
+
+  try{
+
+    const market =
+      await getMarketToday(
+        true
+      );
+
+
+    /*
+     * 不使用 SCAN_CODES。
+     */
+
+    const candidates =
+      market
+        .filter(
+          isScannableMarketRow
+        )
+        .filter(
+          row =>
+            !isETFMarketRow(row)
+        );
+
+
+    const result = [];
+
+
+    /*
+     * 依成交金額先取前100檔，
+     * 避免一次對整個市場逐檔抓4個月日K。
+     *
+     * 這只是效率限制，
+     * 不是固定股票清單。
+     */
+
+    const preselect =
+      candidates
+        .sort(
+          (a,b)=>
+            safeNum(
+              b.tradeValue
+            ) -
+            safeNum(
+              a.tradeValue
+            )
+        )
+        .slice(
+          0,
+          100
+        );
+
+
+    for(
+      const row of preselect
+    ){
+
+      const item =
+        await enrichScanStock(
+          row
+        );
+
+
+      if(!item){
+
+        continue;
+
+      }
+
+
+      const model =
+        breakoutModel(
+          item
+        );
+
+
+      if(
+        model.confirmed
+      ){
+
+        result.push({
+
+          ...item,
+
+          breakout:model
+
+        });
+
+      }
+
+    }
+
+
+    result.sort(
+      (a,b)=>
+        b.breakout.score -
+        a.breakout.score
+    );
+
+
+    state.confirmed =
+      result;
+
+
+    renderScanResults(
+      result,
+      "🚀 確認突破股票推薦",
+      "即時市場動態掃描"
+    );
+
+
+    return result;
+
+  }
+  finally{
+
+    hideLoading();
+
+  }
+
+}
+
+
+/* =========================================================
+   準備突破
+========================================================= */
+
+async function scanReadyBreakout(){
+
+  showLoading(
+    "搜尋準備突破股票…"
+  );
+
+
+  try{
+
+    const market =
+      await getMarketToday(
+        true
+      );
+
+
+    const candidates =
+      market
+        .filter(
+          isScannableMarketRow
+        )
+        .filter(
+          row =>
+            !isETFMarketRow(row)
+        )
+        .sort(
+          (a,b)=>
+            safeNum(
+              b.tradeValue
+            ) -
+            safeNum(
+              a.tradeValue
+            )
+        )
+        .slice(
+          0,
+          100
+        );
+
+
+    const result = [];
+
+
+    for(
+      const row of candidates
+    ){
+
+      const item =
+        await enrichScanStock(
+          row
+        );
+
+
+      if(!item){
+
+        continue;
+
+      }
+
+
+      const model =
+        breakoutModel(
+          item
+        );
+
+
+      /*
+       * 準備突破：
+       * 接近突破或突破觀察。
+       *
+       * 排除已經確認突破。
+       */
+
+      if(
+        model.ready &&
+        !model.confirmed
+      ){
+
+        result.push({
+
+          ...item,
+
+          breakout:model
+
+        });
+
+      }
+
+    }
+
+
+    result.sort(
+      (a,b)=>
+        b.breakout.score -
+        a.breakout.score
+    );
+
+
+    state.ready =
+      result;
+
+
+    renderScanResults(
+      result,
+      "👀 準備突破股票觀察",
+      "接近壓力＋量價／均線條件"
+    );
+
+
+    return result;
+
+  }
+  finally{
+
+    hideLoading();
+
+  }
+
+}
+
+
+/* =========================================================
+   多頭股票
+========================================================= */
+
+async function scanBullish(){
+
+  showLoading(
+    "搜尋多頭股票…"
+  );
+
+
+  try{
+
+    const market =
+      await getMarketToday(
+        true
+      );
+
+
+    const candidates =
+      market
+        .filter(
+          isScannableMarketRow
+        )
+        .filter(
+          row =>
+            !isETFMarketRow(row)
+        )
+        .sort(
+          (a,b)=>
+            safeNum(
+              b.tradeValue
+            ) -
+            safeNum(
+              a.tradeValue
+            )
+        )
+        .slice(
+          0,
+          100
+        );
+
+
+    const result = [];
+
+
+    for(
+      const row of candidates
+    ){
+
+      const item =
+        await enrichScanStock(
+          row
+        );
+
+
+      if(!item){
+
+        continue;
+
+      }
+
+
+      const model =
+        bullishModel(
+          item
+        );
+
+
+      if(
+        model.score >= 60
+      ){
+
+        result.push({
+
+          ...item,
+
+          bullish:model
+
+        });
+
+      }
+
+    }
+
+
+    result.sort(
+      (a,b)=>
+        b.bullish.score -
+        a.bullish.score
+    );
+
+
+    state.bullish =
+      result;
+
+
+    renderScanResults(
+      result,
+      "📈 多頭股票推薦",
+      "均線／價格／量能動態分析"
+    );
+
+
+    return result;
+
+  }
+  finally{
+
+    hideLoading();
+
+  }
+
+}
+
+
+/* =========================================================
+   掃描結果畫面
+========================================================= */
+
+function renderScanResults(
+  list,
+  title,
+  subtitle=""
+){
+
+  if(
+    scanResultTitle
+  ){
+
+    scanResultTitle.textContent =
+      title;
+
+  }
+
+
+  if(
+    scanResultTime
+  ){
+
+    scanResultTime.textContent =
+      (
+        subtitle
+          ? subtitle +
+            "｜"
+          : ""
+      ) +
+      nowText();
+
+  }
+
+
+  if(
+    !scanResultList
+  ){
+
+    return;
+
+  }
+
+
+  if(
+    !Array.isArray(list) ||
+    !list.length
+  ){
+
+    scanResultList.innerHTML = `
+
+      <div class="empty">
+        目前沒有符合條件的股票。
+      </div>
+
+    `;
+
+
+    return;
+
+  }
+
+
+  /*
+   * 最多顯示20筆。
+   */
+
+  const display =
+    list.slice(
+      0,
+      20
+    );
+
+
+  scanResultList.innerHTML =
+    display
+      .map(
+        (item,index)=>
+          renderScanRow(
+            item,
+            index+1
+          )
+      )
+      .join("");
+
+}
+
+
+/* =========================================================
+   掃描結果單列
+========================================================= */
+
+function renderScanRow(
+  item,
+  rank
+){
+
+  const data =
+    item.data ||
+    item;
+
+
+  const price =
+    num(
+      data.price ??
+      item.close
+    );
+
+
+  const changePct =
+    num(
+      data.changePct ??
+      item.changePct
+    );
+
+
+  const levels =
+    item.levels ||
+    data.levels ||
+    {};
+
+
+  const breakout =
+    item.breakout ||
+    {};
+
+
+  const bullish =
+    item.bullish ||
+    {};
+
+
+  let tag =
+    "";
+
+
+  let score =
+    "";
+
+
+  if(
+    breakout.state
+  ){
+
+    tag =
+      breakout.state;
+
+    score =
+      `${Math.round(
+        safeNum(
+          breakout.score
+        )
+      )}分`;
+
+  }
+  else if(
+    bullish.state
+  ){
+
+    tag =
+      bullish.state;
+
+    score =
+      `${Math.round(
+        safeNum(
+          bullish.score
+        )
+      )}分`;
+
+  }
+  else{
+
+    tag =
+      "市場熱門";
+
+  }
+
+
+  let changeClass =
+    "";
+
+
+  if(
+    changePct > 0
+  ){
+
+    changeClass =
+      "up";
+
+  }
+  else if(
+    changePct < 0
+  ){
+
+    changeClass =
+      "down";
+
+  }
+
+
+  return `
+
+    <button
+      type="button"
+      class="scan-row"
+      data-scan-code="${esc(
+        item.code
+      )}"
+    >
+
+      <span class="scan-rank">
+        ${rank}
+      </span>
+
+
+      <span class="scan-main">
+
+        <strong>
+          ${esc(item.code)}
+        </strong>
+
+        <span>
+          ${esc(
+            item.name ||
+            getKnownStock(
+              item.code
+            )?.name ||
+            item.code
+          )}
+        </span>
+
+      </span>
+
+
+      <span class="scan-price">
+
+        ${
+          Number.isFinite(price)
+            ? fmt(price,2)
+            : "--"
+        }
+
+      </span>
+
+
+      <span
+        class="scan-change ${changeClass}"
+      >
+
+        ${
+          Number.isFinite(changePct)
+            ? (
+                changePct >= 0
+                  ? "+"
+                  : ""
+              ) +
+              pct(
+                changePct,
+                2
+              )
+            : "--"
+        }
+
+      </span>
+
+
+      <span class="scan-level">
+
+        ${tag}
+
+        ${
+          score
+            ? `
+              <small>
+                ${score}
+              </small>
+            `
+            : ""
+        }
+
+      </span>
+
+
+      <span class="scan-arrow">
+        ›
+      </span>
+
+    </button>
+
+  `;
+
+}
+
+
+/* =========================================================
+   點擊掃描結果
+========================================================= */
+
+if(
+  scanResultList
+){
+
+  scanResultList.addEventListener(
+    "click",
+    event=>{
+
+      const row =
+        event.target.closest(
+          "[data-scan-code]"
+        );
+
+
+      if(!row){
+
+        return;
+
+      }
+
+
+      const code =
+        row.dataset.scanCode;
+
+
+      const known =
+        getKnownStock(
+          code
+        );
+
+
+      if(
+        searchInput
+      ){
+
+        searchInput.value =
+          code;
+
+      }
+
+
+      doSearch(
+        code
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   第七段結束
+========================================================= */
+
+console.log(
+  "m1491 V1491｜第 7 段載入完成"
+);
+
+</script><script>
+
+/* =========================================================
+   第八段／最終段
+   V1491 系統整合 × 事件綁定 × 自我檢查
+========================================================= */
+
+
+/* =========================================================
+   原始30檔按鈕
+========================================================= */
+
+if(
+  original30ScanBtn
+){
+
+  original30ScanBtn.addEventListener(
+    "click",
+    async ()=>{
+
+      hideMessage();
+
+
+      try{
+
+        await scanOriginal30();
+
+      }
+      catch(error){
+
+        console.error(
+          "原始30檔掃描錯誤：",
+          error
+        );
+
+
+        showMessage(
+          "原始30檔掃描失敗，請稍後再試。"
+        );
+
+      }
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   動態熱門20
+========================================================= */
+
+if(
+  hot20DynamicBtn
+){
+
+  hot20DynamicBtn.addEventListener(
+    "click",
+    async ()=>{
+
+      hideMessage();
+
+
+      try{
+
+        await scanDynamicHot20();
+
+      }
+      catch(error){
+
+        console.error(
+          "熱門20掃描錯誤：",
+          error
+        );
+
+
+        showMessage(
+          "熱門股票資料取得失敗，請稍後再試。"
+        );
+
+      }
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   舊版熱門20按鈕
+   ---------------------------------------------------------
+   保留相容性。
+   點擊後也使用新的動態熱門20。
+========================================================= */
+
+if(
+  hot20ScanBtn
+){
+
+  hot20ScanBtn.addEventListener(
+    "click",
+    async ()=>{
+
+      hideMessage();
+
+
+      try{
+
+        const result =
+          await scanDynamicHot20();
+
+
+        /*
+         * 同步更新舊熱門20面板。
+         */
+
+        renderHot20Legacy(
+          result
+        );
+
+      }
+      catch(error){
+
+        console.error(
+          "舊熱門20掃描錯誤：",
+          error
+        );
+
+
+        showMessage(
+          "熱門20資料取得失敗。"
+        );
+
+      }
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   確認突破
+========================================================= */
+
+if(
+  confirmedBreakoutBtn
+){
+
+  confirmedBreakoutBtn.addEventListener(
+    "click",
+    async ()=>{
+
+      hideMessage();
+
+
+      try{
+
+        await scanConfirmedBreakout();
+
+      }
+      catch(error){
+
+        console.error(
+          "確認突破掃描錯誤：",
+          error
+        );
+
+
+        showMessage(
+          "確認突破掃描失敗，請稍後再試。"
+        );
+
+      }
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   準備突破
+========================================================= */
+
+if(
+  readyBreakoutBtn
+){
+
+  readyBreakoutBtn.addEventListener(
+    "click",
+    async ()=>{
+
+      hideMessage();
+
+
+      try{
+
+        await scanReadyBreakout();
+
+      }
+      catch(error){
+
+        console.error(
+          "準備突破掃描錯誤：",
+          error
+        );
+
+
+        showMessage(
+          "準備突破掃描失敗，請稍後再試。"
+        );
+
+      }
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   多頭股票
+========================================================= */
+
+if(
+  bullishScanBtn
+){
+
+  bullishScanBtn.addEventListener(
+    "click",
+    async ()=>{
+
+      hideMessage();
+
+
+      try{
+
+        await scanBullish();
+
+      }
+      catch(error){
+
+        console.error(
+          "多頭掃描錯誤：",
+          error
+        );
+
+
+        showMessage(
+          "多頭股票掃描失敗，請稍後再試。"
+        );
+
+      }
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   舊熱門20面板
+========================================================= */
+
+function renderHot20Legacy(
+  list
+){
+
+  if(
+    !hot20List
+  ){
+
+    return;
+
+  }
+
+
+  if(
+    !Array.isArray(list) ||
+    !list.length
+  ){
+
+    hot20List.innerHTML = `
+
+      <div class="empty">
+        今日沒有可顯示的熱門股票。
+      </div>
+
+    `;
+
+
+    if(
+      hot20Time
+    ){
+
+      hot20Time.textContent =
+        nowText();
+
+    }
+
+
+    return;
+
+  }
+
+
+  hot20List.innerHTML =
+    list
+      .slice(
+        0,
+        20
+      )
+      .map(
+        (item,index)=>{
+
+          const data =
+            item.data ||
+            item;
+
+
+          const price =
+            num(
+              data.price ??
+              item.close
+            );
+
+
+          const changePct =
+            num(
+              data.changePct ??
+              item.changePct
+            );
+
+
+          let cls =
+            "";
+
+
+          if(
+            changePct > 0
+          ){
+
+            cls =
+              "up";
+
+          }
+          else if(
+            changePct < 0
+          ){
+
+            cls =
+              "down";
+
+          }
+
+
+          return `
+
+            <button
+              type="button"
+              class="hot20-row"
+              data-hot-code="${esc(
+                item.code
+              )}"
+            >
+
+              <span class="hot-rank">
+                ${index+1}
+              </span>
+
+
+              <span class="hot-code">
+                ${esc(item.code)}
+              </span>
+
+
+              <span class="hot-name">
+                ${esc(
+                  item.name ||
+                  item.code
+                )}
+              </span>
+
+
+              <span class="hot-price">
+
+                ${
+                  Number.isFinite(price)
+                    ? fmt(
+                        price,
+                        2
+                      )
+                    : "--"
+                }
+
+              </span>
+
+
+              <span
+                class="hot-change ${cls}"
+              >
+
+                ${
+                  Number.isFinite(
+                    changePct
+                  )
+                    ? (
+                        changePct >= 0
+                          ? "+"
+                          : ""
+                      ) +
+                      pct(
+                        changePct,
+                        2
+                      )
+                    : "--"
+                }
+
+              </span>
+
+
+              <span class="hot-arrow">
+                ›
+              </span>
+
+            </button>
+
+          `;
+
+        }
+      )
+      .join("");
+
+
+  if(
+    hot20Time
+  ){
+
+    hot20Time.textContent =
+      nowText();
+
+  }
+
+}
+
+
+/* =========================================================
+   舊熱門20點擊
+========================================================= */
+
+if(
+  hot20List
+){
+
+  hot20List.addEventListener(
+    "click",
+    event=>{
+
+      const row =
+        event.target.closest(
+          "[data-hot-code]"
+        );
+
+
+      if(!row){
+
+        return;
+
+      }
+
+
+      const code =
+        row.dataset.hotCode;
+
+
+      if(
+        searchInput
+      ){
+
+        searchInput.value =
+          code;
+
+      }
+
+
+      doSearch(
+        code
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   Quick Button
+========================================================= */
+
+function bindQuickButtons(){
+
+  document
+    .querySelectorAll(
+      ".quick-btn[data-code]"
+    )
+    .forEach(
+      btn=>{
+
+        /*
+         * 避免重複綁定。
+         */
+
+        if(
+          btn.dataset.v1491Bound ===
+          "1"
+        ){
+
+          return;
+
+        }
+
+
+        btn.dataset.v1491Bound =
+          "1";
+
+
+        btn.addEventListener(
+          "click",
+          ()=>{
+
+            const code =
+              btn.dataset.code;
+
+
+            if(
+              searchInput
+            ){
+
+              searchInput.value =
+                code;
+
+            }
+
+
+            doSearch(
+              code
+            );
+
+          }
+        );
+
+      }
+    );
+
+}
+
+
+/* =========================================================
+   搜尋候選再次綁定保護
+========================================================= */
+
+function bindSearchCandidates(){
+
+  if(
+    !searchCandidates
+  ){
+
+    return;
+
+  }
+
+
+  /*
+   * 第三段已經使用事件委派，
+   * 這裡不再重複加入 click listener。
+   */
+
+}
+
+
+/* =========================================================
+   鍵盤快捷鍵
+========================================================= */
+
+document.addEventListener(
+  "keydown",
+  event=>{
+
+    /*
+     * Ctrl / Command + K
+     * 快速跳到搜尋。
+     */
+
+    if(
+      (
+        event.ctrlKey ||
+        event.metaKey
+      ) &&
+      event.key.toLowerCase() === "k"
+    ){
+
+      event.preventDefault();
+
+
+      if(
+        searchInput
+      ){
+
+        searchInput.focus();
+
+        searchInput.select();
+
+      }
+
+    }
+
+  }
+);
+
+
+/* =========================================================
+   防止重複掃描
+========================================================= */
+
+function preventConcurrentScan(
+  fn
+){
+
+  return async function(
+    ...args
+  ){
+
+    if(
+      state.scanRunning
+    ){
+
+      showMessage(
+        "目前正在掃描，請稍候…"
+      );
+
+
+      return null;
+
+    }
+
+
+    state.scanRunning =
+      true;
+
+
+    try{
+
+      return await fn(
+        ...args
+      );
+
+    }
+    finally{
+
+      state.scanRunning =
+        false;
+
+    }
+
+  };
+
+}
+
+
+/* =========================================================
+   包裝五大掃描
+   ---------------------------------------------------------
+   防止使用者連續快速點擊造成大量 API 請求。
+========================================================= */
+
+const _scanOriginal30 =
+  scanOriginal30;
+
+const _scanDynamicHot20 =
+  scanDynamicHot20;
+
+const _scanConfirmedBreakout =
+  scanConfirmedBreakout;
+
+const _scanReadyBreakout =
+  scanReadyBreakout;
+
+const _scanBullish =
+  scanBullish;
+
+
+scanOriginal30 =
+  preventConcurrentScan(
+    _scanOriginal30
+  );
+
+
+scanDynamicHot20 =
+  preventConcurrentScan(
+    _scanDynamicHot20
+  );
+
+
+scanConfirmedBreakout =
+  preventConcurrentScan(
+    _scanConfirmedBreakout
+  );
+
+
+scanReadyBreakout =
+  preventConcurrentScan(
+    _scanReadyBreakout
+  );
+
+
+scanBullish =
+  preventConcurrentScan(
+    _scanBullish
+  );
+
+
+/* =========================================================
+   初始化搜尋
+========================================================= */
+
+async function initSearchSystem(){
+
+  try{
+
+    /*
+     * 先不強制下載全部資料。
+     *
+     * 使用者搜尋時才建立完整市場資料庫。
+     *
+     * 這樣首頁速度比較快。
+     */
+
+    state.universeLoaded =
+      false;
+
+
+    state.universeLoadedAt =
+      0;
+
+
+    console.log(
+      "V1491 搜尋系統已啟動"
+    );
+
+  }
+  catch(error){
+
+    console.warn(
+      "搜尋系統初始化失敗：",
+      error
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   初始化 V1491
+========================================================= */
+
+async function initV1491(){
+
+  try{
+
+    setStatus(
+      "V1491 啟動中…",
+      "loading"
+    );
+
+
+    /*
+     * Quick Buttons
+     */
+
+    bindQuickButtons();
+
+
+    /*
+     * 搜尋
+     */
+
+    await initSearchSystem();
+
+
+    /*
+     * 初始化畫面
+     */
+
+    if(
+      hot20List &&
+      !hot20List.innerHTML.trim()
+    ){
+
+      hot20List.innerHTML = `
+
+        <div class="empty">
+          按「🔥 熱門股票推薦20檔」
+          取得今日動態熱門資料。
+        </div>
+
+      `;
+
+    }
+
+
+    /*
+     * 掃描結果
+     */
+
+    if(
+      scanResultList
+    ){
+
+      scanResultList.innerHTML = `
+
+        <div class="empty">
+          請選擇上方五大分析功能。
+        </div>
+
+      `;
+
+    }
+
+
+    setStatus(
+      "系統待命",
+      "normal"
+    );
+
+
+    console.log(
+      "================================="
+    );
+
+
+    console.log(
+      "m1491 V1491 啟動完成"
+    );
+
+
+    console.log(
+      "原始30檔：",
+      SCAN_CODES.length
+    );
+
+
+    console.log(
+      "動態推薦："
+    );
+
+
+    console.log(
+      "🔥 熱門20"
+    );
+
+
+    console.log(
+      "🚀 確認突破"
+    );
+
+
+    console.log(
+      "👀 準備突破"
+    );
+
+
+    console.log(
+      "📈 多頭"
+    );
+
+
+    console.log(
+      "================================="
+    );
+
+  }
+  catch(error){
+
+    console.error(
+      "V1491 初始化失敗：",
+      error
+    );
+
+
+    setStatus(
+      "系統初始化異常",
+      "error"
+    );
+
+
+    showMessage(
+      "系統初始化失敗，請重新整理頁面。"
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   V1491 自我檢查
+========================================================= */
+
+function v1491SelfCheck(){
+
+  const checks = {
+
+    searchInput:
+      !!searchInput,
+
+    searchBtn:
+      !!searchBtn,
+
+    stockCard:
+      !!stockCard,
+
+    original30Button:
+      !!original30ScanBtn,
+
+    hot20Button:
+      !!hot20DynamicBtn,
+
+    confirmedBreakoutButton:
+      !!confirmedBreakoutBtn,
+
+    readyBreakoutButton:
+      !!readyBreakoutBtn,
+
+    bullishButton:
+      !!bullishScanBtn,
+
+    scanCodes30:
+      Array.isArray(
+        SCAN_CODES
+      ) &&
+      SCAN_CODES.length === 30,
+
+    findStock:
+      typeof findStock ===
+      "function",
+
+    loadStockInfo:
+      typeof loadStockInfo ===
+      "function",
+
+    scanOriginal30:
+      typeof scanOriginal30 ===
+      "function",
+
+    scanDynamicHot20:
+      typeof scanDynamicHot20 ===
+      "function",
+
+    scanConfirmedBreakout:
+      typeof scanConfirmedBreakout ===
+      "function",
+
+    scanReadyBreakout:
+      typeof scanReadyBreakout ===
+      "function",
+
+    scanBullish:
+      typeof scanBullish ===
+      "function"
+
+  };
+
+
+  const failed =
+    Object.entries(
+      checks
+    )
+    .filter(
+      ([,value]) =>
+        !value
+    )
+    .map(
+      ([key]) =>
+        key
+    );
+
+
+  if(
+    failed.length
+  ){
+
+    console.error(
+      "V1491 自我檢查失敗：",
+      failed
+    );
+
+
+    return false;
+
+  }
+
+
+  console.log(
+    "V1491 自我檢查 PASS",
+    checks
+  );
+
+
+  return true;
+
+}
+
+
+/* =========================================================
+   全域錯誤
+========================================================= */
+
+window.addEventListener(
+  "error",
+  event=>{
+
+    console.error(
+      "V1491 JavaScript Error:",
+      event.error ||
+      event.message
+    );
+
+  }
+);
+
+
+/* =========================================================
+   Promise 錯誤
+========================================================= */
+
+window.addEventListener(
+  "unhandledrejection",
+  event=>{
+
+    console.error(
+      "V1491 Promise Error:",
+      event.reason
+    );
+
+  }
+);
+
+
+/* =========================================================
+   DOM Ready
+========================================================= */
+
+if(
+  document.readyState ===
+  "loading"
+){
+
+  document.addEventListener(
+    "DOMContentLoaded",
+    async ()=>{
+
+      await initV1491();
+
+
+      v1491SelfCheck();
+
+    },
+    {
+      once:true
+    }
+  );
+
+}
+else{
+
+  initV1491()
+    .then(
+      ()=>{
+        v1491SelfCheck();
+      }
+    );
+
+}
+
+
+/* =========================================================
+   最終提示
+========================================================= */
+
+console.log(
+  "m1491 V1491｜第 8 段載入完成"
+);
+
+</script>
+
+</body>
+</html>
