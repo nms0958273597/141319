@@ -1,30 +1,15 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-  name="viewport"
-  content="width=device-width,initial-scale=1,viewport-fit=cover"
->
-
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#080a0c">
-
 <title>m1491｜動態台股法人籌碼與突破分析 V1491</title>
 
 <style>
-
-/* =========================================================
-   V1491｜基礎樣式
-   注意：
-   本段只負責 UI / CSS
-   不放任何股票固定價格
-   ========================================================= */
-
 *{
   box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent;
+  -webkit-tap-highlight-color:transparent
 }
 
 :root{
@@ -32,10 +17,8 @@
   --card:#11161b;
   --card2:#151b21;
   --line:#26313a;
-
   --text:#f3f6f8;
   --muted:#91a0aa;
-
   --green:#39d98a;
   --red:#ff6374;
   --orange:#ffad42;
@@ -43,185 +26,125 @@
   --blue:#55b9ff;
   --purple:#b38cff;
   --cyan:#46e0ff;
-
-  --shadow:0 10px 28px rgba(0,0,0,.24);
+  --shadow:0 10px 28px rgba(0,0,0,.24)
 }
 
 html{
-  scroll-behavior:smooth;
+  scroll-behavior:smooth
 }
 
 body{
   margin:0;
-
-  background:
-    linear-gradient(
-      180deg,
-      #080a0c 0%,
-      #0b1014 45%,
-      #080a0c 100%
-    );
-
+  background:linear-gradient(
+    180deg,
+    #080a0c,
+    #0b1014 45%,
+    #080a0c
+  );
   color:var(--text);
-
   font-family:
     -apple-system,
     BlinkMacSystemFont,
     "PingFang TC",
     "Noto Sans TC",
     "Microsoft JhengHei",
-    sans-serif;
+    sans-serif
 }
 
 button,
 input{
-  font:inherit;
+  font:inherit
 }
 
 button{
-  cursor:pointer;
+  cursor:pointer
 }
-
-
-/* =========================================================
-   主容器
-   ========================================================= */
 
 .wrap{
   max-width:760px;
   margin:auto;
-
-  padding:
-    16px
-    14px
-    100px;
+  padding:16px 14px 100px
 }
-
-
-/* =========================================================
-   搜尋列
-   ========================================================= */
 
 .search{
   display:flex;
   gap:8px;
-
   position:sticky;
   top:0;
-
   z-index:20;
-
-  padding:
-    4px
-    0
-    12px;
-
+  padding:4px 0 12px;
   background:rgba(8,10,12,.92);
-
-  backdrop-filter:blur(12px);
+  backdrop-filter:blur(12px)
 }
 
 .search input{
   min-width:0;
   flex:1;
-
   background:#10151a;
-
   border:1px solid var(--line);
-
   color:var(--text);
-
   border-radius:14px;
-
   padding:13px 14px;
-
-  outline:none;
+  outline:none
 }
 
 .search input:focus{
   border-color:var(--blue);
+  box-shadow:0 0 0 3px rgba(85,185,255,.1)
+}
 
-  box-shadow:
-    0 0 0 3px
-    rgba(85,185,255,.10);
+.search button,
+.action,
+.feature,
+.navBtn{
+  border:1px solid var(--line);
+  background:#12181d;
+  color:var(--text)
 }
 
 .search button{
-  border:1px solid var(--line);
-
-  background:#12181d;
-
-  color:var(--text);
-
   border-radius:14px;
-
   padding:0 16px;
-
-  font-weight:800;
+  font-weight:800
 }
-
-
-/* =========================================================
-   搜尋提示／狀態
-   ========================================================= */
 
 .hint{
   font-size:12px;
   color:var(--muted);
-
-  margin:
-    0 2px
-    10px;
+  margin:0 2px 10px
 }
 
 .status{
   font-size:13px;
-
   color:var(--muted);
-
   min-height:20px;
-
-  margin:
-    5px 2px;
+  margin:5px 2px
 }
 
 .searchResults{
   display:grid;
   gap:6px;
-
-  margin:
-    4px 0
-    10px;
+  margin:4px 0 10px
 }
 
 .searchResult{
   padding:10px 12px;
-
   border:1px solid var(--line);
-
   border-radius:12px;
-
   background:#0f1418;
-
   display:flex;
-
   justify-content:space-between;
-  align-items:center;
+  align-items:center
 }
 
 .searchResult b{
-  font-size:14px;
+  font-size:14px
 }
 
 .searchResult span{
   font-size:12px;
-  color:var(--muted);
+  color:var(--muted)
 }
-
-
-/* =========================================================
-   卡片
-   ========================================================= */
 
 .card{
   background:
@@ -230,902 +153,579 @@ button{
       rgba(18,24,29,.98),
       rgba(14,19,24,.98)
     );
-
   border:1px solid var(--line);
-
   border-radius:18px;
-
   padding:15px;
-
   margin:10px 0;
-
-  box-shadow:var(--shadow);
+  box-shadow:var(--shadow)
 }
 
 .title{
   font-size:18px;
   font-weight:900;
-
-  margin-bottom:7px;
+  margin-bottom:7px
 }
 
 .intro{
   font-size:13px;
-
   color:var(--muted);
-
-  line-height:1.7;
+  line-height:1.7
 }
 
-
-/* =========================================================
-   股票主資訊
-   ========================================================= */
-
 .hero{
-  padding:16px;
+  padding:16px
 }
 
 .heroTop{
   display:flex;
   gap:12px;
-
-  align-items:center;
+  align-items:center
 }
 
 .icon{
   width:48px;
   height:48px;
-
   border-radius:15px;
-
   display:grid;
   place-items:center;
-
   background:#17222a;
-
-  font-size:25px;
-
-  flex-shrink:0;
+  font-size:25px
 }
 
 .stockTitle{
   font-size:22px;
-  font-weight:950;
+  font-weight:950
 }
 
-.stockSub{
-  font-size:12px;
-  color:var(--muted);
-
-  margin-top:3px;
-}
-
+.stockSub,
 .update{
   font-size:12px;
   color:var(--muted);
-
-  margin-left:auto;
-
-  text-align:right;
+  margin-top:3px
 }
 
-
-/* =========================================================
-   三格資訊
-   ========================================================= */
+.update{
+  margin-left:auto;
+  text-align:right
+}
 
 .grid3{
   display:grid;
-
-  grid-template-columns:
-    repeat(3,1fr);
-
+  grid-template-columns:repeat(3,1fr);
   gap:8px;
-
-  margin-top:13px;
+  margin-top:13px
 }
 
 .box{
   background:#0c1115;
-
   border:1px solid var(--line);
-
   border-radius:13px;
-
-  padding:10px;
+  padding:10px
 }
 
 .boxMain{
   font-size:18px;
-  font-weight:900;
+  font-weight:900
 }
 
 .boxSub{
   font-size:11px;
   color:var(--muted);
-
-  margin-top:3px;
+  margin-top:3px
 }
-
-
-/* =========================================================
-   價格資訊列
-   ========================================================= */
 
 .priceStrip{
   display:grid;
-
-  grid-template-columns:
-    repeat(3,1fr);
-
+  grid-template-columns:repeat(3,1fr);
   gap:7px;
-
-  margin-top:10px;
+  margin-top:10px
 }
 
 .priceCell{
   background:#0d1317;
-
   border:1px solid var(--line);
-
   padding:9px;
-
-  border-radius:12px;
+  border-radius:12px
 }
 
 .priceLabel{
   font-size:11px;
-  color:var(--muted);
+  color:var(--muted)
 }
 
 .priceValue{
   font-size:16px;
   font-weight:900;
-
-  margin-top:3px;
+  margin-top:3px
 }
 
-
-/* =========================================================
-   顏色
-   ========================================================= */
-
 .green{
-  color:var(--green);
+  color:var(--green)
 }
 
 .red{
-  color:var(--red);
+  color:var(--red)
 }
 
 .orange{
-  color:var(--orange);
+  color:var(--orange)
 }
 
 .yellow{
-  color:var(--yellow);
+  color:var(--yellow)
 }
 
 .blue{
-  color:var(--blue);
+  color:var(--blue)
 }
 
 .purple{
-  color:var(--purple);
+  color:var(--purple)
 }
 
-
-/* =========================================================
-   突破區
-   ========================================================= */
-
 .break{
-  border-color:
-    rgba(70,224,255,.35);
+  border-color:rgba(70,224,255,.35)
 }
 
 .breakTitle{
   font-size:17px;
   font-weight:900;
-
-  color:var(--cyan);
+  color:var(--cyan)
 }
 
 .breakGrid{
   display:grid;
-
-  grid-template-columns:
-    1fr 1fr;
-
+  grid-template-columns:1fr 1fr;
   gap:9px;
-
-  margin-top:10px;
+  margin-top:10px
 }
 
 .checkRow{
   display:flex;
-
   gap:8px;
-
   align-items:center;
-
   font-size:13px;
-
-  padding:7px 0;
+  padding:7px 0
 }
 
 .check{
   width:20px;
   height:20px;
-
   border-radius:50%;
-
   display:grid;
   place-items:center;
-
   background:#17242b;
-
   color:var(--cyan);
-
-  font-size:12px;
+  font-size:12px
 }
-
-
-/* =========================================================
-   資料列
-   ========================================================= */
 
 .data{
   display:grid;
-  gap:8px;
+  gap:8px
 }
 
 .dataRow{
   display:flex;
-
   justify-content:space-between;
-
   gap:12px;
-
   padding:9px 0;
-
-  border-bottom:
-    1px solid
-    rgba(255,255,255,.055);
+  border-bottom:1px solid rgba(255,255,255,.055)
 }
 
 .dataRow:last-child{
-  border-bottom:0;
+  border-bottom:0
 }
 
 .dataRow span:first-child{
   color:var(--muted);
-  font-size:13px;
+  font-size:13px
 }
 
 .dataRow b{
-  text-align:right;
+  text-align:right
 }
-
-
-/* =========================================================
-   快速功能
-   ========================================================= */
 
 .featureGrid{
   display:grid;
-
-  grid-template-columns:
-    repeat(3,1fr);
-
-  gap:8px;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px
 }
 
 .feature{
   border-radius:14px;
-
   padding:10px;
-
-  text-align:left;
-
-  border:1px solid var(--line);
-
-  background:#12181d;
-
-  color:var(--text);
+  text-align:left
 }
 
 .featureIcon{
-  font-size:18px;
+  font-size:18px
 }
 
 .featureName{
   font-weight:850;
   font-size:13px;
-
-  margin-top:3px;
+  margin-top:3px
 }
 
 .featureDesc{
   font-size:10px;
-
   color:var(--muted);
-
-  margin-top:3px;
+  margin-top:3px
 }
-
-
-/* =========================================================
-   操作按鈕
-   ========================================================= */
 
 .action{
   width:100%;
-
   border-radius:12px;
-
   padding:11px;
-
   margin-top:7px;
-
-  text-align:left;
-
-  border:1px solid var(--line);
-
-  background:#12181d;
-
-  color:var(--text);
+  text-align:left
 }
-
-
-/* =========================================================
-   動態點位區間
-   第一支撐／第二支撐
-   第一壓力／第二壓力
-   ========================================================= */
 
 .levelGrid{
   display:grid;
-
-  grid-template-columns:
-    1fr 1fr;
-
-  gap:9px;
+  grid-template-columns:1fr 1fr;
+  gap:9px
 }
 
 .level{
   padding:12px;
-
   border-radius:14px;
-
   background:#0d1317;
-
-  border:1px solid var(--line);
+  border:1px solid var(--line)
 }
 
 .levelLabel{
   font-size:12px;
-
-  color:var(--muted);
+  color:var(--muted)
 }
 
 .levelValue{
   font-size:21px;
-
   font-weight:950;
-
-  margin-top:4px;
+  margin-top:4px
 }
 
 .levelSmall{
   font-size:11px;
-
   color:var(--muted);
-
   line-height:1.5;
-
-  margin-top:5px;
+  margin-top:5px
 }
-
-
-/* =========================================================
-   技術／量價指標
-   ========================================================= */
 
 .sectionGrid{
   display:grid;
-
-  grid-template-columns:
-    repeat(2,1fr);
-
-  gap:9px;
+  grid-template-columns:repeat(2,1fr);
+  gap:9px
 }
 
 .metric{
   padding:11px;
-
   background:#0d1317;
-
   border:1px solid var(--line);
-
-  border-radius:13px;
+  border-radius:13px
 }
 
 .metricLabel{
   font-size:11px;
-
-  color:var(--muted);
+  color:var(--muted)
 }
 
 .metricValue{
   font-size:18px;
-
   font-weight:900;
-
-  margin-top:3px;
+  margin-top:3px
 }
 
 .metricSub{
   font-size:11px;
-
   color:var(--muted);
-
   margin-top:4px;
-
-  line-height:1.5;
+  line-height:1.5
 }
-
-
-/* =========================================================
-   綜合訊號
-   ========================================================= */
 
 .signal{
   padding:13px;
-
   border-radius:14px;
-
   border:1px solid var(--line);
-
-  background:#0d1317;
+  background:#0d1317
 }
 
 .signalState{
   font-size:19px;
-
-  font-weight:950;
+  font-weight:950
 }
 
 .scoreBar{
   height:7px;
-
   border-radius:99px;
-
   background:#20282e;
-
   overflow:hidden;
-
-  margin-top:8px;
+  margin-top:8px
 }
 
 .scoreFill{
   height:100%;
-
   border-radius:99px;
-
   background:
     linear-gradient(
       90deg,
       #ff6374,
       #ffad42,
       #39d98a
-    );
+    )
 }
-
-
-/* =========================================================
-   提示區
-   ========================================================= */
 
 .notice{
   padding:11px;
-
   border-radius:12px;
-
   background:#111a20;
-
   border:1px solid #24343d;
-
   font-size:12px;
-
   color:#aebbc3;
-
-  line-height:1.6;
+  line-height:1.6
 }
 
-
-/* =========================================================
-   表格
-   ========================================================= */
-
 .tableWrap{
-  overflow:auto;
+  overflow:auto
 }
 
 .tableWrap table{
   width:100%;
-
   border-collapse:collapse;
-
-  font-size:12px;
+  font-size:12px
 }
 
 .tableWrap th,
 .tableWrap td{
   padding:9px 7px;
-
-  border-bottom:
-    1px solid
-    var(--line);
-
-  white-space:nowrap;
+  border-bottom:1px solid var(--line);
+  white-space:nowrap
 }
 
 .tableWrap th{
   text-align:left;
-
-  color:var(--muted);
+  color:var(--muted)
 }
-
-
-/* =========================================================
-   推薦列表
-   ========================================================= */
 
 .recTable{
   display:grid;
-  gap:7px;
+  gap:7px
 }
 
 .recHead{
   display:grid;
-
-  grid-template-columns:
-    1.5fr .8fr .8fr .8fr;
-
+  grid-template-columns:1.5fr .8fr .8fr .8fr;
   gap:6px;
-
   color:var(--muted);
-
   font-size:11px;
-
-  padding:
-    0 6px;
+  padding:0 6px
 }
 
 .row{
   display:grid;
-
-  grid-template-columns:
-    1.5fr .8fr .8fr .8fr;
-
+  grid-template-columns:1.5fr .8fr .8fr .8fr;
   gap:6px;
-
   align-items:center;
-
   padding:10px 6px;
-
   background:#0d1317;
-
   border:1px solid var(--line);
-
-  border-radius:11px;
-
-  color:var(--text);
+  border-radius:11px
 }
 
 .recName{
-  font-weight:850;
+  font-weight:850
 }
 
 .recSmall{
-  display:block;
-
   font-size:10px;
-
   color:var(--muted);
-
-  margin-top:2px;
+  margin-top:2px
 }
 
 .arrow{
   text-align:center;
-
-  font-size:16px;
+  font-size:16px
 }
 
-
-/* =========================================================
-   空白／載入
-   ========================================================= */
+.searchResults:empty{
+  display:none
+}
 
 .empty{
   padding:18px;
-
   text-align:center;
-
-  color:var(--muted);
+  color:var(--muted)
 }
 
 .loadingBox{
   padding:18px;
-
   text-align:center;
-
-  color:var(--muted);
+  color:var(--muted)
 }
 
 .progress{
   height:6px;
-
   background:#20282e;
-
   border-radius:99px;
-
   overflow:hidden;
-
-  margin-top:9px;
+  margin-top:9px
 }
 
 .progress i{
   display:block;
-
   width:35%;
   height:100%;
-
   background:var(--blue);
-
-  animation:
-    load 1s infinite alternate;
+  animation:load 1s infinite alternate
 }
 
 @keyframes load{
   to{
-    width:85%;
+    width:85%
   }
 }
 
-
-/* =========================================================
-   底部
-   ========================================================= */
-
 .footer{
   text-align:center;
-
   color:#5f6b73;
-
   font-size:10px;
-
-  padding:20px;
+  padding:20px
 }
 
 .bottomNav{
   position:fixed;
-
   left:50%;
   bottom:0;
-
   transform:translateX(-50%);
-
   width:min(760px,100%);
-
-  padding:
-    8px
-    10px
-    calc(8px + env(safe-area-inset-bottom));
-
+  padding:8px 10px calc(8px + env(safe-area-inset-bottom));
   background:rgba(8,10,12,.95);
-
   backdrop-filter:blur(14px);
-
   border-top:1px solid var(--line);
-
   display:grid;
-
-  grid-template-columns:
-    repeat(5,1fr);
-
-  z-index:30;
+  grid-template-columns:repeat(5,1fr);
+  z-index:30
 }
 
 .navBtn{
   border:0;
-
   background:transparent;
-
   padding:5px 2px;
-
-  color:#71808a;
+  color:#71808a
 }
 
 .navIcon{
-  font-size:18px;
+  font-size:18px
 }
 
 .navText{
   font-size:10px;
-
-  margin-top:2px;
+  margin-top:2px
 }
 
 .navBtn.active{
-  color:var(--blue);
+  color:var(--blue)
 }
-
-
-/* =========================================================
-   狀態／壓力
-   ========================================================= */
 
 .dot{
   display:inline-block;
-
   width:7px;
   height:7px;
-
   border-radius:50%;
-
   background:var(--green);
-
-  margin-right:5px;
+  margin-right:5px
 }
 
 .hidden{
-  display:none!important;
+  display:none!important
 }
 
 .pressureStrong{
-  color:var(--red);
+  color:var(--red)
 }
 
 .pressureWarn{
-  color:var(--orange);
+  color:var(--orange)
 }
 
 .pressureDanger{
-  color:#ff4055;
+  color:#ff4055
 }
-
-
-/* =========================================================
-   60日位置區間
-   ========================================================= */
 
 .rangeBar{
   height:8px;
-
   border-radius:99px;
-
   background:#1d252b;
-
   position:relative;
-
   margin-top:9px;
-
-  overflow:hidden;
+  overflow:hidden
 }
 
 .rangeFill{
   height:100%;
-
-  background:
-    linear-gradient(
-      90deg,
-      #55b9ff,
-      #b38cff
-    );
-
-  border-radius:99px;
+  background:linear-gradient(90deg,#55b9ff,#b38cff);
+  border-radius:99px
 }
 
 .rangeMark{
   position:absolute;
-
   top:-2px;
-
   width:2px;
   height:12px;
-
   background:#fff;
-
-  opacity:.9;
+  opacity:.9
 }
-
-
-/* =========================================================
-   手機版
-   ========================================================= */
 
 @media(max-width:480px){
 
   .grid3{
-    grid-template-columns:
-      1fr 1fr;
+    grid-template-columns:1fr 1fr
   }
 
   .grid3 .box:last-child{
-    grid-column:1/-1;
+    grid-column:1/-1
   }
 
   .featureGrid{
-    grid-template-columns:
-      repeat(2,1fr);
+    grid-template-columns:repeat(2,1fr)
   }
 
   .breakGrid,
   .levelGrid,
   .sectionGrid{
-    grid-template-columns:
-      1fr 1fr;
+    grid-template-columns:1fr 1fr
   }
 
   .stockTitle{
-    font-size:20px;
+    font-size:20px
   }
-
 }
-
-</style></head>
+</style>
+</head>
 
 <body>
 
 <div class="wrap">
 
-  <!-- =====================================================
-       搜尋區
-       ===================================================== -->
-
   <div class="search">
-
     <input
       id="searchInput"
       autocomplete="off"
       placeholder="輸入股票代號或名稱，例如 2330、台積電"
     >
-
-    <button id="searchBtn">
-      分析
-    </button>
-
+    <button id="searchBtn">分析</button>
   </div>
-
 
   <div class="hint">
-    V1491｜動態支撐／壓力／點位區間／進場／止盈／法人籌碼
-    ※所有價格均依實際行情動態計算
+    V1491｜動態支撐／壓力／區間／進場／止盈／法人籌碼
+    ※價格全部依實際行情計算
   </div>
-
 
   <div id="status" class="status"></div>
 
-  <div
-    id="searchResults"
-    class="searchResults"
-  ></div>
-
-
-  <!-- =====================================================
-       首頁
-       ===================================================== -->
+  <div id="searchResults" class="searchResults"></div>
 
   <main id="home">
-
-
-    <!-- ===================================================
-         V1491 說明
-         =================================================== -->
 
     <section class="card">
 
@@ -1134,41 +734,12 @@ button{
       </div>
 
       <div class="intro">
-
-        輸入股票後，系統會依實際行情資料，
-        動態計算：
-
-        <br>
-
-        趨勢、
-        第一支撐、
-        第二支撐、
-        第一壓力、
-        第二壓力、
-        點位區間、
-        成交量、
-        三大法人、
-        回踩、
-        突破、
-        進場、
-        防守、
-        第一止盈、
-        第二止盈。
-
-        <br><br>
-
-        <b class="blue">
-          不使用固定股票價格。
-        </b>
-
+        輸入股票後，系統會依即時／近期歷史資料計算趨勢、
+        支撐、壓力、點位區間、成交量、三大法人、回踩與突破條件。
+        程式不預設任何股票的固定價格。
       </div>
 
     </section>
-
-
-    <!-- ===================================================
-         突破掃描
-         =================================================== -->
 
     <section class="card break">
 
@@ -1177,31 +748,16 @@ button{
       </div>
 
       <div class="intro">
-
-        依實際歷史價格與成交量，
-        找出接近壓力區、
-        突破壓力區或具有量價配合的標的。
-
+        掃描清單中的近期行情，找出接近實際壓力結構且有量價配合的標的。
       </div>
 
-      <button
-        id="breakScanBtn"
-        class="action"
-      >
+      <button id="breakScanBtn" class="action">
         🔎 開始動態掃描
       </button>
 
-      <div
-        id="scanResult"
-        class="breakGrid"
-      ></div>
+      <div id="scanResult" class="breakGrid"></div>
 
     </section>
-
-
-    <!-- ===================================================
-         快速股票
-         =================================================== -->
 
     <section class="card">
 
@@ -1211,155 +767,51 @@ button{
 
       <div class="featureGrid">
 
-
-        <button
-          class="feature"
-          data-code="1326"
-        >
-
-          <div class="featureIcon">
-            🏭
-          </div>
-
-          <div class="featureName">
-            台化
-          </div>
-
-          <div class="featureDesc">
-            1326
-          </div>
-
+        <button class="feature" data-code="1326">
+          <div class="featureIcon">🏭</div>
+          <div class="featureName">台化</div>
+          <div class="featureDesc">1326</div>
         </button>
 
-
-        <button
-          class="feature"
-          data-code="2481"
-        >
-
-          <div class="featureIcon">
-            💡
-          </div>
-
-          <div class="featureName">
-            強茂
-          </div>
-
-          <div class="featureDesc">
-            2481
-          </div>
-
+        <button class="feature" data-code="2481">
+          <div class="featureIcon">💡</div>
+          <div class="featureName">強茂</div>
+          <div class="featureDesc">2481</div>
         </button>
 
-
-        <button
-          class="feature"
-          data-code="2606"
-        >
-
-          <div class="featureIcon">
-            🚢
-          </div>
-
-          <div class="featureName">
-            裕民
-          </div>
-
-          <div class="featureDesc">
-            2606
-          </div>
-
+        <button class="feature" data-code="2606">
+          <div class="featureIcon">🚢</div>
+          <div class="featureName">裕民</div>
+          <div class="featureDesc">2606</div>
         </button>
 
-
-        <button
-          class="feature"
-          data-code="2330"
-        >
-
-          <div class="featureIcon">
-            💻
-          </div>
-
-          <div class="featureName">
-            台積電
-          </div>
-
-          <div class="featureDesc">
-            2330
-          </div>
-
+        <button class="feature" data-code="2330">
+          <div class="featureIcon">💻</div>
+          <div class="featureName">台積電</div>
+          <div class="featureDesc">2330</div>
         </button>
 
-
-        <button
-          class="feature"
-          data-code="2317"
-        >
-
-          <div class="featureIcon">
-            📱
-          </div>
-
-          <div class="featureName">
-            鴻海
-          </div>
-
-          <div class="featureDesc">
-            2317
-          </div>
-
+        <button class="feature" data-code="2317">
+          <div class="featureIcon">📱</div>
+          <div class="featureName">鴻海</div>
+          <div class="featureDesc">2317</div>
         </button>
 
-
-        <button
-          class="feature"
-          data-code="0050"
-        >
-
-          <div class="featureIcon">
-            📈
-          </div>
-
-          <div class="featureName">
-            台灣50
-          </div>
-
-          <div class="featureDesc">
-            0050
-          </div>
-
+        <button class="feature" data-code="0050">
+          <div class="featureIcon">📈</div>
+          <div class="featureName">台灣50</div>
+          <div class="featureDesc">0050</div>
         </button>
 
-
-        <button
-          class="feature"
-          data-code="00919"
-        >
-
-          <div class="featureIcon">
-            💰
-          </div>
-
-          <div class="featureName">
-            高股息
-          </div>
-
-          <div class="featureDesc">
-            00919
-          </div>
-
+        <button class="feature" data-code="00919">
+          <div class="featureIcon">💰</div>
+          <div class="featureName">高股息</div>
+          <div class="featureDesc">00919</div>
         </button>
-
 
       </div>
 
     </section>
-
-
-    <!-- ===================================================
-         功能區
-         =================================================== -->
 
     <section class="card">
 
@@ -1367,60 +819,31 @@ button{
         🧭 功能
       </div>
 
-
-      <button
-        class="action"
-        data-action="recent"
-      >
+      <button class="action" data-action="recent">
         📅 近期強勢股
       </button>
 
-
-      <button
-        class="action"
-        data-action="long"
-      >
+      <button class="action" data-action="long">
         📈 長線趨勢
       </button>
 
-
-      <button
-        class="action"
-        data-action="popular"
-      >
+      <button class="action" data-action="popular">
         🔥 熱門標的
       </button>
 
-
-      <button
-        class="action"
-        data-action="institution"
-      >
+      <button class="action" data-action="institution">
         🏦 法人動向
       </button>
 
-
-      <button
-        class="action"
-        data-action="pressure"
-      >
+      <button class="action" data-action="pressure">
         🧱 壓力／卡關
       </button>
 
-
-      <button
-        class="action"
-        data-action="analysis"
-      >
+      <button class="action" data-action="analysis">
         🧠 綜合分析
       </button>
 
     </section>
-
-
-    <!-- ===================================================
-         推薦結果
-         =================================================== -->
 
     <section class="card">
 
@@ -1428,301 +851,737 @@ button{
         📌 動態推薦結果
       </div>
 
-      <div
-        id="recommendTable"
-        class="recTable"
-      >
-
+      <div id="recommendTable" class="recTable">
         <div class="empty">
           尚未執行掃描
         </div>
-
       </div>
 
     </section>
 
-
   </main>
-
-
-  <!-- =====================================================
-       股票分析結果
-       JavaScript 會把完整分析內容放到這裡
-       ===================================================== -->
 
   <section id="result"></section>
 
-
-  <!-- =====================================================
-       Footer
-       ===================================================== -->
-
   <div class="footer">
-
-    V1491｜動態行情分析
-
-    <br>
-
-    支撐、壓力、點位區間、
-    進場、防守與止盈均依實際資料計算
-
-    <br>
-
-    不使用固定股票價格
-
+    V1491｜所有股票價格、支撐、壓力、區間與交易點位均由實際資料動態計算，不使用固定股票價格。
   </div>
-
 
 </div>
 
-
-<!-- =======================================================
-     底部導覽
-     ======================================================= -->
-
 <nav class="bottomNav">
 
-
-  <button
-    class="navBtn active"
-    data-nav="home"
-  >
-
-    <div class="navIcon">
-      ⌂
-    </div>
-
-    <div class="navText">
-      首頁
-    </div>
-
+  <button class="navBtn active" data-nav="home">
+    <div class="navIcon">⌂</div>
+    <div class="navText">首頁</div>
   </button>
 
-
-  <button
-    class="navBtn"
-    data-nav="watch"
-  >
-
-    <div class="navIcon">
-      ◉
-    </div>
-
-    <div class="navText">
-      觀察
-    </div>
-
+  <button class="navBtn" data-nav="watch">
+    <div class="navIcon">◉</div>
+    <div class="navText">觀察</div>
   </button>
 
-
-  <button
-    class="navBtn"
-    data-nav="chip"
-  >
-
-    <div class="navIcon">
-      🏦
-    </div>
-
-    <div class="navText">
-      籌碼
-    </div>
-
+  <button class="navBtn" data-nav="chip">
+    <div class="navIcon">🏦</div>
+    <div class="navText">籌碼</div>
   </button>
 
-
-  <button
-    class="navBtn"
-    data-nav="industry"
-  >
-
-    <div class="navIcon">
-      ▦
-    </div>
-
-    <div class="navText">
-      產業
-    </div>
-
+  <button class="navBtn" data-nav="industry">
+    <div class="navIcon">▦</div>
+    <div class="navText">產業</div>
   </button>
 
-
-  <button
-    class="navBtn"
-    data-nav="setting"
-  >
-
-    <div class="navIcon">
-      ⚙
-    </div>
-
-    <div class="navText">
-      設定
-    </div>
-
+  <button class="navBtn" data-nav="setting">
+    <div class="navIcon">⚙</div>
+    <div class="navText">設定</div>
   </button>
 
+</nav>
 
-</nav><script>
-"use strict";
-
-/* =========================================================
-   V1491｜核心資料引擎
-   第 3 段
-
-   本段負責：
-   1. API
-   2. 股票資料
-   3. 即時行情
-   4. 歷史行情
-   5. MA
-   6. ATR
-   7. 局部高低點
-   8. 量價密集
-   9. 動態價格聚類
-   10. 第一／第二支撐
-   11. 第一／第二壓力
-   12. 點位區間
-
-   注意：
-   不放任何固定股票價格。
-   ========================================================= */
-
-
-/* =========================================================
-   API
+<script>/* =========================================================
+   V1491｜第 2 段
+   核心資料引擎／股票清單／API／搜尋基礎
    ========================================================= */
 
 const FINMIND =
-  "https:///* =========================================================
-   V1491｜第 4 段
-   動態點位引擎
-   ========================================================= */
+  "https://api.finmindtrade.com/api/v4/data";
+
+const MIS =
+  "https://mis.twse.com.tw/stock/api/getStockInfo.jsp";
+
+const PROXIES = [
+  "https://api.allorigins.win/raw?url=",
+  "https://corsproxy.io/?url="
+];
 
 
 /* =========================================================
-   計算平均值
+   基本工具
    ========================================================= */
 
-function avg(arr){
+function $(id){
+  return document.getElementById(id);
+}
 
-  const list = arr
-    .map(v => Number(v))
-    .filter(v => Number.isFinite(v));
+function clean(value){
+  return String(value ?? "").trim();
+}
 
-  if(!list.length){
-    return null;
+function n(value){
+  if(value == null || value === "") return null;
+
+  const v = Number(
+    String(value)
+      .replace(/,/g,"")
+      .trim()
+  );
+
+  return Number.isFinite(v) ? v : null;
+}
+
+function esc(value){
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#39;");
+}
+
+function money(value){
+  const v = n(value);
+
+  if(v == null){
+    return "—";
   }
 
-  return list.reduce(
-    (sum,v) => sum + v,
-    0
-  ) / list.length;
+  return v.toFixed(2);
+}
+
+function integer(value){
+  const v = n(value);
+
+  if(v == null){
+    return "—";
+  }
+
+  return Math.round(v).toLocaleString("zh-TW");
+}
+
+function pct(value){
+  const v = n(value);
+
+  if(v == null){
+    return "—";
+  }
+
+  return `${v >= 0 ? "+" : ""}${v.toFixed(2)}%`;
+}
+
+function pctChange(a,b){
+
+  const x = n(a);
+  const y = n(b);
+
+  if(x == null || y == null || x === 0){
+    return "—";
+  }
+
+  return pct((y-x)/x*100);
+}
+
+function priceText(value){
+  const v = n(value);
+
+  return v == null
+    ? "—"
+    : v.toFixed(2);
+}
+
+function percentText(value){
+  const v = n(value);
+
+  return v == null
+    ? "—"
+    : `${v.toFixed(2)}%`;
+}
+
+function distanceText(price,level){
+
+  const p = n(price);
+  const l = n(level);
+
+  if(p == null || l == null || p === 0){
+    return "—";
+  }
+
+  const d = (l-p)/p*100;
+
+  return `${d >= 0 ? "+" : ""}${d.toFixed(2)}%`;
 }
 
 
 /* =========================================================
-   標準差
-   用於判斷股票自己的波動程度
-   不使用固定百分比
+   股票名稱資料
    ========================================================= */
 
-function stdev(arr){
+const KNOWN = {
 
-  const list = arr
-    .map(v => Number(v))
-    .filter(v => Number.isFinite(v));
+  "1301":"台塑",
+  "1303":"南亞",
+  "1326":"台化",
 
-  if(list.length < 2){
-    return null;
-  }
+  "2002":"中鋼",
 
-  const mean = avg(list);
+  "2303":"聯電",
+  "2308":"台達電",
+  "2312":"金寶",
+  "2313":"華通",
+  "2317":"鴻海",
+  "2330":"台積電",
+  "2367":"燿華",
+  "2481":"強茂",
 
-  const variance =
-    avg(
-      list.map(v =>
-        Math.pow(v - mean,2)
-      )
-    );
+  "2603":"長榮",
+  "2606":"裕民",
+  "2618":"長榮航",
 
-  return variance == null
-    ? null
-    : Math.sqrt(variance);
+  "2891":"中信金",
+
+  "3324":"雙鴻",
+  "3481":"群創",
+  "3711":"日月光投控",
+
+  "5314":"世紀",
+  "5425":"台半",
+
+  "6244":"茂迪",
+
+  "6770":"力積電",
+
+  "8046":"南電",
+
+  "0050":"元大台灣50",
+  "0056":"元大高股息",
+  "00631L":"元大台灣50正2",
+  "00632R":"元大台灣50反1",
+  "00685L":"群益臺灣加權正2",
+  "00891":"中信關鍵半導體",
+  "00919":"群益台灣精選高息",
+  "00981A":"主動野村臺灣優選"
+};
+
+
+/* =========================================================
+   股票別名
+   ========================================================= */
+
+const ALIAS = {
+
+  "台塑":"1301",
+  "南亞":"1303",
+  "台化":"1326",
+
+  "中鋼":"2002",
+
+  "聯電":"2303",
+  "台達":"2308",
+  "台達電":"2308",
+  "金寶":"2312",
+  "華通":"2313",
+  "鴻海":"2317",
+  "台積":"2330",
+  "台積電":"2330",
+  "燿華":"2367",
+  "強茂":"2481",
+
+  "長榮":"2603",
+  "裕民":"2606",
+  "長榮航":"2618",
+
+  "中信金":"2891",
+
+  "雙鴻":"3324",
+  "群創":"3481",
+  "日月光":"3711",
+  "日月光投控":"3711",
+
+  "世紀":"5314",
+  "台半":"5425",
+  "茂迪":"6244",
+  "力積電":"6770",
+  "南電":"8046",
+
+  "0050":"0050",
+  "台灣50":"0050",
+  "元大台灣50":"0050",
+
+  "0056":"0056",
+  "元大高股息":"0056",
+
+  "00919":"00919",
+  "群益高股息":"00919",
+  "群益台灣精選高息":"00919"
+};
+
+
+/* =========================================================
+   掃描清單
+   ========================================================= */
+
+const SCAN_CODES = [
+  "1301",
+  "1303",
+  "1326",
+  "2002",
+  "2303",
+  "2308",
+  "2313",
+  "2317",
+  "2330",
+  "2481",
+  "2603",
+  "2606",
+  "2618",
+  "2891",
+  "3324",
+  "3481",
+  "3711",
+  "6244",
+  "6770",
+  "8046",
+  "0050",
+  "0056",
+  "00919"
+];
+
+
+/* =========================================================
+   全域狀態
+   ========================================================= */
+
+const state = {
+
+  currentStock:null,
+
+  currentData:null,
+
+  cache:new Map(),
+
+  searchSeq:0,
+
+  scanSeq:0,
+
+  refreshTimer:null
+
+};
+
+
+/* =========================================================
+   日期工具
+   ========================================================= */
+
+function pad2(v){
+
+  return String(v).padStart(2,"0");
+
+}
+
+function dateText(date){
+
+  const y = date.getFullYear();
+  const m = pad2(date.getMonth()+1);
+  const d = pad2(date.getDate());
+
+  return `${y}-${m}-${d}`;
+
+}
+
+function today(){
+
+  return dateText(new Date());
+
+}
+
+function dateShift(days){
+
+  const d = new Date();
+
+  d.setDate(
+    d.getDate()+days
+  );
+
+  return dateText(d);
+
 }
 
 
 /* =========================================================
-   ATR
-   依股票自身波動計算區間寬度
+   API JSON
    ========================================================= */
 
-function atr(rows,period=14){
+async function fetchJSON(url,options={}){
 
-  if(!Array.isArray(rows)){
-    return null;
-  }
-
-  if(rows.length < period + 1){
-    return null;
-  }
-
-  const trs = [];
-
-  const start =
-    Math.max(
-      1,
-      rows.length - period
+  const response =
+    await fetch(
+      url,
+      {
+        ...options,
+        cache:"no-store"
+      }
     );
 
-  for(
-    let i=start;
-    i<rows.length;
-    i++
-  ){
+  if(!response.ok){
 
-    const current = rows[i];
-    const previous = rows[i-1];
+    throw new Error(
+      `HTTP ${response.status}`
+    );
 
-    const high =
-      current.high ??
-      current.close;
+  }
 
-    const low =
-      current.low ??
-      current.close;
+  return response.json();
 
-    const previousClose =
-      previous.close;
+}
 
-    if(
-      high == null ||
-      low == null ||
-      previousClose == null
-    ){
-      continue;
+
+/* =========================================================
+   FinMind
+   ========================================================= */
+
+async function finmind(dataset,params={}){
+
+  const query = new URLSearchParams();
+
+  query.set(
+    "dataset",
+    dataset
+  );
+
+  Object.entries(params).forEach(
+    ([key,value])=>{
+
+      if(
+        value != null &&
+        value !== ""
+      ){
+
+        query.set(
+          key,
+          value
+        );
+
+      }
+
+    }
+  );
+
+  const url =
+    `${FINMIND}?${query.toString()}`;
+
+  return fetchJSON(url);
+
+}
+
+
+/* =========================================================
+   數字解析
+   ========================================================= */
+
+function firstNumber(...values){
+
+  for(const value of values){
+
+    const x = n(value);
+
+    if(x != null){
+      return x;
     }
 
-    const tr =
-      Math.max(
-        high - low,
-        Math.abs(
-          high - previousClose
-        ),
-        Math.abs(
-          low - previousClose
-        )
+  }
+
+  return null;
+
+}
+
+
+/* =========================================================
+   歷史行情標準化
+   ========================================================= */
+
+function normalizeHistoryRow(row){
+
+  const date =
+    row.date ||
+    row.Date ||
+    row.datetime ||
+    row.timestamp;
+
+  const close =
+    firstNumber(
+      row.close,
+      row.Close,
+      row.ClosePrice
+    );
+
+  const open =
+    firstNumber(
+      row.open,
+      row.Open,
+      row.OpenPrice
+    );
+
+  const high =
+    firstNumber(
+      row.max,
+      row.high,
+      row.High,
+      row.HighPrice
+    );
+
+  const low =
+    firstNumber(
+      row.min,
+      row.low,
+      row.Low,
+      row.LowPrice
+    );
+
+  const volume =
+    firstNumber(
+      row.Trading_Volume,
+      row.volume,
+      row.Volume
+    );
+
+  if(!date || close == null){
+
+    return null;
+
+  }
+
+  return {
+
+    date:String(date),
+
+    open,
+
+    high:high ?? close,
+
+    low:low ?? close,
+
+    close,
+
+    volume:volume ?? 0
+
+  };
+
+}
+
+
+/* =========================================================
+   歷史行情
+   ========================================================= */
+
+async function getPrices(code){
+
+  const key =
+    `prices:${code}`;
+
+  if(state.cache.has(key)){
+
+    return state.cache.get(key);
+
+  }
+
+  const data =
+    await finmind(
+      "TaiwanStockPrice",
+      {
+        data_id:code,
+        start_date:dateShift(-180),
+        end_date:today()
+      }
+    );
+
+  const arr =
+    Array.isArray(data?.data)
+      ? data.data
+      : [];
+
+  const rows =
+    arr
+      .map(normalizeHistoryRow)
+      .filter(Boolean)
+      .sort(
+        (a,b)=>
+          String(a.date)
+            .localeCompare(
+              String(b.date)
+            )
       );
 
-    if(
-      Number.isFinite(tr) &&
-      tr >= 0
-    ){
-      trs.push(tr);
+  state.cache.set(
+    key,
+    rows
+  );
+
+  return rows;
+
+}
+
+
+/* =========================================================
+   TWSE MIS 即時行情
+   ========================================================= */
+
+async function getRealtime(code){
+
+  const symbol =
+    `${code}.TW`;
+
+  try{
+
+    const url =
+      `${MIS}?ex_ch=tse_${code}.tw`;
+
+    const data =
+      await fetchJSON(url);
+
+    const msg =
+      Array.isArray(data?.msgArray)
+        ? data.msgArray[0]
+        : null;
+
+    if(!msg){
+
+      return null;
+
     }
+
+    const price =
+      firstNumber(
+        msg.z,
+        msg.y
+      );
+
+    const prev =
+      firstNumber(
+        msg.y
+      );
+
+    const open =
+      firstNumber(
+        msg.o
+      );
+
+    const high =
+      firstNumber(
+        msg.h
+      );
+
+    const low =
+      firstNumber(
+        msg.l
+      );
+
+    const volume =
+      firstNumber(
+        msg.v
+      );
+
+    const time =
+      msg.t ||
+      msg.tv ||
+      "";
+
+    return {
+
+      code,
+
+      symbol,
+
+      price,
+
+      prev,
+
+      open,
+
+      high,
+
+      low,
+
+      volume,
+
+      time,
+
+      name:
+        msg.n ||
+        KNOWN[code] ||
+        code
+
+    };
+
+  }catch(error){
+
+    console.warn(
+      "MIS realtime failed",
+      code,
+      error
+    );
+
   }
 
-  return avg(trs);
+  return null;
+
+}
+
+
+/* =========================================================
+   排序工具
+   ========================================================= */
+
+function sorted(rows){
+
+  return [...rows]
+    .filter(Boolean)
+    .sort(
+      (a,b)=>
+        String(a.date)
+          .localeCompare(
+            String(b.date)
+          )
+    );
+
+}
+
+
+/* =========================================================
+   最新資料
+   ========================================================= */
+
+function latest(rows){
+
+  if(!Array.isArray(rows) || !rows.length){
+
+    return null;
+
+  }
+
+  return rows[rows.length-1];
+
+}
+
+
+/* =========================================================
+   收盤價
+   ========================================================= */
+
+function closes(rows){
+
+  return rows
+    .map(r=>n(r.close))
+    .filter(v=>v!=null);
+
 }
 
 
@@ -1732,56 +1591,139 @@ function atr(rows,period=14){
 
 function sma(rows,period){
 
-  if(
-    !Array.isArray(rows) ||
-    rows.length < period
-  ){
+  const arr =
+    closes(rows);
+
+  if(arr.length < period){
+
     return null;
+
   }
 
-  const values =
-    rows
-      .slice(-period)
-      .map(r => r.close)
-      .filter(v => v != null);
+  const part =
+    arr.slice(-period);
 
-  if(values.length !== period){
-    return null;
-  }
+  return (
+    part.reduce(
+      (sum,v)=>sum+v,
+      0
+    ) / part.length
+  );
 
-  return avg(values);
 }
 
 
 /* =========================================================
-   找近期波段高低
+   均量
    ========================================================= */
 
-function recentRange(rows,period=60){
+function avgVolume(rows,period=20){
 
-  const data =
-    rows.slice(
-      Math.max(
-        0,
-        rows.length - period
-      )
-    );
+  const arr =
+    rows
+      .slice(-period)
+      .map(r=>n(r.volume))
+      .filter(v=>v!=null);
+
+  if(!arr.length){
+
+    return null;
+
+  }
+
+  return (
+    arr.reduce(
+      (sum,v)=>sum+v,
+      0
+    ) / arr.length
+  );
+
+}
+
+
+/* =========================================================
+   斜率
+   ========================================================= */
+
+function slope(rows,period=20){
+
+  const arr =
+    closes(rows)
+      .slice(-period);
+
+  if(arr.length < 5){
+
+    return null;
+
+  }
+
+  const first =
+    arr[0];
+
+  const last =
+    arr[arr.length-1];
+
+  if(first === 0){
+
+    return null;
+
+  }
+
+  return (
+    (last-first) /
+    first *
+    100
+  );
+
+}
+
+
+/* =========================================================
+   Bias
+   ========================================================= */
+
+function bias(price,ma){
+
+  const p=n(price);
+  const m=n(ma);
+
+  if(p==null || m==null || m===0){
+
+    return null;
+
+  }
+
+  return (
+    (p-m)/m*100
+  );
+
+}
+
+
+/* =========================================================
+   震幅
+   ========================================================= */
+
+function rangeOf(rows){
+
+  if(!rows?.length){
+
+    return {
+      high:null,
+      low:null
+    };
+
+  }
 
   const highs =
-    data
-      .map(r =>
-        r.high ??
-        r.close
-      )
-      .filter(v => v != null);
+    rows
+      .map(r=>n(r.high))
+      .filter(v=>v!=null);
 
   const lows =
-    data
-      .map(r =>
-        r.low ??
-        r.close
-      )
-      .filter(v => v != null);
+    rows
+      .map(r=>n(r.low))
+      .filter(v=>v!=null);
 
   return {
 
@@ -1796,830 +1738,573 @@ function recentRange(rows,period=60){
         : null
 
   };
+
+}
+
+
+/* =========================================================
+   安全 clamp
+   ========================================================= */
+
+function clamp(value,min,max){
+
+  return Math.max(
+    min,
+    Math.min(
+      max,
+      value
+    )
+  );
+
+}
+
+
+/* =========================================================
+   狀態文字
+   ========================================================= */
+
+function setStatus(text){
+
+  const el=$("status");
+
+  if(el){
+
+    el.innerHTML =
+      `<span class="dot"></span>${esc(text)}`;
+
+  }
+
+}
+
+
+/* =========================================================
+   搜尋候選
+   ========================================================= */
+
+async function showSearchCandidates(){
+
+  const input =
+    $("searchInput");
+
+  const box =
+    $("searchResults");
+
+  if(!input || !box){
+
+    return;
+
+  }
+
+  const q =
+    clean(input.value);
+
+  if(!q){
+
+    box.innerHTML="";
+
+    return;
+
+  }
+
+  const upper =
+    q.toUpperCase();
+
+  const list =
+    Object.entries(KNOWN)
+      .filter(
+        ([code,name])=>
+          code.includes(upper) ||
+          name.includes(q)
+      )
+      .slice(0,8);
+
+  box.innerHTML =
+    list.map(
+      ([code,name])=>`
+        <button
+          class="searchResult"
+          data-search-code="${esc(code)}"
+        >
+          <b>${esc(code)}</b>
+          <span>${esc(name)}</span>
+        </button>
+      `
+    ).join("");
+
+  box
+    .querySelectorAll(
+      "[data-search-code]"
+    )
+    .forEach(button=>{
+
+      button.addEventListener(
+        "click",
+        ()=>{
+
+          input.value =
+            button.dataset.searchCode;
+
+          box.innerHTML="";
+
+          searchStock(
+            button.dataset.searchCode
+          );
+
+        }
+      );
+
+    });
+
+}/* =========================================================
+   V1491｜第 3 段
+   動態技術分析引擎
+   MA5 / MA20 / MA60 / ATR / 60日區間 / 趨勢 / 量能
+   ========================================================= */
+
+
+/* =========================================================
+   平均值
+   ========================================================= */
+
+function avg(arr){
+
+  const values =
+    (arr || [])
+      .map(n)
+      .filter(v=>v!=null);
+
+  if(!values.length){
+    return null;
+  }
+
+  return values.reduce(
+    (sum,v)=>sum+v,
+    0
+  ) / values.length;
+
+}
+
+
+/* =========================================================
+   標準差
+   ========================================================= */
+
+function stdev(arr){
+
+  const values =
+    (arr || [])
+      .map(n)
+      .filter(v=>v!=null);
+
+  if(values.length < 2){
+    return null;
+  }
+
+  const mean =
+    avg(values);
+
+  const variance =
+    avg(
+      values.map(
+        v=>Math.pow(v-mean,2)
+      )
+    );
+
+  return Math.sqrt(
+    variance
+  );
+
+}
+
+
+/* =========================================================
+   ATR
+   使用實際高低價計算
+   ========================================================= */
+
+function atr(rows,period=14){
+
+  if(!Array.isArray(rows) || rows.length < 2){
+    return null;
+  }
+
+  const sortedRows =
+    sorted(rows);
+
+  const trs=[];
+
+  for(let i=1;i<sortedRows.length;i++){
+
+    const current =
+      sortedRows[i];
+
+    const previous =
+      sortedRows[i-1];
+
+    const high =
+      n(current.high);
+
+    const low =
+      n(current.low);
+
+    const prevClose =
+      n(previous.close);
+
+    if(
+      high==null ||
+      low==null ||
+      prevClose==null
+    ){
+      continue;
+    }
+
+    const tr =
+      Math.max(
+        high-low,
+        Math.abs(high-prevClose),
+        Math.abs(low-prevClose)
+      );
+
+    if(Number.isFinite(tr)){
+      trs.push(tr);
+    }
+
+  }
+
+  if(trs.length < period){
+    return null;
+  }
+
+  return avg(
+    trs.slice(-period)
+  );
+
+}
+
+
+/* =========================================================
+   最近價格區間
+   ========================================================= */
+
+function recentRange(rows,period=60){
+
+  const data =
+    sorted(rows)
+      .slice(-period);
+
+  if(!data.length){
+
+    return {
+      high:null,
+      low:null,
+      range:null
+    };
+
+  }
+
+  const highs =
+    data
+      .map(r=>n(r.high))
+      .filter(v=>v!=null);
+
+  const lows =
+    data
+      .map(r=>n(r.low))
+      .filter(v=>v!=null);
+
+  if(!highs.length || !lows.length){
+
+    return {
+      high:null,
+      low:null,
+      range:null
+    };
+
+  }
+
+  const high =
+    Math.max(...highs);
+
+  const low =
+    Math.min(...lows);
+
+  return {
+
+    high,
+
+    low,
+
+    range:
+      high-low
+
+  };
+
 }
 
 
 /* =========================================================
    局部高低點
-   只使用實際歷史資料
+   找實際歷史價格的轉折
    ========================================================= */
 
-function localExtremes(
-  rows,
-  side,
-  look=2
-){
+function localExtremes(rows,lookback=2){
 
-  const result = [];
+  const data =
+    sorted(rows);
 
-  if(
-    !Array.isArray(rows) ||
-    rows.length < look * 2 + 1
-  ){
-    return result;
+  const highs=[];
+  const lows=[];
+
+  if(data.length < lookback*2+1){
+
+    return {
+      highs,
+      lows
+    };
+
   }
 
   for(
-    let i=look;
-    i<rows.length-look;
+    let i=lookback;
+    i<data.length-lookback;
     i++
   ){
 
-    const row = rows[i];
+    const current =
+      data[i];
 
-    const value =
-      side === "high"
-        ? (
-            row.high ??
-            row.close
-          )
-        : (
-            row.low ??
-            row.close
-          );
+    const high =
+      n(current.high);
 
-    if(value == null){
+    const low =
+      n(current.low);
+
+    if(high==null || low==null){
       continue;
     }
 
-    let valid = true;
+    let isHigh=true;
+    let isLow=true;
 
     for(
       let j=1;
-      j<=look;
+      j<=lookback;
       j++
     ){
 
-      const left = rows[i-j];
-      const right = rows[i+j];
+      const left =
+        data[i-j];
 
-      const leftValue =
-        side === "high"
-          ? (
-              left.high ??
-              left.close
-            )
-          : (
-              left.low ??
-              left.close
-            );
+      const right =
+        data[i+j];
 
-      const rightValue =
-        side === "high"
-          ? (
-              right.high ??
-              right.close
-            )
-          : (
-              right.low ??
-              right.close
-            );
+      const leftHigh =
+        n(left.high);
+
+      const rightHigh =
+        n(right.high);
+
+      const leftLow =
+        n(left.low);
+
+      const rightLow =
+        n(right.low);
 
       if(
-        leftValue == null ||
-        rightValue == null
+        leftHigh!=null &&
+        high < leftHigh
       ){
-        valid = false;
-        break;
+        isHigh=false;
       }
 
-      if(side === "high"){
-
-        if(
-          value < leftValue ||
-          value < rightValue
-        ){
-          valid = false;
-          break;
-        }
-
-      }else{
-
-        if(
-          value > leftValue ||
-          value > rightValue
-        ){
-          valid = false;
-          break;
-        }
-
+      if(
+        rightHigh!=null &&
+        high < rightHigh
+      ){
+        isHigh=false;
       }
+
+      if(
+        leftLow!=null &&
+        low > leftLow
+      ){
+        isLow=false;
+      }
+
+      if(
+        rightLow!=null &&
+        low > rightLow
+      ){
+        isLow=false;
+      }
+
     }
 
-    if(valid){
+    if(isHigh){
 
-      result.push({
-
-        price:value,
-
-        index:i,
-
-        date:row.date,
-
-        volume:row.volume ?? null
-
+      highs.push({
+        price:high,
+        date:current.date,
+        volume:n(current.volume) || 0
       });
 
     }
+
+    if(isLow){
+
+      lows.push({
+        price:low,
+        date:current.date,
+        volume:n(current.volume) || 0
+      });
+
+    }
+
   }
 
-  return result;
+  return {
+    highs,
+    lows
+  };
+
 }
 
 
 /* =========================================================
-   成交量價格分布
-   找實際成交量比較集中的價格
+   量價密集區
+   不使用固定價格
    ========================================================= */
 
-function volumeProfile(
-  rows,
-  bin
-){
+function volumeProfile(rows,bins=24){
 
-  const map = new Map();
+  const data =
+    sorted(rows)
+      .slice(-120);
 
-  if(
-    !Array.isArray(rows) ||
-    !Number.isFinite(bin) ||
-    bin <= 0
-  ){
+  const values =
+    data
+      .map(r=>({
+        high:n(r.high),
+        low:n(r.low),
+        close:n(r.close),
+        volume:n(r.volume)||0
+      }))
+      .filter(
+        r=>
+          r.high!=null &&
+          r.low!=null &&
+          r.close!=null
+      );
+
+  if(!values.length){
+
     return [];
+
   }
 
-  for(
-    const row of rows.slice(-120)
+  const highs =
+    values.map(r=>r.high);
+
+  const lows =
+    values.map(r=>r.low);
+
+  const maxPrice =
+    Math.max(...highs);
+
+  const minPrice =
+    Math.min(...lows);
+
+  if(
+    !Number.isFinite(maxPrice) ||
+    !Number.isFinite(minPrice) ||
+    maxPrice<=minPrice
   ){
 
-    const price = row.close;
-    const volume = row.volume;
+    return [];
 
-    if(
-      price == null ||
-      volume == null
-    ){
-      continue;
-    }
+  }
 
-    const key =
-      Math.round(
-        price / bin
-      ) * bin;
+  const width =
+    (maxPrice-minPrice)/bins;
 
-    const old =
-      map.get(key) ||
-      {
-        price:key,
+  if(width<=0){
+
+    return [];
+
+  }
+
+  const buckets =
+    Array.from(
+      {length:bins},
+      ()=>({
         volume:0,
-        touches:0
-      };
-
-    old.volume += volume;
-    old.touches += 1;
-
-    map.set(
-      key,
-      old
-    );
-  }
-
-  return [
-    ...map.values()
-  ];
-}
-
-
-/* =========================================================
-   價格群組
-   將彼此很接近的實際價格聚成一個區域
-   ========================================================= */
-
-function clusterLevels(
-  candidates,
-  tolerance
-){
-
-  const sorted =
-    candidates
-      .filter(
-        x =>
-          x &&
-          Number.isFinite(
-            Number(x.price)
-          )
-      )
-      .sort(
-        (a,b) =>
-          a.price - b.price
-      );
-
-  const groups = [];
-
-  for(
-    const candidate of sorted
-  ){
-
-    const last =
-      groups[groups.length-1];
-
-    if(
-      !last ||
-      Math.abs(
-        candidate.price -
-        last.center
-      ) > tolerance
-    ){
-
-      groups.push({
-
-        items:[candidate],
-
-        center:candidate.price
-
-      });
-
-      continue;
-    }
-
-    last.items.push(
-      candidate
+        count:0,
+        prices:[]
+      })
     );
 
-    const weights =
-      last.items.map(
-        item =>
-          Number.isFinite(
-            item.weight
-          )
-            ? item.weight
-            : 1
-      );
+  values.forEach(row=>{
 
-    const weightTotal =
-      weights.reduce(
-        (a,b) => a+b,
-        0
-      );
-
-    last.center =
-      last.items.reduce(
-        (sum,item,index) =>
-          sum +
-          item.price *
-          weights[index],
-        0
-      ) /
-      weightTotal;
-  }
-
-
-  return groups.map(
-    group => {
-
-      const strength =
-        group.items.reduce(
-          (sum,item) =>
-            sum +
-            (
-              Number.isFinite(
-                item.weight
-              )
-                ? item.weight
-                : 1
-            ),
-          0
-        );
-
-      return {
-
-        ...group,
-
-        strength,
-
-        min:
-          Math.min(
-            ...group.items.map(
-              x => x.price
-            )
-          ),
-
-        max:
-          Math.max(
-            ...group.items.map(
-              x => x.price
-            )
-          ),
-
-        types:[
-          ...new Set(
-            group.items.map(
-              x => x.type
-            )
-          )
-        ]
-
-      };
-
-    }
-  );
-}
-
-
-/* =========================================================
-   動態點位理由
-   ========================================================= */
-
-function levelReason(group){
-
-  if(!group){
-    return "資料不足";
-  }
-
-  const count = {};
-
-  group.items.forEach(
-    item => {
-
-      count[item.type] =
-        (count[item.type] || 0) + 1;
-
-    }
-  );
-
-  const reasons = [];
-
-  if(count["高點"]){
-    reasons.push("歷史高點");
-  }
-
-  if(count["低點"]){
-    reasons.push("歷史低點");
-  }
-
-  if(count["均線"]){
-    reasons.push("均線");
-  }
-
-  if(count["量價"]){
-    reasons.push("量價密集");
-  }
-
-  if(
-    count["波段高點"] ||
-    count["波段低點"]
-  ){
-    reasons.push("波段結構");
-  }
-
-  return reasons.length
-    ? reasons.slice(0,3).join("＋")
-    : "價格結構";
-}
-
-
-/* =========================================================
-   建立實際點位區間
-   區間寬度依 ATR / 波動度計算
-   ========================================================= */
-
-function makeLevelBand(
-  group,
-  atrValue,
-  tolerance
-){
-
-  if(!group){
-    return null;
-  }
-
-  const atrPart =
-    Number.isFinite(atrValue)
-      ? atrValue * 0.18
-      : 0;
-
-  const tolerancePart =
-    Number.isFinite(tolerance)
-      ? tolerance * 0.45
-      : 0;
-
-  const padding =
-    Math.max(
-      atrPart,
-      tolerancePart
-    );
-
-  return {
-
-    point:group.center,
-
-    low:
-      Math.max(
+    const index =
+      clamp(
+        Math.floor(
+          (row.close-minPrice)/width
+        ),
         0,
-        group.center - padding
-      ),
+        bins-1
+      );
 
-    high:
-      group.center + padding,
+    buckets[index].volume +=
+      row.volume;
 
-    strength:
-      group.strength,
+    buckets[index].count += 1;
 
-    reason:
-      levelReason(group)
+    buckets[index].prices.push(
+      row.close
+    );
 
-  };
+  });
+
+  return buckets
+    .map(
+      (bucket,index)=>({
+
+        price:
+          minPrice+
+          width*(index+0.5),
+
+        volume:
+          bucket.volume,
+
+        count:
+          bucket.count,
+
+        low:
+          minPrice+
+          width*index,
+
+        high:
+          minPrice+
+          width*(index+1)
+
+      })
+    )
+    .filter(
+      x=>x.count>0
+    )
+    .sort(
+      (a,b)=>
+        b.volume-a.volume
+    );
+
 }
 
 
 /* =========================================================
-   ⭐ V1491 核心
-   動態支撐／壓力引擎
+   均線趨勢
    ========================================================= */
 
-function dynamicLevels(
-  rows,
-  price
-){
-
-  if(
-    !Array.isArray(rows) ||
-    !rows.length ||
-    price == null
-  ){
-    return null;
-  }
-
-
-  /* -------------------------------------------------------
-     股票自己的波動
-     ------------------------------------------------------- */
-
-  const atrValue =
-    atr(rows,14);
-
-
-  const recentRows =
-    rows.slice(-90);
-
-
-  const closeValues =
-    recentRows
-      .map(r => r.close)
-      .filter(
-        v => v != null
-      );
-
-
-  const deviation =
-    stdev(closeValues);
-
-
-  /*
-   * 容許區間不是固定百分比。
-   * 優先使用 ATR / 標準差。
-   */
-
-  const tolerance =
-    Math.max(
-
-      Number.isFinite(atrValue)
-        ? atrValue * 0.45
-        : 0,
-
-      Number.isFinite(deviation)
-        ? deviation * 0.18
-        : 0,
-
-      /*
-       * 最小單位只用於避免
-       * 數學上變成零，
-       * 不代表股票固定百分比。
-       */
-
-      Number.EPSILON
-
-    );
-
-
-  const candidates = [];
-
-
-  /* -------------------------------------------------------
-     實際局部低點
-     ------------------------------------------------------- */
-
-  localExtremes(
-    recentRows,
-    "low",
-    2
-  ).forEach(
-    item => {
-
-      candidates.push({
-
-        price:item.price,
-
-        type:"低點",
-
-        weight:2.4,
-
-        reason:"近期局部低點"
-
-      });
-
-    }
-  );
-
-
-  /* -------------------------------------------------------
-     實際局部高點
-     ------------------------------------------------------- */
-
-  localExtremes(
-    recentRows,
-    "high",
-    2
-  ).forEach(
-    item => {
-
-      candidates.push({
-
-        price:item.price,
-
-        type:"高點",
-
-        weight:2.4,
-
-        reason:"近期局部高點"
-
-      });
-
-    }
-  );
-
-
-  /* -------------------------------------------------------
-     實際均線
-     ------------------------------------------------------- */
-
-  const ma20 =
-    sma(rows,20);
-
-  const ma60 =
-    sma(rows,60);
-
-  const ma120 =
-    sma(rows,120);
-
-
-  if(ma20 != null){
-
-    candidates.push({
-
-      price:ma20,
-
-      type:"均線",
-
-      weight:2,
-
-      reason:"MA20"
-
-    });
-
-  }
-
-
-  if(ma60 != null){
-
-    candidates.push({
-
-      price:ma60,
-
-      type:"均線",
-
-      weight:2.2,
-
-      reason:"MA60"
-
-    });
-
-  }
-
-
-  if(ma120 != null){
-
-    candidates.push({
-
-      price:ma120,
-
-      type:"均線",
-
-      weight:1.8,
-
-      reason:"MA120"
-
-    });
-
-  }
-
-
-  /* -------------------------------------------------------
-     實際成交量價格分布
-     ------------------------------------------------------- */
-
-  const profileBin =
-    Math.max(
-      tolerance,
-      Number.isFinite(atrValue)
-        ? atrValue * 0.55
-        : tolerance
-    );
-
-
-  volumeProfile(
-    recentRows,
-    profileBin
-  ).forEach(
-    item => {
-
-      if(item.touches < 2){
-        return;
-      }
-
-      candidates.push({
-
-        price:item.price,
-
-        type:"量價",
-
-        weight:
-          Math.min(
-            4,
-            item.touches * 0.55 + 1
-          ),
-
-        reason:"成交量價格密集"
-
-      });
-
-    }
-  );
-
-
-  /* -------------------------------------------------------
-     實際 60 日波段高低
-     ------------------------------------------------------- */
-
-  const range60 =
-    recentRange(
-      rows,
-      60
-    );
-
-
-  if(range60.low != null){
-
-    candidates.push({
-
-      price:range60.low,
-
-      type:"波段低點",
-
-      weight:2,
-
-      reason:"近60日波段低點"
-
-    });
-
-  }
-
-
-  if(range60.high != null){
-
-    candidates.push({
-
-      price:range60.high,
-
-      type:"波段高點",
-
-      weight:2,
-
-      reason:"近60日波段高點"
-
-    });
-
-  }
-
-
-  /* -------------------------------------------------------
-     價格群組
-     ------------------------------------------------------- */
-
-  const groups =
-    clusterLevels(
-      candidates,
-      tolerance
-    );
-
-
-  const below =
-    groups
-      .filter(
-        group =>
-          group.center <
-          price -
-          tolerance * 0.15
-      )
-      .sort(
-        (a,b) =>
-          b.center -
-          a.center
-      );
-
-
-  const above =
-    groups
-      .filter(
-        group =>
-          group.center >
-          price +
-          tolerance * 0.15
-      )
-      .sort(
-        (a,b) =>
-          a.center -
-          b.center
-      );
-
-
-  /* -------------------------------------------------------
-     建立：
-     第一支撐
-     第二支撐
-     第一壓力
-     第二壓力
-     ------------------------------------------------------- */
-
-  const s1 =
-    makeLevelBand(
-      below[0],
-      atrValue,
-      tolerance
-    );
-
-  const s2 =
-    makeLevelBand(
-      below[1],
-      atrValue,
-      tolerance
-    );
-
-  const r1 =
-    makeLevelBand(
-      above[0],
-      atrValue,
-      tolerance
-    );
-
-  const r2 =
-    makeLevelBand(
-      above[1],
-      atrValue,
-      tolerance
-    );
-
-
-  return {
-
-    s1,
-    s2,
-
-    r1,
-    r2,
-
-    atr:
-      atrValue,
-
-    tolerance,
-
-    groups,
-
-    range:
-      range60,
-
-    ma20,
-    ma60,
-    ma120
-
-  };
-}
-
-
-/* =========================================================
-   趨勢與成交量
-   ========================================================= */
-
-function technical(
+function movingAverageStructure(
   rows,
   price
 ){
@@ -2636,155 +2321,63 @@ function technical(
   const ma120 =
     sma(rows,120);
 
+  let score=0;
 
-  const recent =
-    recentRange(
-      rows,
-      20
-    );
+  if(price!=null && ma5!=null){
 
-
-  const range60 =
-    recentRange(
-      rows,
-      60
-    );
-
-
-  const atrValue =
-    atr(rows,14);
-
-
-  /*
-   * 20 日平均量：
-   * 排除最後一筆，
-   * 避免當日量正在變動時影響基準。
-   */
-
-  const previous20 =
-    rows.slice(
-      -21,
-      -1
-    );
-
-
-  const avgVol20 =
-    avg(
-      previous20
-        .map(r => r.volume)
-        .filter(v => v != null)
-    );
-
-
-  const latestRow =
-    rows[rows.length-1];
-
-
-  const volumeToday =
-    latestRow?.volume ??
-    null;
-
-
-  const volumeRatio =
-    avgVol20 &&
-    volumeToday
-      ? volumeToday / avgVol20
-      : null;
-
-
-  /* -------------------------------------------------------
-     趨勢分數
-     ------------------------------------------------------- */
-
-  const mas = [
-    ma5,
-    ma20,
-    ma60,
-    ma120
-  ].filter(
-    v => v != null
-  );
-
-
-  let trendScore = 0;
-
-  mas.forEach(
-    ma => {
-
-      if(price > ma){
-        trendScore++;
-      }else if(price < ma){
-        trendScore--;
-      }
-
-    }
-  );
-
-
-  let trend =
-    "震盪";
-
-
-  if(trendScore >= 3){
-
-    trend =
-      "偏多";
-
-  }else if(
-    trendScore <= -2
-  ){
-
-    trend =
-      "偏空";
+    score +=
+      price>ma5 ? 1 : -1;
 
   }
 
+  if(price!=null && ma20!=null){
 
-  /* -------------------------------------------------------
-     現價在 60 日區間的位置
-     ------------------------------------------------------- */
+    score +=
+      price>ma20 ? 2 : -2;
 
-  let position = null;
-
+  }
 
   if(
-    range60.high != null &&
-    range60.low != null &&
-    range60.high !== range60.low
+    ma5!=null &&
+    ma20!=null
   ){
 
-    position =
-      (
-        price -
-        range60.low
-      ) /
-      (
-        range60.high -
-        range60.low
-      );
+    score +=
+      ma5>ma20 ? 2 : -2;
 
   }
 
+  if(
+    ma20!=null &&
+    ma60!=null
+  ){
 
-  const nearHigh =
-    recent.high != null &&
-    price >=
-    recent.high -
-    (
-      atrValue ??
-      0
-    );
+    score +=
+      ma20>ma60 ? 2 : -2;
 
+  }
 
-  const nearLow =
-    recent.low != null &&
-    price <=
-    recent.low +
-    (
-      atrValue ??
-      0
-    );
+  if(
+    ma60!=null &&
+    ma120!=null
+  ){
 
+    score +=
+      ma60>ma120 ? 1 : -1;
+
+  }
+
+  let trend="盤整";
+
+  if(score>=5){
+
+    trend="偏多";
+
+  }else if(score<=-5){
+
+    trend="偏空";
+
+  }
 
   return {
 
@@ -2792,114 +2385,1210 @@ function technical(
     ma20,
     ma60,
     ma120,
+    score,
+    trend
 
-    atr:atrValue,
+  };
 
-    avgVol20,
+}
 
-    volToday:
-      volumeToday,
 
-    volRatio:
-      volumeRatio,
+/* =========================================================
+   60日位置
+   ========================================================= */
 
-    recent,
+function pricePosition(
+  price,
+  range
+){
 
-    range60,
+  if(
+    price==null ||
+    range?.low==null ||
+    range?.high==null ||
+    range.high<=range.low
+  ){
+
+    return null;
+
+  }
+
+  return clamp(
+    (
+      price-range.low
+    ) /
+    (
+      range.high-range.low
+    ),
+    0,
+    1
+  );
+
+}
+
+
+/* =========================================================
+   技術資料主函式
+   ========================================================= */
+
+function technical(rows,price){
+
+  const data =
+    sorted(rows);
+
+  const latestRow =
+    latest(data);
+
+  const ma =
+    movingAverageStructure(
+      data,
+      price
+    );
+
+  const range60 =
+    recentRange(
+      data,
+      60
+    );
+
+  const range20 =
+    recentRange(
+      data,
+      20
+    );
+
+  const atrValue =
+    atr(
+      data,
+      14
+    );
+
+  const avgVol20 =
+    avgVolume(
+      data,
+      20
+    );
+
+  const avgVol5 =
+    avgVolume(
+      data,
+      5
+    );
+
+  const volToday =
+    n(
+      latestRow?.volume
+    );
+
+  const volRatio =
+    volToday!=null &&
+    avgVol20!=null &&
+    avgVol20>0
+      ? volToday/avgVol20
+      : null;
+
+  const slope20 =
+    slope(
+      data,
+      20
+    );
+
+  const slope60 =
+    slope(
+      data,
+      60
+    );
+
+  const bias20 =
+    bias(
+      price,
+      ma.ma20
+    );
+
+  const bias60 =
+    bias(
+      price,
+      ma.ma60
+    );
+
+  const pos =
+    pricePosition(
+      price,
+      range60
+    );
+
+  let trend =
+    ma.trend;
+
+  /*
+   * 再加入實際斜率，
+   * 避免單純依均線排列判斷。
+   */
+
+  if(
+    trend==="偏多" &&
+    slope20!=null &&
+    slope20<0
+  ){
+
+    trend="盤整";
+
+  }
+
+  if(
+    trend==="偏空" &&
+    slope20!=null &&
+    slope20>0
+  ){
+
+    trend="盤整";
+
+  }
+
+  /*
+   * 趨勢分數
+   */
+
+  let trendScore =
+    ma.score;
+
+  if(
+    slope20!=null
+  ){
+
+    if(slope20>5){
+
+      trendScore += 2;
+
+    }else if(slope20>0){
+
+      trendScore += 1;
+
+    }else if(slope20<-5){
+
+      trendScore -= 2;
+
+    }else if(slope20<0){
+
+      trendScore -= 1;
+
+    }
+
+  }
+
+  /*
+   * 成交量趨勢
+   */
+
+  let volumeState =
+    "正常";
+
+  if(volRatio==null){
+
+    volumeState="資料不足";
+
+  }else if(volRatio>=2){
+
+    volumeState="明顯放量";
+
+  }else if(volRatio>=1.25){
+
+    volumeState="量能偏強";
+
+  }else if(volRatio<=0.65){
+
+    volumeState="量縮";
+
+  }
+
+  return {
+
+    price,
+
+    ma5:ma.ma5,
+
+    ma20:ma.ma20,
+
+    ma60:ma.ma60,
+
+    ma120:ma.ma120,
 
     trend,
 
     trendScore,
 
-    pos:position,
+    slope20,
 
-    nearHigh,
+    slope60,
 
-    nearLow
+    bias20,
+
+    bias60,
+
+    atr:atrValue,
+
+    range20,
+
+    range60,
+
+    pos,
+
+    avgVol5,
+
+    avgVol20,
+
+    volToday,
+
+    volRatio,
+
+    volumeState
 
   };
+
 }
 
 
 /* =========================================================
-   成交量狀態
+   成交量訊號
    ========================================================= */
 
-function volumeSignal(
-  tech
-){
+function volumeSignal(tech){
 
   if(
-    tech.volRatio == null
+    !tech ||
+    tech.volRatio==null
   ){
-    return "成交量資料不足";
+
+    return {
+
+      status:"資料不足",
+
+      ratio:null,
+
+      detail:
+        "沒有足夠的20日均量資料"
+
+    };
+
   }
 
+  const ratio =
+    tech.volRatio;
 
-  if(
-    tech.volRatio >= 2
-  ){
-    return "明顯放量";
+  let status =
+    "量能正常";
+
+  if(ratio>=2){
+
+    status =
+      "明顯放量";
+
+  }else if(ratio>=1.25){
+
+    status =
+      "量能偏強";
+
+  }else if(ratio<=0.65){
+
+    status =
+      "量縮";
+
   }
 
+  return {
 
-  if(
-    tech.volRatio >= 1.25
-  ){
-    return "量能偏強";
-  }
+    status,
 
+    ratio,
 
-  if(
-    tech.volRatio <= 0.65
-  ){
-    return "量縮";
-  }
+    detail:
+      `目前量能約為20日均量 ${ratio.toFixed(2)} 倍`
 
+  };
 
-  return "量能正常";
 }
 
 
 /* =========================================================
-   現價位置文字
+   位置文字
    ========================================================= */
 
-function positionLabel(
-  position
-){
+function positionLabel(pos){
 
-  if(position == null){
+  if(pos==null){
+
     return "資料不足";
+
   }
 
+  if(pos<=0.2){
 
-  if(position >= 0.8){
-    return "接近60日高檔";
+    return "低檔區";
+
   }
 
+  if(pos<=0.4){
 
-  if(position >= 0.6){
-    return "偏高位置";
+    return "偏低區";
+
   }
 
+  if(pos<=0.6){
 
-  if(position >= 0.4){
-    return "區間中段";
+    return "中間區";
+
   }
 
+  if(pos<=0.8){
 
-  if(position >= 0.2){
-    return "偏低位置";
+    return "偏高區";
+
   }
 
+  return "高檔區";
 
-  return "接近60日低檔";
+}/* =========================================================
+   V1491｜第 4 段
+   動態支撐／壓力／點位區間引擎
+   ========================================================= */
+
+
+/* =========================================================
+   價格候選去重
+   ========================================================= */
+
+function uniquePriceCandidates(list){
+
+  const result=[];
+
+  for(const item of list || []){
+
+    const price =
+      n(item?.price);
+
+    if(price==null || price<=0){
+      continue;
+    }
+
+    const exists =
+      result.some(
+        x=>
+          Math.abs(
+            x.price-price
+          ) /
+          price
+          < 0.0015
+      );
+
+    if(!exists){
+
+      result.push({
+        ...item,
+        price
+      });
+
+    }
+
+  }
+
+  return result;
+
 }
 
 
 /* =========================================================
-   回踩判斷
+   價格候選排序
+   ========================================================= */
+
+function sortCandidates(
+  list,
+  currentPrice,
+  direction
+){
+
+  return [...list]
+    .filter(
+      x=>
+        x &&
+        x.price!=null &&
+        (
+          direction==="support"
+            ? x.price<currentPrice
+            : x.price>currentPrice
+        )
+    )
+    .sort(
+      (a,b)=>
+        direction==="support"
+          ? b.price-a.price
+          : a.price-b.price
+    );
+
+}
+
+
+/* =========================================================
+   動態波動容許範圍
+   不使用固定百分比
+   ========================================================= */
+
+function levelTolerance(
+  rows,
+  price
+){
+
+  const atrValue =
+    atr(
+      rows,
+      14
+    );
+
+  const closesArr =
+    closes(rows)
+      .slice(-60);
+
+  const deviation =
+    stdev(
+      closesArr
+    );
+
+  const values=[
+    atrValue!=null
+      ? atrValue*0.45
+      : null,
+
+    deviation!=null
+      ? deviation*0.18
+      : null
+  ].filter(
+    v=>v!=null && v>0
+  );
+
+  if(!values.length){
+
+    return Math.max(
+      Math.abs(price||0)*0.01,
+      0.01
+    );
+
+  }
+
+  return Math.max(
+    ...values
+  );
+
+}
+
+
+/* =========================================================
+   支撐／壓力候選
+   ========================================================= */
+
+function buildLevelCandidates(
+  rows,
+  price
+){
+
+  const data =
+    sorted(rows);
+
+  const result=[];
+
+  /*
+   * 1. 局部高低點
+   */
+
+  const extremes =
+    localExtremes(
+      data,
+      2
+    );
+
+  extremes.lows.forEach(x=>{
+
+    result.push({
+
+      price:x.price,
+
+      type:"support",
+
+      source:"局部低點",
+
+      date:x.date,
+
+      volume:x.volume
+
+    });
+
+  });
+
+  extremes.highs.forEach(x=>{
+
+    result.push({
+
+      price:x.price,
+
+      type:"resistance",
+
+      source:"局部高點",
+
+      date:x.date,
+
+      volume:x.volume
+
+    });
+
+  });
+
+
+  /*
+   * 2. 均線
+   */
+
+  const ma5 =
+    sma(data,5);
+
+  const ma20 =
+    sma(data,20);
+
+  const ma60 =
+    sma(data,60);
+
+  const ma120 =
+    sma(data,120);
+
+  [
+    {
+      price:ma5,
+      source:"MA5"
+    },
+    {
+      price:ma20,
+      source:"MA20"
+    },
+    {
+      price:ma60,
+      source:"MA60"
+    },
+    {
+      price:ma120,
+      source:"MA120"
+    }
+  ].forEach(x=>{
+
+    if(x.price==null){
+      return;
+    }
+
+    result.push({
+
+      price:x.price,
+
+      type:
+        x.price<price
+          ? "support"
+          : "resistance",
+
+      source:x.source,
+
+      date:null,
+
+      volume:0
+
+    });
+
+  });
+
+
+  /*
+   * 3. 60日高低
+   */
+
+  const range60 =
+    recentRange(
+      data,
+      60
+    );
+
+  if(range60.low!=null){
+
+    result.push({
+
+      price:range60.low,
+
+      type:"support",
+
+      source:"60日區間低點",
+
+      date:null,
+
+      volume:0
+
+    });
+
+  }
+
+  if(range60.high!=null){
+
+    result.push({
+
+      price:range60.high,
+
+      type:"resistance",
+
+      source:"60日區間高點",
+
+      date:null,
+
+      volume:0
+
+    });
+
+  }
+
+
+  /*
+   * 4. 量價密集區
+   */
+
+  const profile =
+    volumeProfile(
+      data,
+      24
+    );
+
+  profile
+    .slice(0,8)
+    .forEach(x=>{
+
+      if(x.price==null){
+        return;
+      }
+
+      result.push({
+
+        price:x.price,
+
+        type:
+          x.price<price
+            ? "support"
+            : "resistance",
+
+        source:"量價密集區",
+
+        date:null,
+
+        volume:x.volume,
+
+        profileLow:x.low,
+
+        profileHigh:x.high
+
+      });
+
+    });
+
+
+  return uniquePriceCandidates(
+    result
+  );
+
+}
+
+
+/* =========================================================
+   候選點位聚類
+   將非常接近的實際價位合併
+   ========================================================= */
+
+function clusterLevels(
+  candidates,
+  tolerance
+){
+
+  const list =
+    [...candidates]
+      .filter(
+        x=>
+          x &&
+          x.price!=null
+      )
+      .sort(
+        (a,b)=>
+          a.price-b.price
+      );
+
+  const groups=[];
+
+  for(const candidate of list){
+
+    let group =
+      groups.find(
+        g=>
+          Math.abs(
+            candidate.price-g.center
+          )
+          <= tolerance
+      );
+
+    if(!group){
+
+      group={
+        items:[],
+        center:candidate.price
+      };
+
+      groups.push(group);
+
+    }
+
+    group.items.push(
+      candidate
+    );
+
+    group.center =
+      avg(
+        group.items.map(
+          x=>x.price
+        )
+      );
+
+  }
+
+
+  return groups.map(
+    group=>{
+
+      const items =
+        group.items;
+
+      const sources =
+        [
+          ...new Set(
+            items.map(
+              x=>x.source
+            )
+          )
+        ];
+
+      const dates =
+        items
+          .map(x=>x.date)
+          .filter(Boolean);
+
+      const volume =
+        items.reduce(
+          (sum,x)=>
+            sum+
+            (
+              n(x.volume)||0
+            ),
+          0
+        );
+
+      /*
+       * 同一價格附近出現越多不同結構，
+       * 支撐／壓力可信度越高。
+       */
+
+      let strength =
+        items.length*2;
+
+      if(
+        sources.includes(
+          "量價密集區"
+        )
+      ){
+
+        strength+=2;
+
+      }
+
+      if(
+        sources.includes(
+          "局部低點"
+        ) ||
+        sources.includes(
+          "局部高點"
+        )
+      ){
+
+        strength+=2;
+
+      }
+
+      if(
+        sources.some(
+          x=>
+            /^MA/.test(x)
+        )
+      ){
+
+        strength+=1;
+
+      }
+
+      return {
+
+        price:
+          group.center,
+
+        items,
+
+        sources,
+
+        dates,
+
+        volume,
+
+        strength
+
+      };
+
+    }
+  );
+
+}
+
+
+/* =========================================================
+   點位原因
+   ========================================================= */
+
+function levelReason(
+  group,
+  type
+){
+
+  if(!group){
+
+    return "資料不足";
+
+  }
+
+  const source =
+    group.sources || [];
+
+  const reasons=[];
+
+  if(
+    source.includes(
+      type==="support"
+        ? "局部低點"
+        : "局部高點"
+    )
+  ){
+
+    reasons.push(
+      type==="support"
+        ? "近期實際低點"
+        : "近期實際高點"
+    );
+
+  }
+
+  if(
+    source.includes(
+      "量價密集區"
+    )
+  ){
+
+    reasons.push(
+      "量價密集區"
+    );
+
+  }
+
+  const maSources =
+    source.filter(
+      x=>/^MA/.test(x)
+    );
+
+  if(maSources.length){
+
+    reasons.push(
+      maSources.join("／")
+    );
+
+  }
+
+  if(
+    source.includes(
+      type==="support"
+        ? "60日區間低點"
+        : "60日區間高點"
+    )
+  ){
+
+    reasons.push(
+      type==="support"
+        ? "60日區間低點"
+        : "60日區間高點"
+    );
+
+  }
+
+  if(!reasons.length){
+
+    reasons.push(
+      "實際歷史價格結構"
+    );
+
+  }
+
+  return reasons.join("＋");
+
+}
+
+
+/* =========================================================
+   建立點位區間
+   ========================================================= */
+
+function makeLevelBand(
+  group,
+  rows,
+  type,
+  price
+){
+
+  if(!group){
+
+    return null;
+
+  }
+
+  const tolerance =
+    levelTolerance(
+      rows,
+      price
+    );
+
+  /*
+   * 區間不直接使用固定百分比。
+   * 由 ATR、歷史波動與聚類結構決定。
+   */
+
+  const half =
+    Math.max(
+      tolerance,
+      (
+        group.items
+          .map(
+            x=>
+              Math.abs(
+                n(x.profileHigh)-
+                n(x.profileLow)
+              )||0
+          )
+          .filter(
+            v=>v>0
+          )[0] || 0
+      )/2
+    );
+
+  const low =
+    Math.max(
+      0,
+      group.price-half
+    );
+
+  const high =
+    group.price+half;
+
+  return {
+
+    point:
+      group.price,
+
+    low,
+
+    high,
+
+    strength:
+      group.strength,
+
+    reason:
+      levelReason(
+        group,
+        type
+      ),
+
+    sources:
+      group.sources,
+
+    distance:
+      distanceText(
+        price,
+        group.price
+      )
+
+  };
+
+}
+
+
+/* =========================================================
+   動態四大關卡
+   ========================================================= */
+
+function dynamicLevels(
+  rows,
+  price
+){
+
+  const current =
+    n(price);
+
+  if(
+    current==null ||
+    !Array.isArray(rows) ||
+    rows.length<5
+  ){
+
+    return {
+
+      s1:null,
+      s2:null,
+      r1:null,
+      r2:null
+
+    };
+
+  }
+
+
+  const candidates =
+    buildLevelCandidates(
+      rows,
+      current
+    );
+
+  const tolerance =
+    levelTolerance(
+      rows,
+      current
+    );
+
+
+  /*
+   * 支撐候選
+   */
+
+  const supportCandidates =
+    candidates.filter(
+      x=>
+        x.type==="support" &&
+        x.price<current
+    );
+
+  /*
+   * 壓力候選
+   */
+
+  const resistanceCandidates =
+    candidates.filter(
+      x=>
+        x.type==="resistance" &&
+        x.price>current
+    );
+
+
+  /*
+   * 聚類
+   */
+
+  const supportGroups =
+    clusterLevels(
+      supportCandidates,
+      tolerance
+    )
+    .sort(
+      (a,b)=>
+        b.price-a.price
+    );
+
+  const resistanceGroups =
+    clusterLevels(
+      resistanceCandidates,
+      tolerance
+    )
+    .sort(
+      (a,b)=>
+        a.price-b.price
+    );
+
+
+  /*
+   * 第一支撐
+   */
+
+  const s1Group =
+    supportGroups[0] || null;
+
+  /*
+   * 第二支撐
+   */
+
+  const s2Group =
+    supportGroups[1] || null;
+
+  /*
+   * 第一壓力
+   */
+
+  const r1Group =
+    resistanceGroups[0] || null;
+
+  /*
+   * 第二壓力
+   */
+
+  const r2Group =
+    resistanceGroups[1] || null;
+
+
+  return {
+
+    s1:
+      makeLevelBand(
+        s1Group,
+        rows,
+        "support",
+        current
+      ),
+
+    s2:
+      makeLevelBand(
+        s2Group,
+        rows,
+        "support",
+        current
+      ),
+
+    r1:
+      makeLevelBand(
+        r1Group,
+        rows,
+        "resistance",
+        current
+      ),
+
+    r2:
+      makeLevelBand(
+        r2Group,
+        rows,
+        "resistance",
+        current
+      )
+
+  };
+
+}
+
+
+/* =========================================================
+   回踩模型
    ========================================================= */
 
 function retestModel(
@@ -2908,91 +3597,95 @@ function retestModel(
   levels
 ){
 
+  const current =
+    n(price);
+
   const r1 =
     levels?.r1;
 
+  const s1 =
+    levels?.s1;
 
-  if(!r1){
+  if(
+    current==null
+  ){
 
     return {
 
       state:"資料不足",
 
       detail:
-        "目前沒有足夠資料形成第一壓力區"
+        "沒有目前價格"
 
     };
 
   }
 
-
-  const lastRows =
-    rows.slice(-8);
-
-
-  const touches =
-    lastRows.filter(
-      row => {
-
-        const high =
-          row.high ??
-          row.close;
-
-        const low =
-          row.low ??
-          row.close;
-
-        return (
-          high >= r1.low &&
-          low <= r1.high
-        );
-
-      }
-    ).length;
-
+  /*
+   * 已經接近第一壓力
+   */
 
   if(
-    price >=
-    r1.high
+    r1 &&
+    current>=r1.low &&
+    current<=r1.high
   ){
 
     return {
 
-      state:"突破觀察",
+      state:"壓力測試中",
 
       detail:
-        `價格已在第一壓力區上方，觀察突破後是否守住。近8日接觸 ${touches} 次`
+        "現價正在測試第一壓力區"
 
     };
 
   }
 
 
+  /*
+   * 突破後回到第一壓力附近
+   */
+
   if(
-    price >= r1.low &&
-    price <= r1.high
+    r1 &&
+    current>r1.high &&
+    current<=
+      r1.high+
+      levelTolerance(
+        rows,
+        current
+      )
   ){
 
     return {
 
-      state:"回踩中",
+      state:"突破後回踩",
 
       detail:
-        `現價位於第一壓力區內，等待結構確認。近8日接觸 ${touches} 次`
+        "價格位於第一壓力上方，正在測試突破有效性"
 
     };
 
   }
 
 
-  if(touches > 0){
+  /*
+   * 接近第一支撐
+   */
+
+  if(
+    s1 &&
+    current>=s1.low &&
+    current<=s1.high
+  ){
 
     return {
 
-      state:"等待回踩",
+      state:"支撐測試中",
 
       detail:
-        `近期曾測試第一壓力區，近8日接觸 ${touches} 次`
+        "現價正在測試第一支撐區"
 
     };
 
@@ -3001,12 +3694,13 @@ function retestModel(
 
   return {
 
-    state:"尚未回踩",
+    state:"等待回踩",
 
     detail:
-      "近期尚未形成明確壓力回踩紀錄"
+      "目前沒有進入主要支撐／壓力測試區"
 
   };
+
 }
 
 
@@ -3021,158 +3715,307 @@ function breakoutModel(
   levels
 ){
 
+  const current =
+    n(price);
+
   const r1 =
     levels?.r1;
 
+  const latestRow =
+    latest(rows);
 
-  const above =
-    r1
-      ? price > r1.high
-      : false;
+  const todayHigh =
+    n(latestRow?.high);
 
+  const volume =
+    volumeSignal(
+      tech
+    );
 
-  const near =
-    r1
-      ? price >= r1.low
-      : tech.nearHigh;
+  const checks=[];
 
 
   /*
-   * 不強迫一定要有量。
-   * 若有量能資料，再用實際量能判斷。
+   * 壓力位置
+   */
+
+  const above =
+    Boolean(
+      r1 &&
+      current>r1.high
+    );
+
+  const near =
+    Boolean(
+      r1 &&
+      current>=r1.low &&
+      current<=r1.high
+    );
+
+
+  checks.push({
+
+    ok:above,
+
+    text:
+      r1
+        ? above
+          ? "現價已站上第一壓力區"
+          : near
+            ? "現價正在測試第一壓力區"
+            : "尚未站上第一壓力區"
+        : "第一壓力資料不足"
+
+  });
+
+
+  /*
+   * 成交量
    */
 
   const volumeOK =
-    tech.volRatio == null ||
-    tech.volRatio >= 1.15;
+    Boolean(
+      volume.ratio!=null &&
+      volume.ratio>=1.2
+    );
+
+  checks.push({
+
+    ok:volumeOK,
+
+    text:
+      volume.ratio==null
+        ? "成交量資料不足"
+        : volumeOK
+          ? `量能 ${volume.ratio.toFixed(2)} 倍`
+          : `量能 ${volume.ratio.toFixed(2)} 倍，尚未明顯放量`
+
+  });
 
 
-  const checks = [
+  /*
+   * 收盤是否靠近當日高點
+   */
 
-    {
-      ok:above,
-      text:"價格站上第一壓力區"
-    },
+  const closeNearHigh =
+    Boolean(
+      todayHigh!=null &&
+      current!=null &&
+      todayHigh>0 &&
+      (
+        (todayHigh-current) /
+        todayHigh
+      ) <= 0.015
+    );
 
-    {
-      ok:near,
-      text:"接近第一壓力區"
-    },
+  checks.push({
 
-    {
-      ok:volumeOK,
-      text:"量能配合"
-    }
+    ok:closeNearHigh,
 
-  ];
+    text:
+      closeNearHigh
+        ? "價格位於當日高點附近"
+        : "尚未明顯靠近當日高點"
+
+  });
 
 
-  let state =
-    "等待突破";
+  /*
+   * 趨勢
+   */
 
+  const trendOK =
+    tech?.trend==="偏多";
+
+  checks.push({
+
+    ok:trendOK,
+
+    text:
+      trendOK
+        ? "均線結構偏多"
+        : `均線結構：${tech?.trend||"資料不足"}`
+
+  });
+
+
+  let stateText =
+    "觀察";
 
   if(
     above &&
-    volumeOK
+    volumeOK &&
+    closeNearHigh &&
+    trendOK
   ){
 
-    state =
+    stateText =
       "突破確認中";
 
   }else if(
     near &&
-    volumeOK
+    (
+      volumeOK ||
+      trendOK
+    )
   ){
 
-    state =
+    stateText =
       "突破前觀察";
 
+  }else if(
+    above
+  ){
+
+    stateText =
+      "已越過壓力";
+
   }
+
+
+  const confirmed =
+    Boolean(
+      above &&
+      volumeOK
+    );
+
+  const ready =
+    Boolean(
+      !confirmed &&
+      near &&
+      (
+        volumeOK ||
+        trendOK
+      )
+    );
 
 
   return {
 
-    state,
+    state:
+      stateText,
 
-    checks
+    checks,
+
+    confirmed,
+
+    ready
 
   };
+
 }
 
 
 /* =========================================================
-   異常波動
+   異常模型
    ========================================================= */
 
 function anomalyModel(
   rows,
-  tech
+  tech,
+  price
 ){
 
-  const latest =
-    rows[rows.length-1];
+  const items=[];
 
-  const previous =
-    rows[rows.length-2];
+  const ratio =
+    tech?.volRatio;
 
+  const slope20 =
+    tech?.slope20;
 
-  const move =
-    latest &&
-    previous &&
-    previous.close
-      ? (
-          latest.close /
-          previous.close -
-          1
-        ) * 100
-      : null;
+  const bias20 =
+    tech?.bias20;
 
+  /*
+   * 異常放量
+   */
 
-  const previousCloses =
-    rows
-      .slice(-21,-1)
-      .map(r => r.close)
-      .filter(v => v != null);
-
-
-  const deviation =
-    stdev(
-      previousCloses
-    );
-
-
-  const abnormalMove =
-    move != null &&
-    deviation != null &&
-    Math.abs(move) >
-      Math.max(
-        3,
-        deviation
-      );
-
-
-  const abnormalVolume =
-    tech.volRatio != null &&
-    tech.volRatio >= 2;
-
-
-  const items = [];
-
-
-  if(abnormalMove){
+  if(
+    ratio!=null &&
+    ratio>=2
+  ){
 
     items.push(
-      `單日價格變動 ${pct(move)}`
+      `成交量約為20日均量 ${ratio.toFixed(2)} 倍`
     );
 
   }
 
 
-  if(abnormalVolume){
+  /*
+   * 價量背離提醒
+   */
+
+  if(
+    ratio!=null &&
+    ratio<=0.55 &&
+    slope20!=null &&
+    slope20>2
+  ){
 
     items.push(
-      `成交量約為20日均量 ${tech.volRatio.toFixed(2)} 倍`
+      "價格上行但成交量明顯量縮"
     );
+
+  }
+
+
+  /*
+   * 價格偏離 MA20
+   */
+
+  if(
+    bias20!=null &&
+    Math.abs(bias20)>=8
+  ){
+
+    items.push(
+      `現價與MA20偏離 ${bias20.toFixed(2)}%`
+    );
+
+  }
+
+
+  /*
+   * 單日大波動
+   */
+
+  const last =
+    latest(rows);
+
+  const previous =
+    rows?.length>=2
+      ? rows[rows.length-2]
+      : null;
+
+  const lastClose =
+    n(last?.close);
+
+  const prevClose =
+    n(previous?.close);
+
+  if(
+    lastClose!=null &&
+    prevClose!=null &&
+    prevClose!==0
+  ){
+
+    const dailyChange =
+      (
+        lastClose-prevClose
+      ) /
+      prevClose*100;
+
+    if(
+      Math.abs(dailyChange)>=7
+    ){
+
+      items.push(
+        `單日價格變動 ${dailyChange>=0?"+":""}${dailyChange.toFixed(2)}%`
+      );
+
+    }
 
   }
 
@@ -3180,210 +4023,214 @@ function anomalyModel(
   return {
 
     abnormal:
-      items.length > 0,
+      items.length>0,
 
-    items
+    items,
+
+    label:
+      items.length
+        ? "偵測到異常"
+        : "正常",
+
+    reason:
+      items.length
+        ? items.join("；")
+        : "目前未偵測到明顯異常"
 
   };
+
 }
 
 
 /* =========================================================
-   ⭐ 進場／防守／止盈模型
+   進場／防守／止盈模型
    ========================================================= */
 
 function entryModel(
   price,
   tech,
-  levels
+  levels,
+  retest
 ){
 
-  if(!levels){
-
-    return {
-
-      type:"等待資料",
-
-      entry:null,
-
-      defense:null,
-
-      tp1:null,
-
-      tp2:null,
-
-      note:
-        "支撐與壓力資料不足"
-
-    };
-
-  }
-
+  const current =
+    n(price);
 
   const s1 =
-    levels.s1;
+    levels?.s1;
 
   const s2 =
-    levels.s2;
+    levels?.s2;
 
   const r1 =
-    levels.r1;
+    levels?.r1;
 
   const r2 =
-    levels.r2;
+    levels?.r2;
 
 
   let type =
-    "區間等待";
+    "等待結構";
 
+  let entry =
+    null;
 
-  let entry = null;
+  let defense =
+    null;
 
-  let defense = null;
+  let tp1 =
+    r1?.point ?? null;
+
+  let tp2 =
+    r2?.point ?? null;
 
   let note =
-    "目前等待較明確的結構";
+    "目前資料不足以形成明確進場結構";
 
 
   /*
-   * 回踩第一支撐
+   * 突破後回踩
    */
 
   if(
-    s1 &&
-    price >= s1.low &&
-    price <= s1.high
+    retest?.state==="突破後回踩" &&
+    s1
   ){
 
     type =
-      "回踩進場觀察";
+      "突破後回踩";
 
     entry =
       s1.point;
 
     defense =
-      s2
-        ? s2.low
-        : s1.low -
-          (
-            levels.atr ??
-            0
-          );
+      s1.low;
 
     note =
-      "現價位於第一支撐區，等待支撐守住再確認。";
+      "以實際支撐結構觀察回踩是否守住";
 
   }
 
 
   /*
-   * 接近第一支撐
+   * 支撐測試
    */
 
   else if(
-    s1 &&
-    price > s1.high &&
-    price <
-      s1.point +
-      (
-        levels.atr ??
-        0
-      )
+    retest?.state==="支撐測試中" &&
+    s1
   ){
 
     type =
-      "支撐附近觀察";
+      "支撐區觀察";
 
     entry =
       s1.point;
 
     defense =
-      s2
-        ? s2.low
-        : s1.low -
-          (
-            levels.atr ??
-            0
-          );
+      s1.low;
 
     note =
-      "距離第一支撐較近，可等待回踩確認。";
+      "等待支撐區出現止跌與量價確認";
 
   }
 
 
   /*
-   * 位於壓力區
+   * 突破前觀察
    */
 
   else if(
     r1 &&
-    price >= r1.low &&
-    price <= r1.high
+    current!=null &&
+    current>=r1.low &&
+    current<=r1.high
   ){
 
     type =
-      "壓力區不追價";
-
-    defense =
-      s1
-        ? s1.low
-        : null;
-
-    note =
-      "現價接近壓力區，等待突破或回踩，不把壓力區直接當買點。";
-
-  }
-
-
-  /*
-   * 已經突破
-   */
-
-  else if(
-    r1 &&
-    price >
-      r1.high
-  ){
-
-    type =
-      "突破後觀察";
+      "壓力突破觀察";
 
     entry =
+      r1.high;
+
+    defense =
       r1.point;
 
-    defense =
-      s1
-        ? s1.low
-        : r1.low;
-
     note =
-      "已站上第一壓力區，觀察突破後回踩是否守住。";
+      "等待實際壓力區被有效突破";
 
   }
 
 
   /*
-   * 其他區域
+   * 價格位於第一支撐與第一壓力之間
    */
 
-  else{
+  else if(
+    s1 &&
+    r1
+  ){
 
     type =
       "區間等待";
 
     entry =
-      s1
-        ? s1.point
-        : null;
+      s1.point;
 
     defense =
-      s1
-        ? s1.low
-        : null;
+      s1.low;
 
     note =
-      "目前不在明確支撐區，等待回踩或有效突破。";
+      "目前位於支撐與壓力之間，等待更好的價格結構";
+
+  }
+
+
+  /*
+   * 如果第一支撐不存在，
+   * 使用第二支撐作為結構參考。
+   */
+
+  else if(
+    s2
+  ){
+
+    type =
+      "支撐觀察";
+
+    entry =
+      s2.point;
+
+    defense =
+      s2.low;
+
+    note =
+      "第一支撐資料不足，改以第二支撐結構觀察";
+
+  }
+
+
+  /*
+   * 止盈沒有第一壓力時，
+   * 不用固定百分比補數字。
+   */
+
+  if(
+    tp1==null &&
+    r2
+  ){
+
+    tp1 =
+      r2.point;
+
+  }
+
+  if(
+    tp2==null
+  ){
+
+    tp2 =
+      null;
 
   }
 
@@ -3396,2038 +4243,54 @@ function entryModel(
 
     defense,
 
-    tp1:
-      r1
-        ? r1.point
-        : null,
+    tp1,
 
-    tp2:
-      r2
-        ? r2.point
-        : null,
+    tp2,
 
     note
-
-  };
-}/* =========================================================
-   V1491｜第 5 段
-   法人籌碼＋估值資料
-   ========================================================= */
-
-
-/* =========================================================
-   法人資料空白結構
-   ========================================================= */
-
-function institutionBlank(){
-
-  return {
-
-    foreign:null,
-
-    trust:null,
-
-    dealer:null,
-
-    total:null,
-
-    rows:[]
-
-  };
-
-}
-
-
-/* =========================================================
-   法人名稱標準化
-   ========================================================= */
-
-function normalizeInvestor(name){
-
-  const text =
-    String(name ?? "")
-      .toLowerCase();
-
-  if(
-    text.includes("foreign") ||
-    text.includes("外資")
-  ){
-
-    return "foreign";
-
-  }
-
-
-  if(
-    text.includes("investment") ||
-    text.includes("投信")
-  ){
-
-    return "trust";
-
-  }
-
-
-  if(
-    text.includes("dealer") ||
-    text.includes("自營")
-  ){
-
-    return "dealer";
-
-  }
-
-
-  return null;
-
-}
-
-
-/* =========================================================
-   單日法人合計
-   ========================================================= */
-
-function sumInstitutionDay(row){
-
-  const values = [
-
-    row.foreign,
-
-    row.trust,
-
-    row.dealer
-
-  ].filter(
-    value =>
-      value != null &&
-      Number.isFinite(
-        Number(value)
-      )
-  );
-
-
-  if(!values.length){
-
-    return null;
-
-  }
-
-
-  return values.reduce(
-    (sum,value) =>
-      sum + Number(value),
-    0
-  );
-
-}
-
-
-/* =========================================================
-   取得法人資料
-   ========================================================= */
-
-async function getInstitution(code){
-
-  try{
-
-    const response =
-      await finmind(
-        "TaiwanStockInstitutionalInvestorsBuySell",
-        {
-          data_id:code,
-          start_date:dateShift(-35),
-          end_date:today()
-        }
-      );
-
-
-    const source =
-      Array.isArray(response?.data)
-        ? response.data
-        : [];
-
-
-    const map =
-      new Map();
-
-
-    for(
-      const row of source
-    ){
-
-      const date =
-        row.date;
-
-      const investor =
-        normalizeInvestor(
-          row.name ??
-          row.investor ??
-          row.Investor
-        );
-
-
-      if(
-        !date ||
-        !investor
-      ){
-
-        continue;
-
-      }
-
-
-      const buy =
-        firstNumber(
-          row.buy,
-          row.BuyShares,
-          row.buy_shares,
-          row.Buy
-        );
-
-
-      const sell =
-        firstNumber(
-          row.sell,
-          row.SellShares,
-          row.sell_shares,
-          row.Sell
-        );
-
-
-      /*
-       * 只有買賣都有資料
-       * 才計算淨買賣。
-       */
-
-      const net =
-        buy != null &&
-        sell != null
-
-          ? buy - sell
-
-          : null;
-
-
-      if(!map.has(date)){
-
-        map.set(
-          date,
-          {
-
-            date,
-
-            foreign:null,
-
-            trust:null,
-
-            dealer:null
-
-          }
-        );
-
-      }
-
-
-      if(net != null){
-
-        map.get(date)[investor] =
-          net;
-
-      }
-
-    }
-
-
-    const rows =
-      [...map.values()]
-        .sort(
-          (a,b) =>
-            String(a.date)
-              .localeCompare(
-                String(b.date)
-              )
-        );
-
-
-    const latest =
-      rows[rows.length-1] ??
-      null;
-
-
-    /* -----------------------------------------------------
-       期間累計
-       ----------------------------------------------------- */
-
-    function periodSum(
-      period,
-      key
-    ){
-
-      const values =
-        rows
-          .slice(-period)
-          .map(
-            row =>
-              row[key]
-          )
-          .filter(
-            value =>
-              value != null &&
-              Number.isFinite(
-                Number(value)
-              )
-          );
-
-
-      if(!values.length){
-
-        return null;
-
-      }
-
-
-      return values.reduce(
-        (sum,value) =>
-          sum + Number(value),
-        0
-      );
-
-    }
-
-
-    /* -----------------------------------------------------
-       最新一天
-       ----------------------------------------------------- */
-
-    const latestData = {
-
-      foreign:
-        latest?.foreign ??
-        null,
-
-      trust:
-        latest?.trust ??
-        null,
-
-      dealer:
-        latest?.dealer ??
-        null
-
-    };
-
-
-    latestData.total =
-      sumInstitutionDay(
-        latestData
-      );
-
-
-    /* -----------------------------------------------------
-       1／5／20 日
-       ----------------------------------------------------- */
-
-    const p1 = {
-
-      foreign:
-        periodSum(
-          1,
-          "foreign"
-        ),
-
-      trust:
-        periodSum(
-          1,
-          "trust"
-        ),
-
-      dealer:
-        periodSum(
-          1,
-          "dealer"
-        )
-
-    };
-
-
-    p1.total =
-      sumInstitutionDay(
-        p1
-      );
-
-
-    const p5 = {
-
-      foreign:
-        periodSum(
-          5,
-          "foreign"
-        ),
-
-      trust:
-        periodSum(
-          5,
-          "trust"
-        ),
-
-      dealer:
-        periodSum(
-          5,
-          "dealer"
-        )
-
-    };
-
-
-    p5.total =
-      sumInstitutionDay(
-        p5
-      );
-
-
-    const p20 = {
-
-      foreign:
-        periodSum(
-          20,
-          "foreign"
-        ),
-
-      trust:
-        periodSum(
-          20,
-          "trust"
-        ),
-
-      dealer:
-        periodSum(
-          20,
-          "dealer"
-        )
-
-    };
-
-
-    p20.total =
-      sumInstitutionDay(
-        p20
-      );
-
-
-    return {
-
-      rows,
-
-      latest:
-        latestData,
-
-      p1,
-
-      p5,
-
-      p20
-
-    };
-
-  }catch(error){
-
-    console.warn(
-      "法人資料取得失敗",
-      error
-    );
-
-
-    /*
-     * API 失敗時全部維持 null。
-     * 絕對不要用 0 假裝有資料。
-     */
-
-    return {
-
-      rows:[],
-
-      latest:
-        institutionBlank(),
-
-      p1:
-        institutionBlank(),
-
-      p5:
-        institutionBlank(),
-
-      p20:
-        institutionBlank()
-
-    };
-
-  }
-
-}
-
-
-/* =========================================================
-   取得估值資料
-   ========================================================= */
-
-async function getValuation(code){
-
-  const result = {
-
-    pe:null,
-
-    pb:null,
-
-    eps:null,
-
-    book:null
-
-  };
-
-
-  try{
-
-    const response =
-      await finmind(
-        "TaiwanStockPER",
-        {
-          data_id:code,
-
-          start_date:
-            dateShift(-90),
-
-          end_date:
-            today()
-        }
-      );
-
-
-    const rows =
-      Array.isArray(response?.data)
-        ? response.data
-        : [];
-
-
-    const latest =
-      rows[rows.length-1];
-
-
-    if(latest){
-
-      result.pe =
-        firstNumber(
-          latest.PER,
-          latest.per
-        );
-
-
-      result.pb =
-        firstNumber(
-          latest.PBR,
-          latest.pbr
-        );
-
-
-      result.eps =
-        firstNumber(
-          latest.EPS,
-          latest.eps
-        );
-
-    }
-
-  }catch(error){
-
-    console.warn(
-      "估值資料取得失敗",
-      error
-    );
-
-  }
-
-
-  return result;
-
-}
-
-
-/* =========================================================
-   法人數字格式
-   ========================================================= */
-
-function lawCell(value){
-
-  if(value == null){
-
-    return "—";
-
-  }
-
-
-  const number =
-    Number(value);
-
-
-  if(
-    !Number.isFinite(number)
-  ){
-
-    return "—";
-
-  }
-
-
-  return (
-
-    number >= 0
-      ? "+"
-      : ""
-
-  ) +
-    Math.round(
-      number
-    ).toLocaleString(
-      "zh-TW"
-    );
-
-}
-
-
-/* =========================================================
-   法人顏色
-   ========================================================= */
-
-function lawClass(value){
-
-  if(value == null){
-
-    return "";
-
-  }
-
-
-  const number =
-    Number(value);
-
-
-  if(
-    !Number.isFinite(number)
-  ){
-
-    return "";
-
-  }
-
-
-  if(number > 0){
-
-    return "green";
-
-  }
-
-
-  if(number < 0){
-
-    return "red";
-
-  }
-
-
-  return "";
-
-}
-
-
-/* =========================================================
-   法人期間文字
-   ========================================================= */
-
-function periodLabel(
-  period
-){
-
-  if(period === 1){
-
-    return "1日";
-
-  }
-
-
-  if(period === 5){
-
-    return "5日";
-
-  }
-
-
-  if(period === 20){
-
-    return "20日";
-
-  }
-
-
-  return `${period}日`;
-
-}
-
-
-/* =========================================================
-   法人趨勢
-   ========================================================= */
-
-function institutionTrend(
-  law
-){
-
-  if(!law){
-
-    return {
-
-      text:"資料不足",
-
-      className:""
-
-    };
-
-  }
-
-
-  const p5 =
-    law.p5;
-
-
-  if(!p5){
-
-    return {
-
-      text:"資料不足",
-
-      className:""
-
-    };
-
-  }
-
-
-  const values = [
-
-    p5.foreign,
-
-    p5.trust,
-
-    p5.dealer
-
-  ].filter(
-    value =>
-      value != null
-  );
-
-
-  if(!values.length){
-
-    return {
-
-      text:"資料不足",
-
-      className:""
-
-    };
-
-  }
-
-
-  const positive =
-    values.filter(
-      value =>
-        value > 0
-    ).length;
-
-
-  const negative =
-    values.filter(
-      value =>
-        value < 0
-    ).length;
-
-
-  if(
-    positive > negative
-  ){
-
-    return {
-
-      text:"法人偏買",
-
-      className:"green"
-
-    };
-
-  }
-
-
-  if(
-    negative > positive
-  ){
-
-    return {
-
-      text:"法人偏賣",
-
-      className:"red"
-
-    };
-
-  }
-
-
-  return {
-
-    text:"法人分歧",
-
-    className:"orange"
-
-  };
-
-}
-
-
-/* =========================================================
-   法人資料完成檢查
-   ========================================================= */
-
-function institutionHasData(
-  law
-){
-
-  if(!law){
-
-    return false;
-
-  }
-
-
-  const groups = [
-
-    law.latest,
-
-    law.p1,
-
-    law.p5,
-
-    law.p20
-
-  ];
-
-
-  return groups.some(
-    group => {
-
-      if(!group){
-
-        return false;
-
-      }
-
-
-      return [
-
-        group.foreign,
-
-        group.trust,
-
-        group.dealer
-
-      ].some(
-        value =>
-          value != null
-      );
-
-    }
-  );
-
-}
-
-
-/* =========================================================
-   估值資料是否完整
-   ========================================================= */
-
-function valuationHasData(
-  valuation
-){
-
-  if(!valuation){
-
-    return false;
-
-  }
-
-
-  return [
-
-    valuation.pe,
-
-    valuation.pb,
-
-    valuation.eps,
-
-    valuation.book
-
-  ].some(
-    value =>
-      value != null
-  );
-
-}
-
-
-/* =========================================================
-   建立目前股票完整資料物件
-   ========================================================= */
-
-function buildData(
-  code,
-  name,
-  price,
-  rows,
-  realtime,
-  law,
-  valuation
-){
-
-  const tech =
-    technical(
-      rows,
-      price
-    );
-
-
-  const levels =
-    dynamicLevels(
-      rows,
-      price
-    );
-
-
-  const retest =
-    retestModel(
-      rows,
-      price,
-      levels
-    );
-
-
-  const breakout =
-    breakoutModel(
-      rows,
-      price,
-      tech,
-      levels
-    );
-
-
-  const anomaly =
-    anomalyModel(
-      rows,
-      tech
-    );
-
-
-  const entry =
-    entryModel(
-      price,
-      tech,
-      levels
-    );
-
-
-  return {
-
-    code,
-
-    name,
-
-    price,
-
-    rows,
-
-    rt:
-      realtime,
-
-    law,
-
-    val:
-      valuation,
-
-    tech,
-
-    lv:
-      levels,
-
-    retest,
-
-    breakout,
-
-    anomaly,
-
-    entry
 
   };
 
 }/* =========================================================
    V1491｜第 6 段
-   股票資料取得／搜尋／即時行情
+   搜尋主程式／即時更新／單股掃描
    ========================================================= */
-
-
-/* =========================================================
-   股票清單
-   這裡只保存「代號 → 名稱」
-   不保存任何固定股價
-   ========================================================= */
-
-const KNOWN = {
-
-  "1301":"台塑",
-  "1303":"南亞",
-  "1326":"台化",
-  "2002":"中鋼",
-
-  "2303":"聯電",
-  "2308":"台達電",
-  "2312":"金寶",
-  "2313":"華通",
-  "2317":"鴻海",
-
-  "2330":"台積電",
-  "2367":"燿華",
-  "2481":"強茂",
-  "2606":"裕民",
-  "2618":"長榮航",
-
-  "2891":"中信金",
-  "3324":"雙鴻",
-  "3481":"群創",
-  "3711":"日月光投控",
-
-  "5314":"世紀",
-  "5425":"台半",
-  "6244":"茂迪",
-  "6770":"力積電",
-  "8046":"南電",
-
-  "0050":"元大台灣50",
-  "0056":"元大高股息",
-  "00631L":"元大台灣50正2",
-  "00632R":"元大台灣50反1",
-  "00685L":"群益臺灣加權正2",
-  "00891":"中信關鍵半導體",
-  "00919":"群益台灣精選高息",
-  "00981A":"主動統一台股增長"
-
-};
-
-
-/* =========================================================
-   名稱別名
-   ========================================================= */
-
-const ALIAS = {
-
-  "台塑":"1301",
-
-  "南亞":"1303",
-
-  "台化":"1326",
-
-  "台灣化學纖維":"1326",
-
-  "中鋼":"2002",
-
-  "聯電":"2303",
-
-  "台達":"2308",
-
-  "台達電":"2308",
-
-  "金寶":"2312",
-
-  "華通":"2313",
-
-  "鴻海":"2317",
-
-  "富士康":"2317",
-
-  "台積":"2330",
-
-  "台積電":"2330",
-
-  "tsmc":"2330",
-
-  "燿華":"2367",
-
-  "強茂":"2481",
-
-  "裕民":"2606",
-
-  "長榮航":"2618",
-
-  "中信金":"2891",
-
-  "中國信託":"2891",
-
-  "雙鴻":"3324",
-
-  "群創":"3481",
-
-  "日月光":"3711",
-
-  "世紀":"5314",
-
-  "台半":"5425",
-
-  "茂迪":"6244",
-
-  "力積電":"6770",
-
-  "南電":"8046",
-
-  "元大台灣50":"0050",
-
-  "台灣50":"0050",
-
-  "元大高股息":"0056",
-
-  "高股息":"00919",
-
-  "台灣50正2":"00631L",
-
-  "元大台灣50正2":"00631L",
-
-  "群益臺灣加權正2":"00685L",
-
-  "中信關鍵半導體":"00891",
-
-  "群益台灣精選高息":"00919",
-
-  "主動統一台股增長":"00981A"
-
-};
-
-
-/* =========================================================
-   掃描股票清單
-   ========================================================= */
-
-const SCAN_CODES = [
-
-  "2330",
-  "2317",
-  "2303",
-  "2308",
-  "1326",
-  "2313",
-  "2367",
-  "2481",
-  "2606",
-  "2618",
-  "2891",
-  "3324",
-  "3481",
-  "3711",
-  "6770",
-  "8046",
-  "0050",
-  "00919"
-
-];
-
-
-/* =========================================================
-   App 狀態
-   ========================================================= */
-
-const state = {
-
-  currentStock:null,
-
-  currentData:null,
-
-  searchSeq:0,
-
-  scanSeq:0,
-
-  refreshTimer:null,
-
-  cache:new Map()
-
-};
-
-
-/* =========================================================
-   日期
-   ========================================================= */
-
-function today(){
-
-  const d =
-    new Date();
-
-  const year =
-    d.getFullYear();
-
-  const month =
-    String(
-      d.getMonth()+1
-    ).padStart(2,"0");
-
-  const day =
-    String(
-      d.getDate()
-    ).padStart(2,"0");
-
-  return `${year}-${month}-${day}`;
-
-}
-
-
-/* =========================================================
-   日期往前推
-   ========================================================= */
-
-function dateShift(days){
-
-  const d =
-    new Date();
-
-  d.setDate(
-    d.getDate()+days
-  );
-
-  const year =
-    d.getFullYear();
-
-  const month =
-    String(
-      d.getMonth()+1
-    ).padStart(2,"0");
-
-  const day =
-    String(
-      d.getDate()
-    ).padStart(2,"0");
-
-  return `${year}-${month}-${day}`;
-
-}
-
-
-/* =========================================================
-   HTTP JSON
-   ========================================================= */
-
-async function fetchJSON(
-  url,
-  options={}
-){
-
-  const response =
-    await fetch(
-      url,
-      {
-        ...options,
-
-        headers:{
-          "Accept":
-            "application/json",
-
-          ...(options.headers || {})
-        }
-      }
-    );
-
-
-  if(!response.ok){
-
-    throw new Error(
-      `HTTP ${response.status}`
-    );
-
-  }
-
-
-  return await response.json();
-
-}
-
-
-/* =========================================================
-   FinMind
-   ========================================================= */
-
-async function finmind(
-  dataset,
-  params={}
-){
-
-  const query =
-    new URLSearchParams({
-
-      dataset,
-
-      ...params
-
-    });
-
-
-  const url =
-    `${FINMIND}?${query.toString()}`;
-
-
-  return fetchJSON(url);
-
-}
-
-
-/* =========================================================
-   第一個有效數字
-   ========================================================= */
-
-function firstNumber(
-  ...values
-){
-
-  for(
-    const value of values
-  ){
-
-    const number =
-      n(value);
-
-    if(number != null){
-
-      return number;
-
-    }
-
-  }
-
-  return null;
-
-}
-
-
-/* =========================================================
-   即時行情解析
-   ========================================================= */
-
-function parseRealtime(
-  item
-){
-
-  if(!item){
-
-    return null;
-
-  }
-
-
-  const price =
-    firstNumber(
-
-      item.z,
-
-      item.last,
-
-      item.price,
-
-      item.p
-
-    );
-
-
-  if(price == null){
-
-    return null;
-
-  }
-
-
-  return {
-
-    price,
-
-    prev:
-      firstNumber(
-        item.y,
-        item.prevClose,
-        item.previousClose
-      ),
-
-    open:
-      firstNumber(
-        item.o,
-        item.open
-      ),
-
-    high:
-      firstNumber(
-        item.h,
-        item.high
-      ),
-
-    low:
-      firstNumber(
-        item.l,
-        item.low
-      ),
-
-    bid:
-      firstNumber(
-        item.b
-      ),
-
-    ask:
-      firstNumber(
-        item.a
-      ),
-
-    volume:
-      firstNumber(
-        item.v,
-        item.tv
-      ),
-
-    time:
-      item.t ||
-      item.time ||
-      "",
-
-    name:
-      item.n ||
-      item.name ||
-      "",
-
-    market:
-      item.ex ||
-      ""
-
-  };
-
-}
-
-
-/* =========================================================
-   TWSE / OTC 即時行情
-   ========================================================= */
-
-async function getRealtime(
-  code
-){
-
-  const markets = [
-
-    "tse",
-
-    "otc"
-
-  ];
-
-
-  /*
-   * 依序嘗試上市／上櫃。
-   * 不假設股票一定屬於哪個市場。
-   */
-
-  for(
-    const market of markets
-  ){
-
-    const baseUrl =
-      `${MIS}` +
-      `?ex_ch=` +
-      `${market}_${encodeURIComponent(code)}.tw` +
-      `&json=1` +
-      `&delay=0` +
-      `&_=${Date.now()}`;
-
-
-    const urls = [
-
-      baseUrl,
-
-      ...PROXIES.map(
-        proxy =>
-          proxy +
-          encodeURIComponent(
-            baseUrl
-          )
-      )
-
-    ];
-
-
-    for(
-      const url of urls
-    ){
-
-      try{
-
-        const response =
-          await fetchJSON(
-            url
-          );
-
-
-        const item =
-          response
-            ?.msgArray
-            ?.at(0);
-
-
-        const realtime =
-          parseRealtime(
-            item
-          );
-
-
-        if(realtime){
-
-          return realtime;
-
-        }
-
-      }catch(error){
-
-        /*
-         * 該來源失敗後
-         * 繼續嘗試下一個來源。
-         */
-
-      }
-
-    }
-
-  }
-
-
-  return null;
-
-}
-
-
-/* =========================================================
-   歷史行情資料標準化
-   ========================================================= */
-
-function normalizeRows(
-  data
-){
-
-  const source =
-
-    Array.isArray(
-      data?.data
-    )
-
-      ? data.data
-
-      : Array.isArray(data)
-
-        ? data
-
-        : [];
-
-
-  return source
-
-    .map(
-      row => ({
-
-        date:
-          row.date ||
-          row.Date ||
-          row.TradeDate ||
-          row.trade_date,
-
-        open:
-          firstNumber(
-            row.open,
-            row.Open
-          ),
-
-        high:
-          firstNumber(
-            row.max,
-            row.high,
-            row.High
-          ),
-
-        low:
-          firstNumber(
-            row.min,
-            row.low,
-            row.Low
-          ),
-
-        close:
-          firstNumber(
-            row.close,
-            row.Close
-          ),
-
-        volume:
-          firstNumber(
-            row.Trading_Volume,
-            row.volume,
-            row.Volume,
-            row.TradingVolume
-          ),
-
-        turnover:
-          firstNumber(
-            row.Trading_money,
-            row.turnover,
-            row.Turnover
-          )
-
-      })
-    )
-
-    .filter(
-      row =>
-        row.date &&
-        row.close != null
-    )
-
-    .sort(
-      (a,b) =>
-        String(a.date)
-          .localeCompare(
-            String(b.date)
-          )
-    );
-
-}
-
-
-/* =========================================================
-   取得歷史行情
-   ========================================================= */
-
-async function getPrices(
-  code
-){
-
-  /*
-   * 先取得約一年多資料，
-   * 讓 V1491 有足夠資料計算：
-   *
-   * MA20
-   * MA60
-   * MA120
-   * ATR
-   * 60日高低
-   * 價格密集區
-   *
-   * 不是只抓幾天。
-   */
-
-  const startDate =
-    dateShift(-420);
-
-
-  try{
-
-    const response =
-      await finmind(
-        "TaiwanStockPrice",
-        {
-
-          data_id:code,
-
-          start_date:
-            startDate,
-
-          end_date:
-            today()
-
-        }
-      );
-
-
-    const rows =
-      normalizeRows(
-        response
-      );
-
-
-    if(rows.length){
-
-      return rows;
-
-    }
-
-  }catch(error){
-
-    console.warn(
-      "第一次歷史行情取得失敗",
-      error
-    );
-
-  }
-
-
-  /*
-   * 第一次失敗再擴大資料期間。
-   */
-
-  try{
-
-    const response =
-      await finmind(
-        "TaiwanStockPrice",
-        {
-
-          data_id:code,
-
-          start_date:
-            dateShift(-900),
-
-          end_date:
-            today()
-
-        }
-      );
-
-
-    return normalizeRows(
-      response
-    );
-
-  }catch(error){
-
-    console.warn(
-      "第二次歷史行情取得失敗",
-      error
-    );
-
-    return [];
-
-  }
-
-}
-
-
-/* =========================================================
-   取得股票基本資訊
-   ========================================================= */
-
-async function loadStockInfo(
-  code
-){
-
-  const key =
-    String(code)
-      .toUpperCase();
-
-
-  const cacheKey =
-    `info:${key}`;
-
-
-  if(
-    state.cache.has(cacheKey)
-  ){
-
-    return state.cache.get(
-      cacheKey
-    );
-
-  }
-
-
-  try{
-
-    const response =
-      await finmind(
-        "TaiwanStockInfo"
-      );
-
-
-    const rows =
-      Array.isArray(
-        response?.data
-      )
-        ? response.data
-        : [];
-
-
-    const found =
-      rows.find(
-        row =>
-          String(
-            row.stock_id ??
-            row.code ??
-            ""
-          ).toUpperCase() ===
-          key
-      );
-
-
-    if(found){
-
-      const info = {
-
-        code:key,
-
-        name:
-          found.stock_name ||
-          found.name ||
-          KNOWN[key] ||
-          key,
-
-        industry:
-          found.industry_category ||
-          found.industry ||
-          "—"
-
-      };
-
-
-      state.cache.set(
-        cacheKey,
-        info
-      );
-
-
-      return info;
-
-    }
-
-  }catch(error){
-
-    console.warn(
-      "股票基本資料取得失敗",
-      error
-    );
-
-  }
-
-
-  /*
-   * FinMind 基本資料失敗時，
-   * 仍可使用內建名稱。
-   *
-   * 注意：
-   * 只 fallback 名稱，
-   * 不 fallback 價格。
-   */
-
-  return {
-
-    code:key,
-
-    name:
-      KNOWN[key] ||
-      key,
-
-    industry:
-      "—"
-
-  };
-
-}
 
 
 /* =========================================================
    搜尋股票
    ========================================================= */
 
-async function findStock(
-  query
-){
+async function searchStock(query){
 
-  const keyword =
-    clean(query);
+  const input =
+    $("searchInput");
 
+  const result =
+    $("result");
 
-  if(!keyword){
-
-    return null;
-
-  }
-
-
-  /*
-   * 先查名稱別名。
-   */
-
-  const alias =
-    ALIAS[
-      keyword.toLowerCase()
-    ] ??
-    ALIAS[
-      keyword
-    ];
-
-
-  const candidate =
-    alias ||
-    keyword.toUpperCase();
-
-
-  /*
-   * 股票代號：
-   * 4～6 碼＋可能的英文字母
-   */
-
-  if(
-    /^\d{4,6}[A-Z]*$/
-      .test(candidate)
-  ){
-
-    return loadStockInfo(
-      candidate
+  const searchQuery =
+    clean(
+      query ??
+      input?.value
     );
 
-  }
+  if(!searchQuery){
 
-
-  /*
-   * 先查內建股票名稱。
-   */
-
-  const known =
-    Object.entries(
-      KNOWN
-    ).find(
-      ([code,name]) =>
-        code.includes(
-          keyword.toUpperCase()
-        ) ||
-        name.includes(
-          keyword
-        )
+    setStatus(
+      "請輸入股票代號或股票名稱"
     );
 
+    if(result){
 
-  if(known){
-
-    return loadStockInfo(
-      known[0]
-    );
-
-  }
-
-
-  /*
-   * 再查 FinMind。
-   */
-
-  try{
-
-    const response =
-      await finmind(
-        "TaiwanStockInfo"
-      );
-
-
-    const rows =
-      Array.isArray(
-        response?.data
-      )
-        ? response.data
-        : [];
-
-
-    const found =
-      rows.find(
-        row => {
-
-          const code =
-            String(
-              row.stock_id ??
-              row.code ??
-              ""
-            );
-
-
-          const name =
-            String(
-              row.stock_name ??
-              row.name ??
-              ""
-            );
-
-
-          return (
-
-            code
-              .toUpperCase()
-              .includes(
-                keyword.toUpperCase()
-              )
-
-            ||
-
-            name.includes(
-              keyword
-            )
-
-          );
-
-        }
-      );
-
-
-    if(found){
-
-      return loadStockInfo(
-        String(
-          found.stock_id ??
-          found.code
-        )
-      );
+      result.innerHTML = `
+        <div class="card notice">
+          請輸入股票代號或名稱，例如：
+          <b>2330</b>、<b>台積電</b>。
+        </div>
+      `;
 
     }
-
-  }catch(error){
-
-    console.warn(
-      "股票搜尋 API 失敗",
-      error
-    );
-
-  }
-
-
-  return null;
-
-}
-
-
-/* =========================================================
-   搜尋候選
-   ========================================================= */
-
-async function showSearchCandidates(){
-
-  const keyword =
-    clean(
-      $("searchInput").value
-    );
-
-
-  const box =
-    $("searchResults");
-
-
-  if(
-    keyword.length < 1
-  ){
-
-    box.innerHTML =
-      "";
 
     return;
 
@@ -5435,110 +4298,12 @@ async function showSearchCandidates(){
 
 
   /*
-   * 先用本地清單即時顯示，
-   * 避免每打一個字都呼叫 API。
+   * 每一次搜尋建立新的序號。
+   * 避免使用者連續搜尋時，
+   * 舊請求回來覆蓋最新結果。
    */
 
-  const candidates =
-    Object.entries(
-      KNOWN
-    )
-
-      .filter(
-        ([code,name]) =>
-
-          code
-            .toUpperCase()
-            .includes(
-              keyword.toUpperCase()
-            )
-
-          ||
-
-          name.includes(
-            keyword
-          )
-      )
-
-      .slice(
-        0,
-        8
-      );
-
-
-  box.innerHTML =
-    candidates
-
-      .map(
-        ([code,name]) => `
-
-          <button
-            class="searchResult"
-            data-search-code="${esc(code)}"
-          >
-
-            <b>
-              ${esc(code)}
-            </b>
-
-            <span>
-              ${esc(name)}
-            </span>
-
-          </button>
-
-        `
-      )
-
-      .join("");
-
-
-  /*
-   * 搜尋候選按鈕
-   */
-
-  box
-    .querySelectorAll(
-      "[data-search-code]"
-    )
-    .forEach(
-      button => {
-
-        button.addEventListener(
-          "click",
-          () => {
-
-            const code =
-              button.dataset.searchCode;
-
-            $("searchInput").value =
-              code;
-
-            box.innerHTML =
-              "";
-
-            searchStock(
-              code
-            );
-
-          }
-        );
-
-      }
-    );
-
-}
-
-
-/* =========================================================
-   搜尋並分析股票
-   ========================================================= */
-
-async function searchStock(
-  query
-){
-
-  const sequence =
+  const seq =
     ++state.searchSeq;
 
 
@@ -5547,37 +4312,34 @@ async function searchStock(
   );
 
 
-  $("result").innerHTML = `
+  if(result){
 
-    <div class="card loadingBox">
-
-      資料載入中
-
-      <div class="progress">
-        <i></i>
+    result.innerHTML = `
+      <div class="card loadingBox">
+        <div>正在分析 ${esc(searchQuery)}…</div>
+        <div class="progress">
+          <i></i>
+        </div>
       </div>
+    `;
 
-    </div>
-
-  `;
+  }
 
 
   try{
 
+    /*
+     * 找股票
+     */
+
     const info =
       await findStock(
-        query
+        searchQuery
       );
 
 
-    /*
-     * 如果使用者又搜尋另一檔，
-     * 舊請求直接停止後續畫面更新。
-     */
-
     if(
-      sequence !==
-      state.searchSeq
+      seq !== state.searchSeq
     ){
 
       return;
@@ -5591,8 +4353,17 @@ async function searchStock(
         "找不到此股票或 ETF"
       );
 
-      $("result").innerHTML =
-        "";
+      if(result){
+
+        result.innerHTML = `
+          <div class="card notice">
+            找不到「${esc(searchQuery)}」。
+            <br><br>
+            請確認股票代號或名稱。
+          </div>
+        `;
+
+      }
 
       return;
 
@@ -5604,44 +4375,26 @@ async function searchStock(
      *
      * 歷史行情
      * 即時行情
-     * 法人
+     * 三大法人
      * 估值
      */
 
     const [
-
       rows,
-
-      realtime,
-
+      rt,
       law,
-
-      valuation
-
-    ] = await Promise.all([
-
-      getPrices(
-        info.code
-      ),
-
-      getRealtime(
-        info.code
-      ),
-
-      getInstitution(
-        info.code
-      ),
-
-      getValuation(
-        info.code
-      )
-
-    ]);
+      val
+    ] =
+      await Promise.all([
+        getPrices(info.code),
+        getRealtime(info.code),
+        getInstitution(info.code),
+        getValuation(info.code)
+      ]);
 
 
     if(
-      sequence !==
-      state.searchSeq
+      seq !== state.searchSeq
     ){
 
       return;
@@ -5650,11 +4403,11 @@ async function searchStock(
 
 
     /*
-     * 沒有歷史行情就不使用
-     * 虛構價格代替。
+     * 歷史行情不足
      */
 
     if(
+      !Array.isArray(rows) ||
       !rows.length
     ){
 
@@ -5666,72 +4419,90 @@ async function searchStock(
 
 
     /*
-     * 優先即時價格。
-     * 如果沒有即時資料，
-     * 使用最後一筆歷史收盤價。
+     * 即時價格優先。
+     * 如果即時行情沒有價格，
+     * 才使用最新歷史收盤價。
      */
 
+    const latestRow =
+      latest(rows);
+
     const price =
-      realtime?.price ??
-      rows.at(-1)?.close ??
+      rt?.price ??
+      latestRow?.close ??
       null;
 
 
-    if(price == null){
+    if(price==null){
 
       throw new Error(
-        "沒有可用價格資料"
+        "目前沒有可用價格"
       );
 
     }
 
 
     /*
-     * 建立完整分析資料。
+     * 建立完整分析資料
      */
 
     const data =
       buildData(
-
         info.code,
-
         info.name,
-
         price,
-
         rows,
-
-        realtime,
-
+        rt,
         law,
-
-        valuation
-
+        val
       );
 
 
+    /*
+     * 儲存目前標的
+     */
+
     state.currentStock =
       info;
-
 
     state.currentData =
       data;
 
 
     /*
-     * 第 7 段會提供 renderData。
+     * 搜尋框同步
      */
 
-    if(
-      typeof renderData ===
-      "function"
-    ){
+    if(input){
 
-      renderData(
-        data
-      );
+      input.value =
+        info.code;
 
     }
+
+
+    /*
+     * 清除候選
+     */
+
+    const searchResults =
+      $("searchResults");
+
+    if(searchResults){
+
+      searchResults.innerHTML =
+        "";
+
+    }
+
+
+    /*
+     * 渲染
+     */
+
+    renderData(
+      data
+    );
 
 
     setStatus(
@@ -5740,19 +4511,16 @@ async function searchStock(
 
 
     /*
-     * 先清除舊的更新計時器。
+     * 啟動即時價格更新
      */
 
-    clearInterval(
-      state.refreshTimer
-    );
+    if(state.refreshTimer){
 
+      clearInterval(
+        state.refreshTimer
+      );
 
-    /*
-     * 每 30 秒重新抓即時價格。
-     * 不重新抓歷史資料，
-     * 避免不必要 API 壓力。
-     */
+    }
 
     state.refreshTimer =
       setInterval(
@@ -5761,11 +4529,23 @@ async function searchStock(
       );
 
 
-    $("result")
-      .scrollIntoView({
-        behavior:"smooth",
-        block:"start"
-      });
+    /*
+     * 自動移動到分析結果
+     */
+
+    if(result){
+
+      setTimeout(
+        ()=>{
+          result.scrollIntoView({
+            behavior:"smooth",
+            block:"start"
+          });
+        },
+        80
+      );
+
+    }
 
 
   }catch(error){
@@ -5777,34 +4557,29 @@ async function searchStock(
 
 
     setStatus(
-      `載入失敗：${error.message}`
+      `載入失敗：${error.message || "未知錯誤"}`
     );
 
 
-    $("result").innerHTML = `
+    if(result){
 
-      <div class="card">
-
-        <div class="notice">
-
-          行情服務目前無法取得完整資料。
-
+      result.innerHTML = `
+        <div class="card notice">
+          <b>目前無法取得完整行情資料。</b>
           <br><br>
-
-          請稍後重新分析。
-
+          原因：
+          ${esc(
+            error.message ||
+            "行情服務暫時無法使用"
+          )}
           <br><br>
-
-          <b class="yellow">
-            V1491 不會用固定股票價格
-            假裝成即時行情。
-          </b>
-
+          請稍後重新搜尋。
+          <br>
+          程式不會使用固定價格冒充實際行情。
         </div>
+      `;
 
-      </div>
-
-    `;
+    }
 
   }
 
@@ -5817,9 +4592,10 @@ async function searchStock(
 
 async function refreshPrice(){
 
-  if(
-    !state.currentData
-  ){
+  const current =
+    state.currentData;
+
+  if(!current){
 
     return;
 
@@ -5828,56 +4604,45 @@ async function refreshPrice(){
 
   try{
 
-    const realtime =
+    const rt =
       await getRealtime(
-        state.currentData.code
+        current.code
       );
 
 
     /*
      * 即時 API 暫時沒有資料，
-     * 保留目前畫面。
+     * 保留原分析，不清除畫面。
      */
 
-    if(!realtime){
+    if(
+      !rt ||
+      rt.price==null
+    ){
 
       return;
 
     }
 
 
-    const oldData =
-      state.currentData;
-
-
-    const newPrice =
-      realtime.price;
+    const price =
+      rt.price;
 
 
     /*
-     * 重新計算所有跟現價有關的模型。
-     *
-     * 歷史資料本身不偽造，
-     * 只更新即時價格。
+     * 使用原本已取得的歷史資料，
+     * 重新計算動態點位。
      */
 
     const rebuilt =
       buildData(
-
-        oldData.code,
-
-        oldData.name,
-
-        newPrice,
-
-        oldData.rows,
-
-        realtime,
-
-        oldData.law,
-
-        oldData.val
-
+        current.code,
+        current.name,
+        price,
+        current.rows,
+        rt,
+        current.law,
+        current.val
       );
 
 
@@ -5886,125 +4651,268 @@ async function refreshPrice(){
 
 
     /*
-     * 第 7 段 renderData
-     * 完成後即可更新畫面。
+     * false：
+     * 不重新觸發頁面捲動。
      */
 
-    if(
-      typeof renderData ===
-      "function"
-    ){
-
-      renderData(
-        rebuilt,
-        false
-      );
-
-    }
+    renderData(
+      rebuilt,
+      false
+    );
 
 
     setStatus(
-      `即時更新 ${oldData.code} ${oldData.name}`
+      `即時更新 ${current.code} ${current.name}`
     );
 
 
   }catch(error){
 
+    /*
+     * 即時更新失敗不清空原畫面。
+     */
+
     console.warn(
-      "即時更新失敗",
+      "refreshPrice error:",
       error
     );
 
   }
 
-}/* =========================================================
-   V1491｜第 8 段
-   突破掃描／功能按鈕／推薦清單
-   ========================================================= */
+}
 
 
 /* =========================================================
-   掃描單一股票
+   單一股票掃描
+   給突破掃描與推薦功能使用
    ========================================================= */
 
-async function scanOneStock(code){
+async function scanOne(code){
 
   try{
 
     const info =
-      await loadStockInfo(code);
-
-    if(!info){
-
-      return null;
-
-    }
+      await loadStockInfo(
+        code
+      );
 
 
     const [
       rows,
-      realtime,
-      law,
-      valuation
-    ] = await Promise.all([
-
-      getPrices(code),
-
-      getRealtime(code),
-
-      getInstitution(code),
-
-      getValuation(code)
-
-    ]);
+      rt
+    ] =
+      await Promise.all([
+        getPrices(code),
+        getRealtime(code)
+      ]);
 
 
     if(
-      !rows ||
-      rows.length < 20
+      !Array.isArray(rows) ||
+      !rows.length
     ){
 
       return null;
 
     }
+
+
+    const latestRow =
+      latest(rows);
 
 
     const price =
-      realtime?.price ??
-      rows[rows.length-1]?.close;
+      rt?.price ??
+      latestRow?.close ??
+      null;
 
 
-    if(
-      price == null
-    ){
+    if(price==null){
 
       return null;
 
     }
 
 
-    return buildData(
+    /*
+     * 技術分析
+     */
+
+    const tech =
+      technical(
+        rows,
+        price
+      );
+
+
+    /*
+     * 四大動態點位
+     */
+
+    const levels =
+      dynamicLevels(
+        rows,
+        price
+      );
+
+
+    if(!levels){
+
+      return null;
+
+    }
+
+
+    /*
+     * 回踩
+     */
+
+    const retest =
+      retestModel(
+        rows,
+        price,
+        levels
+      );
+
+
+    /*
+     * 突破
+     */
+
+    const breakout =
+      breakoutModel(
+        rows,
+        price,
+        tech,
+        levels
+      );
+
+
+    /*
+     * 量能
+     */
+
+    const volume =
+      volumeSignal(
+        tech
+      );
+
+
+    /*
+     * 突破評分
+     *
+     * 這裡只是掃描條件分數，
+     * 不是股票投資評級。
+     */
+
+    let score=0;
+
+
+    if(
+      breakout.confirmed
+    ){
+
+      score+=45;
+
+    }else if(
+      breakout.ready
+    ){
+
+      score+=30;
+
+    }
+
+
+    if(
+      tech.trend==="偏多"
+    ){
+
+      score+=15;
+
+    }
+
+
+    if(
+      volume.ratio!=null &&
+      volume.ratio>=2
+    ){
+
+      score+=20;
+
+    }else if(
+      volume.ratio!=null &&
+      volume.ratio>=1.25
+    ){
+
+      score+=12;
+
+    }
+
+
+    if(
+      retest.state==="突破後回踩"
+    ){
+
+      score+=15;
+
+    }
+
+
+    /*
+     * 距離第一壓力
+     */
+
+    let pressureDistance =
+      null;
+
+    if(
+      levels.r1
+    ){
+
+      pressureDistance =
+        Math.abs(
+          price-
+          levels.r1.point
+        );
+
+    }
+
+
+    return {
 
       code,
 
-      info.name,
+      name:
+        info.name,
 
       price,
 
-      rows,
+      score,
 
-      realtime,
+      level:
+        levels.r1?.point ??
+        null,
 
-      law,
+      levels,
 
-      valuation
+      tech,
 
-    );
+      breakout,
+
+      retest,
+
+      volume,
+
+      pressureDistance
+
+    };
+
 
   }catch(error){
 
     console.warn(
-      `掃描 ${code} 失敗`,
+      "scanOne error:",
+      code,
       error
     );
 
@@ -6019,1064 +4927,195 @@ async function scanOneStock(code){
    突破掃描
    ========================================================= */
 
-async function runBreakoutScan(){
+async function scanBreakout(){
+
+  const seq =
+    ++state.scanSeq;
+
+  const box =
+    $("scanResult");
 
   const button =
     $("breakScanBtn");
 
-  const result =
-    $("scanResult");
 
-
-  if(!button || !result){
+  if(!box){
 
     return;
 
   }
 
 
-  const sequence =
-    ++state.scanSeq;
+  if(button){
+
+    button.disabled=true;
+
+    button.innerHTML=
+      "⏳ 掃描中…";
+
+  }
 
 
-  button.disabled =
-    true;
-
-
-  button.innerHTML =
-    "掃描中…";
-
-
-  result.innerHTML = `
-
-    <div class="notice">
-
-      正在分析股票結構、成交量與突破狀態…
-
+  box.innerHTML = `
+    <div class="loadingBox">
+      正在掃描實際行情…
+      <div class="progress">
+        <i></i>
+      </div>
     </div>
-
   `;
 
 
-  const found = [];
+  try{
+
+    const output=[];
 
 
-  /*
-   * 一次處理少量股票，
-   * 避免同時打太多 API。
-   */
-
-  for(
-    const code of SCAN_CODES
-  ){
-
-    if(
-      sequence !==
-      state.scanSeq
+    for(
+      const code of SCAN_CODES
     ){
 
-      return;
-
-    }
-
-
-    const data =
-      await scanOneStock(
-        code
-      );
-
-
-    if(!data){
-
-      continue;
-
-    }
-
-
-    const breakout =
-      data.breakout ||
-      {};
-
-
-    const volume =
-      data.volumeSignal ||
-      {};
-
-
-    const tech =
-      data.tech ||
-      {};
-
-
-    /*
-     * 只把「有實際結構依據」
-     * 的股票放進突破結果。
-     *
-     * 不用固定股票價格判斷。
-     */
-
-    const breakoutReady =
-      Boolean(
-        breakout.confirmed ||
-        breakout.ready
-      );
-
-
-    const volumeReady =
-      Boolean(
-        volume.status === "放量" ||
-        volume.status === "量增"
-      );
-
-
-    const trendReady =
-      tech.trend === "多頭" ||
-      tech.trend === "偏多";
-
-
-    if(
-      breakoutReady ||
-      (
-        trendReady &&
-        volumeReady
-      )
-    ){
-
-      found.push(
-        data
-      );
-
-    }
-
-  }
-
-
-  if(
-    sequence !==
-    state.scanSeq
-  ){
-
-    return;
-
-  }
-
-
-  button.disabled =
-    false;
-
-
-  button.innerHTML =
-    "重新掃描";
-
-
-  /*
-   * 沒有符合條件
-   */
-
-  if(
-    !found.length
-  ){
-
-    result.innerHTML = `
-
-      <div class="notice">
-
-        目前掃描清單中，
-        沒有出現符合突破條件的標的。
-
-        <br><br>
-
-        可以稍後重新掃描。
-
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-
-  /*
-   * 依照「結構完整度」排序。
-   *
-   * 這不是投資排名，
-   * 只是讓畫面先顯示資料較完整的標的。
-   */
-
-  found.sort(
-    (a,b) => {
-
-      const scoreA =
-        breakoutDisplayScore(a);
-
-      const scoreB =
-        breakoutDisplayScore(b);
-
-      return scoreB - scoreA;
-
-    }
-  );
-
-
-  result.innerHTML = `
-
-    <div class="recTable">
-
-      <div class="recHead">
-
-        <span>突破掃描</span>
-
-        <span>${found.length} 檔</span>
-
-      </div>
-
-      ${found
-        .slice(0,8)
-        .map(
-          data =>
-            breakoutRow(
-              data
-            )
-        )
-        .join("")}
-
-    </div>
-
-  `;
-
-
-  /*
-   * 掃描結果點擊
-   */
-
-  result
-    .querySelectorAll(
-      "[data-scan-code]"
-    )
-    .forEach(
-      item => {
-
-        item.addEventListener(
-          "click",
-          () => {
-
-            const code =
-              item.dataset.scanCode;
-
-            $("searchInput").value =
-              code;
-
-            searchStock(
-              code
-            );
-
-          }
-        );
+      /*
+       * 如果使用者已經開始
+       * 新一輪掃描，
+       * 取消舊掃描。
+       */
+
+      if(
+        seq !== state.scanSeq
+      ){
+
+        return;
 
       }
-    );
 
-}
 
-
-/* =========================================================
-   突破顯示分數
-   只作畫面排序用途
-   ========================================================= */
-
-function breakoutDisplayScore(
-  data
-){
-
-  let score = 0;
-
-
-  const breakout =
-    data.breakout ||
-    {};
-
-
-  const volume =
-    data.volumeSignal ||
-    {};
-
-
-  const tech =
-    data.tech ||
-    {};
-
-
-  if(
-    breakout.confirmed
-  ){
-
-    score += 4;
-
-  }else if(
-    breakout.ready
-  ){
-
-    score += 2;
-
-  }
-
-
-  if(
-    tech.trend === "多頭"
-  ){
-
-    score += 3;
-
-  }else if(
-    tech.trend === "偏多"
-  ){
-
-    score += 2;
-
-  }
-
-
-  if(
-    volume.status === "放量"
-  ){
-
-    score += 3;
-
-  }else if(
-    volume.status === "量增"
-  ){
-
-    score += 2;
-
-  }
-
-
-  return score;
-
-}
-
-
-/* =========================================================
-   突破掃描列
-   ========================================================= */
-
-function breakoutRow(
-  data
-){
-
-  const tech =
-    data.tech ||
-    {};
-
-  const breakout =
-    data.breakout ||
-    {};
-
-  const volume =
-    data.volumeSignal ||
-    {};
-
-
-  let stateText =
-    "觀察";
-
-
-  if(
-    breakout.confirmed
-  ){
-
-    stateText =
-      "突破確認";
-
-  }else if(
-    breakout.ready
-  ){
-
-    stateText =
-      "突破準備";
-
-  }else if(
-    volume.status === "放量"
-  ){
-
-    stateText =
-      "量能轉強";
-
-  }
-
-
-  const price =
-    data.price != null
-      ? money(data.price)
-      : "—";
-
-
-  return `
-
-    <button
-      class="row"
-      type="button"
-      data-scan-code="${esc(data.code)}"
-    >
-
-      <div>
-
-        <div class="recName">
-
-          ${esc(data.code)}
-          ${esc(data.name)}
-
-        </div>
-
-        <div class="recSmall">
-
-          ${esc(
-            tech.trend ||
-            "—"
-          )}
-
-          ・
-
-          ${esc(
-            volume.status ||
-            "量能待確認"
-          )}
-
-        </div>
-
-      </div>
-
-
-      <div>
-
-        <div class="recName">
-
-          ${esc(price)}
-
-        </div>
-
-        <div class="recSmall">
-
-          ${esc(stateText)}
-
-        </div>
-
-      </div>
-
-
-      <div class="arrow">
-
-        ›
-        
-      </div>
-
-    </button>
-
-  `;
-
-}
-
-
-/* =========================================================
-   功能按鈕
-   ========================================================= */
-
-async function runFeatureAction(
-  action
-){
-
-  const table =
-    $("recommendTable");
-
-
-  if(!table){
-
-    return;
-
-  }
-
-
-  table.innerHTML = `
-
-    <div class="card loadingBox">
-
-      正在分析…
-
-      <div class="progress">
-
-        <i></i>
-
-      </div>
-
-    </div>
-
-  `;
-
-
-  /*
-   * 不同按鈕使用不同的資料篩選方向。
-   */
-
-  let title =
-    "市場分析";
-
-
-  let codes =
-    SCAN_CODES.slice();
-
-
-  switch(action){
-
-    case "recent":
-
-      title =
-        "近期強勢";
-
-      codes =
-        SCAN_CODES.slice();
-
-      break;
-
-
-    case "long":
-
-      title =
-        "趨勢觀察";
-
-      codes =
-        SCAN_CODES.slice();
-
-      break;
-
-
-    case "popular":
-
-      title =
-        "熱門標的";
-
-      codes =
-        SCAN_CODES.slice();
-
-      break;
-
-
-    case "institution":
-
-      title =
-        "法人籌碼";
-
-      codes =
-        SCAN_CODES.slice();
-
-      break;
-
-
-    case "pressure":
-
-      title =
-        "賣壓卡關";
-
-      codes =
-        SCAN_CODES.slice();
-
-      break;
-
-
-    case "analysis":
-
-      title =
-        "綜合分析";
-
-      codes =
-        SCAN_CODES.slice();
-
-      break;
-
-
-    default:
-
-      title =
-        "市場分析";
-
-      break;
-
-  }
-
-
-  const result = [];
-
-
-  /*
-   * 分批處理，避免 API 同時大量請求。
-   */
-
-  for(
-    let i = 0;
-    i < codes.length;
-    i += 3
-  ){
-
-    const batch =
-      codes.slice(
-        i,
-        i + 3
-      );
-
-
-    const rows =
-      await Promise.all(
-        batch.map(
-          code =>
-            scanOneStock(
-              code
+      const data =
+        await scanOne(
+          code
+        );
+
+
+      if(data){
+
+        /*
+         * 只保留：
+         *
+         * 突破
+         * 接近突破
+         * 偏多＋量能
+         */
+
+        const shouldShow =
+          data.breakout?.confirmed ||
+          data.breakout?.ready ||
+          (
+            data.tech?.trend==="偏多" &&
+            (
+              data.volume?.status==="明顯放量" ||
+              data.volume?.status==="量能偏強"
             )
-        )
-      );
+          );
 
 
-    rows.forEach(
-      data => {
+        if(shouldShow){
 
-        if(data){
-
-          result.push(
+          output.push(
             data
           );
 
         }
 
       }
+
+    }
+
+
+    /*
+     * 依掃描分數排序。
+     * 這只是程式內部排列，
+     * 不代表投資排名。
+     */
+
+    output.sort(
+      (a,b)=>
+        b.score-a.score
     );
 
-  }
 
+    if(!output.length){
 
-  /*
-   * 依功能重新整理。
-   */
-
-  let filtered =
-    result.slice();
-
-
-  if(
-    action === "recent"
-  ){
-
-    filtered.sort(
-      (a,b) =>
-        (
-          b.tech?.nearHigh || 0
-        ) -
-        (
-          a.tech?.nearHigh || 0
-        )
-    );
-
-  }
-
-
-  if(
-    action === "long"
-  ){
-
-    filtered =
-      filtered.filter(
-        data => {
-
-          const trend =
-            data.tech?.trend;
-
-          return (
-
-            trend === "多頭" ||
-            trend === "偏多"
-
-          );
-
-        }
-      );
-
-  }
-
-
-  if(
-    action === "popular"
-  ){
-
-    filtered =
-      filtered.slice(
-        0,
-        10
-      );
-
-  }
-
-
-  if(
-    action === "institution"
-  ){
-
-    filtered =
-      filtered.filter(
-        data =>
-          institutionHasData(
-            data.law
-          )
-      );
-
-  }
-
-
-  if(
-    action === "pressure"
-  ){
-
-    filtered.sort(
-      (a,b) => {
-
-        const pa =
-          a.pressure?.score ??
-          0;
-
-        const pb =
-          b.pressure?.score ??
-          0;
-
-        return pb - pa;
-
-      }
-    );
-
-  }
-
-
-  if(
-    action === "analysis"
-  ){
-
-    filtered.sort(
-      (a,b) => {
-
-        return (
-
-          breakoutDisplayScore(b)
-
-          -
-
-          breakoutDisplayScore(a)
-
-        );
-
-      }
-    );
-
-  }
-
-
-  renderFeatureTable(
-    title,
-    filtered
-  );
-
-}
-
-
-/* =========================================================
-   功能分析表
-   ========================================================= */
-
-function renderFeatureTable(
-  title,
-  list
-){
-
-  const table =
-    $("recommendTable");
-
-
-  if(!table){
-
-    return;
-
-  }
-
-
-  if(!list.length){
-
-    table.innerHTML = `
-
-      <div class="card">
-
+      box.innerHTML = `
         <div class="notice">
-
-          ${esc(title)}
-
+          目前掃描清單中，
+          沒有符合目前突破條件的標的。
           <br><br>
-
-          目前沒有足夠資料可供判斷。
-
-          <br>
-
-          不以缺失資料製造假訊號。
-
+          可以稍後重新掃描。
         </div>
+      `;
 
-      </div>
+      return;
 
-    `;
-
-    return;
-
-  }
+    }
 
 
-  table.innerHTML = `
-
-    <div class="recTable">
-
-      <div class="recHead">
-
-        <span>${esc(title)}</span>
-
-        <span>${list.length} 檔</span>
-
-      </div>
-
-
-      ${list
-        .slice(0,10)
+    box.innerHTML =
+      output
+        .slice(0,8)
         .map(
-          featureRow
-        )
-        .join("")}
+          data=>{
 
-    </div>
+            const stateText =
+              data.breakout?.state ||
+              "觀察";
 
-  `;
+            const volumeText =
+              data.volume?.ratio==null
+                ? "量比 —"
+                : `量比 ${data.volume.ratio.toFixed(2)}x`;
 
+            return `
+              <button
+                class="searchResult"
+                data-scan-code="${esc(data.code)}"
+              >
+                <b>
+                  ${esc(data.code)}
+                  ${esc(data.name)}
+                </b>
 
-  table
-    .querySelectorAll(
-      "[data-feature-code]"
-    )
-    .forEach(
-      item => {
-
-        item.addEventListener(
-          "click",
-          () => {
-
-            const code =
-              item.dataset.featureCode;
-
-            $("searchInput").value =
-              code;
-
-            searchStock(
-              code
-            );
+                <span>
+                  ${esc(stateText)}
+                  ｜${volumeText}
+                  ｜現價 ${money(data.price)}
+                </span>
+              </button>
+            `;
 
           }
-        );
-
-      }
-    );
-
-}
-
-
-/* =========================================================
-   功能分析列
-   ========================================================= */
-
-function featureRow(
-  data
-){
-
-  const price =
-    data.price != null
-      ? money(data.price)
-      : "—";
-
-
-  const trend =
-    data.tech?.trend ||
-    "—";
-
-
-  const volume =
-    data.volumeSignal?.status ||
-    "—";
-
-
-  const law =
-    data.law;
-
-
-  let lawText =
-    "—";
-
-
-  if(
-    law &&
-    institutionHasData(law)
-  ){
-
-    lawText =
-      law.trend ||
-      "有資料";
-
-  }
-
-
-  const levels =
-    data.levels ||
-    {};
-
-
-  const support =
-    levels.s1?.point != null
-      ? money(
-          levels.s1.point
         )
-      : "—";
+        .join("");
 
 
-  const resistance =
-    levels.r1?.point != null
-      ? money(
-          levels.r1.point
-        )
-      : "—";
+    /*
+     * 點掃描結果直接進入完整分析。
+     */
 
-
-  return `
-
-    <button
-      type="button"
-      class="row"
-      data-feature-code="${esc(data.code)}"
-    >
-
-      <div>
-
-        <div class="recName">
-
-          ${esc(data.code)}
-          ${esc(data.name)}
-
-        </div>
-
-        <div class="recSmall">
-
-          ${esc(trend)}
-          ・
-          ${esc(volume)}
-
-        </div>
-
-      </div>
-
-
-      <div>
-
-        <div class="recName">
-
-          ${esc(price)}
-
-        </div>
-
-        <div class="recSmall">
-
-          支 ${esc(support)}
-          ／
-          壓 ${esc(resistance)}
-
-        </div>
-
-      </div>
-
-
-      <div>
-
-        <div class="recSmall">
-
-          法人
-
-        </div>
-
-        <div class="recName">
-
-          ${esc(lawText)}
-
-        </div>
-
-      </div>
-
-
-      <div class="arrow">
-
-        ›
-
-      </div>
-
-    </button>
-
-  `;
-
-}
-
-
-/* =========================================================
-   快速股票按鈕
-   ========================================================= */
-
-function bindQuickCodes(){
-
-  document
-    .querySelectorAll(
-      "[data-code]"
-    )
-    .forEach(
-      button => {
-
-        /*
-         * 避免重複綁定。
-         */
-
-        if(
-          button.dataset.bound === "1"
-        ){
-
-          return;
-
-        }
-
-
-        button.dataset.bound =
-          "1";
-
+    box
+      .querySelectorAll(
+        "[data-scan-code]"
+      )
+      .forEach(button=>{
 
         button.addEventListener(
           "click",
-          () => {
+          ()=>{
 
             const code =
-              button.dataset.code;
-
-
-            if(!code){
-
-              return;
-
-            }
-
+              button.dataset.scanCode;
 
             const input =
               $("searchInput");
-
 
             if(input){
 
@@ -7085,7 +5124,6 @@ function bindQuickCodes(){
 
             }
 
-
             searchStock(
               code
             );
@@ -7093,579 +5131,504 @@ function bindQuickCodes(){
           }
         );
 
-      }
+      });
+
+
+  }catch(error){
+
+    console.error(
+      "scanBreakout error:",
+      error
     );
+
+
+    box.innerHTML = `
+      <div class="notice">
+        突破掃描暫時無法完成。
+        <br><br>
+        ${esc(
+          error.message ||
+          "行情服務暫時無法使用"
+        )}
+      </div>
+    `;
+
+
+  }finally{
+
+    if(button){
+
+      button.disabled=false;
+
+      button.innerHTML=
+        "🔎 開始動態掃描";
+
+    }
+
+  }
 
 }
 
 
 /* =========================================================
-   功能按鈕綁定
+   舊版／相容名稱
    ========================================================= */
 
-function bindFeatureActions(){
+async function runBreakoutScan(){
 
-  document
-    .querySelectorAll(
-      "[data-action]"
-    )
-    .forEach(
-      button => {
-
-        if(
-          button.dataset.bound === "1"
-        ){
-
-          return;
-
-        }
-
-
-        button.dataset.bound =
-          "1";
-
-
-        button.addEventListener(
-          "click",
-          () => {
-
-            const action =
-              button.dataset.action;
-
-
-            if(!action){
-
-              return;
-
-            }
-
-
-            runFeatureAction(
-              action
-            );
-
-          }
-        );
-
-      }
-    );
+  return scanBreakout();
 
 }/* =========================================================
-   V1491｜第 9 段
-   完整畫面／進出場／事件／啟動
+   V1491｜第 7 段
+   顯示引擎＋功能按鈕＋事件綁定
    ========================================================= */
 
+/* ---------- UI 小元件 ---------- */
 
-/* =========================================================
-   進出場參考
-   ========================================================= */
-
-function entryBlock(
-  data
-){
-
-  const entry =
-    data.entry;
-
-
-  if(!entry){
-
-    return "";
-
+function levelCard(label, item, cls){
+  if(!item || item.price == null){
+    return `
+      <div class="level ${cls || ""}">
+        <div class="levelLabel">${esc(label)}</div>
+        <div class="levelValue">—</div>
+        <div class="levelSub">資料不足</div>
+      </div>
+    `;
   }
 
+  const price = n(item.price);
+  const low = n(item.low);
+  const high = n(item.high);
+  const distance = n(item.distance);
 
-  const entryPoint =
-    entry.entry ??
-    null;
+  let rangeText = "—";
 
-
-  const entryLow =
-    entry.entryLow ??
-    entry.low ??
-    entryPoint;
-
-
-  const entryHigh =
-    entry.entryHigh ??
-    entry.high ??
-    entryPoint;
-
-
-  const defense =
-    entry.defense ??
-    null;
-
-
-  const tp1 =
-    entry.tp1 ??
-    null;
-
-
-  const tp2 =
-    entry.tp2 ??
-    null;
-
-
-  const price =
-    data.price;
-
+  if(low != null && high != null){
+    rangeText =
+      low === high
+        ? money(low)
+        : `${money(low)} ～ ${money(high)}`;
+  }
 
   return `
+    <div class="level ${cls || ""}">
+      <div class="levelLabel">${esc(label)}</div>
 
-    <div class="card">
-
-      <div class="title">
-        進出場參考
+      <div class="levelValue">
+        ${money(price)}
       </div>
 
-
-      <div class="levelGrid">
-
-        <div class="level">
-
-          <div class="levelLabel">
-            建議進場區
-          </div>
-
-          <div class="levelValue green">
-            ${
-              entryPoint == null
-                ? "—"
-                : priceText(entryPoint)
-            }
-          </div>
-
-          <div class="recSmall">
-
-            區間
-            ${
-              entryPoint == null
-                ? "—"
-                : (
-                    priceText(entryLow) +
-                    " ～ " +
-                    priceText(entryHigh)
-                  )
-            }
-
-          </div>
-
-          <div class="recSmall">
-
-            ${
-              price == null ||
-              entryPoint == null
-                ? "—"
-                : distanceText(
-                    entryPoint,
-                    price
-                  )
-            }
-
-          </div>
-
-        </div>
-
-
-        <div class="level">
-
-          <div class="levelLabel">
-            防守參考
-          </div>
-
-          <div class="levelValue red">
-            ${
-              defense == null
-                ? "—"
-                : priceText(defense)
-            }
-          </div>
-
-          <div class="recSmall">
-
-            以結構支撐失守作為
-            風險控制參考。
-
-          </div>
-
-        </div>
-
-
-        <div class="level">
-
-          <div class="levelLabel">
-            第一止盈
-          </div>
-
-          <div class="levelValue orange">
-            ${
-              tp1 == null
-                ? "—"
-                : priceText(tp1)
-            }
-          </div>
-
-          <div class="recSmall">
-
-            第一壓力區附近
-
-          </div>
-
-        </div>
-
-
-        <div class="level">
-
-          <div class="levelLabel">
-            第二止盈
-          </div>
-
-          <div class="levelValue yellow">
-            ${
-              tp2 == null
-                ? "—"
-                : priceText(tp2)
-            }
-          </div>
-
-          <div class="recSmall">
-
-            第二壓力區附近
-
-          </div>
-
-        </div>
-
+      <div class="levelSub">
+        區間 ${rangeText}
       </div>
 
+      ${
+        distance != null
+        ? `<div class="levelSub">
+             距現價 ${distance >= 0 ? "+" : ""}${pct(distance)}
+           </div>`
+        : ""
+      }
 
-      <div class="notice">
-
-        <b>
-          操作邏輯
-        </b>
-
-        <br>
-
-        ${esc(
-          entry.reason ||
-          "依支撐、壓力、突破與回踩結構計算。"
-        )}
-
-        <br><br>
-
-        實際成交價格可能因盤中波動、
-        跳空或成交速度而與參考價不同。
-
-      </div>
-
+      ${
+        item.reason
+        ? `<div class="levelSub">
+             ${esc(item.reason)}
+           </div>`
+        : ""
+      }
     </div>
-
   `;
-
 }
 
 
-/* =========================================================
-   異常波動
-   ========================================================= */
-
-function anomalyBlock(
-  data
-){
-
-  const anomaly =
-    data.anomaly;
-
-
-  if(!anomaly){
-
-    return "";
-
-  }
-
-
+function metric(label, value, sub, cls){
   return `
-
-    <div class="card">
-
-      <div class="title">
-        異常波動
-      </div>
-
-      <div class="sectionGrid">
-
-        <div class="metric">
-
-          <div class="metricLabel">
-            波動狀態
-          </div>
-
-          <div class="metricValue">
-            ${esc(
-              anomaly.label ||
-              "正常"
-            )}
-          </div>
-
-        </div>
-
-        <div class="metric">
-
-          <div class="metricLabel">
-            波動幅度
-          </div>
-
-          <div class="metricValue">
-            ${
-              anomaly.range == null
-                ? "—"
-                : priceText(
-                    anomaly.range
-                  )
-            }
-          </div>
-
-        </div>
-
-      </div>
-
-      <div class="notice">
-
-        ${esc(
-          anomaly.reason ||
-          "依近期實際價格波動判斷。"
-        )}
-
-      </div>
-
+    <div class="metric ${cls || ""}">
+      <div class="metricLabel">${esc(label)}</div>
+      <div class="metricValue">${value == null ? "—" : value}</div>
+      ${
+        sub
+        ? `<div class="metricSub">${esc(sub)}</div>`
+        : ""
+      }
     </div>
-
   `;
-
 }
 
 
-/* =========================================================
-   綜合訊號
-   ========================================================= */
+/* ---------- 技術結構文字 ---------- */
 
-function signalBlock(
-  data
-){
+function trendText(t){
+  if(!t) return "資料不足";
 
-  const breakout =
-    data.breakout ||
-    {};
-
-  const tech =
-    data.tech ||
-    {};
-
-  const volume =
-    data.volumeSignal ||
-    {};
-
-
-  let stateText =
-    "觀察";
-
-
-  let description =
-    "目前以價格結構觀察為主。";
-
-
-  if(
-    breakout.confirmed
-  ){
-
-    stateText =
-      "突破確認";
-
-    description =
-      "價格已突破近期關鍵壓力，仍需觀察成交量與後續站穩情況。";
-
-  }else if(
-    breakout.ready
-  ){
-
-    stateText =
-      "接近突破";
-
-    description =
-      "價格正在接近關鍵壓力區，等待實際突破確認。";
-
-  }else if(
-    tech.trend === "多頭" ||
-    tech.trend === "偏多"
-  ){
-
-    stateText =
-      "偏多觀察";
-
-    description =
-      "目前趨勢偏多，但仍應觀察支撐與壓力是否有效。";
-
-  }else if(
-    tech.trend === "偏空"
-  ){
-
-    stateText =
-      "偏空觀察";
-
-    description =
-      "目前趨勢偏弱，先觀察支撐是否能守住。";
-
+  if(t.trend === "多頭"){
+    return "多頭結構";
   }
 
+  if(t.trend === "空頭"){
+    return "空頭結構";
+  }
 
-  return `
-
-    <div class="card">
-
-      <div class="title">
-        綜合訊號
-      </div>
-
-      <div class="signal">
-
-        <div class="signalState">
-
-          ${esc(stateText)}
-
-        </div>
-
-        <div class="recSmall">
-
-          ${esc(description)}
-
-        </div>
-
-      </div>
-
-
-      <div class="sectionGrid">
-
-        <div class="metric">
-
-          <div class="metricLabel">
-            趨勢
-          </div>
-
-          <div class="metricValue">
-            ${esc(
-              tech.trend ||
-              "—"
-            )}
-          </div>
-
-        </div>
-
-
-        <div class="metric">
-
-          <div class="metricLabel">
-            突破
-          </div>
-
-          <div class="metricValue">
-            ${
-              breakout.confirmed
-                ? "已確認"
-                : breakout.ready
-                  ? "接近"
-                  : "等待"
-            }
-          </div>
-
-        </div>
-
-
-        <div class="metric">
-
-          <div class="metricLabel">
-            成交量
-          </div>
-
-          <div class="metricValue">
-            ${esc(
-              volume.status ||
-              "—"
-            )}
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  `;
-
+  return "震盪整理";
 }
 
 
-/* =========================================================
-   完整結果畫面
-   ========================================================= */
+function breakoutText(b){
+  if(!b){
+    return "資料不足";
+  }
 
-function renderData(
-  data,
-  scroll=true
-){
+  if(b.state === "已突破"){
+    return "已突破";
+  }
 
-  if(!data){
+  if(b.state === "接近突破"){
+    return "接近突破";
+  }
 
+  if(b.state === "整理"){
+    return "整理中";
+  }
+
+  return b.state || "觀察";
+}
+
+
+function retestText(r){
+  if(!r){
+    return "資料不足";
+  }
+
+  if(r.state === "可觀察"){
+    return "可觀察回踩";
+  }
+
+  if(r.state === "回踩中"){
+    return "回踩中";
+  }
+
+  if(r.state === "尚未回踩"){
+    return "尚未回踩";
+  }
+
+  return r.state || "觀察";
+}
+
+
+/* ---------- 法人顯示 ---------- */
+
+function lawDisplay(label, obj){
+  if(!obj || !institutionHasData(obj)){
+    return `
+      <div class="box">
+        <div class="boxMain">${esc(label)}</div>
+        <div class="boxSub">—</div>
+      </div>
+    `;
+  }
+
+  const net = n(obj.net);
+
+  let cls = "";
+
+  if(net > 0){
+    cls = "green";
+  }else if(net < 0){
+    cls = "red";
+  }else{
+    cls = "yellow";
+  }
+
+  return `
+    <div class="box">
+      <div class="boxMain">${esc(label)}</div>
+
+      <div class="boxSub ${cls}">
+        ${net == null ? "—" : integer(net)}
+      </div>
+
+      <div class="boxSub">
+        買 ${obj.buy == null ? "—" : integer(obj.buy)}
+        ／
+        賣 ${obj.sell == null ? "—" : integer(obj.sell)}
+      </div>
+    </div>
+  `;
+}
+
+
+/* ---------- 主要股票畫面 ---------- */
+
+function renderData(d, autoScroll = true){
+
+  if(!d){
     return;
-
   }
 
+  state.current = d;
 
-  const result =
-    $("result");
-
+  const result = $("result");
 
   if(!result){
-
     return;
-
   }
 
+  const t = d.tech || {};
+  const lv = d.levels || d.lv || {};
+  const law = d.law || {};
+  const rt = d.rt || d.realtime || {};
+  const b = d.breakout || {};
+  const r = d.retest || {};
+  const entry = d.entry || {};
+  const anomaly = d.anomaly || {};
+  const vs = d.volumeSignal || {};
 
-  const realtime =
-    data.realtime ||
+  const price =
+    n(d.price) ??
+    n(rt.price);
+
+  const rows = d.rows || [];
+
+  const last =
+    latest(rows) || {};
+
+  const high =
+    n(last.high);
+
+  const low =
+    n(last.low);
+
+  const volume20 =
+    avgVolume(rows, 20);
+
+  const atrValue =
+    n(t.atr);
+
+  const position =
+    t.position;
+
+  const score =
+    Math.round(
+      clamp(
+        n(t.trendScore) || 0,
+        0,
+        100
+      )
+    );
+
+  const positionBar =
+    position && position.percent != null
+      ? position.percent
+      : null;
+
+
+  /* ---------- 點位 ---------- */
+
+  const support1 =
+    lv.s1 ||
+    lv.support1 ||
+    null;
+
+  const support2 =
+    lv.s2 ||
+    lv.support2 ||
+    null;
+
+  const resistance1 =
+    lv.r1 ||
+    lv.resistance1 ||
+    null;
+
+  const resistance2 =
+    lv.r2 ||
+    lv.resistance2 ||
     null;
 
 
-  const change =
-    realtime?.prev != null &&
-    data.price != null
+  /* ---------- 法人 ---------- */
 
-      ? data.price -
-        realtime.prev
+  const foreign =
+    law.foreign ||
+    law.foreignInvestor ||
+    null;
 
-      : null;
+  const trust =
+    law.trust ||
+    law.investmentTrust ||
+    null;
 
-
-  const changePct =
-    change != null &&
-    realtime?.prev
-
-      ? change /
-        realtime.prev *
-        100
-
-      : null;
+  const dealer =
+    law.dealer ||
+    law.dealerSelf ||
+    null;
 
 
-  const changeClass =
-    change > 0
-      ? "green"
-      : change < 0
-        ? "red"
-        : "yellow";
+  /* ---------- 目前位置 ---------- */
 
+  let positionHtml = "—";
+
+  if(position){
+
+    const rangeLow =
+      n(position.low);
+
+    const rangeHigh =
+      n(position.high);
+
+    const posPct =
+      n(position.percent);
+
+    if(
+      rangeLow != null &&
+      rangeHigh != null &&
+      posPct != null
+    ){
+
+      positionHtml = `
+        <div style="margin-top:8px">
+
+          <div class="metricSub">
+            近 ${position.days || 60} 日區間
+            ${money(rangeLow)}
+            ～ ${money(rangeHigh)}
+          </div>
+
+          <div
+            style="
+              margin-top:8px;
+              height:7px;
+              background:#1b2026;
+              border-radius:99px;
+              overflow:hidden;
+            "
+          >
+            <div
+              style="
+                width:${clamp(posPct,0,100)}%;
+                height:100%;
+                background:linear-gradient(
+                  90deg,
+                  #39d98a,
+                  #f0b84b,
+                  #ff5d5d
+                );
+              "
+            ></div>
+          </div>
+
+          <div
+            class="metricSub"
+            style="margin-top:6px"
+          >
+            目前位於區間 ${pct(posPct)} 位置
+          </div>
+
+        </div>
+      `;
+    }
+  }
+
+
+  /* ---------- 突破檢查 ---------- */
+
+  let breakoutChecks = "";
+
+  if(b.checks && Array.isArray(b.checks)){
+
+    breakoutChecks = b.checks
+      .map(function(item){
+
+        const ok =
+          item.ok === true;
+
+        return `
+          <div class="checkRow">
+
+            <div class="check ${ok ? "green" : "red"}">
+              ${ok ? "✓" : "×"}
+            </div>
+
+            <div>
+              ${esc(item.name || "條件")}
+            </div>
+
+            <div class="data">
+              ${esc(item.value || "")}
+            </div>
+
+          </div>
+        `;
+      })
+      .join("");
+  }
+
+
+  /* ---------- 進場資訊 ---------- */
+
+  let entryText =
+    entry.entry != null
+      ? money(entry.entry)
+      : "—";
+
+  let defenseText =
+    entry.defense != null
+      ? money(entry.defense)
+      : "—";
+
+  let tp1Text =
+    entry.tp1 != null
+      ? money(entry.tp1)
+      : "—";
+
+  let tp2Text =
+    entry.tp2 != null
+      ? money(entry.tp2)
+      : "—";
+
+
+  /* ---------- 量能 ---------- */
+
+  let volumeStatus =
+    vs.status ||
+    "資料不足";
+
+  let volumeReason =
+    vs.reason ||
+    "";
+
+
+  /* ---------- 綜合狀態 ---------- */
+
+  let signalState =
+    "觀察";
+
+  if(
+    b.state === "已突破" &&
+    vs.state === "放量"
+  ){
+    signalState = "突破結構";
+  }else if(
+    t.trend === "多頭" &&
+    r.state === "可觀察"
+  ){
+    signalState = "回踩觀察";
+  }else if(
+    t.trend === "空頭"
+  ){
+    signalState = "弱勢結構";
+  }else if(
+    t.trend === "多頭"
+  ){
+    signalState = "偏多結構";
+  }else{
+    signalState = "整理觀察";
+  }
+
+
+  /* =====================================================
+     主畫面
+     ===================================================== */
 
   result.innerHTML = `
 
@@ -7676,193 +5639,929 @@ function renderData(
         <div class="heroTop">
 
           <div class="icon">
-            ${change > 0
-              ? "↗"
-              : change < 0
-                ? "↘"
-                : "→"}
+            ${esc(
+              (d.name || "?")
+                .slice(0,1)
+            )}
           </div>
 
+          <div>
 
-          <div class="stockTitle">
-
-            ${esc(data.code)}
-            ${esc(data.name)}
+            <div class="stockTitle">
+              ${esc(d.name || "—")}
+              <span style="opacity:.55">
+                ${esc(d.code || "")}
+              </span>
+            </div>
 
             <div class="stockSub">
+              ${trendText(t)}
+              ／
+              ${positionLabel(t)}
+            </div>
 
-              ${esc(
-                data.industry ||
-                "台股／ETF"
-              )}
+          </div>
 
+          <div class="update">
+            ${d.updateTime || "—"}
+          </div>
+
+        </div>
+
+
+        <div class="priceStrip">
+
+          <div class="priceCell">
+
+            <div class="priceLabel">
+              現價
+            </div>
+
+            <div class="priceValue">
+              ${
+                price == null
+                  ? "—"
+                  : money(price)
+              }
             </div>
 
           </div>
 
 
-          <div class="update">
+          <div class="priceCell">
 
-            ${esc(
-              realtime?.time ||
-              data.lastDate ||
-              ""
-            )}
+            <div class="priceLabel">
+              今日高
+            </div>
+
+            <div class="priceValue green">
+              ${high == null ? "—" : money(high)}
+            </div>
+
+          </div>
+
+
+          <div class="priceCell">
+
+            <div class="priceLabel">
+              今日低
+            </div>
+
+            <div class="priceValue red">
+              ${low == null ? "—" : money(low)}
+            </div>
+
+          </div>
+
+
+          <div class="priceCell">
+
+            <div class="priceLabel">
+              20日均量
+            </div>
+
+            <div class="priceValue">
+              ${
+                volume20 == null
+                  ? "—"
+                  : integer(volume20)
+              }
+            </div>
 
           </div>
 
         </div>
 
+      </div>
 
-        <div class="boxMain">
 
-          ${priceText(data.price)}
+      <!-- 動態點位 -->
+
+      <div class="title">
+        動態支撐／壓力
+      </div>
+
+      <div class="intro">
+        點位由近期歷史高低點、局部轉折、
+        成交量分布與波動結構動態計算。
+        不使用固定百分比硬套價格。
+      </div>
+
+
+      <div class="levelGrid">
+
+        ${levelCard(
+          "第二支撐",
+          support2,
+          "blue"
+        )}
+
+        ${levelCard(
+          "第一支撐",
+          support1,
+          "green"
+        )}
+
+        ${levelCard(
+          "第一壓力",
+          resistance1,
+          "orange"
+        )}
+
+        ${levelCard(
+          "第二壓力",
+          resistance2,
+          "red"
+        )}
+
+      </div>
+
+
+      <!-- 進場區 -->
+
+      <div class="title">
+        進場／防守／止盈
+      </div>
+
+      <div class="sectionGrid">
+
+        ${metric(
+          "建議進場區",
+          entryText,
+          entry.reason || "依動態支撐區計算",
+          "green"
+        )}
+
+        ${metric(
+          "防守參考",
+          defenseText,
+          "失守後重新評估",
+          "red"
+        )}
+
+        ${metric(
+          "第一止盈",
+          tp1Text,
+          "第一壓力附近",
+          "orange"
+        )}
+
+        ${metric(
+          "第二止盈",
+          tp2Text,
+          "第二壓力附近",
+          "yellow"
+        )}
+
+      </div>
+
+
+      <!-- 突破 -->
+
+      <div class="break">
+
+        <div class="breakTitle">
+          突破分析
+          <span>
+            ${breakoutText(b)}
+          </span>
+        </div>
+
+        <div class="breakGrid">
+
+          <div>
+            <div class="metricLabel">
+              突破參考
+            </div>
+
+            <div class="metricValue">
+              ${
+                b.level == null
+                  ? "—"
+                  : money(b.level)
+              }
+            </div>
+          </div>
+
+
+          <div>
+            <div class="metricLabel">
+              成交量
+            </div>
+
+            <div class="metricValue">
+              ${esc(volumeStatus)}
+            </div>
+
+            <div class="metricSub">
+              ${esc(volumeReason)}
+            </div>
+          </div>
 
         </div>
 
 
-        <div class="boxSub ${changeClass}">
+        <div class="checkRow" style="margin-top:12px">
 
-          ${
-            change == null
+          <div class="check green">
+            ${b.closeAbove ? "✓" : "×"}
+          </div>
+
+          <div>
+            收盤位置
+          </div>
+
+          <div class="data">
+            ${b.closeAbove ? "突破區上方" : "尚未確認"}
+          </div>
+
+        </div>
+
+
+        ${breakoutChecks}
+
+      </div>
+
+
+      <!-- 回踩 -->
+
+      <div class="card" style="margin-top:12px">
+
+        <div class="title">
+          回踩分析
+        </div>
+
+        <div class="sectionGrid">
+
+          ${metric(
+            "回踩狀態",
+            retestText(r),
+            r.reason || "依支撐／突破結構判斷"
+          )}
+
+          ${metric(
+            "回踩區",
+            r.level == null
               ? "—"
-              : (
-                  (change > 0 ? "+" : "") +
-                  priceText(change) +
-                  "　" +
-                  percentText(changePct)
-                )
-          }
+              : money(r.level),
+            r.rangeText || ""
+          )}
 
         </div>
 
       </div>
 
 
-      <div class="priceStrip">
+      <!-- 目前位置 -->
 
-        <div class="priceCell">
+      <div class="card" style="margin-top:12px">
 
-          <div class="priceLabel">
-            開
-          </div>
+        <div class="title">
+          現價位置
+        </div>
 
-          <div class="priceValue">
-            ${priceText(
-              realtime?.open ??
-              data.tech?.todayOpen
-            )}
-          </div>
+        ${positionHtml}
+
+      </div>
+
+
+      <!-- 技術結構 -->
+
+      <div class="card" style="margin-top:12px">
+
+        <div class="title">
+          技術結構
+        </div>
+
+        <div class="sectionGrid">
+
+          ${metric(
+            "趨勢",
+            trendText(t),
+            t.reason || ""
+          )}
+
+          ${metric(
+            "20日均線",
+            t.ma20 == null
+              ? "—"
+              : money(t.ma20),
+            t.ma20Bias == null
+              ? ""
+              : `現價乖離 ${pct(t.ma20Bias)}`
+          )}
+
+          ${metric(
+            "60日均線",
+            t.ma60 == null
+              ? "—"
+              : money(t.ma60),
+            t.ma60Bias == null
+              ? ""
+              : `現價乖離 ${pct(t.ma60Bias)}`
+          )}
+
+          ${metric(
+            "ATR",
+            atrValue == null
+              ? "—"
+              : money(atrValue),
+            "歷史實際波動"
+          )}
 
         </div>
 
+        <div class="scoreBar">
 
-        <div class="priceCell">
-
-          <div class="priceLabel">
-            高
-          </div>
-
-          <div class="priceValue red">
-            ${priceText(
-              realtime?.high ??
-              data.tech?.todayHigh
-            )}
-          </div>
-
-        </div>
-
-
-        <div class="priceCell">
-
-          <div class="priceLabel">
-            低
-          </div>
-
-          <div class="priceValue green">
-            ${priceText(
-              realtime?.low ??
-              data.tech?.todayLow
-            )}
-          </div>
+          <div
+            style="
+              width:${score}%;
+              height:100%;
+              background:linear-gradient(
+                90deg,
+                #ff5d5d,
+                #f0b84b,
+                #39d98a
+              );
+              border-radius:99px;
+            "
+          ></div>
 
         </div>
 
-
-        <div class="priceCell">
-
-          <div class="priceLabel">
-            昨收
-          </div>
-
-          <div class="priceValue">
-            ${priceText(
-              realtime?.prev
-            )}
-          </div>
-
+        <div class="metricSub" style="margin-top:6px">
+          技術結構強度 ${score}/100
         </div>
 
       </div>
+
+
+      <!-- 三大法人 -->
+
+      <div class="card" style="margin-top:12px">
+
+        <div class="title">
+          三大法人
+        </div>
+
+        <div class="grid3">
+
+          ${lawDisplay(
+            "外資",
+            foreign
+          )}
+
+          ${lawDisplay(
+            "投信",
+            trust
+          )}
+
+          ${lawDisplay(
+            "自營商",
+            dealer
+          )}
+
+        </div>
+
+
+        <div class="metricSub" style="margin-top:10px">
+          ${esc(
+            d.lawTrend ||
+            "法人資料依來源實際回傳顯示；沒有資料不以 0 代替。"
+          )}
+        </div>
+
+      </div>
+
+
+      <!-- 異常與風險 -->
+
+      <div class="card" style="margin-top:12px">
+
+        <div class="title">
+          異常訊號
+        </div>
+
+        ${
+          anomaly.messages &&
+          anomaly.messages.length
+          ?
+          anomaly.messages
+            .map(function(x){
+              return `
+                <div class="notice">
+                  ${esc(x)}
+                </div>
+              `;
+            })
+            .join("")
+          :
+          `
+            <div class="notice">
+              目前沒有明顯異常訊號。
+            </div>
+          `
+        }
+
+      </div>
+
+
+      <!-- 綜合 -->
+
+      <div class="signal">
+
+        <div class="signalState">
+          ${esc(signalState)}
+        </div>
+
+        <div class="metricSub">
+          趨勢：${esc(trendText(t))}
+          ／
+          突破：${esc(breakoutText(b))}
+          ／
+          回踩：${esc(retestText(r))}
+          ／
+          量能：${esc(volumeStatus)}
+        </div>
+
+      </div>
+
+
+      ${
+        d.valuation &&
+        valuationHasData(d.valuation)
+        ?
+        `
+        <div class="card" style="margin-top:12px">
+
+          <div class="title">
+            基本面資料
+          </div>
+
+          <div class="sectionGrid">
+
+            ${metric(
+              "本益比",
+              d.valuation.pe == null
+                ? "—"
+                : d.valuation.pe,
+              "資料來源實際回傳"
+            )}
+
+            ${metric(
+              "股價淨值比",
+              d.valuation.pb == null
+                ? "—"
+                : d.valuation.pb,
+              "資料來源實際回傳"
+            )}
+
+            ${metric(
+              "殖利率",
+              d.valuation.dividendYield == null
+                ? "—"
+                : `${d.valuation.dividendYield}%`,
+              "資料來源實際回傳"
+            )}
+
+            ${metric(
+              "EPS",
+              d.valuation.eps == null
+                ? "—"
+                : d.valuation.eps,
+              "資料來源實際回傳"
+            )}
+
+          </div>
+
+        </div>
+        `
+        :
+        ""
+      }
 
     </div>
-
-
-    ${signalBlock(data)}
-
-
-    ${trendBlock(data)}
-
-
-    ${currentPositionBlock(data)}
-
-
-    ${levelsBlock(data)}
-
-
-    ${volumeBlock(data)}
-
-
-    ${breakoutBlock(data)}
-
-
-    ${entryBlock(data)}
-
-
-    ${institutionBlock(data)}
-
-
-    ${anomalyBlock(data)}
-
-
-    ${data.levels?.s1
-      ? levelReasonText(
-          "第一支撐",
-          data.levels.s1
-        )
-      : ""}
-
-
-    ${data.levels?.r1
-      ? levelReasonText(
-          "第一壓力",
-          data.levels.r1
-        )
-      : ""}
-
   `;
 
 
-  if(
-    scroll
-  ){
+  if(autoScroll){
 
-    result.scrollIntoView({
+    setTimeout(function(){
 
+      result.scrollIntoView({
+        behavior:"smooth",
+        block:"start"
+      });
+
+    },80);
+  }
+}
+
+
+/* =========================================================
+   功能按鈕
+   ========================================================= */
+
+async function runFeature(action){
+
+  const table =
+    $("recommendTable");
+
+  if(!table){
+    return;
+  }
+
+  table.innerHTML = `
+    <div class="loadingBox">
+      正在分析資料……
+    </div>
+  `;
+
+  setStatus("正在分析…");
+
+  try{
+
+    const list = [];
+
+    for(const code of SCAN_CODES){
+
+      try{
+
+        const d =
+          await scanOne(code);
+
+        if(d){
+          list.push(d);
+        }
+
+      }catch(e){
+        console.warn(
+          "feature scan error",
+          code,
+          e
+        );
+      }
+    }
+
+
+    if(!list.length){
+
+      table.innerHTML = `
+        <div class="empty">
+          暫時沒有取得可分析資料。
+        </div>
+      `;
+
+      setStatus("資料取得失敗");
+      return;
+    }
+
+
+    let data = list.slice();
+
+
+    /* ---------- 最近 ---------- */
+
+    if(action === "recent"){
+
+      data.sort(function(a,b){
+
+        const ta =
+          a.updateTime || "";
+
+        const tb =
+          b.updateTime || "";
+
+        return tb.localeCompare(ta);
+
+      });
+
+    }
+
+
+    /* ---------- 長期 ---------- */
+
+    else if(action === "long"){
+
+      data.sort(function(a,b){
+
+        const pa =
+          n(a.tech && a.tech.ma20Bias) || 0;
+
+        const pb =
+          n(b.tech && b.tech.ma20Bias) || 0;
+
+        return pb - pa;
+
+      });
+
+    }
+
+
+    /* ---------- 熱門 ---------- */
+
+    else if(action === "popular"){
+
+      data.sort(function(a,b){
+
+        const va =
+          n(a.volumeSignal && a.volumeSignal.ratio)
+          || 0;
+
+        const vb =
+          n(b.volumeSignal && b.volumeSignal.ratio)
+          || 0;
+
+        return vb - va;
+
+      });
+
+    }
+
+
+    /* ---------- 法人 ---------- */
+
+    else if(action === "institution"){
+
+      data.sort(function(a,b){
+
+        const getNet = function(x){
+
+          const law =
+            x.law || {};
+
+          const f =
+            law.foreign;
+
+          const t =
+            law.trust;
+
+          const d =
+            law.dealer;
+
+          return (
+            n(f && f.net) || 0
+          ) + (
+            n(t && t.net) || 0
+          ) + (
+            n(d && d.net) || 0
+          );
+        };
+
+        return getNet(b) - getNet(a);
+
+      });
+
+    }
+
+
+    /* ---------- 壓力 ---------- */
+
+    else if(action === "pressure"){
+
+      data.sort(function(a,b){
+
+        const pa =
+          n(
+            a.levels &&
+            a.levels.r1 &&
+            a.levels.r1.distance
+          );
+
+        const pb =
+          n(
+            b.levels &&
+            b.levels.r1 &&
+            b.levels.r1.distance
+          );
+
+        return (
+          (pa == null ? 999 : pa) -
+          (pb == null ? 999 : pb)
+        );
+
+      });
+
+    }
+
+
+    /* ---------- 綜合分析 ---------- */
+
+    else if(action === "analysis"){
+
+      data.sort(function(a,b){
+
+        const score = function(x){
+
+          const t =
+            x.tech || {};
+
+          const bo =
+            x.breakout || {};
+
+          const vs =
+            x.volumeSignal || {};
+
+          let s =
+            n(t.trendScore) || 0;
+
+          if(bo.state === "已突破"){
+            s += 20;
+          }
+
+          if(vs.state === "放量"){
+            s += 10;
+          }
+
+          return s;
+        };
+
+        return score(b) - score(a);
+
+      });
+
+    }
+
+
+    table.innerHTML = `
+
+      <div class="recHead">
+
+        <div>
+          股票
+        </div>
+
+        <div>
+          現價
+        </div>
+
+        <div>
+          結構
+        </div>
+
+      </div>
+
+      ${
+        data
+          .slice(0,10)
+          .map(function(x){
+
+            const trend =
+              x.tech &&
+              x.tech.trend
+              ? x.tech.trend
+              : "—";
+
+            const price =
+              x.price == null
+                ? "—"
+                : money(x.price);
+
+            const breakout =
+              x.breakout &&
+              x.breakout.state
+              ? x.breakout.state
+              : "—";
+
+            return `
+
+              <div
+                class="row"
+                data-code="${esc(x.code)}"
+              >
+
+                <div class="recName">
+
+                  ${esc(x.name)}
+
+                  <div class="recSmall">
+                    ${esc(x.code)}
+                  </div>
+
+                </div>
+
+                <div>
+                  ${price}
+                </div>
+
+                <div>
+
+                  ${esc(trend)}
+
+                  <div class="recSmall">
+                    ${esc(breakout)}
+                  </div>
+
+                </div>
+
+                <div class="arrow">
+                  ›
+                </div>
+
+              </div>
+
+            `;
+
+          })
+          .join("")
+      }
+
+    `;
+
+
+    table
+      .querySelectorAll("[data-code]")
+      .forEach(function(el){
+
+        el.addEventListener(
+          "click",
+          async function(){
+
+            const code =
+              el.dataset.code;
+
+            await searchStock(code);
+
+          }
+        );
+
+      });
+
+
+    setStatus(
+      `完成分析 ${data.length} 檔`
+    );
+
+  }catch(e){
+
+    console.error(e);
+
+    table.innerHTML = `
+      <div class="empty">
+        分析失敗，請稍後再試。
+      </div>
+    `;
+
+    setStatus("分析失敗");
+  }
+}
+
+
+/* =========================================================
+   底部導覽
+   ========================================================= */
+
+function navAction(name){
+
+  if(name === "home"){
+
+    $("home")?.scrollIntoView({
       behavior:"smooth",
-
       block:"start"
+    });
 
+    return;
+  }
+
+
+  if(name === "watch"){
+
+    $("recommendTable")?.scrollIntoView({
+      behavior:"smooth",
+      block:"start"
+    });
+
+    return;
+  }
+
+
+  if(name === "chip"){
+
+    $("result")?.scrollIntoView({
+      behavior:"smooth",
+      block:"start"
+    });
+
+    return;
+  }
+
+
+  if(name === "industry"){
+
+    $("recommendTable")?.scrollIntoView({
+      behavior:"smooth",
+      block:"start"
+    });
+
+    return;
+  }
+
+
+  if(name === "setting"){
+
+    window.scrollTo({
+      top:document.body.scrollHeight,
+      behavior:"smooth"
     });
 
   }
@@ -7871,263 +6570,69 @@ function renderData(
 
 
 /* =========================================================
-   狀態列
+   事件綁定
    ========================================================= */
 
-if(
-  typeof window.setStatus !==
-  "function"
-){
-
-  window.setStatus =
-    function(message){
-
-      const status =
-        $("status");
-
-
-      if(!status){
-
-        return;
-
-      }
-
-
-      status.textContent =
-        message || "";
-
-    };
-
-}
-
-
-/* =========================================================
-   底部導航
-   ========================================================= */
-
-function handleNavigation(
-  nav
-){
-
-  if(
-    nav === "home"
-  ){
-
-    const home =
-      $("home");
-
-
-    if(home){
-
-      home.scrollIntoView({
-
-        behavior:"smooth",
-
-        block:"start"
-
-      });
-
-    }
-
-    setStatus(
-      "首頁"
-    );
-
-    return;
-
-  }
-
-
-  if(
-    nav === "watch"
-  ){
-
-    const target =
-      $("recommendTable");
-
-
-    if(target){
-
-      target.scrollIntoView({
-
-        behavior:"smooth",
-
-        block:"start"
-
-      });
-
-    }
-
-    setStatus(
-      "觀察清單"
-    );
-
-    return;
-
-  }
-
-
-  if(
-    nav === "chip"
-  ){
-
-    const target =
-      $("result");
-
-
-    if(target){
-
-      target.scrollIntoView({
-
-        behavior:"smooth",
-
-        block:"start"
-
-      });
-
-    }
-
-    setStatus(
-      "法人籌碼與個股分析"
-    );
-
-    return;
-
-  }
-
-
-  if(
-    nav === "industry"
-  ){
-
-    const target =
-      $("recommendTable");
-
-
-    if(target){
-
-      target.scrollIntoView({
-
-        behavior:"smooth",
-
-        block:"start"
-
-      });
-
-    }
-
-    setStatus(
-      "產業與熱門標的"
-    );
-
-    return;
-
-  }
-
-
-  if(
-    nav === "setting"
-  ){
-
-    setStatus(
-      "目前版本採用動態資料分析模式"
-    );
-
-  }
-
-}
-
-
-/* =========================================================
-   所有事件
-   ========================================================= */
+let eventsBound = false;
 
 function bindEvents(){
 
-  /*
-   * 搜尋按鈕
-   */
+  if(eventsBound){
+    return;
+  }
+
+  eventsBound = true;
+
+
+  /* ---------- 搜尋 ---------- */
 
   const searchBtn =
     $("searchBtn");
+
+  const searchInput =
+    $("searchInput");
 
 
   if(searchBtn){
 
     searchBtn.addEventListener(
       "click",
-      () => {
+      function(){
 
-        const value =
+        const keyword =
           clean(
-            $("searchInput").value
+            searchInput
+              ? searchInput.value
+              : ""
           );
 
-
-        if(!value){
-
-          setStatus(
-            "請輸入股票代號或名稱"
-          );
-
-          return;
-
+        if(keyword){
+          searchStock(keyword);
         }
-
-
-        searchStock(
-          value
-        );
 
       }
     );
 
   }
-
-
-  /*
-   * 搜尋框
-   */
-
-  const searchInput =
-    $("searchInput");
 
 
   if(searchInput){
 
     searchInput.addEventListener(
-      "input",
-      showSearchCandidates
-    );
-
-
-    searchInput.addEventListener(
       "keydown",
-      event => {
+      function(e){
 
-        if(
-          event.key === "Enter"
-        ){
+        if(e.key === "Enter"){
 
-          event.preventDefault();
+          e.preventDefault();
 
-
-          const value =
+          const keyword =
             clean(
               searchInput.value
             );
 
-
-          if(value){
-
-            $("searchResults")
-              .innerHTML = "";
-
-
-            searchStock(
-              value
-            );
-
+          if(keyword){
+            searchStock(keyword);
           }
 
         }
@@ -8135,97 +6640,105 @@ function bindEvents(){
       }
     );
 
-  }
 
+    searchInput.addEventListener(
+      "input",
+      function(){
 
-  /*
-   * 快速股票
-   */
-
-  bindQuickCodes();
-
-
-  /*
-   * 功能按鈕
-   */
-
-  bindFeatureActions();
-
-
-  /*
-   * 突破掃描
-   */
-
-  const breakScanBtn =
-    $("breakScanBtn");
-
-
-  if(breakScanBtn){
-
-    breakScanBtn.addEventListener(
-      "click",
-      runBreakoutScan
-    );
-
-  }
-
-
-  /*
-   * 底部導航
-   */
-
-  document
-    .querySelectorAll(
-      "[data-nav]"
-    )
-    .forEach(
-      button => {
-
-        button.addEventListener(
-          "click",
-          () => {
-
-            handleNavigation(
-              button.dataset.nav
-            );
-
-          }
+        showSearchCandidates(
+          searchInput.value
         );
 
       }
     );
 
-
-  /*
-   * 點擊搜尋結果以外的地方，
-   * 收起搜尋候選。
-   */
-
-  document.addEventListener(
-    "click",
-    event => {
-
-      if(
-        !event.target.closest(
-          ".search"
-        )
-      ){
-
-        const box =
-          $("searchResults");
+  }
 
 
-        if(box){
+  /* ---------- 快速股票 ---------- */
 
-          box.innerHTML =
-            "";
+  document
+    .querySelectorAll("[data-code]")
+    .forEach(function(btn){
+
+      btn.addEventListener(
+        "click",
+        function(){
+
+          const code =
+            btn.dataset.code;
+
+          if(code){
+            searchStock(code);
+          }
 
         }
+      );
+
+    });
+
+
+  /* ---------- 功能 ---------- */
+
+  document
+    .querySelectorAll("[data-action]")
+    .forEach(function(btn){
+
+      btn.addEventListener(
+        "click",
+        function(){
+
+          const action =
+            btn.dataset.action;
+
+          if(action){
+            runFeature(action);
+          }
+
+        }
+      );
+
+    });
+
+
+  /* ---------- 突破掃描 ---------- */
+
+  const breakBtn =
+    $("breakScanBtn");
+
+  if(breakBtn){
+
+    breakBtn.addEventListener(
+      "click",
+      function(){
+
+        runBreakoutScan();
 
       }
+    );
 
-    }
-  );
+  }
+
+
+  /* ---------- 底部導覽 ---------- */
+
+  document
+    .querySelectorAll("[data-nav]")
+    .forEach(function(btn){
+
+      btn.addEventListener(
+        "click",
+        function(){
+
+          const nav =
+            btn.dataset.nav;
+
+          navAction(nav);
+
+        }
+      );
+
+    });
 
 }
 
@@ -8234,75 +6747,45 @@ function bindEvents(){
    啟動
    ========================================================= */
 
-function boot(){
+let booted = false;
 
-  /*
-   * 綁定一次。
-   */
+async function boot(){
 
-  if(
-    document.body.dataset.v1491Booted === "1"
-  ){
-
+  if(booted){
     return;
-
   }
 
-
-  document.body.dataset.v1491Booted =
-    "1";
-
+  booted = true;
 
   bindEvents();
 
-
-  /*
-   * 首頁預設狀態。
-   */
-
   setStatus(
-    "V1491 已啟動｜輸入股票代號開始分析"
+    "V1491 已啟動｜等待搜尋股票"
   );
-
-
-  /*
-   * 預設推薦清單不自動大量呼叫 API。
-   * 使用者點擊功能或搜尋後才分析。
-   *
-   * 這樣可以避免一開頁面就大量請求。
-   */
 
 }
 
 
-/* =========================================================
-   DOM Ready
-   ========================================================= */
+/* ---------- DOM Ready ---------- */
 
 if(
-  document.readyState ===
-  "loading"
+  document.readyState === "loading"
 ){
 
   document.addEventListener(
     "DOMContentLoaded",
     boot,
-    {
-      once:true
-    }
+    {once:true}
   );
 
 }else{
 
   boot();
 
-}
-
-
-/* =========================================================
-   V1491 第 9 段結束
+}/* =========================================================
+   V1491｜第 8 段
+   HTML 最後封口
    ========================================================= */
-
 </script>
 
 </body>
