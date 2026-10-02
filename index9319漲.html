@@ -1,0 +1,7110 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#080a0c">
+<title>m1491｜動態台股法人籌碼與突破分析 V1491</title>
+
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+
+:root{
+  --bg:#080a0c;
+  --card:#11161b;
+  --card2:#151b21;
+  --line:#26313a;
+  --text:#f3f6f8;
+  --muted:#91a0aa;
+  --green:#39d98a;
+  --red:#ff6374;
+  --orange:#ffad42;
+  --yellow:#f4d35e;
+  --blue:#55b9ff;
+  --purple:#b38cff;
+  --cyan:#46e0ff;
+  --shadow:0 10px 28px rgba(0,0,0,.24)
+}
+
+html{
+  scroll-behavior:smooth
+}
+
+body{
+  margin:0;
+  background:linear-gradient(180deg,#080a0c,#0b1014 45%,#080a0c);
+  color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,
+  "PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif
+}
+
+button,
+input{
+  font:inherit
+}
+
+button{
+  cursor:pointer
+}
+
+.wrap{
+  max-width:760px;
+  margin:auto;
+  padding:16px 14px 100px
+}
+
+.search{
+  display:flex;
+  gap:8px;
+  position:sticky;
+  top:0;
+  z-index:20;
+  padding:4px 0 12px;
+  background:rgba(8,10,12,.92);
+  backdrop-filter:blur(12px)
+}
+
+.search input{
+  min-width:0;
+  flex:1;
+  background:#10151a;
+  border:1px solid var(--line);
+  color:var(--text);
+  border-radius:14px;
+  padding:13px 14px;
+  outline:none
+}
+
+.search input:focus{
+  border-color:var(--blue);
+  box-shadow:0 0 0 3px rgba(85,185,255,.1)
+}
+
+.search button,
+.action,
+.feature,
+.navBtn{
+  border:1px solid var(--line);
+  background:#12181d;
+  color:var(--text)
+}
+
+.search button{
+  border-radius:14px;
+  padding:0 16px;
+  font-weight:800
+}
+
+.hint{
+  font-size:12px;
+  color:var(--muted);
+  margin:0 2px 10px
+}
+
+.status{
+  font-size:13px;
+  color:var(--muted);
+  min-height:20px;
+  margin:5px 2px
+}
+
+.searchResults{
+  display:grid;
+  gap:6px;
+  margin:4px 0 10px
+}
+
+.searchResult{
+  padding:10px 12px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:#0f1418;
+  display:flex;
+  justify-content:space-between;
+  align-items:center
+}
+
+.searchResult b{
+  font-size:14px
+}
+
+.searchResult span{
+  font-size:12px;
+  color:var(--muted)
+}
+
+.card{
+  background:linear-gradient(
+    180deg,
+    rgba(18,24,29,.98),
+    rgba(14,19,24,.98)
+  );
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:15px;
+  margin:10px 0;
+  box-shadow:var(--shadow)
+}
+
+.title{
+  font-size:18px;
+  font-weight:900;
+  margin-bottom:7px
+}
+
+.intro{
+  font-size:13px;
+  color:var(--muted);
+  line-height:1.7
+}
+
+.hero{
+  padding:16px
+}
+
+.heroTop{
+  display:flex;
+  gap:12px;
+  align-items:center
+}
+
+.icon{
+  width:48px;
+  height:48px;
+  border-radius:15px;
+  display:grid;
+  place-items:center;
+  background:#17222a;
+  font-size:25px
+}
+
+.stockTitle{
+  font-size:22px;
+  font-weight:950
+}
+
+.stockSub,
+.update{
+  font-size:12px;
+  color:var(--muted);
+  margin-top:3px
+}
+
+.update{
+  margin-left:auto;
+  text-align:right
+}
+
+.grid3{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  margin-top:13px
+}
+
+.box{
+  background:#0c1115;
+  border:1px solid var(--line);
+  border-radius:13px;
+  padding:10px
+}
+
+.boxMain{
+  font-size:18px;
+  font-weight:900
+}
+
+.boxSub{
+  font-size:11px;
+  color:var(--muted);
+  margin-top:3px
+}
+
+.priceStrip{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:7px;
+  margin-top:10px
+}
+
+.priceCell{
+  background:#0d1317;
+  border:1px solid var(--line);
+  padding:9px;
+  border-radius:12px
+}
+
+.priceLabel{
+  font-size:11px;
+  color:var(--muted)
+}
+
+.priceValue{
+  font-size:16px;
+  font-weight:900;
+  margin-top:3px
+}
+
+.green{color:var(--green)}
+.red{color:var(--red)}
+.orange{color:var(--orange)}
+.yellow{color:var(--yellow)}
+.blue{color:var(--blue)}
+.purple{color:var(--purple)}
+
+.break{
+  border-color:rgba(70,224,255,.35)
+}
+
+.breakTitle{
+  font-size:17px;
+  font-weight:900;
+  color:var(--cyan)
+}
+
+.breakGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+  margin-top:10px
+}
+
+.checkRow{
+  display:flex;
+  gap:8px;
+  align-items:center;
+  font-size:13px;
+  padding:7px 0
+}
+
+.check{
+  width:20px;
+  height:20px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:#17242b;
+  color:var(--cyan);
+  font-size:12px
+}
+
+.data{
+  display:grid;
+  gap:8px
+}
+
+.dataRow{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  padding:9px 0;
+  border-bottom:1px solid rgba(255,255,255,.055)
+}
+
+.dataRow:last-child{
+  border-bottom:0
+}
+
+.dataRow span:first-child{
+  color:var(--muted);
+  font-size:13px
+}
+
+.dataRow b{
+  text-align:right
+}
+
+.featureGrid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px
+}
+
+.feature{
+  border-radius:14px;
+  padding:10px;
+  text-align:left
+}
+
+.featureIcon{
+  font-size:18px
+}
+
+.featureName{
+  font-weight:850;
+  font-size:13px;
+  margin-top:3px
+}
+
+.featureDesc{
+  font-size:10px;
+  color:var(--muted);
+  margin-top:3px
+}
+
+.action{
+  width:100%;
+  border-radius:12px;
+  padding:11px;
+  margin-top:7px;
+  text-align:left
+}
+
+.levelGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px
+}
+
+.level{
+  padding:12px;
+  border-radius:14px;
+  background:#0d1317;
+  border:1px solid var(--line)
+}
+
+.levelLabel{
+  font-size:12px;
+  color:var(--muted)
+}
+
+.levelValue{
+  font-size:21px;
+  font-weight:950;
+  margin-top:4px
+}
+
+.levelSmall{
+  font-size:11px;
+  color:var(--muted);
+  line-height:1.5;
+  margin-top:5px
+}
+
+.sectionGrid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:9px
+}
+
+.metric{
+  padding:11px;
+  background:#0d1317;
+  border:1px solid var(--line);
+  border-radius:13px
+}
+
+.metricLabel{
+  font-size:11px;
+  color:var(--muted)
+}
+
+.metricValue{
+  font-size:18px;
+  font-weight:900;
+  margin-top:3px
+}
+
+.metricSub{
+  font-size:11px;
+  color:var(--muted);
+  margin-top:4px;
+  line-height:1.5
+}
+
+.signal{
+  padding:13px;
+  border-radius:14px;
+  border:1px solid var(--line);
+  background:#0d1317
+}
+
+.signalState{
+  font-size:19px;
+  font-weight:950
+}
+
+.scoreBar{
+  height:7px;
+  border-radius:99px;
+  background:#20282e;
+  overflow:hidden;
+  margin-top:8px
+}
+
+.scoreFill{
+  height:100%;
+  border-radius:99px;
+  background:linear-gradient(
+    90deg,
+    #ff6374,
+    #ffad42,
+    #39d98a
+  )
+}
+
+.notice{
+  padding:11px;
+  border-radius:12px;
+  background:#111a20;
+  border:1px solid #24343d;
+  font-size:12px;
+  color:#aebbc3;
+  line-height:1.6
+}
+
+.tableWrap{
+  overflow:auto
+}
+
+.tableWrap table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:12px
+}
+
+.tableWrap th,
+.tableWrap td{
+  padding:9px 7px;
+  border-bottom:1px solid var(--line);
+  white-space:nowrap
+}
+
+.tableWrap th{
+  text-align:left;
+  color:var(--muted)
+}
+
+.recTable{
+  display:grid;
+  gap:7px
+}
+
+.recHead{
+  display:grid;
+  grid-template-columns:1.5fr .8fr .8fr .8fr;
+  gap:6px;
+  color:var(--muted);
+  font-size:11px;
+  padding:0 6px
+}
+
+.row{
+  display:grid;
+  grid-template-columns:1.5fr .8fr .8fr .8fr;
+  gap:6px;
+  align-items:center;
+  padding:10px 6px;
+  background:#0d1317;
+  border:1px solid var(--line);
+  border-radius:11px
+}
+
+.recName{
+  font-weight:850
+}
+
+.recSmall{
+  font-size:10px;
+  color:var(--muted);
+  margin-top:2px
+}
+
+.arrow{
+  text-align:center;
+  font-size:16px
+}
+
+.searchResults:empty{
+  display:none
+}
+
+.empty{
+  padding:18px;
+  text-align:center;
+  color:var(--muted)
+}
+
+.loadingBox{
+  padding:18px;
+  text-align:center;
+  color:var(--muted)
+}
+
+.progress{
+  height:6px;
+  background:#20282e;
+  border-radius:99px;
+  overflow:hidden;
+  margin-top:9px
+}
+
+.progress i{
+  display:block;
+  width:35%;
+  height:100%;
+  background:var(--blue);
+  animation:load 1s infinite alternate
+}
+
+@keyframes load{
+  to{width:85%}
+}
+
+.footer{
+  text-align:center;
+  color:#5f6b73;
+  font-size:10px;
+  padding:20px
+}
+
+.bottomNav{
+  position:fixed;
+  left:50%;
+  bottom:0;
+  transform:translateX(-50%);
+  width:min(760px,100%);
+  padding:8px 10px calc(8px + env(safe-area-inset-bottom));
+  background:rgba(8,10,12,.95);
+  backdrop-filter:blur(14px);
+  border-top:1px solid var(--line);
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  z-index:30
+}
+
+.navBtn{
+  border:0;
+  background:transparent;
+  padding:5px 2px;
+  color:#71808a
+}
+
+.navIcon{
+  font-size:18px
+}
+
+.navText{
+  font-size:10px;
+  margin-top:2px
+}
+
+.navBtn.active{
+  color:var(--blue)
+}
+
+.dot{
+  display:inline-block;
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:var(--green);
+  margin-right:5px
+}
+
+.hidden{
+  display:none!important
+}
+
+.pressureStrong{
+  color:var(--red)
+}
+
+.pressureWarn{
+  color:var(--orange)
+}
+
+.pressureDanger{
+  color:#ff4055
+}
+
+.rangeBar{
+  height:8px;
+  border-radius:99px;
+  background:#1d252b;
+  position:relative;
+  margin-top:9px;
+  overflow:hidden
+}
+
+.rangeFill{
+  height:100%;
+  background:linear-gradient(90deg,#55b9ff,#b38cff);
+  border-radius:99px
+}
+
+.rangeMark{
+  position:absolute;
+  top:-2px;
+  width:2px;
+  height:12px;
+  background:#fff;
+  opacity:.9
+}
+
+.scanCards{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:10px
+}
+
+.scanCard{
+  display:block;
+  width:100%;
+  text-align:left;
+  padding:13px;
+  border:1px solid var(--line);
+  border-radius:15px;
+  background:linear-gradient(180deg,#0d1922,#0b1218);
+  color:var(--text)
+}
+
+.scanCard:active{
+  transform:scale(.99)
+}
+
+.scanHead{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px
+}
+
+.scanName{
+  font-weight:900;
+  font-size:15px
+}
+
+.scanCode{
+  font-size:10px;
+  color:var(--muted);
+  margin-top:2px
+}
+
+.scanState{
+  font-size:11px;
+  font-weight:800;
+  color:var(--cyan)
+}
+
+.scanPrice{
+  font-size:20px;
+  font-weight:950;
+  margin:9px 0 8px
+}
+
+.scanLevels{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:6px
+}
+
+.scanLevel{
+  padding:7px 8px;
+  border-radius:10px;
+  background:#111b23;
+  border:1px solid rgba(255,255,255,.06)
+}
+
+.scanLevelLabel{
+  font-size:10px;
+  color:var(--muted)
+}
+
+.scanLevelValue{
+  font-size:14px;
+  font-weight:900;
+  margin-top:2px
+}
+
+.scanMeta{
+  font-size:10px;
+  color:var(--muted);
+  line-height:1.45;
+  margin-top:8px
+}
+
+@media(max-width:480px){
+  .scanCards{
+    grid-template-columns:1fr
+  }
+
+  .grid3{
+    grid-template-columns:1fr 1fr
+  }
+
+  .grid3 .box:last-child{
+    grid-column:1/-1
+  }
+
+  .featureGrid{
+    grid-template-columns:repeat(2,1fr)
+  }
+
+  .breakGrid,
+  .levelGrid,
+  .sectionGrid{
+    grid-template-columns:1fr 1fr
+  }
+
+  .stockTitle{
+    font-size:20px
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+
+  <div class="search">
+    <input
+      id="searchInput"
+      autocomplete="off"
+      placeholder="輸入股票代號或名稱，例如 2330、台積電"
+    >
+
+    <button id="searchBtn">分析</button>
+  </div>
+
+  <div class="hint">
+    V1491｜動態支撐／壓力／區間／進場／止盈／法人籌碼
+    ※價格全部依實際行情計算
+  </div>
+
+  <div id="status" class="status"></div>
+
+  <div id="searchResults" class="searchResults"></div>
+
+  <main id="home">
+
+    <section class="card">
+      <div class="title">
+        📊 動態台股法人籌碼與突破分析
+      </div>
+
+      <div class="intro">
+        輸入股票後，系統會依即時／近期歷史資料計算趨勢、支撐、壓力、點位區間、成交量、三大法人、回踩與突破條件。
+        程式不預設任何股票的固定價格。
+      </div>
+    </section>
+
+    <section class="card break">
+
+      <div class="breakTitle">
+        ⚡ 關鍵突破／壓力共振掃描
+      </div>
+
+      <div class="intro">
+        掃描清單中的近期行情，找出接近實際壓力結構且有量價配合的標的。
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+
+        <button id="breakScanBtn" class="action">
+          🔎 開始動態掃描
+        </button>
+
+        <button id="hot20ScanBtn" class="action">
+          🔥 掃描熱門20檔
+        </button>
+
+      </div>
+
+      <div id="scanResult" class="breakGrid"></div>
+
+    </section>
+
+    <section class="card">
+
+      <div class="title">
+        ⚡ 快速分析
+      </div>
+
+      <div class="featureGrid">
+
+        <button class="feature" data-code="1326">
+          <div class="featureIcon">🏭</div>
+          <div class="featureName">台化</div>
+          <div class="featureDesc">1326</div>
+        </button>
+
+        <button class="feature" data-code="2481">
+          <div class="featureIcon">💡</div>
+          <div class="featureName">強茂</div>
+          <div class="featureDesc">2481</div>
+        </button>
+
+        <button class="feature" data-code="2606">
+          <div class="featureIcon">🚢</div>
+          <div class="featureName">裕民</div>
+          <div class="featureDesc">2606</div>
+        </button>
+
+        <button class="feature" data-code="2330">
+          <div class="featureIcon">💻</div>
+          <div class="featureName">台積電</div>
+          <div class="featureDesc">2330</div>
+        </button>
+
+        <button class="feature" data-code="2317">
+          <div class="featureIcon">📱</div>
+          <div class="featureName">鴻海</div>
+          <div class="featureDesc">2317</div>
+        </button>
+
+        <button class="feature" data-code="0050">
+          <div class="featureIcon">📈</div>
+          <div class="featureName">台灣50</div>
+          <div class="featureDesc">0050</div>
+        </button>
+
+        <button class="feature" data-code="00919">
+          <div class="featureIcon">💰</div>
+          <div class="featureName">高股息</div>
+          <div class="featureDesc">00919</div>
+        </button>
+
+      </div>
+
+    </section>
+
+    <section class="card">
+
+      <div class="title">
+        🧭 功能
+      </div>
+
+      <button class="action" data-action="recent">
+        📅 近期強勢股
+      </button>
+
+      <button class="action" data-action="long">
+        📈 長線趨勢
+      </button>
+
+      <button class="action" data-action="popular">
+        🔥 熱門標的
+      </button>
+
+      <button class="action" data-action="institution">
+        🏦 法人動向
+      </button>
+
+      <button class="action" data-action="pressure">
+        🧱 壓力／卡關
+      </button>
+
+      <button class="action" data-action="analysis">
+        🧠 綜合分析
+      </button>
+
+    </section>
+
+    <section class="card">
+
+      <div class="title">
+        📌 動態推薦結果
+      </div>
+
+      <div id="recommendTable" class="recTable">
+        <div class="empty">
+          尚未執行掃描
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <section id="result"></section>
+
+  <div class="footer">
+    V1491｜所有股票價格、支撐、壓力、區間與交易點位均由實際資料動態計算，不使用固定股票價格。
+  </div>
+
+</div>
+
+<nav class="bottomNav">
+
+  <button class="navBtn active" data-nav="home">
+    <div class="navIcon">⌂</div>
+    <div class="navText">首頁</div>
+  </button>
+
+  <button class="navBtn" data-nav="watch">
+    <div class="navIcon">◉</div>
+    <div class="navText">觀察</div>
+  </button>
+
+  <button class="navBtn" data-nav="chip">
+    <div class="navIcon">🏦</div>
+    <div class="navText">籌碼</div>
+  </button>
+
+  <button class="navBtn" data-nav="industry">
+    <div class="navIcon">▦</div>
+    <div class="navText">產業</div>
+  </button>
+
+  <button class="navBtn" data-nav="setting">
+    <div class="navIcon">⚙</div>
+    <div class="navText">設定</div>
+  </button>
+
+</nav>
+
+<script>
+"use strict";
+
+/* =========================
+   V1491｜單一 JS、單一啟動點
+   ========================= */
+
+const FINMIND="https://api.finmindtrade.com/api/v4/data";
+
+const MIS="https://mis.twse.com.tw/stock/api/getStockInfo.jsp";
+
+const PROXIES=[
+  "https://api.allorigins.win/raw?url=",
+  "https://corsproxy.io/?url="
+];
+
+const $=id=>document.getElementById(id);
+
+const esc=v=>String(v??"").replace(
+  /[&<>"']/g,
+  m=>({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#39;"
+  }[m])
+);
+
+const n=v=>{
+  const x=Number(String(v??"").replace(/,/g,""));
+  return Number.isFinite(x)?x:null;
+};
+
+const money=(v,d=2)=>
+  n(v)==null
+    ?"—"
+    :n(v).toLocaleString(
+      "zh-TW",
+      {
+        minimumFractionDigits:d,
+        maximumFractionDigits:d
+      }
+    );
+
+const integer=v=>
+  n(v)==null
+    ?"—"
+    :Math.round(n(v)).toLocaleString("zh-TW");
+
+const pct=v=>
+  n(v)==null
+    ?"—"
+    :`${n(v)>=0?"+":""}${n(v).toFixed(2)}%`;
+
+const clean=v=>String(v??"").trim();
+
+const state={
+  currentStock:null,
+  currentData:null,
+  searchSeq:0,
+  scanSeq:0,
+  refreshTimer:null,
+  cache:new Map()
+};
+
+const KNOWN={
+  "1301":"台塑",
+  "1303":"南亞",
+  "1326":"台化",
+  "2002":"中鋼",
+  "2303":"聯電",
+  "2308":"台達電",
+  "2312":"金寶",
+  "2313":"華通",
+  "2317":"鴻海",
+  "2330":"台積電",
+  "2367":"燿華",
+  "2481":"強茂",
+  "2606":"裕民",
+  "2618":"長榮航",
+  "2891":"中信金",
+  "3324":"雙鴻",
+  "3481":"群創",
+  "3711":"日月光投控",
+  "5314":"世紀",
+  "5425":"台半",
+  "6244":"茂迪",
+  "6770":"力積電",
+  "8046":"南電",
+  "0050":"元大台灣50",
+  "0056":"元大高股息",
+  "00631L":"元大台灣50正2",
+  "00632R":"元大台灣50反1",
+  "00685L":"群益臺灣加權正2",
+  "00891":"中信關鍵半導體",
+  "00919":"群益台灣精選高息",
+  "00981A":"主動統一台股增長"
+};
+
+const ALIAS={
+  "台塑":"1301",
+  "南亞":"1303",
+  "台化":"1326",
+  "台灣化學纖維":"1326",
+  "中鋼":"2002",
+  "聯電":"2303",
+  "台達":"2308",
+  "台達電":"2308",
+  "金寶":"2312",
+  "華通":"2313",
+  "鴻海":"2317",
+  "富士康":"2317",
+  "台積":"2330",
+  "台積電":"2330",
+  "tsmc":"2330",
+  "燿華":"2367",
+  "強茂":"2481",
+  "裕民":"2606",
+  "長榮航":"2618",
+  "中信金":"2891",
+  "中國信託":"2891",
+  "雙鴻":"3324",
+  "群創":"3481",
+  "日月光":"3711",
+  "世紀":"5314",
+  "台半":"5425",
+  "茂迪":"6244",
+  "力積電":"6770",
+  "南電":"8046",
+  "元大台灣50":"0050",
+  "台灣50":"0050",
+  "元大高股息":"0056",
+  "高股息":"00919",
+  "台灣50正2":"00631L",
+  "元大台灣50正2":"00631L",
+  "群益臺灣加權正2":"00685L",
+  "中信關鍵半導體":"00891",
+  "群益台灣精選高息":"00919",
+  "主動統一台股增長":"00981A"
+};
+
+const SCAN_CODES=[
+  "2330",
+  "2317",
+  "2303",
+  "2308",
+  "1326",
+  "2313",
+  "2367",
+  "2481",
+  "2606",
+  "2618",
+  "2891",
+  "3324",
+  "3481",
+  "3711",
+  "6770",
+  "8046",
+  "0050",
+  "00919"
+];
+
+function setStatus(text,type=""){
+  $("status").innerHTML=text
+    ?`<span class="dot"></span>${esc(text)}`
+    :"";
+
+  $("status").className=`status ${type}`;
+}
+
+function safeDate(v){
+  const d=new Date(v);
+  return Number.isNaN(d.getTime())?null:d;
+}
+
+function today(){
+  const d=new Date();
+  const y=d.getFullYear();
+  const m=String(d.getMonth()+1).padStart(2,"0");
+  const day=String(d.getDate()).padStart(2,"0");
+
+  return `${y}-${m}-${day}`;
+}
+
+function dateShift(days){
+  const d=new Date();
+  d.setDate(d.getDate()+days);
+
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+}
+
+async function fetchJSON(url,options={}){
+  const controller=new AbortController();
+
+  const timer=setTimeout(
+    ()=>controller.abort(),
+    15000
+  );
+
+  try{
+    const res=await fetch(
+      url,
+      {
+        ...options,
+        signal:controller.signal,
+        headers:{
+          "Accept":"application/json",
+          ...(options.headers||{})
+        }
+      }
+    );
+
+    if(!res.ok)
+      throw new Error(`HTTP ${res.status}`);
+
+    return await res.json();
+
+  }catch(e){
+
+    if(e?.name==="AbortError")
+      throw new Error("行情服務逾時");
+
+    throw e;
+
+  }finally{
+
+    clearTimeout(timer);
+
+  }
+}
+
+async function finmind(dataset,params={}){
+  const q=new URLSearchParams({
+    dataset,
+    ...params
+  });
+
+  const target=`${FINMIND}?${q.toString()}`;
+
+  const urls=[
+    target,
+    ...PROXIES.map(
+      p=>p+encodeURIComponent(target)
+    )
+  ];
+
+  let lastError=null;
+
+  for(const url of urls){
+
+    try{
+
+      const data=await fetchJSON(url);
+
+      if(
+        data &&
+        (
+          Array.isArray(data.data) ||
+          data.status===200 ||
+          data.msg===undefined
+        )
+      )
+        return data;
+
+      if(data && Array.isArray(data.data))
+        return data;
+
+    }catch(e){
+
+      lastError=e;
+
+    }
+
+  }
+
+  throw lastError ||
+    new Error("FinMind 暫時無法取得資料");
+}
+
+function firstNumber(...vals){
+
+  for(const v of vals){
+
+    const x=n(v);
+
+    if(x!=null)
+      return x;
+
+  }
+
+  return null;
+}
+
+function parseRealtime(item){
+
+  if(!item)
+    return null;
+
+  const price=firstNumber(
+    item.z,
+    item.last,
+    item.price,
+    item.p
+  );
+
+  if(price==null)
+    return null;
+
+  return{
+    price,
+    prev:firstNumber(
+      item.y,
+      item.prevClose,
+      item.previousClose
+    ),
+    open:firstNumber(item.o,item.open),
+    high:firstNumber(item.h,item.high),
+    low:firstNumber(item.l,item.low),
+    bid:firstNumber(item.b),
+    ask:firstNumber(item.a),
+    volume:firstNumber(item.v,item.tv),
+    time:item.t||item.time||"",
+    name:item.n||item.name||"",
+    market:item.ex||""
+  };
+}
+
+async function getRealtime(code){
+
+  const markets=[
+    "tse",
+    "otc"
+  ];
+
+  for(const m of markets){
+
+    const urls=[
+      `${MIS}?ex_ch=${m}_${encodeURIComponent(code)}.tw&json=1&delay=0&_=${Date.now()}`,
+      ...PROXIES.map(
+        p=>p+encodeURIComponent(
+          `${MIS}?ex_ch=${m}_${encodeURIComponent(code)}.tw&json=1&delay=0&_=${Date.now()}`
+        )
+      )
+    ];
+
+    for(const url of urls){
+
+      try{
+
+        const data=await fetchJSON(url);
+
+        const item=data?.msgArray?.[0];
+
+        const rt=parseRealtime(item);
+
+        if(rt)
+          return rt;
+
+      }catch(e){}
+
+    }
+
+  }
+
+  return null;
+}
+
+function normalizeRows(data){
+
+  const arr=
+    Array.isArray(data?.data)
+      ?data.data
+      :Array.isArray(data)
+        ?data
+        :[];
+
+  return arr
+    .map(r=>({
+
+      date:
+        r.date||
+        r.Date||
+        r.TradeDate||
+        r.trade_date,
+
+      open:
+        firstNumber(
+          r.open,
+          r.Open
+        ),
+
+      high:
+        firstNumber(
+          r.max,
+          r.high,
+          r.High
+        ),
+
+      low:
+        firstNumber(
+          r.min,
+          r.low,
+          r.Low
+        ),
+
+      close:
+        firstNumber(
+          r.close,
+          r.Close
+        ),
+
+      volume:
+        firstNumber(
+          r.Trading_Volume,
+          r.volume,
+          r.Volume,
+          r.TradingVolume
+        ),
+
+      turnover:
+        firstNumber(
+          r.Trading_money,
+          r.turnover,
+          r.Turnover
+        )
+
+    }))
+    .filter(
+      r=>r.date&&r.close!=null
+    )
+    .sort(
+      (a,b)=>
+        String(a.date)
+          .localeCompare(String(b.date))
+    );
+}
+
+async function getPrices(code){
+
+  const start=dateShift(-420);
+
+  try{
+
+    const a=await finmind(
+      "TaiwanStockPrice",
+      {
+        data_id:code,
+        start_date:start,
+        end_date:today()
+      }
+    );
+
+    const rows=normalizeRows(a);
+
+    if(rows.length)
+      return rows;
+
+  }catch(e){}
+
+  try{
+
+    const a=await finmind(
+      "TaiwanStockPrice",
+      {
+        data_id:code,
+        start_date:dateShift(-900),
+        end_date:today()
+      }
+    );
+
+    return normalizeRows(a);
+
+  }catch(e){
+
+    return [];
+
+  }
+}
+
+function closes(rows){
+  return rows
+    .map(r=>r.close)
+    .filter(v=>v!=null)
+}
+
+function avg(a){
+
+  const x=a.filter(
+    v=>n(v)!=null
+  );
+
+  return x.length
+    ?x.reduce((s,v)=>s+v,0)/x.length
+    :null;
+}
+
+function sma(rows,period){
+
+  const x=rows
+    .slice(-period)
+    .map(r=>r.close)
+    .filter(v=>v!=null);
+
+  return x.length===period
+    ?avg(x)
+    :null;
+}
+
+function stdev(a){
+
+  const x=a.filter(
+    v=>n(v)!=null
+  );
+
+  if(x.length<2)
+    return null;
+
+  const m=avg(x);
+
+  return Math.sqrt(
+    avg(
+      x.map(v=>(v-m)**2)
+    )
+  );
+}
+
+function atr(rows,period=14){
+
+  if(rows.length<period+1)
+    return null;
+
+  const trs=[];
+
+  for(
+    let i=Math.max(1,rows.length-period);
+    i<rows.length;
+    i++
+  ){
+
+    const r=rows[i];
+    const p=rows[i-1];
+
+    if(
+      r.high==null||
+      r.low==null||
+      p.close==null
+    )
+      continue;
+
+    trs.push(
+      Math.max(
+        r.high-r.low,
+        Math.abs(r.high-p.close),
+        Math.abs(r.low-p.close)
+      )
+    );
+
+  }
+
+  return avg(trs);
+}
+
+function pctChange(a,b){
+  return a!=null&&
+    b!=null&&
+    b!==0
+      ?(a/b-1)*100
+      :null
+}
+
+function recentRange(rows,period=60){
+
+  const x=rows.slice(-period);
+
+  const highs=x
+    .map(r=>r.high??r.close)
+    .filter(v=>v!=null);
+
+  const lows=x
+    .map(r=>r.low??r.close)
+    .filter(v=>v!=null);
+
+  return{
+    high:
+      highs.length
+        ?Math.max(...highs)
+        :null,
+
+    low:
+      lows.length
+        ?Math.min(...lows)
+        :null
+  };
+}
+
+function localExtremes(rows,side,look=2){
+
+  const out=[];
+
+  for(
+    let i=look;
+    i<rows.length-look;
+    i++
+  ){
+
+    const p=rows[i];
+
+    const v=
+      side==="high"
+        ?(p.high??p.close)
+        :(p.low??p.close);
+
+    if(v==null)
+      continue;
+
+    let ok=true;
+
+    for(
+      let j=1;
+      j<=look;
+      j++
+    ){
+
+      const l=rows[i-j];
+      const r=rows[i+j];
+
+      const lv=
+        side==="high"
+          ?(l.high??l.close)
+          :(l.low??l.close);
+
+      const rv=
+        side==="high"
+          ?(r.high??r.close)
+          :(r.low??r.close);
+
+      if(
+        side==="high" &&
+        (v<lv||v<rv)
+      )
+        ok=false;
+
+      if(
+        side==="low" &&
+        (v>lv||v>rv)
+      )
+        ok=false;
+
+    }
+
+    if(ok)
+      out.push({
+        price:v,
+        index:i,
+        date:rows[i].date
+      });
+
+  }
+
+  return out;
+}function volumeProfile(rows,bins=24){
+  const data=(rows||[])
+    .slice(-120)
+    .filter(r=>r.close!=null);
+
+  if(!data.length)
+    return [];
+
+  const highs=data
+    .map(r=>n(r.high??r.close))
+    .filter(v=>v!=null);
+
+  const lows=data
+    .map(r=>n(r.low??r.close))
+    .filter(v=>v!=null);
+
+  const max=Math.max(...highs);
+  const min=Math.min(...lows);
+
+  if(
+    !Number.isFinite(min)||
+    !Number.isFinite(max)||
+    max<=min
+  )
+    return [];
+
+  const width=(max-min)/bins;
+
+  const buckets=Array.from(
+    {length:bins},
+    ()=>({
+      volume:0,
+      touches:0
+    })
+  );
+
+  for(const r of data){
+
+    const p=n(r.close);
+    const v=n(r.volume)||0;
+
+    if(p==null)
+      continue;
+
+    const i=Math.max(
+      0,
+      Math.min(
+        bins-1,
+        Math.floor((p-min)/width)
+      )
+    );
+
+    buckets[i].volume+=v;
+    buckets[i].touches+=1;
+  }
+
+  return buckets
+    .map((b,i)=>({
+      price:min+width*(i+.5),
+      low:min+width*i,
+      high:min+width*(i+1),
+      volume:b.volume,
+      touches:b.touches
+    }))
+    .filter(x=>x.touches>0)
+    .sort((a,b)=>b.volume-a.volume);
+}
+
+
+function clusterLevels(candidates,tolerance){
+
+  const sorted=[
+    ...candidates
+  ]
+  .filter(x=>x.price!=null)
+  .sort((a,b)=>a.price-b.price);
+
+  const groups=[];
+
+  for(const c of sorted){
+
+    const g=groups[groups.length-1];
+
+    if(
+      !g||
+      Math.abs(c.price-g.center)>tolerance
+    ){
+
+      groups.push({
+        items:[c],
+        center:c.price
+      });
+
+    }else{
+
+      g.items.push(c);
+
+      const weights=
+        g.items.map(
+          x=>x.weight||1
+        );
+
+      const sw=
+        weights.reduce(
+          (a,b)=>a+b,
+          0
+        );
+
+      g.center=
+        g.items.reduce(
+          (s,x,i)=>
+            s+x.price*weights[i],
+          0
+        )/sw;
+    }
+  }
+
+  return groups.map(g=>{
+
+    const strength=
+      g.items.reduce(
+        (s,x)=>
+          s+(x.weight||1),
+        0
+      );
+
+    const types=[
+      ...new Set(
+        g.items.map(x=>x.type)
+      )
+    ];
+
+    return{
+      ...g,
+      strength,
+      types,
+      min:Math.min(
+        ...g.items.map(x=>x.price)
+      ),
+      max:Math.max(
+        ...g.items.map(x=>x.price)
+      )
+    };
+
+  });
+}
+
+
+function dailyRangeBaseline(rows,period=20){
+
+  const data=(rows||[])
+    .slice(-period);
+
+  const values=data
+    .map(r=>{
+
+      const h=n(r.high);
+      const l=n(r.low);
+
+      return h!=null&&
+        l!=null&&
+        h>l
+          ?h-l
+          :null;
+
+    })
+    .filter(
+      v=>v!=null&&v>0
+    );
+
+  return values.length
+    ?avg(values)
+    :null;
+}
+
+
+function levelTolerance(rows,price){
+
+  const a=atr(rows,14);
+
+  const d=
+    dailyRangeBaseline(
+      rows,
+      20
+    );
+
+  const sd=
+    stdev(
+      closes(rows).slice(-60)
+    );
+
+  const values=[
+    a!=null?a*.45:null,
+    d!=null?d*.55:null,
+    sd!=null?sd*.18:null
+  ]
+  .filter(
+    v=>v!=null&&v>0
+  );
+
+  return values.length
+    ?Math.max(...values)
+    :null;
+}
+
+
+function dynamicLevels(rows,price){
+
+  if(
+    !rows.length||
+    price==null
+  )
+    return null;
+
+  const ret=
+    rows.slice(-120);
+
+  const atrVal=
+    atr(ret,14);
+
+  const daily=
+    dailyRangeBaseline(
+      ret,
+      20
+    );
+
+  const tol=
+    levelTolerance(
+      ret,
+      price
+    );
+
+  const candidates=[];
+
+  const add=(
+    p,
+    type,
+    weight,
+    reason
+  )=>{
+
+    if(
+      p!=null&&
+      Number.isFinite(p)
+    ){
+
+      candidates.push({
+        price:p,
+        type,
+        weight,
+        reason
+      });
+
+    }
+
+  };
+
+
+  for(
+    const x of localExtremes(
+      ret,
+      "low",
+      2
+    )
+  ){
+
+    add(
+      x.price,
+      "低點",
+      2.4,
+      "近期局部低點"
+    );
+
+  }
+
+
+  for(
+    const x of localExtremes(
+      ret,
+      "high",
+      2
+    )
+  ){
+
+    add(
+      x.price,
+      "高點",
+      2.4,
+      "近期局部高點"
+    );
+
+  }
+
+
+  const ma20=sma(rows,20);
+  const ma60=sma(rows,60);
+  const ma120=sma(rows,120);
+
+  if(ma20!=null)
+    add(
+      ma20,
+      "均線",
+      2,
+      "MA20"
+    );
+
+  if(ma60!=null)
+    add(
+      ma60,
+      "均線",
+      2.2,
+      "MA60"
+    );
+
+  if(ma120!=null)
+    add(
+      ma120,
+      "均線",
+      1.8,
+      "MA120"
+    );
+
+
+  for(
+    const v of volumeProfile(
+      ret,
+      24
+    ).slice(0,10)
+  ){
+
+    if(v.touches>=2){
+
+      add(
+        v.price,
+        "量價",
+        Math.min(
+          4,
+          v.touches*.55+1
+        ),
+        "成交量價格密集"
+      );
+
+    }
+
+  }
+
+
+  const rr=
+    recentRange(
+      rows,
+      60
+    );
+
+  add(
+    rr.low,
+    "波段低點",
+    2,
+    "近60日波段低點"
+  );
+
+  add(
+    rr.high,
+    "波段高點",
+    2,
+    "近60日波段高點"
+  );
+
+
+  const clusterTol=
+    tol ??
+    atrVal ??
+    daily;
+
+
+  if(clusterTol==null){
+
+    return{
+      s1:null,
+      s2:null,
+      r1:null,
+      r2:null,
+      atr:atrVal,
+      tolerance:null,
+      groups:[],
+      range:rr,
+      ma20,
+      ma60,
+      ma120
+    };
+
+  }
+
+
+  const groups=
+    clusterLevels(
+      candidates,
+      clusterTol
+    );
+
+
+  function reason(g){
+
+    const types=
+      g.items.map(
+        x=>x.type
+      );
+
+    const parts=[];
+
+    if(types.includes("高點"))
+      parts.push("歷史高點");
+
+    if(types.includes("低點"))
+      parts.push("歷史低點");
+
+    if(types.includes("均線"))
+      parts.push("均線");
+
+    if(types.includes("量價"))
+      parts.push("量價密集");
+
+    if(
+      types.includes("波段高點")||
+      types.includes("波段低點")
+    )
+      parts.push("波段結構");
+
+    return parts
+      .slice(0,3)
+      .join("＋")||
+      "價格結構";
+  }
+
+
+  const below=
+    groups
+      .filter(
+        g=>g.center<price
+      )
+      .sort(
+        (a,b)=>
+          b.center-a.center
+      );
+
+
+  const above=
+    groups
+      .filter(
+        g=>g.center>price
+      )
+      .sort(
+        (a,b)=>
+          a.center-b.center
+      );
+
+
+  function band(g){
+
+    if(!g)
+      return null;
+
+    const profilePad=
+      Math.max(
+        0,
+        ...g.items.map(x=>{
+
+          const hi=n(x.profileHigh);
+          const lo=n(x.profileLow);
+
+          return hi!=null&&
+            lo!=null
+              ?Math.abs(hi-lo)/2
+              :0;
+
+        })
+      );
+
+
+    const pad=Math.max(
+      tol!=null
+        ?tol*.45
+        :0,
+
+      atrVal!=null
+        ?atrVal*.18
+        :0,
+
+      daily!=null
+        ?daily*.25
+        :0,
+
+      profilePad
+    );
+
+
+    return{
+      point:g.center,
+      low:Math.max(
+        0,
+        g.center-pad
+      ),
+      high:g.center+pad,
+      reason:reason(g),
+      strength:g.strength
+    };
+
+  }
+
+
+  return{
+
+    s1:band(below[0]),
+    s2:band(below[1]),
+
+    r1:band(above[0]),
+    r2:band(above[1]),
+
+    atr:atrVal,
+    tolerance:tol,
+
+    groups,
+
+    range:rr,
+
+    ma20,
+    ma60,
+    ma120
+
+  };
+
+}
+
+
+function technical(rows,price){
+
+  const ma5=sma(rows,5);
+  const ma20=sma(rows,20);
+  const ma60=sma(rows,60);
+  const ma120=sma(rows,120);
+
+  const recent=
+    recentRange(
+      rows,
+      20
+    );
+
+  const range60=
+    recentRange(
+      rows,
+      60
+    );
+
+  const a=
+    atr(
+      rows,
+      14
+    );
+
+  const c20=
+    rows
+      .slice(-21,-1)
+      .map(r=>r.close)
+      .filter(v=>v!=null);
+
+  const avgVol20=
+    avg(
+      rows
+        .slice(-21,-1)
+        .map(r=>r.volume)
+        .filter(v=>v!=null)
+    );
+
+  const todayRow=
+    rows[rows.length-1];
+
+  const volToday=
+    todayRow?.volume??null;
+
+  const volRatio=
+    avgVol20&&volToday
+      ?volToday/avgVol20
+      :null;
+
+  const trendScore=
+    [
+      ma5,
+      ma20,
+      ma60,
+      ma120
+    ]
+    .filter(v=>v!=null)
+    .reduce(
+      (s,m)=>
+        s+(price>m?1:-1),
+      0
+    );
+
+  let trend=
+    trendScore>=3
+      ?"偏多"
+      :trendScore<=-2
+        ?"偏空"
+        :"震盪";  const pos=
+    range60.high!=null&&
+    range60.low!=null
+      ?(price-range60.low)/
+        (range60.high-range60.low||1)
+      :null;
+
+  const nearHigh=
+    recent.high!=null&&
+    a!=null
+      ?price>=recent.high-a
+      :false;
+
+  const nearLow=
+    recent.low!=null&&
+    a!=null
+      ?price<=recent.low+a
+      :false;
+
+  return{
+    ma5,
+    ma20,
+    ma60,
+    ma120,
+    atr:a,
+    avgVol20,
+    volToday,
+    volRatio,
+    recent,
+    range60,
+    trend,
+    trendScore,
+    pos,
+    nearHigh,
+    nearLow
+  };
+}
+
+
+function volumeSignal(t){
+
+  if(t.volRatio==null)
+    return "成交量資料不足";
+
+  if(t.volRatio>=2.0)
+    return "明顯放量";
+
+  if(t.volRatio>=1.25)
+    return "量能偏強";
+
+  if(t.volRatio<=0.65)
+    return "量縮";
+
+  return "量能正常";
+}
+
+
+function positionLabel(pos){
+
+  if(pos==null)
+    return "資料不足";
+
+  if(pos>=.8)
+    return "接近60日高檔";
+
+  if(pos>=.6)
+    return "偏高位置";
+
+  if(pos>=.4)
+    return "區間中段";
+
+  if(pos>=.2)
+    return "偏低位置";
+
+  return "接近60日低檔";
+}
+
+
+function retestModel(rows,price,lv){
+
+  const r1=lv?.r1;
+
+  if(!r1){
+
+    return{
+      state:"資料不足",
+      detail:"尚未形成可辨識的第一壓力區"
+    };
+
+  }
+
+  const low=r1.low;
+  const high=r1.high;
+
+  const last=rows.slice(-8);
+
+  const touches=last.filter(r=>{
+
+    const h=r.high??r.close;
+    const l=r.low??r.close;
+
+    return h>=low&&l<=high;
+
+  }).length;
+
+
+  if(price>=high){
+
+    return{
+      state:"突破觀察",
+      detail:
+        `價格已在壓力區上方，需觀察突破後是否守住。近8個交易日接觸${touches}次`
+    };
+
+  }
+
+
+  if(
+    price>=low&&
+    price<=high
+  ){
+
+    return{
+      state:"回踩中",
+      detail:
+        `現價位於第一壓力區內，等待結構確認。近8個交易日接觸${touches}次`
+    };
+
+  }
+
+
+  if(touches>0){
+
+    return{
+      state:"等待回踩",
+      detail:
+        `曾測試第一壓力區，尚未回到有效回踩位置。近8個交易日接觸${touches}次`
+    };
+
+  }
+
+
+  return{
+    state:"尚未回踩",
+    detail:
+      "近期尚未形成明確壓力回踩紀錄"
+  };
+
+}
+
+
+function breakoutModel(rows,price,tech,lv){
+
+  const r1=lv?.r1;
+
+  const vol=tech.volRatio;
+
+  const above=
+    r1
+      ?price>r1.high
+      :false;
+
+  const near=
+    r1
+      ?price>=r1.low
+      :tech.nearHigh;
+
+  const volumeOk=
+    vol==null||
+    vol>=1.15;
+
+  const checks=[
+
+    {
+      ok:above,
+      text:"價格站上第一壓力區"
+    },
+
+    {
+      ok:near,
+      text:"接近第一壓力區"
+    },
+
+    {
+      ok:volumeOk,
+      text:"量能配合"
+    }
+
+  ];
+
+  let state=
+    above&&volumeOk
+      ?"突破確認中"
+      :near&&volumeOk
+        ?"突破前觀察"
+        :"等待突破";
+
+  return{
+    state,
+    checks
+  };
+
+}
+
+
+function anomalyModel(rows,tech,price){
+
+  const last=
+    rows[rows.length-1];
+
+  const prev=
+    rows[rows.length-2];
+
+  const move=
+    last&&prev
+      ?pctChange(
+          last.close,
+          prev.close
+        )
+      :null;
+
+  const arr=
+    rows
+      .slice(-21,-1)
+      .map(r=>r.close)
+      .filter(v=>v!=null);
+
+  const sd=
+    stdev(arr);
+
+  const abnormalMove=
+    move!=null&&
+    sd!=null&&
+    Math.abs(move)>
+      Math.max(3,sd);
+
+  const abnormalVol=
+    tech.volRatio!=null&&
+    tech.volRatio>=2;
+
+  const items=[];
+
+  if(abnormalMove){
+
+    items.push(
+      `單日價格變動 ${pct(move)}`
+    );
+
+  }
+
+  if(abnormalVol){
+
+    items.push(
+      `成交量約為20日均量 ${tech.volRatio.toFixed(2)} 倍`
+    );
+
+  }
+
+  return{
+    abnormal:items.length>0,
+    items
+  };
+
+}
+
+
+function entryModel(price,tech,lv,retest){
+
+  if(!lv){
+
+    return{
+      type:"等待資料",
+      entry:null,
+      defense:null,
+      tp1:null,
+      tp2:null,
+      note:"支撐壓力資料不足"
+    };
+
+  }
+
+  const candidates=[];
+
+  if(lv.s1)
+    candidates.push(
+      lv.s1.point
+    );
+
+  if(lv.s2)
+    candidates.push(
+      lv.s2.point
+    );
+
+  const s1=lv.s1;
+  const s2=lv.s2;
+  const r1=lv.r1;
+  const r2=lv.r2;
+
+  let type="等待回踩";
+  let entry=null;
+  let defense=null;
+  let note="";
+
+
+  if(
+    s1&&
+    price>=s1.low&&
+    price<=s1.high
+  ){
+
+    type="回踩進場觀察";
+
+    entry=s1.point;
+
+    note=
+      "現價位於第一支撐區，需觀察支撐是否守住。";
+
+    defense=
+      s2
+        ?s2.low
+        :(lv.atr!=null
+          ?s1.low-lv.atr
+          :s1.low);
+
+  }
+
+  else if(
+    s1&&
+    price>s1.high&&
+    price<s1.point+lv.atr*1.1
+  ){
+
+    type="支撐附近觀察";
+
+    entry=s1.point;
+
+    note=
+      "距離第一支撐較近，可等待回踩確認。";
+
+    defense=
+      s2
+        ?s2.low
+        :(lv.atr!=null
+          ?s1.low-lv.atr
+          :s1.low);
+
+  }
+
+  else if(
+    r1&&
+    price>=r1.low&&
+    price<=r1.high
+  ){
+
+    type="壓力區不追價";
+
+    note=
+      "現價接近壓力區，先等待突破或回踩，不把壓力區直接當買點。";
+
+    defense=
+      s1
+        ?s1.low
+        :null;
+
+  }
+
+  else if(
+    r1&&
+    price>r1.high
+  ){
+
+    type="突破後觀察";
+
+    entry=r1.point;
+
+    note=
+      "已站上第一壓力區，觀察突破後回踩是否守住。";
+
+    defense=
+      s1
+        ?s1.low
+        :r1.low;
+
+  }
+
+  else{
+
+    type="區間等待";
+
+    entry=
+      s1?.point??
+      null;
+
+    defense=
+      s1?.low??
+      null;
+
+    note=
+      "目前不在明確支撐區，等待回踩或有效突破。";
+
+  }
+
+
+  return{
+    type,
+    entry,
+    defense,
+    tp1:r1?.point??null,
+    tp2:r2?.point??null,
+    note
+  };
+
+}
+
+
+function institutionBlank(){
+
+  return{
+    foreign:null,
+    trust:null,
+    dealer:null,
+    total:null,
+    rows:[]
+  };
+
+}
+
+
+function normalizeInvestor(name){
+
+  const s=
+    String(name??"")
+      .toLowerCase();
+
+  if(
+    s.includes("foreign")||
+    s.includes("外資")
+  )
+    return "foreign";
+
+  if(
+    s.includes("investment")||
+    s.includes("投信")
+  )
+    return "trust";
+
+  if(
+    s.includes("dealer")||
+    s.includes("自營")
+  )
+    return "dealer";
+
+  return null;
+}
+
+
+async function getInstitution(code){
+
+  try{
+
+    const a=
+      await finmind(
+        "TaiwanStockInstitutionalInvestorsBuySell",
+        {
+          data_id:code,
+          start_date:dateShift(-35),
+          end_date:today()
+        }
+      );
+
+    const arr=
+      Array.isArray(a?.data)
+        ?a.data
+        :[];
+
+    const map=
+      new Map();
+
+    for(const r of arr){
+
+      const date=r.date;
+
+      const key=
+        normalizeInvestor(
+          r.name??
+          r.investor??
+          r.Investor
+        );
+
+      if(
+        !date||
+        !key
+      )
+        continue;
+
+      const buy=
+        firstNumber(
+          r.buy,
+          r.BuyShares,
+          r.buy_shares,
+          r.Buy
+        );
+
+      const sell=
+        firstNumber(
+          r.sell,
+          r.SellShares,
+          r.sell_shares,
+          r.Sell
+        );
+
+      const net=
+        buy!=null&&
+        sell!=null
+          ?buy-sell
+          :null;
+
+      if(!map.has(date)){
+
+        map.set(
+          date,
+          {
+            date,
+            foreign:null,
+            trust:null,
+            dealer:null
+          }
+        );
+
+      }
+
+      if(net!=null)
+        map.get(date)[key]=net;
+
+    }
+
+
+    const rows=
+      [...map.values()]
+        .sort(
+          (a,b)=>
+            String(a.date)
+              .localeCompare(
+                String(b.date)
+              )
+        );
+
+    const recent=
+      rows[rows.length-1]||
+      null;
+
+
+    function sum(period,key){
+
+      const x=
+        rows
+          .slice(-period)
+          .map(r=>r[key])
+          .filter(v=>v!=null);
+
+      return x.length
+        ?x.reduce(
+            (s,v)=>s+v,
+            0
+          )
+        :null;
+
+    }
+
+
+    return{
+
+      rows,
+
+      latest:
+        recent
+          ?{
+            foreign:recent.foreign,
+            trust:recent.trust,
+            dealer:recent.dealer,
+
+            total:(()=>{
+
+              const v=[
+                recent.foreign,
+                recent.trust,
+                recent.dealer
+              ]
+              .filter(
+                x=>x!=null
+              );
+
+              return v.length
+                ?v.reduce(
+                    (a,b)=>a+b,
+                    0
+                  )
+                :null;
+
+            })()
+
+          }
+          :institutionBlank(),
+
+      p1:{
+        foreign:sum(1,"foreign"),
+        trust:sum(1,"trust"),
+        dealer:sum(1,"dealer")
+      },
+
+      p5:{
+        foreign:sum(5,"foreign"),
+        trust:sum(5,"trust"),
+        dealer:sum(5,"dealer")
+      },
+
+      p20:{
+        foreign:sum(20,"foreign"),
+        trust:sum(20,"trust"),
+        dealer:sum(20,"dealer")
+      }
+
+    };
+
+  }catch(e){
+
+    return{
+      rows:[],
+      latest:institutionBlank(),
+      p1:institutionBlank(),
+      p5:institutionBlank(),
+      p20:institutionBlank()
+    };
+
+  }
+
+}
+
+
+async function getValuation(code){
+
+  const out={
+    pe:null,
+    pb:null,
+    eps:null,
+    book:null
+  };
+
+  try{
+
+    const a=
+      await finmind(
+        "TaiwanStockPER",
+        {
+          data_id:code,
+          start_date:dateShift(-60),
+          end_date:today()
+        }
+      );
+
+    const rows=
+      Array.isArray(a?.data)
+        ?a.data
+        :[];
+
+    const r=
+      rows[rows.length-1];
+
+    out.pe=
+      firstNumber(
+        r?.PER,
+        r?.per
+      );
+
+    out.pb=
+      firstNumber(
+        r?.PBR,
+        r?.pbr
+      );
+
+    out.eps=
+      firstNumber(
+        r?.EPS,
+        r?.eps
+      );
+
+  }catch(e){}
+
+  return out;
+}
+
+
+function lawCell(v){
+
+  return v==null
+    ?"—"
+    :`${v>=0?"+":""}${integer(v)}`;
+
+}
+
+
+function lawClass(v){
+
+  return v==null
+    ?""
+    :v>0
+      ?"green"
+      :v<0
+        ?"red"
+        :"";
+
+}
+
+
+function levelCard(
+  label,
+  x,
+  cls,
+  price
+){
+
+  const icon=
+    label.includes("支撐")
+      ?"🛡️"
+      :"⚡";
+
+  if(!x){
+
+    return`
+      <div class="level levelEmpty">
+
+        <div class="levelLabel ${cls}">
+          ${icon} ${esc(label)}
+        </div>
+
+        <div class="levelValue">
+          —
+        </div>
+
+        <div class="levelSmall">
+          目前沒有足夠的實際歷史結構資料
+        </div>
+
+      </div>
+    `;
+
+  }
+
+
+  const d1=
+    (
+      price!=null&&
+      x.point!=null&&
+      price!==0
+    )
+      ?((x.point-price)/price*100)
+      :null;
+
+  const range=
+    `${money(x.low)} ～ ${money(x.high)}`;
+
+  const distance=
+    d1==null
+      ?"—"
+      :`${d1>=0?"+":""}${d1.toFixed(2)}%`;
+
+
+  return`
+    <div class="level">
+
+      <div class="levelLabel ${cls}">
+        ${icon} ${esc(label)}
+      </div>
+
+      <div style="display:flex;justify-content:space-between;align-items:end;gap:8px">
+
+        <div class="levelValue ${cls}">
+          ${money(x.point)}
+        </div>
+
+        <div
+          class="levelSmall"
+          style="text-align:right"
+        >
+          距現價 ${distance}
+        </div>
+
+      </div>
+
+      <div class="levelSmall">
+        價格區間 ${range}
+      </div>
+
+      <div class="levelSmall">
+        ${esc(
+          x.reason ||
+          "實際歷史價格結構"
+        )}
+      </div>
+
+    </div>
+  `;
+
+}
+
+
+function metric(
+  label,
+  value,
+  sub="",
+  cls=""
+){
+
+  return`
+    <div class="metric">
+
+      <div class="metricLabel">
+        ${label}
+      </div>
+
+      <div class="metricValue ${cls}">
+        ${value}
+      </div>
+
+      <div class="metricSub">
+        ${sub}
+      </div>
+
+    </div>
+  `;
+
+}
+
+
+function buildData(
+  code,
+  name,
+  price,
+  rows,
+  rt,
+  law,
+  val
+){
+
+  const tech=
+    technical(
+      rows,
+      price
+    );
+
+  const lv=
+    dynamicLevels(
+      rows,
+      price
+    );
+
+  const retest=
+    retestModel(
+      rows,
+      price,
+      lv
+    );
+
+  const breakout=
+    breakoutModel(
+      rows,
+      price,
+      tech,
+      lv
+    );
+
+  const anomaly=
+    anomalyModel(
+      rows,
+      tech,
+      price
+    );
+
+  const entry=
+    entryModel(
+      price,
+      tech,
+      lv,
+      retest
+    );
+
+  const quality=
+    breakoutQuality(
+      rows,
+      price,
+      tech,
+      lv,
+      breakout,
+      retest,
+      law
+    );
+
+  const signal=
+    signalModel(
+      price,
+      tech,
+      lv,
+      breakout,
+      retest,
+      entry,
+      law,
+      anomaly,
+      quality
+    );
+
+  const risk=
+    riskRewardModel(
+      price,
+      entry
+    );
+
+  const alerts=
+    alertModel(
+      price,
+      tech,
+      lv,
+      breakout,
+      retest,
+      law,
+      anomaly
+    );
+
+  return{
+    code,
+    name,
+    price,
+    rows,
+    rt,
+    law,
+    val,
+    tech,
+    lv,
+    retest,
+    breakout,
+    anomaly,
+    entry,
+    quality,
+    signal,
+    risk,
+    alerts
+  };
+
+}
+
+
+function breakoutQuality(
+  rows,
+  price,
+  tech,
+  lv,
+  breakout,
+  retest,
+  law
+){
+
+  const checks=[];
+
+  const r1=lv?.r1;
+
+  const above=
+    !!(
+      r1&&
+      price>r1.high
+    );
+
+  const near=
+    !!(
+      r1&&
+      price>=r1.low&&
+      price<=r1.high
+    );
+
+  const vol=
+    tech?.volRatio;
+
+  const volumeStrong=
+    vol!=null&&
+    vol>=1.2;
+
+  const close=
+    rows?.[rows.length-1];
+
+  const closeStrong=
+    !!(
+      close&&
+      close.high!=null&&
+      close.low!=null&&
+      close.close!=null&&
+      close.high>close.low&&
+      (
+        (close.close-close.low)/
+        (close.high-close.low)
+      )>=0.65
+    );
+
+  const lawLatest=
+    law?.latest||{};
+
+  const instTotal=
+    lawLatest.total?.net;
+
+  const instPositive=
+    instTotal!=null&&
+    instTotal>0;
+
+  checks.push({
+    ok:above,
+    text:"價格站上第一壓力區"
+  });
+
+  checks.push({
+    ok:volumeStrong,
+    text:"成交量較20日均量放大"
+  });
+
+  checks.push({
+    ok:closeStrong,
+    text:"收盤位於當日高檔區"
+  });
+
+  checks.push({
+    ok:instPositive,
+    text:"三大法人合計偏買超"
+  });
+
+  let score=0;
+
+  if(above)
+    score+=35;
+  else if(near)
+    score+=20;
+
+  if(volumeStrong)
+    score+=25;
+
+  if(closeStrong)
+    score+=20;
+
+  if(instPositive)
+    score+=20;
+
+  if(
+    breakout?.state==="突破確認中"&&
+    volumeStrong
+  )
+    score=
+      Math.min(
+        100,
+        score+5
+      );
+
+  if(
+    retest?.state==="回踩中"
+  )
+    score=
+      Math.min(
+        100,
+        score+5
+      );
+
+  const label=
+    score>=75
+      ?"高品質觀察"
+      :score>=55
+        ?"中度確認"
+        :score>=35
+          ?"接近突破"
+          :"條件不足";
+
+  return{
+    score:
+      Math.round(
+        Math.min(100,score)
+      ),
+    label,
+    checks,
+    above,
+    near
+  };
+
+}
+
+
+function signalModel(
+  price,
+  tech,
+  lv,
+  breakout,
+  retest,
+  entry,
+  law,
+  anomaly,
+  quality
+){
+
+  const total=
+    law?.latest?.total?.net;
+
+  if(
+    anomaly?.items?.some(
+      x=>x.includes("高檔爆量")
+    )
+  ){
+
+    return{
+      state:"異常警戒",
+      icon:"🚨",
+      detail:
+        "出現高檔量價異常，先觀察結構。"
+    };
+
+  }
+
+  if(
+    breakout?.state==="突破確認中"&&
+    quality.score>=70
+  ){
+
+    return{
+      state:"突破確認",
+      icon:"🟢",
+      detail:
+        "價格、量能與壓力結構同時出現確認訊號。"
+    };
+
+  }
+
+  if(
+    retest?.state==="回踩中"&&
+    tech?.trend==="偏多"
+  ){
+
+    return{
+      state:"強勢回踩",
+      icon:"🟢",
+      detail:
+        "偏多趨勢中回到關鍵區，等待支撐確認。"
+    };
+
+  }
+
+  if(
+    breakout?.state==="突破前觀察"||
+    quality.score>=45
+  ){
+
+    return{
+      state:"接近突破",
+      icon:"🟡",
+      detail:
+        "接近第一壓力，等待量價確認。"
+    };
+
+  }
+
+  if(
+    entry?.type==="壓力區不追價"
+  ){
+
+    return{
+      state:"壓力附近",
+      icon:"🟠",
+      detail:
+        "目前位於壓力結構附近，不宜只因接近壓力而追價。"
+    };
+
+  }
+
+  if(
+    tech?.trend==="偏空"&&
+    lv?.s1&&
+    price<lv.s1.low
+  ){
+
+    return{
+      state:"跌破防守",
+      icon:"🔴",
+      detail:
+        "現價低於第一支撐區，重新觀察結構。"
+    };
+
+  }
+
+  return{
+    state:"區間整理",
+    icon:"⚪",
+    detail:
+      total==null
+        ?"等待更多量價／法人資料。"
+        :total>0
+          ?"法人偏買但技術訊號尚未完全確認。"
+          :"等待價格結構轉強。"
+  };
+
+}
+
+
+function riskRewardModel(
+  price,
+  entry
+){
+
+  const e=entry?.entry;
+  const stop=entry?.defense;
+  const t1=entry?.tp1;
+  const t2=entry?.tp2;
+
+  if(e==null){
+
+    return{
+      riskPct:null,
+      rr1:null,
+      rr2:null,
+      state:"等待進場點"
+    };
+
+  }
+
+  const risk=
+    stop!=null
+      ?e-stop
+      :null;
+
+  const riskPct=
+    risk!=null&&e>0
+      ?risk/e*100
+      :null;  const rr1=
+    risk>0&&
+    t1!=null
+      ?(t1-e)/risk
+      :null;
+
+  const rr2=
+    risk>0&&
+    t2!=null
+      ?(t2-e)/risk
+      :null;
+
+  return{
+    riskPct,
+    rr1,
+    rr2,
+    state:
+      risk>0
+        ?"可計算"
+        :"風險區間不足"
+  };
+
+}
+
+
+function alertModel(
+  price,
+  tech,
+  lv,
+  breakout,
+  retest,
+  law,
+  anomaly
+){
+
+  const a=[];
+
+  const r1=lv?.r1;
+  const s1=lv?.s1;
+
+  const vol=tech?.volRatio;
+
+
+  if(
+    r1&&
+    price>r1.high&&
+    vol!=null&&
+    vol>=1.5
+  ){
+
+    a.push({
+      type:"突破＋放量",
+      level:"強",
+      text:
+        "價格站上第一壓力且成交量明顯放大。"
+    });
+
+  }
+
+
+  if(
+    r1&&
+    price>=r1.low&&
+    price<=r1.high&&
+    vol!=null&&
+    vol<0.8
+  ){
+
+    a.push({
+      type:"壓力量縮",
+      level:"中",
+      text:
+        "接近第一壓力但量能偏弱，等待確認。"
+    });
+
+  }
+
+
+  if(
+    r1&&
+    price>=r1.low&&
+    price<=r1.high&&
+    vol!=null&&
+    vol>=2
+  ){
+
+    a.push({
+      type:"壓力爆量",
+      level:"高",
+      text:
+        "壓力區出現異常大量，留意突破或大量換手。"
+    });
+
+  }
+
+
+  if(
+    s1&&
+    price<s1.low&&
+    vol!=null&&
+    vol>=1.3
+  ){
+
+    a.push({
+      type:"跌破支撐＋放量",
+      level:"高",
+      text:
+        "第一支撐失守且量能放大。"
+    });
+
+  }
+
+
+  if(
+    retest?.state==="回踩中"&&
+    tech?.trend==="偏多"
+  ){
+
+    a.push({
+      type:"突破後回踩",
+      level:"強",
+      text:
+        "偏多趨勢出現關鍵區回踩。"
+    });
+
+  }
+
+
+  if(
+    law?.latest?.total?.net>0&&
+    law?.p5?.total?.net>0
+  ){
+
+    a.push({
+      type:"法人連續偏買",
+      level:"中",
+      text:
+        "最新與5日法人合計皆偏買超。"
+    });
+
+  }
+
+
+  if(anomaly?.abnormal){
+
+    a.push(
+      ...(anomaly.items||[])
+        .map(text=>({
+          type:"異常波動",
+          level:"中",
+          text
+        }))
+    );
+
+  }
+
+
+  return a.slice(0,6);
+
+}
+
+
+/* =========================
+   全市場股票／ETF 搜尋
+   不再依賴 KNOWN 白名單；
+   KNOWN 只保留給首頁快速按鈕與別名。
+   ========================= */
+
+let stockUniverseCache=null;
+let stockUniverseLoading=null;
+
+const STOCK_UNIVERSE_TTL=
+  10*60*1000;
+
+
+function inferMarket(x){
+
+  const t=
+    String(
+      x?.type??
+      x?.market??
+      x?.market_type??
+      x?.exchange??
+      ''
+    ).toLowerCase();
+
+  if(
+    /otc|tpex|上櫃|櫃買/.test(t)
+  )
+    return 'otc';
+
+  return 'tse';
+}
+
+
+function inferETF(x){
+
+  const text=
+    String(
+      x?.stock_name??
+      x?.name??
+      ''
+    )+
+    ' '+
+    String(
+      x?.industry_category??
+      x?.industry??
+      ''
+    )+
+    ' '+
+    String(
+      x?.type??
+      ''
+    );
+
+  return /etf|指數型基金|指數股票型基金|槓桿|反向|高股息|主動/
+    .test(text.toLowerCase());
+}
+
+
+function normalizeInfo(x){
+
+  const code=
+    String(
+      x?.stock_id??
+      x?.code??
+      ''
+    )
+    .trim()
+    .toUpperCase();
+
+  const name=
+    String(
+      x?.stock_name??
+      x?.name??
+      ''
+    )
+    .trim();
+
+  if(!code||!name)
+    return null;
+
+  return{
+    code,
+    name,
+    industry:
+      String(
+        x?.industry_category??
+        x?.industry??
+        '台股'
+      ).trim()||'台股',
+    market:
+      inferMarket(x),
+    isETF:
+      inferETF(x)
+  };
+
+}
+
+
+async function getStockUniverse(force=false){
+
+  if(
+    !force&&
+    stockUniverseCache&&
+    Date.now()-
+      stockUniverseCache.time<
+      STOCK_UNIVERSE_TTL
+  )
+    return stockUniverseCache.rows;
+
+
+  if(stockUniverseLoading)
+    return stockUniverseLoading;
+
+
+  stockUniverseLoading=
+    (async()=>{
+
+      let rows=[];
+
+
+      try{
+
+        const a=
+          await finmind(
+            'TaiwanStockInfo'
+          );
+
+        const arr=
+          Array.isArray(a?.data)
+            ?a.data
+            :[];
+
+        rows=
+          arr
+            .map(normalizeInfo)
+            .filter(Boolean);
+
+      }catch(e){
+
+        console.warn(
+          'TaiwanStockInfo 取得失敗',
+          e
+        );
+
+      }
+
+
+      /*
+        FinMind 暫時不可用時，
+        仍保留首頁已知清單；
+        輸入任意代碼仍可直接查行情。
+      */
+
+      if(!rows.length){
+
+        rows=
+          Object.entries(KNOWN)
+            .map(
+              ([code,name])=>({
+                code,
+                name,
+                industry:
+                  /^00/.test(code)
+                    ?'ETF'
+                    :'台股',
+                market:'tse',
+                isETF:/^00/.test(code)
+              })
+            );
+
+      }
+
+
+      const map=new Map();
+
+      rows.forEach(
+        x=>map.set(x.code,x)
+      );
+
+
+      Object.entries(KNOWN)
+        .forEach(
+          ([code,name])=>{
+
+            if(!map.has(code)){
+
+              map.set(
+                code,
+                {
+                  code,
+                  name,
+                  industry:
+                    /^00/.test(code)
+                      ?'ETF'
+                      :'台股',
+                  market:'tse',
+                  isETF:/^00/.test(code)
+                }
+              );
+
+            }
+
+          }
+        );
+
+
+      const unique=
+        [...map.values()]
+          .filter(
+            x=>/^[0-9A-Z]{4,8}$/.test(
+              x.code
+            )
+          );
+
+
+      stockUniverseCache={
+        time:Date.now(),
+        rows:unique
+      };
+
+      return unique;
+
+    })();
+
+
+  try{
+
+    return await stockUniverseLoading;
+
+  }finally{
+
+    stockUniverseLoading=null;
+
+  }
+
+}
+
+
+async function loadStockInfo(code){
+
+  const key=
+    String(code||'')
+      .trim()
+      .toUpperCase();
+
+  if(!key)
+    return null;
+
+
+  const cacheKey=
+    `info:${key}`;
+
+
+  if(
+    state.cache.has(cacheKey)
+  )
+    return state.cache.get(cacheKey);
+
+
+  const universe=
+    await getStockUniverse();
+
+
+  const hit=
+    universe.find(
+      x=>x.code===key
+    );
+
+
+  if(hit){
+
+    const v={
+      code:hit.code,
+      name:hit.name,
+      industry:hit.industry,
+      market:hit.market,
+      isETF:hit.isETF
+    };
+
+    state.cache.set(
+      cacheKey,
+      v
+    );
+
+    return v;
+
+  }
+
+
+  /*
+    不在名稱清單時仍允許
+    直接輸入代碼，
+    避免因資料源暫時失敗
+    而把合法代碼判成不存在。
+  */
+
+  if(
+    /^[0-9]{4,6}[A-Z]*$/.test(key)
+  ){
+
+    const v={
+      code:key,
+      name:key,
+      industry:'股票／ETF',
+      market:'tse',
+      isETF:/^00/.test(key)
+    };
+
+    state.cache.set(
+      cacheKey,
+      v
+    );
+
+    return v;
+
+  }
+
+  return null;
+
+}
+
+
+function aliasCode(query){
+
+  const q=
+    clean(query)
+      .toLowerCase();
+
+  const hit=
+    Object.entries(ALIAS)
+      .find(
+        ([name])=>
+          String(name)
+            .toLowerCase()===q
+      );
+
+  return hit
+    ?hit[1]
+    :null;
+
+}
+
+
+async function findStock(query){
+
+  const raw=
+    clean(query);
+
+  if(!raw)
+    return null;
+
+
+  const alias=
+    aliasCode(raw);
+
+  const key=
+    alias||
+    raw.toUpperCase();
+
+
+  const universe=
+    await getStockUniverse();
+
+
+  /*
+    代碼精確搜尋：
+    支援一般股票、ETF、
+    槓桿／反向 ETF 等代碼。
+  */
+
+  const byCode=
+    universe.find(
+      x=>x.code===key
+    );
+
+  if(byCode)
+    return loadStockInfo(
+      byCode.code
+    );
+
+
+  /*
+    名稱精確／部分搜尋。
+  */
+
+  const q=
+    raw.toLowerCase();
+
+
+  const byName=
+    universe.find(
+      x=>
+        String(x.name)
+          .toLowerCase()===q
+    )||
+    universe.find(
+      x=>
+        String(x.name)
+          .toLowerCase()
+          .includes(q)
+    );
+
+
+  if(byName)
+    return loadStockInfo(
+      byName.code
+    );
+
+
+  /*
+    全市場資料源暫時失敗時，
+    仍讓使用者直接輸入代碼
+    進入行情查詢。
+  */
+
+  if(
+    /^[0-9]{4,6}[A-Z]*$/.test(key)
+  )
+    return loadStockInfo(key);
+
+
+  return null;
+
+}
+
+
+async function showSearchCandidates(){
+
+  const q=
+    clean(
+      $('searchInput').value
+    );
+
+  const box=
+    $('searchResults');
+
+
+  if(q.length<1){
+
+    box.innerHTML='';
+
+    return;
+
+  }
+
+
+  box.innerHTML=
+    '<div class="searchResult">'+
+    '<b>搜尋中…</b>'+
+    '<span>正在查詢全市場股票／ETF</span>'+
+    '</div>';
+
+
+  try{
+
+    const universe=
+      await getStockUniverse();
+
+    const z=
+      q.toLowerCase();
+
+
+    const arr=
+      universe
+        .filter(
+          x=>
+            String(x.code)
+              .toLowerCase()
+              .includes(z)||
+            String(x.name)
+              .toLowerCase()
+              .includes(z)
+        )
+        .slice(0,12);
+
+
+    if(!arr.length){
+
+      box.innerHTML='';
+
+      return;
+
+    }
+
+
+    box.innerHTML=
+      arr.map(
+        x=>`
+          <button
+            class="searchResult"
+            data-search-code="${esc(x.code)}"
+          >
+            <b>${esc(x.code)}</b>
+            <span>
+              ${esc(x.name)}
+              ${x.isETF?' · ETF':''}
+            </span>
+          </button>
+        `
+      )
+      .join('');
+
+
+    box
+      .querySelectorAll(
+        '[data-search-code]'
+      )
+      .forEach(
+        b=>
+          b.addEventListener(
+            'click',
+            ()=>{
+              $('searchInput').value=
+                b.dataset.searchCode;
+
+              box.innerHTML='';
+
+              searchStock(
+                b.dataset.searchCode
+              );
+            }
+          )
+      );
+
+
+  }catch(e){
+
+    box.innerHTML='';
+
+  }
+
+}
+
+
+async function searchStock(query){
+
+  const seq=
+    ++state.searchSeq;
+
+  const q=
+    clean(query);
+
+
+  if(!q){
+
+    setStatus(
+      "請輸入股票代號或名稱"
+    );
+
+    return;
+
+  }
+
+
+  setStatus(
+    "正在取得行情與分析資料…"
+  );
+
+
+  $("result").innerHTML=`
+    <div class="card loadingBox">
+      資料載入中
+      <div class="progress">
+        <i></i>
+      </div>
+    </div>
+  `;
+
+
+  try{
+
+    const info=
+      await findStock(q);
+
+
+    if(seq!==state.searchSeq)
+      return;
+
+
+    if(!info){
+
+      setStatus(
+        "找不到此股票或 ETF"
+      );
+
+      $("result").innerHTML=`
+        <div class="card notice">
+          找不到「${esc(q)}」，
+          請確認代號或名稱。
+        </div>
+      `;
+
+      return;
+
+    }
+
+
+    /*
+      行情是必要資料；
+      法人／估值是輔助資料，
+      失敗不能讓整支股票載入失敗。
+    */
+
+    const settled=
+      await Promise.allSettled([
+        getPrices(info.code),
+        getRealtime(info.code),
+        getInstitution(info.code),
+        getValuation(info.code)
+      ]);
+
+
+    if(seq!==state.searchSeq)
+      return;
+
+
+    const rows=
+      settled[0].status==="fulfilled"
+        ?settled[0].value
+        :[];
+
+    const rt=
+      settled[1].status==="fulfilled"
+        ?settled[1].value
+        :null;
+
+    const law=
+      settled[2].status==="fulfilled"
+        ?settled[2].value
+        :institutionBlank();
+
+    const val=
+      settled[3].status==="fulfilled"
+        ?settled[3].value
+        :{};
+
+
+    if(!rows.length)
+      throw new Error(
+        "歷史行情資料暫時無法取得"
+      );
+
+
+    const price=
+      rt?.price??
+      rows[rows.length-1]?.close;
+
+
+    if(price==null)
+      throw new Error(
+        "目前沒有可用價格"
+      );
+
+
+    const data=
+      buildData(
+        info.code,
+        info.name,
+        price,
+        rows,
+        rt,
+        law,
+        val
+      );
+
+
+    state.currentStock=
+      info;
+
+    state.currentData=
+      data;
+
+
+    $("searchInput").value=
+      info.code;
+
+    $("searchResults").innerHTML=
+      "";
+
+
+    renderData(data);
+
+    setStatus(
+      `已更新 ${info.code} ${info.name}`
+    );
+
+
+    clearInterval(
+      state.refreshTimer
+    );
+
+
+    state.refreshTimer=
+      setInterval(
+        refreshPrice,
+        30000
+      );
+
+
+  }catch(e){
+
+    console.error(
+      "searchStock",
+      e
+    );
+
+
+    setStatus(
+      `載入失敗：${
+        e.message||
+        "行情服務暫時無法使用"
+      }`
+    );
+
+
+    $("result").innerHTML=`
+      <div class="card notice">
+        <b>載入失敗</b>
+        <br><br>
+        ${esc(
+          e.message||
+          "行情服務暫時無法使用"
+        )}
+        <br><br>
+        請稍後重新分析。
+        程式不會用固定價格代替實際行情。
+      </div>
+    `;
+
+  }
+
+}
+
+
+async function refreshPrice(){
+
+  if(!state.currentData)
+    return;
+
+
+  try{
+
+    const rt=
+      await getRealtime(
+        state.currentData.code
+      );
+
+
+    if(!rt?.price)
+      return;
+
+
+    const d=
+      state.currentData;
+
+
+    const rebuilt=
+      buildData(
+        d.code,
+        d.name,
+        rt.price,
+        d.rows,
+        rt,
+        d.law,
+        d.val
+      );
+
+
+    state.currentData=
+      rebuilt;
+
+
+    renderData(
+      rebuilt,
+      false
+    );
+
+
+    setStatus(
+      `即時更新 ${d.code} ${d.name}`
+    );
+
+
+  }catch(e){
+
+    console.warn(
+      "refreshPrice",
+      e
+    );
+
+  }
+
+}
+
+
+async function scanOne(code){  const key=
+    String(code).toUpperCase();
+
+  try{
+
+    const info=
+      await loadStockInfo(key);
+
+    const settled=
+      await Promise.allSettled([
+        getPrices(key),
+        getRealtime(key)
+      ]);
+
+    const rows=
+      settled[0].status==="fulfilled"
+        ?settled[0].value
+        :[];
+
+    const rt=
+      settled[1].status==="fulfilled"
+        ?settled[1].value
+        :null;
+
+
+    if(
+      !Array.isArray(rows)||
+      !rows.length
+    ){
+
+      return{
+        code:key,
+        name:
+          info?.name||
+          KNOWN[key]||
+          key,
+        failed:true,
+        reason:
+          "歷史行情沒有回傳資料"
+      };
+
+    }
+
+
+    const price=
+      rt?.price??
+      rows[rows.length-1]?.close;
+
+
+    if(price==null){
+
+      return{
+        code:key,
+        name:
+          info?.name||
+          KNOWN[key]||
+          key,
+        failed:true,
+        reason:
+          "沒有可用現價"
+      };
+
+    }
+
+
+    const tech=
+      technical(
+        rows,
+        price
+      );
+
+    const levels=
+      dynamicLevels(
+        rows,
+        price
+      );
+
+    const retest=
+      retestModel(
+        rows,
+        price,
+        levels
+      );
+
+    const breakout=
+      breakoutModel(
+        rows,
+        price,
+        tech,
+        levels
+      );
+
+    const entry=
+      entryModel(
+        price,
+        tech,
+        levels,
+        retest
+      );
+
+
+    let score=0;
+
+
+    if(
+      breakout.state===
+      "突破確認中"
+    )
+      score+=40;
+
+    else if(
+      breakout.state===
+      "突破前觀察"
+    )
+      score+=25;
+
+    else if(
+      breakout.state===
+      "已越過壓力"
+    )
+      score+=20;
+
+
+    if(
+      tech.trend==="偏多"
+    )
+      score+=20;
+
+
+    if(
+      tech.volRatio!=null&&
+      tech.volRatio>=2
+    )
+      score+=20;
+
+    else if(
+      tech.volRatio!=null&&
+      tech.volRatio>=1.25
+    )
+      score+=12;
+
+
+    if(
+      retest.state===
+      "突破觀察"
+    )
+      score+=10;
+
+
+    return{
+      code:key,
+      name:
+        info?.name||
+        KNOWN[key]||
+        key,
+
+      price,
+      rows,
+      rt,
+      score,
+      levels,
+      tech,
+      retest,
+      breakout,
+      entry,
+
+      volume:
+        tech.volRatio,
+
+      failed:false
+    };
+
+
+  }catch(e){
+
+    console.warn(
+      "scanOne",
+      key,
+      e
+    );
+
+
+    return{
+      code:key,
+      name:
+        KNOWN[key]||
+        key,
+      failed:true,
+      reason:
+        e?.message||
+        "行情取得失敗"
+    };
+
+  }
+
+}
+
+
+async function getHot20Codes(){
+
+  /*
+    🔥 每次按下按鈕都重新向
+    TWSE 官方「成交量前二十名證券」
+    抓取最新排行。
+
+    這裡完全不保存固定20檔代號，
+    也不保存固定價格。
+
+    因此今天、明天、
+    下個交易日出現的20檔
+    可以完全不同。
+  */
+
+  const targets=[
+
+    "https://openapi.twse.com.tw/v1/exchangeReport/MI_INDEX20",
+
+    "https://www.twse.com.tw/exchangeReport/MI_INDEX20?response=json&date="
+
+  ];
+
+
+  let last=null;
+
+
+  for(
+    const target of targets
+  ){
+
+    const urls=[
+      target,
+      ...PROXIES.map(
+        p=>
+          p+
+          encodeURIComponent(target)
+      )
+    ];
+
+
+    for(
+      const url of urls
+    ){
+
+      try{
+
+        const data=
+          await fetchJSON(
+            url,
+            16000
+          );
+
+
+        const rows=
+          Array.isArray(data?.data)
+            ?data.data
+            :(
+              Array.isArray(data)
+                ?data
+                :[]
+            );
+
+
+        const hot=
+          rows
+            .map(
+              r=>({
+
+                code:
+                  String(
+                    r?.[0]??
+                    r?.Code??
+                    r?.code??
+                    ""
+                  )
+                  .trim()
+                  .toUpperCase(),
+
+                name:
+                  String(
+                    r?.[1]??
+                    r?.Name??
+                    r?.name??
+                    ""
+                  )
+                  .trim(),
+
+                volume:
+                  n(
+                    r?.[3]??
+                    r?.Trading_Volume??
+                    r?.TradingVolume??
+                    r?.volume
+                  )
+
+              })
+            )
+            .filter(
+              x=>
+                /^[0-9A-Z]{4,8}$/
+                  .test(x.code)
+            );
+
+
+        if(
+          hot.length>=20
+        ){
+
+          return hot.slice(
+            0,
+            20
+          );
+
+        }
+
+
+      }catch(e){
+
+        last=e;
+
+        console.warn(
+          "熱門20來源",
+          url,
+          e
+        );
+
+      }
+
+    }
+
+  }
+
+
+  /*
+    完全不使用固定股票清單；
+    抓不到當日排行就讓使用者重試。
+  */
+
+  throw(
+    last||
+    new Error(
+      "TWSE 今日熱門20檔資料暫時無法取得"
+    )
+  );
+
+}
+
+
+async function scanHot20(){
+
+  const seq=
+    ++state.scanSeq;
+
+  const box=
+    $("scanResult");
+
+  const button=
+    $("hot20ScanBtn");
+
+
+  if(!box)
+    return;
+
+
+  if(button){
+
+    button.disabled=true;
+
+    button.innerHTML=
+      "⏳ 正在抓取熱門20檔…";
+
+  }
+
+
+  box.className=
+    "scanCards";
+
+
+  box.innerHTML=`
+    <div class="loadingBox">
+      🔥 正在取得最新熱門成交量排行
+      <div class="progress">
+        <i></i>
+      </div>
+    </div>
+  `;
+
+
+  setStatus(
+    "正在取得今日最新熱門20檔（非固定清單）…"
+  );
+
+
+  try{
+
+    const hot=
+      await getHot20Codes();
+
+
+    if(
+      seq!==state.scanSeq
+    )
+      return;
+
+
+    const total=
+      hot.length;
+
+    const results=[];
+    const failed=[];
+
+    const batchSize=3;
+
+
+    for(
+      let i=0;
+      i<hot.length;
+      i+=batchSize
+    ){
+
+      if(
+        seq!==state.scanSeq
+      )
+        return;
+
+
+      const batch=
+        hot.slice(
+          i,
+          i+batchSize
+        );
+
+
+      const batchResults=
+        await Promise.all(
+          batch.map(
+            x=>
+              scanOne(x.code)
+          )
+        );
+
+
+      batchResults.forEach(
+        (x,j)=>{
+
+          const meta=
+            batch[j];
+
+
+          if(x?.failed){
+
+            failed.push({
+              ...x,
+              rank:i+j+1,
+              hotName:meta.name
+            });
+
+          }else if(
+            x?.price!=null
+          ){
+
+            results.push({
+              ...x,
+              hotRank:i+j+1,
+              hotVolume:meta.volume,
+              hotName:meta.name
+            });
+
+          }
+
+        }
+      );
+
+
+      setStatus(
+        `熱門20檔掃描中 ${
+          Math.min(
+            i+batchSize,
+            total
+          )
+        }/${total}｜已完成 ${
+          results.length
+        } 檔`
+      );
+
+    }
+
+
+    if(
+      seq!==state.scanSeq
+    )
+      return;
+
+
+    results.sort(
+      (a,b)=>{
+
+        const av=
+          a.hotVolume??-1;
+
+        const bv=
+          b.hotVolume??-1;
+
+
+        if(
+          bv!==av
+        )
+          return bv-av;
+
+
+        return(
+          (a.hotRank??99)-
+          (b.hotRank??99)
+        );
+
+      }
+    );
+
+
+    if(!results.length){
+
+      box.innerHTML=`
+        <div class="notice">
+          <b>
+            ⚠️ 熱門20檔沒有取得可用行情
+          </b>
+          <br><br>
+
+          ${
+            failed
+              .slice(0,6)
+              .map(
+                x=>
+                  `${esc(x.code)}
+                   ${esc(x.hotName||x.name)}
+                   ：
+                   ${esc(
+                     x.reason||
+                     "行情取得失敗"
+                   )}`
+              )
+              .join("<br>")
+          }
+
+        </div>
+      `;
+
+
+      setStatus(
+        "熱門20檔掃描失敗"
+      );
+
+      return;
+
+    }
+
+
+    box.innerHTML=
+      results
+        .map(
+          (x,i)=>{
+
+            const b=
+              x.breakout||{};
+
+            const t=
+              x.tech||{};
+
+            const l=
+              x.levels||{};
+
+
+            const level=
+              l.r1?.point??
+              l.r1?.price??
+              null;
+
+
+            const dist=
+              level!=null&&x.price
+                ?(
+                    (level-x.price)/
+                    x.price*
+                    100
+                  )
+                :null;
+
+
+            const stateText=
+              b.state||
+              "觀察";
+
+
+            const cls=
+              stateText.includes("突破")
+                ?"green"
+                :stateText.includes("壓力")
+                  ?"yellow"
+                  :"orange";
+
+
+            return`
+              <div
+                class="box"
+                style="
+                  grid-column:1/-1
+                "
+              >
+
+                <div
+                  class="boxMain"
+                  style="
+                    display:flex;
+                    justify-content:
+                      space-between;
+                    gap:10px;
+                    align-items:center
+                  "
+                >
+
+                  <div>
+
+                    <b>
+                      ${i+1}.
+                      ${esc(
+                        x.name||
+                        x.hotName||
+                        x.code
+                      )}
+                    </b>
+
+                    <div class="boxSub">
+                      ${esc(x.code)}
+                      ｜成交量排行
+                      #${x.hotRank||i+1}
+                    </div>
+
+                  </div>
+
+
+                  <div class="priceValue">
+                    ${money(x.price)}
+                  </div>
+
+                </div>
+
+
+                <div
+                  class="metricSub"
+                  style="margin-top:8px"
+                >
+                  趨勢：
+                  ${esc(t.trend||"—")}
+                  ｜量能：
+                  ${
+                    x.volume==null
+                      ?"—"
+                      :x.volume.toFixed(2)+"倍"
+                  }
+                  ｜狀態：
+                  <span class="${cls}">
+                    ${esc(stateText)}
+                  </span>
+                </div>
+
+
+                <div
+                  class="metricSub"
+                  style="margin-top:5px"
+                >
+                  第一支撐：
+                  ${money(
+                    l.s1?.point??
+                    l.s1?.price
+                  )}
+                  ｜第二支撐：
+                  ${money(
+                    l.s2?.point??
+                    l.s2?.price
+                  )}
+                  ｜第一壓力：
+                  ${money(
+                    l.r1?.point??
+                    l.r1?.price
+                  )}
+                  ｜第二壓力：
+                  ${money(
+                    l.r2?.point??
+                    l.r2?.price
+                  )}
+                </div>
+
+
+                <div
+                  class="metricSub"
+                  style="margin-top:5px"
+                >
+                  距第一壓力：
+                  ${
+                    dist==null
+                      ?"—"
+                      :(
+                        dist>=0
+                          ?"+"
+                          :""
+                      )+
+                      dist.toFixed(2)+
+                      "%"
+                  }
+                </div>
+
+              </div>
+            `;
+
+          }
+        )
+        .join("");
+
+
+    setStatus(
+      `熱門20檔掃描完成｜今日動態排行 ${
+        hot.length
+      } 檔｜成功 ${
+        results.length
+      } 檔${
+        failed.length
+          ?`｜失敗 ${failed.length} 檔`
+          :""
+      }`
+    );
+
+
+  }catch(e){
+
+    console.error(
+      "scanHot20",
+      e
+    );
+
+
+    box.innerHTML=`
+      <div class="notice">
+
+        <b>
+          ⚠️ 熱門20檔掃描失敗
+        </b>
+
+        <br><br>
+
+        ${esc(
+          e.message||
+          "熱門排行資料暫時無法取得"
+        )}
+
+        <br><br>
+
+        請稍後再試。
+
+      </div>
+    `;
+
+
+    setStatus(
+      "熱門20檔掃描失敗"
+    );
+
+
+  }finally{
+
+    if(button){
+
+      button.disabled=false;
+
+      button.innerHTML=
+        "🔥 掃描熱門20檔";
+
+    }
+
+  }
+
+}
+
+
+async function scanBreakout(){
+
+  const seq=
+    ++state.scanSeq;
+
+  const box=
+    $("scanResult");
+
+  const button=
+    $("breakScanBtn");
+
+
+  if(!box)
+    return;
+
+
+  if(button){
+
+    button.disabled=true;
+
+    button.innerHTML=
+      "⏳ 正在動態掃描…";
+
+  }
+
+
+  box.className=
+    "scanCards";
+
+
+  box.innerHTML=`
+    <div class="loadingBox">
+      🔎 正在掃描實際行情
+      <div class="progress">
+        <i></i>
+      </div>
+    </div>
+  `;
+
+
+  try{
+
+    const results=[];
+    const failed=[];
+
+    const batchSize=3;
+
+
+    for(
+      let i=0;
+      i<SCAN_CODES.length;
+      i+=batchSize
+    ){
+
+      if(
+        seq!==state.scanSeq
+      )
+        return;
+
+
+      const batch=
+        SCAN_CODES.slice(
+          i,
+          i+batchSize
+        );
+
+
+      const batchResults=
+        await Promise.all(
+          batch.map(scanOne)
+        );
+
+
+      for(
+        const x of batchResults
+      ){
+
+        if(x?.failed)
+          failed.push(x);
+
+        else if(
+          x?.price!=null
+        )
+          results.push(x);
+
+      }
+
+
+      setStatus(
+        `動態掃描中 ${
+          Math.min(
+            i+batchSize,
+            SCAN_CODES.length
+          )
+        }/${SCAN_CODES.length}
+        ｜已取得 ${
+          results.length
+        } 檔`
+      );
+
+    }
+
+
+    if(
+      seq!==state.scanSeq
+    )
+      return;
+
+
+    /*
+      有行情就顯示，
+      不要求一定突破。
+    */
+
+    results.sort(
+      (a,b)=>{
+
+        const ap=
+          a.score||0;
+
+        const bp=
+          b.score||0;
+
+        return bp-ap;
+
+      }
+    );
+
+
+    if(!results.length){
+
+      const detail=
+        failed
+          .slice(0,6)
+          .map(
+            x=>
+              `${x.code}
+               ${x.name}：
+               ${x.reason}`
+          )
+          .join("<br>");
+
+
+      box.innerHTML=`
+        <div class="notice">
+
+          <b>
+            ⚠️ 這次沒有取得任何可用行情
+          </b>
+
+          <br><br>
+
+          這不是「沒有股票符合」，
+          而是行情資料服務沒有成功回傳。
+
+          ${
+            detail
+              ?`<br><br>${detail}`
+              :""
+          }
+
+          <br><br>
+
+          請確認 GitHub Pages
+          目前可正常連線，
+          或稍後重新掃描。
+
+        </div>
+      `;
+
+
+      setStatus(
+        "掃描完成｜0 檔行情資料"
+      );
+
+      return;
+
+    }
+
+
+    box.innerHTML=
+      results
+        .slice(0,12)
+        .map(
+          x=>{
+
+            const lv=
+              x.levels||{};
+
+            const stateText=
+              x.breakout?.state||
+              "觀察";
+
+
+            const stateCls=
+              x.breakout?.state===
+                "突破確認中"
+                ?"green"
+                :x.breakout?.state===
+                  "突破前觀察"
+                  ?"yellow"
+                  :"blue";
+
+
+            const vol=
+              x.volume==null
+                ?"—"
+                :`${x.volume.toFixed(2)}x`;
+
+
+            const dist=p=>{
+
+              if(
+                p==null||
+                x.price==null||
+                x.price===0
+              )
+                return "—";
+
+
+              const v=
+                (p-x.price)/
+                x.price*
+                100;
+
+
+              return`
+                ${
+                  v>=0
+                    ?"+"
+                    :""
+                }${v.toFixed(2)}%
+              `;
+
+            };
+
+
+            return`
+              <button
+                class="scanCard"
+                data-scan-code="${esc(x.code)}"
+              >
+
+                <div class="scanHead">
+
+                  <div>
+
+                    <div class="scanName">
+                      ${esc(x.name)}
+                    </div>
+
+                    <div class="scanCode">
+                      ${esc(x.code)}
+                      ｜${esc(
+                        positionLabel(
+                          x.tech?.pos
+                        )
+                      )}
+                    </div>
+
+                  </div>
+
+
+                  <div
+                    class="scanState
+                    ${stateCls}"
+                  >
+                    ${esc(stateText)}
+                  </div>
+
+                </div>
+
+
+                <div class="scanPrice">
+                  現價 ${money(x.price)}
+                </div>
+
+
+                <div class="scanLevels">
+
+                  <div class="scanLevel">
+
+                    <div
+                      class="scanLevelLabel"
+                    >
+                      🛡️ 第一支撐
+                    </div>
+
+                    <div
+                      class="scanLevelValue green"
+                    >
+                      ${money(
+                        lv.s1?.point
+                      )}
+                    </div>
+
+                    <div
+                      class="scanSmall"
+                    >
+                      ${
+                        lv.s1
+                          ?`區間 ${
+                              money(
+                                lv.s1.low
+                              )
+                            }～
+                            ${
+                              money(
+                                lv.s1.high
+                              )
+                            }
+                            ｜距現價 ${
+                              dist(
+                                lv.s1.point
+                              )
+                            }`
+                          :"資料不足"
+                      }
+                    </div>
+
+                  </div>          <div class="scanLevel">
+            <div class="scanLevelLabel">
+              🛡️ 第二支撐
+            </div>
+
+            <div class="scanLevelValue green">
+              ${money(lv.s2?.point)}
+            </div>
+
+            <div class="scanSmall">
+              ${
+                lv.s2
+                  ?`區間 ${
+                      money(lv.s2.low)
+                    }～
+                    ${
+                      money(lv.s2.high)
+                    }
+                    ｜距現價 ${
+                      dist(lv.s2.point)
+                    }`
+                  :"資料不足"
+              }
+            </div>
+          </div>
+
+
+          <div class="scanLevel">
+            <div class="scanLevelLabel">
+              ⚡ 第一壓力
+            </div>
+
+            <div class="scanLevelValue orange">
+              ${money(lv.r1?.point)}
+            </div>
+
+            <div class="scanSmall">
+              ${
+                lv.r1
+                  ?`區間 ${
+                      money(lv.r1.low)
+                    }～
+                    ${
+                      money(lv.r1.high)
+                    }
+                    ｜距現價 ${
+                      dist(lv.r1.point)
+                    }`
+                  :"資料不足"
+              }
+            </div>
+          </div>
+
+
+          <div class="scanLevel">
+            <div class="scanLevelLabel">
+              🔥 第二壓力
+            </div>
+
+            <div class="scanLevelValue red">
+              ${money(lv.r2?.point)}
+            </div>
+
+            <div class="scanSmall">
+              ${
+                lv.r2
+                  ?`區間 ${
+                      money(lv.r2.low)
+                    }～
+                    ${
+                      money(lv.r2.high)
+                    }
+                    ｜距現價 ${
+                      dist(lv.r2.point)
+                    }`
+                  :"資料不足"
+              }
+            </div>
+          </div>
+
+        </div>
+
+
+        <div class="scanMeta">
+          量比 ${vol}
+          ｜進場 ${money(x.entry?.entry)}
+          ｜第一止盈 ${money(x.entry?.tp1)}
+          <br>
+          ${esc(
+            x.retest?.detail||
+            "依實際價格結構計算"
+          )}
+        </div>
+
+      </button>
+    `;
+
+          }
+        )
+        .join("");
+
+
+    box
+      .querySelectorAll(
+        "[data-scan-code]"
+      )
+      .forEach(
+        b=>
+          b.addEventListener(
+            "click",
+            ()=>
+              searchStock(
+                b.dataset.scanCode
+              )
+          )
+      );
+
+
+    setStatus(
+      `動態掃描完成｜取得 ${
+        results.length
+      } 檔實際行情${
+        failed.length
+          ?`｜${failed.length} 檔資料失敗`
+          :""
+      }`
+    );
+
+
+  }catch(e){
+
+    console.error(
+      "scanBreakout",
+      e
+    );
+
+
+    box.className=
+      "breakGrid";
+
+
+    box.innerHTML=`
+      <div class="notice">
+
+        <b>
+          ⚠️ 掃描程式發生錯誤
+        </b>
+
+        <br><br>
+
+        ${esc(
+          e?.message||
+          "未知錯誤"
+        )}
+
+        <br><br>
+
+        這不代表沒有股票符合；
+        請重新整理頁面後再掃描。
+
+      </div>
+    `;
+
+
+    setStatus(
+      "動態掃描程式錯誤"
+    );
+
+  }finally{
+
+    if(button){
+
+      button.disabled=false;
+
+      button.innerHTML=
+        "🔎 開始動態掃描";
+
+    }
+
+  }
+
+}
+
+
+function renderData(d){
+
+  const t=d.tech;
+  const lv=d.lv;
+  const entry=d.entry;
+
+  const position=
+    positionLabel(t.pos);
+
+
+  const posPct=
+    t.pos==null
+      ?null
+      :Math.max(
+          0,
+          Math.min(
+            1,
+            t.pos
+          )
+        )*100;
+
+
+  const score=
+    Math.max(
+      0,
+      Math.min(
+        100,
+        50+
+        d.tech.trendScore*10+
+        (
+          d.breakout.state===
+          "突破確認中"
+            ?20
+            :d.breakout.state===
+              "突破前觀察"
+              ?8
+              :0
+        )+
+        (
+          t.volRatio&&
+          t.volRatio>1.2
+            ?8
+            :0
+        )
+      )
+    );
+
+
+  const anomaly=
+    d.anomaly.abnormal
+      ?d.anomaly.items.join("；")
+      :"目前未偵測到明顯異常";
+
+
+  const latest=
+    d.law.latest||{};
+
+
+  $("result").innerHTML=`
+
+  <section class="card hero">
+
+    <div class="heroTop">
+
+      <div class="icon">
+        📈
+      </div>
+
+      <div>
+
+        <div class="stockTitle">
+          ${esc(d.name)}
+
+          <span class="stockSub">
+            ${esc(d.code)}
+          </span>
+        </div>
+
+        <div class="stockSub">
+          ${esc(
+            state.currentStock?.industry||
+            "—"
+          )}
+        </div>
+
+      </div>
+
+      <div class="update">
+        ${esc(
+          d.rt?.time||
+          "行情"
+        )}
+
+        <br>
+
+        <span class="${
+          t.trend==="偏多"
+            ?"green"
+            :t.trend==="偏空"
+              ?"red"
+              :"orange"
+        }">
+          ${t.trend}
+        </span>
+      </div>
+
+    </div>
+
+
+    <div class="grid3">
+
+      <div class="box">
+
+        <div class="boxSub">
+          現價
+        </div>
+
+        <div class="boxMain">
+          ${money(d.price)}
+        </div>
+
+        <div class="boxSub">
+          ${
+            d.rt?.prev!=null
+              ?`昨收 ${money(d.rt.prev)}`
+              :"歷史收盤"
+          }
+        </div>
+
+      </div>
+
+
+      <div class="box">
+
+        <div class="boxSub">
+          60日位置
+        </div>
+
+        <div class="boxMain">
+          ${position}
+        </div>
+
+        <div class="boxSub">
+          ${
+            posPct==null
+              ?"—"
+              :posPct.toFixed(1)+"%"
+          }
+        </div>
+
+      </div>
+
+
+      <div class="box">
+
+        <div class="boxSub">
+          ATR(14)
+        </div>
+
+        <div class="boxMain">
+          ${money(t.atr)}
+        </div>
+
+        <div class="boxSub">
+          實際波動度
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="priceStrip">
+
+      <div class="priceCell">
+
+        <div class="priceLabel">
+          今日高
+        </div>
+
+        <div class="priceValue">
+          ${money(
+            d.rt?.high??
+            d.rows[
+              d.rows.length-1
+            ].high
+          )}
+        </div>
+
+      </div>
+
+
+      <div class="priceCell">
+
+        <div class="priceLabel">
+          今日低
+        </div>
+
+        <div class="priceValue">
+          ${money(
+            d.rt?.low??
+            d.rows[
+              d.rows.length-1
+            ].low
+          )}
+        </div>
+
+      </div>
+
+
+      <div class="priceCell">
+
+        <div class="priceLabel">
+          20日均量
+        </div>
+
+        <div class="priceValue">
+          ${integer(t.avgVol20)}
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <section class="card break">
+
+    <div class="breakTitle">
+      🧠 綜合訊號
+    </div>
+
+    <div class="breakGrid">
+
+      <div class="level">
+
+        <div class="levelLabel">
+          目前訊號
+        </div>
+
+        <div class="
+          levelValue
+          ${
+            d.signal.state.includes("突破")||
+            d.signal.state.includes("回踩")
+              ?"green"
+              :d.signal.state.includes("跌破")||
+               d.signal.state.includes("異常")
+                ?"red"
+                :"orange"
+          }
+        ">
+          ${d.signal.icon}
+          ${esc(d.signal.state)}
+        </div>
+
+        <div class="levelSmall">
+          ${esc(d.signal.detail)}
+        </div>
+
+      </div>
+
+
+      <div class="level">
+
+        <div class="levelLabel">
+          突破品質
+        </div>
+
+        <div class="levelValue blue">
+          ${d.quality.score}／100
+        </div>
+
+        <div class="levelSmall">
+          ${esc(d.quality.label)}
+          ｜站上壓力
+          ${d.quality.above?"✓":"·"}
+          ｜量能
+          ${d.quality.checks[1].ok?"✓":"·"}
+          ｜收盤
+          ${d.quality.checks[2].ok?"✓":"·"}
+          ｜法人
+          ${d.quality.checks[3].ok?"✓":"·"}
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <section class="card">
+
+    <div class="title">
+      🎯 動態點位區間
+    </div>
+
+    <div class="intro">
+      以下數字均由此股票的實際歷史價格、
+      均線、局部高低點、量價密集區與波動度計算。
+    </div>
+
+    <div class="levelGrid">
+
+      ${levelCard(
+        "第一支撐",
+        lv?.s1,
+        "green",
+        d.price
+      )}
+
+      ${levelCard(
+        "第二支撐",
+        lv?.s2,
+        "green",
+        d.price
+      )}
+
+      ${levelCard(
+        "第一壓力",
+        lv?.r1,
+        "orange",
+        d.price
+      )}
+
+      ${levelCard(
+        "第二壓力",
+        lv?.r2,
+        "red",
+        d.price
+      )}
+
+    </div>
+
+  </section>
+
+
+  <section class="card break">
+
+    <div class="breakTitle">
+      ⚡ 關鍵突破／壓力共振區
+    </div>
+
+    <div class="breakGrid">
+
+      <div class="level">
+
+        <div class="levelLabel">
+          關鍵區
+        </div>
+
+        <div class="levelValue blue">
+          ${
+            lv?.r1
+              ?money(lv.r1.point)
+              :"—"
+          }
+        </div>
+
+        <div class="levelSmall">
+          ${
+            lv?.r1
+              ?`區間 ${
+                  money(lv.r1.low)
+                }～
+                ${
+                  money(lv.r1.high)
+                }
+                <br>
+                ${esc(lv.r1.reason)}`
+              :"資料不足"
+          }
+        </div>
+
+      </div>
+
+
+      <div class="level">
+
+        <div class="levelLabel">
+          突破狀態
+        </div>
+
+        <div class="
+          levelValue
+          ${
+            d.breakout.state===
+            "突破確認中"
+              ?"green"
+              :"orange"
+          }
+        ">
+          ${esc(
+            d.breakout.state
+          )}
+        </div>
+
+        <div class="levelSmall">
+
+          ${d.breakout.checks
+            .map(
+              x=>`
+                <div class="checkRow">
+
+                  <span class="check">
+                    ${x.ok?"✓":"·"}
+                  </span>
+
+                  ${esc(x.text)}
+
+                </div>
+              `
+            )
+            .join("")
+          }
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <section class="card">
+
+    <div class="title">
+      🟢 進場／防守／止盈
+    </div>
+
+    <div class="levelGrid">
+
+      <div class="level">
+
+        <div class="levelLabel">
+          建議進場類型
+        </div>
+
+        <div class="levelValue blue">
+          ${esc(entry.type)}
+        </div>
+
+        <div class="levelSmall">
+          ${esc(entry.note)}
+        </div>
+
+      </div>
+
+
+      <div class="level">
+
+        <div class="levelLabel">
+          參考進場點
+        </div>
+
+        <div class="levelValue green">
+          ${money(entry.entry)}
+        </div>
+
+        <div class="levelSmall">
+          ${
+            entry.entry!=null
+              ?"來自動態支撐／突破結構"
+              :"目前沒有足夠條件"
+          }
+        </div>
+
+      </div>
+
+
+      <div class="level">
+
+        <div class="levelLabel">
+          防守／停損參考
+        </div>
+
+        <div class="levelValue red">
+          ${money(entry.defense)}
+        </div>
+
+        <div class="levelSmall">
+          結構失守時重新評估；
+          不保證實際成交價格
+        </div>
+
+      </div>
+
+
+      <div class="level">
+
+        <div class="levelLabel">
+          第一止盈
+        </div>
+
+        <div class="levelValue orange">
+          ${money(entry.tp1)}
+        </div>
+
+        <div class="levelSmall">
+          第一實際壓力區
+        </div>
+
+      </div>
+
+
+      <div class="level">
+
+        <div class="levelLabel">
+          第二止盈
+        </div>
+
+        <div class="levelValue red">
+          ${money(entry.tp2)}
+        </div>
+
+        <div class="levelSmall">
+          第二實際壓力區
+        </div>
+
+      </div>
+
+
+      <div class="level">
+
+        <div class="levelLabel">
+          回踩狀態
+        </div>
+
+        <div class="levelValue purple">
+          ${esc(d.retest.state)}
+        </div>
+
+        <div class="levelSmall">
+          ${esc(d.retest.detail)}
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <section class="card">
+
+    <div class="title">
+      📍 現價位置
+    </div>
+
+    ${
+      posPct==null
+        ?`
+          <div class="notice">
+            區間資料不足
+          </div>
+        `
+        :`
+          <div class="dataRow">
+
+            <span>
+              60日區間
+            </span>
+
+            <b>
+              ${money(t.range60.low)}
+              ～
+              ${money(t.range60.high)}
+            </b>
+
+          </div>
+
+          <div class="rangeBar">
+
+            <div
+              class="rangeFill"
+              style="
+                width:${posPct}%
+              "
+            ></div>
+
+            <span
+              class="rangeMark"
+              style="
+                left:${posPct}%
+              "
+            ></span>
+
+          </div>
+
+          <div
+            class="metricSub"
+            style="margin-top:8px"
+          >
+            現價位於60日實際價格區間約
+            ${posPct.toFixed(1)}%
+          </div>
+        `
+    }
+
+  </section>
+
+
+  <section class="card">
+
+    <div class="title">
+      📊 量價與技術
+    </div>
+
+    <div class="sectionGrid">
+
+      ${metric(
+        "MA5",
+        money(t.ma5),
+        t.ma5!=null
+          ?`距現價 ${pctChange(d.price,t.ma5)}`
+          :""
+      )}
+
+      ${metric(
+        "MA20",
+        money(t.ma20),
+        t.ma20!=null
+          ?`距現價 ${pctChange(d.price,t.ma20)}`
+          :""
+      )}
+
+      ${metric(
+        "MA60",
+        money(t.ma60),
+        t.ma60!=null
+          ?`距現價 ${pctChange(d.price,t.ma60)}`
+          :""
+      )}
+
+      ${metric(
+        "成交量",
+        integer(t.volToday),
+        `20日均量 ${integer(t.avgVol20)}`
+      )}
+
+      ${metric(
+        "量比",
+        t.volRatio==null
+          ?"—"
+          :t.volRatio.toFixed(2)+"x",
+        volumeSignal(t),
+        t.volRatio>=1.25
+          ?"green"
+          :t.volRatio<=.65
+            ?"orange"
+            :""
+      )}
+
+      ${metric(
+        "趨勢",
+        t.trend,
+        `均線結構分數 ${t.trendScore}`,
+        t.trend==="偏多"
+          ?"green"
+          :t.trend==="偏空"
+            ?"red"
+            :"orange"
+      )}
+
+    </div>
+
+  </section>
+
+
+  <section class="card">
+
+    <div class="title">
+      🏦 三大法人
+    </div>
+
+    <div class="sectionGrid">
+
+      ${metric(
+        "外資",
+        lawCell(latest.foreign),
+        "最新可取得資料",
+        lawClass(latest.foreign)
+      )}
+
+      ${metric(
+        "投信",
+        lawCell(latest.trust),
+        "最新可取得資料",
+        lawClass(latest.trust)
+      )}
+
+      ${metric(
+        "自營商",
+        lawCell(latest.dealer),
+        "最新可取得資料",
+        lawClass(latest.dealer)
+      )}
+
+      ${metric(
+        "合計",
+        lawCell(latest.total),
+        "僅在有可用分類資料時合計",
+        lawClass(latest.total)
+      )}
+
+    </div>
+
+    <div
+      class="notice"
+      style="margin-top:9px"
+    >
+      「—」代表該分類資料未取得，
+      不以 0 假造資料。
+    </div>
+
+  </section>
+
+
+  <section class="card">
+
+    <div class="title">
+      🧾 法人期間累計
+    </div>
+
+    <div class="tableWrap">
+
+      <table>
+
+        <thead>
+
+          <tr>
+            <th>期間</th>
+            <th>外資</th>
+            <th>投信</th>
+            <th>自營商</th>
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          ${
+            ["1日","5日","20日"]
+              .map(
+                (p,i)=>{
+
+                  const x=
+                    [
+                      d.law.p1,
+                      d.law.p5,
+                      d.law.p20
+                    ][i]||{};
+
+
+                  return`
+                    <tr>
+
+                      <td>
+                        ${p}
+                      </td>
+
+                      <td
+                        class="${lawClass(x.foreign)}"
+                      >
+                        ${lawCell(x.foreign)}
+                      </td>
+
+                      <td
+                        class="${lawClass(x.trust)}"
+                      >
+                        ${lawCell(x.trust)}
+                      </td>
+
+                      <td
+                        class="${lawClass(x.dealer)}"
+                      >
+                        ${lawCell(x.dealer)}
+                      </td>
+
+                    </tr>
+                  `;
+
+                }
+              )
+              .join("")
+          }
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </section>
+
+
+  <section class="card">
+
+    <div class="title">
+      ⚖️ 風險／報酬
+    </div>
+
+    <div class="sectionGrid">
+
+      ${metric(
+        "單筆風險",
+        d.risk.riskPct==null
+          ?"—"
+          :d.risk.riskPct.toFixed(2)+"%",
+        "依動態進場與防守點計算",
+        d.risk.riskPct!=null&&
+        d.risk.riskPct<=5
+          ?"green"
+          :"orange"
+      )}
+
+      ${metric(
+        "第一目標 R/R",
+        d.risk.rr1==null
+          ?"—"
+          :"1 : "+
+           d.risk.rr1.toFixed(2),
+        "進場→第一止盈",
+        d.risk.rr1!=null&&
+        d.risk.rr1>=2
+          ?"green"
+          :"orange"
+      )}
+
+      ${metric(
+        "第二目標 R/R",
+        d.risk.rr2==null
+          ?"—"
+          :"1 : "+
+           d.risk.rr2.toFixed(2),
+        "進場→第二止盈",
+        d.risk.rr2!=null&&
+        d.risk.rr2>=2
+          ?"green"
+          :"orange"
+      )}
+
+      ${metric(
+        "風控狀態",
+        d.risk.state,
+        "停損為結構參考，不保證實際成交",
+        d.risk.state==="可計算"
+          ?"blue"
+          :"orange"
+      )}
+
+    </div>
+
+  </section>
+
+
+  <section class="card">
+
+    <div class="title">
+      🚨 今日警報
+    </div>
+
+    ${
+      d.alerts.length
+        ?`
+          <div class="notice">
+
+            ${
+              d.alerts
+                .map(
+                  a=>`
+                    <div
+                      style="margin-bottom:7px"
+                    >
+                      <b>
+                        ${
+                          a.level==="高"
+                            ?"🔴"
+                            :a.level==="強"
+                              ?"🟢"
+                              :"🟡"
+                        }
+
+                        ${esc(a.type)}
+                      </b>
+
+                      ｜${esc(a.text)}
+
+                    </div>
+                  `
+                )
+                .join("")
+            }
+
+          </div>
+        `
+        :`
+          <div class="notice">
+            目前沒有觸發主要異常警報。
+          </div>
+        `
+    }
+
+  </section>
+
+
+  <section class="card">
+
+    <div class="title">
+      🚨 今日異常
+    </div>
+
+    <div class="notice">
+      ${esc(anomaly)}
+    </div>
+
+  </section>
+
+
+  <section class="card">
+
+    <div class="title">
+      🧠 綜合結論
+    </div>
+
+    <div class="signal">
+
+      <div class="signalState">
+        ${d.signal.icon}
+
+        ${esc(d.signal.state)}
+
+        ｜突破品質
+        ${d.quality.score}/100
+      </div>
+
+
+      <div class="scoreBar">
+
+        <div
+          class="scoreFill"
+          style="
+            width:${score}%
+          "
+        ></div>
+
+      </div>
+
+
+      <div
+        class="metricSub"
+        style="margin-top:9px"
+      >
+
+        趨勢：
+        ${esc(t.trend)}
+
+        ｜量能：
+        ${esc(volumeSignal(t))}
+
+        ｜位置：
+        ${esc(position)}
+
+        <br>
+
+        進場：
+        ${esc(entry.type)}
+
+        ｜第一止盈：
+        ${money(entry.tp1)}
+
+        ｜第二止盈：
+        ${money(entry.tp2)}
+
+        <br>
+
+        風險：
+        ${
+          d.risk.riskPct==null
+            ?"—"
+            :d.risk.riskPct.toFixed(2)+"%"
+        }
+
+        ｜第一 R/R：
+        ${
+          d.risk.rr1==null
+            ?"—"
+            :"1 : "+
+             d.risk.rr1.toFixed(2)
+        }
+
+        ｜第二 R/R：
+        ${
+          d.risk.rr2==null
+            ?"—"
+            :"1 : "+
+             d.risk.rr2.toFixed(2)
+        }
+
+      </div>
+
+    </div>
+
+
+    <div
+      class="notice"
+      style="margin-top:9px"
+    >
+      以上是依公開行情資料計算的技術結構，
+      不是保證獲利或固定買賣指令。
+      若價格快速跳動，
+      實際成交可能與計算點位不同。
+    </div>
+
+  </section>
+
+  `;
+
+}
+
+
+async function runFeature(action){
+
+  setStatus(
+    "正在掃描…"
+  );
+
+
+  const results=[];
+
+
+  for(
+    const code of SCAN_CODES
+  ){
+
+    const x=
+      await scanOne(code);
+
+    if(x)
+      results.push(x);
+
+  }
+
+
+  let sorted=
+    results;
+
+
+  if(action==="recent")
+    sorted=
+      results
+        .filter(x=>x.score>0)
+        .sort(
+          (a,b)=>
+            b.score-a.score
+        );
+
+
+  if(action==="long")
+    sorted=
+      results.sort(
+        (a,b)=>
+          b.score-a.score
+      );
+
+
+  if(action==="popular")
+    sorted=
+      results.sort(
+        (a,b)=>
+          (b.volume??-1)-
+          (a.volume??-1)
+      );
+
+
+  if(action==="institution")
+    sorted=
+      results.sort(
+        (a,b)=>
+          b.score-a.score
+      );
+
+
+  if(action==="pressure")
+    sorted=
+      results.sort(
+        (a,b)=>
+          Math.abs(
+            (a.level??a.price)-
+            a.price
+          )-
+          Math.abs(
+            (b.level??b.price)-
+            b.price
+          )
+      );
+
+
+  if(action==="analysis")
+    sorted=
+      results.sort(
+        (a,b)=>
+          b.score-a.score
+      );
+
+
+  $("recommendTable").innerHTML=
+    `
+      <div class="recHead">
+        <span>標的</span>
+        <span>現價</span>
+        <span>關鍵區</span>
+        <span>狀態</span>
+      </div>
+    `+
+    sorted
+      .slice(0,8)
+      .map(
+        x=>`
+          <button
+            class="row"
+            data-rec-code="${esc(x.code)}"
+          >
+
+            <span>
+
+              <b class="recName">
+                ${esc(x.name)}
+              </b>
+
+              <span class="recSmall">
+                ${esc(x.code)}
+              </span>
+
+            </span>
+
+            <span>
+              ${money(x.price)}
+            </span>
+
+            <span>
+              ${money(x.level)}
+            </span>
+
+            <span
+              class="${
+                x.breakout?.state===
+                  "突破確認中"
+                  ?"green"
+                  :x.breakout?.state===
+                    "突破前觀察"
+                    ?"yellow"
+                    :"orange"
+              }"
+            >
+              ${esc(
+                x.breakout?.state||
+                "觀察"
+              )}
+            </span>
+
+          </button>
+        `
+      )
+      .join("");
+
+
+  $("recommendTable")
+    .querySelectorAll(
+      "[data-rec-code]"
+    )
+    .forEach(
+      b=>
+        b.addEventListener(
+          "click",
+          ()=>
+            searchStock(
+              b.dataset.recCode
+            )
+        )
+    );
+
+
+  setStatus(
+    `完成：${sorted.length} 檔`
+  );
+
+}
+
+
+function navAction(nav){
+
+  document
+    .querySelectorAll(".navBtn")
+    .forEach(
+      b=>
+        b.classList.toggle(
+          "active",
+          b.dataset.nav===nav
+        )
+    );
+
+
+  if(nav==="home"){
+
+    $("home")
+      .scrollIntoView({
+        behavior:"smooth"
+      });
+
+    return;
+
+  }
+
+
+  if(nav==="watch"){
+
+    $("recommendTable")
+      .scrollIntoView({
+        behavior:"smooth"
+      });
+
+    return;
+
+  }
+
+
+  if(nav==="chip"){
+
+    if(state.currentData){
+
+      $("result")
+        .scrollIntoView({
+          behavior:"smooth"
+        });
+
+      setTimeout(
+        ()=>
+          document
+            .querySelectorAll(".card")
+            .forEach(
+              ()=>{}
+            ),
+        0
+      );
+
+    }else{
+
+      setStatus(
+        "請先分析一檔股票"
+      );
+
+    }
+
+    return;
+
+  }
+
+
+  if(nav==="industry"){
+
+    setStatus(
+      "產業比較功能以實際搜尋的股票資料為基礎；請先分析標的"
+    );
+
+    return;
+
+  }
+
+
+  if(nav==="setting"){
+
+    setStatus(
+      "V1491：單一 HTML、動態點位、不寫死股票價格"
+    );
+
+    return;
+
+  }
+
+}
+
+
+let eventsBound=false;
+
+
+function bindEvents(){
+
+  if(eventsBound)
+    return;
+
+  eventsBound=true;
+
+
+  $("searchBtn")
+    .addEventListener(
+      "click",
+      ()=>
+        searchStock(
+          $("searchInput").value
+        )
+    );
+
+
+  $("searchInput")
+    .addEventListener(
+      "keydown",
+      e=>{
+        if(e.key==="Enter")
+          searchStock(
+            e.target.value
+          );
+      }
+    );
+
+
+  $("searchInput")
+    .addEventListener(
+      "input",
+      showSearchCandidates
+    );
+
+
+  document
+    .querySelectorAll(
+      "[data-code]"
+    )
+    .forEach(
+      b=>
+        b.addEventListener(
+          "click",
+          ()=>
+            searchStock(
+              b.dataset.code
+            )
+        )
+    );
+
+
+  document
+    .querySelectorAll(
+      "[data-action]"
+    )
+    .forEach(
+      b=>
+        b.addEventListener(
+          "click",
+          ()=>
+            runFeature(
+              b.dataset.action
+            )
+        )
+    );
+
+
+  $("breakScanBtn")
+    .addEventListener(
+      "click",
+      scanBreakout
+    );
+
+
+  $("hot20ScanBtn")
+    .addEventListener(
+      "click",
+      scanHot20
+    );
+
+
+  document
+    .querySelectorAll(
+      "[data-nav]"
+    )
+    .forEach(
+      b=>
+        b.addEventListener(
+          "click",
+          ()=>
+            navAction(
+              b.dataset.nav
+            )
+        )
+    );
+
+}
+
+
+function boot(){
+
+  bindEvents();
+
+  setStatus(
+    "V1491 已啟動｜等待輸入股票"
+  );
+
+}
+
+
+if(
+  document.readyState==="loading"
+)
+  document.addEventListener(
+    "DOMContentLoaded",
+    boot
+  );
+else
+  boot();
+
+</script>
+
+</body>
+</html>
