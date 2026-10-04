@@ -1329,8 +1329,7 @@ button:disabled{
         type="button"
         data-code="2330"
       >
-        2330<br>
-        台積電
+        2330<br>    台積電
       </button>
 
 
@@ -3568,7 +3567,7 @@ function bindSearchButton(){
 ========================================================= */
 
 function bindSearchEnter(){
-
+ 
   const input =
     getSearchInput();
 
@@ -4958,6 +4957,9 @@ function readyBreakoutModel(
 
     reasons.push(
       "站上5日線"
+    );
+
+  }日線"
     );
 
   }
@@ -6359,6 +6361,758 @@ function getTrendState(
   if(
     ma5 !== null &&
     ma20 !== null
+  ){
+
+    score +=
+      ma5 > ma20
+        ? 25
+        : -20;
+
+  }
+
+
+  if(
+    ma20 !== null &&
+    ma60 !== null
+  ){
+
+    score +=
+      ma20 > ma60
+        ? 30
+        : -20;
+
+  }
+
+
+  if(
+    technical.dayChangePct !== null
+  ){
+
+    score +=
+      technical.dayChangePct > 0
+        ? 20
+        : -15;
+
+  }
+
+
+  if(
+    score >= 70
+  ){
+
+    return {
+
+      state:"多頭",
+
+      score,
+
+      label:"🟢 多頭"
+
+    };
+
+  }
+
+
+  if(
+    score >= 35
+  ){
+
+    return {
+
+      state:"偏多",
+
+      score,
+
+      label:"🟡 偏多"
+
+    };
+
+  }
+
+
+  if(
+    score <= -20
+  ){
+
+    return {
+
+      state:"偏空",
+
+      score,
+
+      label:"🔴 偏空"
+
+    };
+
+  }
+
+
+  return {
+
+    state:"震盪",
+
+    score,
+
+    label:"⚪ 震盪"
+
+  };
+
+}
+
+
+/* =========================================================
+   77. 成交量狀態
+========================================================= */
+
+function getVolumeState(
+  technical
+){
+
+  if(!technical){
+
+    return {
+
+      state:"資料不足",
+
+      score:0,
+
+      ratio:null,
+
+      label:"資料不足"
+
+    };
+
+  }
+
+
+  const ratio =
+    num(
+      technical.volumeRatio
+    );
+
+
+  if(ratio === null){
+
+    return {
+
+      state:"資料不足",
+
+      score:0,
+
+      ratio:null,
+
+      label:"⚪ 資料不足"
+
+    };
+
+  }
+
+
+  if(
+    ratio >= 2
+  ){
+
+    return {
+
+      state:"爆量",
+
+      score:100,
+
+      ratio,
+
+      label:"🔥 爆量"
+
+    };
+
+  }
+
+
+  if(
+    ratio >= 1.5
+  ){
+
+    return {
+
+      state:"放量",
+
+      score:85,
+
+      ratio,
+
+      label:"🟢 放量"
+
+    };
+
+  }
+
+
+  if(
+    ratio >= 1.15
+  ){
+
+    return {
+
+      state:"溫和放量",
+
+      score:70,
+
+      ratio,
+
+      label:"🟡 溫和放量"
+
+    };
+
+  }
+
+
+  if(
+    ratio >= .8
+  ){
+
+    return {
+
+      state:"正常",
+
+      score:50,
+
+      ratio,
+
+      label:"⚪ 正常"
+
+    };
+
+  }
+
+
+  return {
+
+    state:"量縮",
+
+    score:25,
+
+    ratio,
+
+    label:"🔵 量縮"
+
+  };
+
+}
+
+
+/* =========================================================
+   78. 成交量模型
+========================================================= */
+
+function volumeSignal(
+  technical
+){
+
+  const volume =
+    getVolumeState(
+      technical
+    );
+
+
+  const priceChange =
+    num(
+      technical?.dayChangePct
+    );
+
+
+  let signal =
+    volume.state;
+
+
+  let score =
+    volume.score;
+
+
+  /*
+   * 上漲＋放量
+   * 是突破模型中最重要的組合之一。
+   */
+
+  if(
+    priceChange !== null &&
+    priceChange > 0 &&
+    volume.ratio !== null &&
+    volume.ratio >= 1.3
+  ){
+
+    score =
+      Math.min(
+        100,
+        score + 15
+      );
+
+    signal =
+      "上漲放量";
+
+  }
+
+
+  /*
+   * 下跌＋爆量
+   * 不直接視為利多。
+   */
+
+  if(
+    priceChange !== null &&
+    priceChange < 0 &&
+    volume.ratio !== null &&
+    volume.ratio >= 1.5
+  ){
+
+    score =
+      Math.max(
+        0,
+        score - 15
+      );
+
+    signal =
+      "下跌爆量";
+
+  }
+
+
+  return {
+
+    ...volume,
+
+    signal,
+
+    score
+
+  };
+
+}
+
+
+/* =========================================================
+   79. 突破模型
+========================================================= */
+
+function breakoutModel(
+  stock,
+  technical
+){
+
+  if(!technical){
+
+    return {
+
+      isBreakout:false,
+
+      score:0,
+
+      label:"資料不足",
+
+      reasons:[]
+
+    };
+
+  }
+
+
+  const price =
+    num(
+      technical.price
+    );
+
+
+  const high20 =
+    num(
+      technical.high20
+    );
+
+
+  const high60 =
+    num(
+      technical.high60
+    );
+
+
+  const ma5 =
+    num(
+      technical.ma5
+    );
+
+
+  const ma20 =
+    num(
+      technical.ma20
+    );
+
+
+  const volume =
+    volumeSignal(
+      technical
+    );
+
+
+  const reasons=[];
+
+  let score=0;
+
+
+  /*
+   * 價格站上 20 日高
+   */
+
+  if(
+    price !== null &&
+    high20 !== null &&
+    price >= high20
+  ){
+
+    score += 35;
+
+    reasons.push(
+      "站上20日高"
+    );
+
+  }
+
+
+  /*
+   * 價格接近 20 日高
+   */
+
+  else if(
+    price !== null &&
+    high20 !== null &&
+    price >= high20 * .985
+  ){
+
+    score += 15;
+
+    reasons.push(
+      "接近20日高"
+    );
+
+  }
+
+
+  /*
+   * 站上 MA5
+   */
+
+  if(
+    price !== null &&
+    ma5 !== null &&
+    price > ma5
+  ){
+
+    score += 10;
+
+    reasons.push(
+      "站上5日線"
+    );
+
+  }
+
+
+  /*
+   * MA5 > MA20
+   */
+
+  if(
+    ma5 !== null &&
+    ma20 !== null &&
+    ma5 > ma20
+  ){
+
+    score += 15;
+
+    reasons.push(
+      "5日線在20日線上"
+    );
+
+  }
+
+
+  /*
+   * 放量
+   */
+
+  if(
+    volume.ratio !== null &&
+    volume.ratio >= 1.3
+  ){
+
+    score += 20;
+
+    reasons.push(
+      "成交量放大"
+    );
+
+  }
+
+
+  /*
+   * 60日高突破額外加分
+   */
+
+  if(
+    price !== null &&
+    high60 !== null &&
+    price >= high60
+  ){
+
+    score += 20;
+
+    reasons.push(
+      "站上60日高"
+    );
+
+  }
+
+
+  score =
+    Math.min(
+      100,
+      score
+    );
+
+
+  /*
+   * 確認突破需要：
+   * 1. 價格突破
+   * 2. 趨勢／量能至少一項支持
+   */
+
+  const priceBreak =
+    (
+      price !== null &&
+      high20 !== null &&
+      price >= high20
+    );
+
+
+  const supportBreak =
+    (
+      (
+        ma5 !== null &&
+        ma20 !== null &&
+        ma5 > ma20
+      )
+      ||
+      (
+        volume.ratio !== null &&
+        volume.ratio >= 1.3
+      )
+    );
+
+
+  const isBreakout =
+    priceBreak &&
+    supportBreak;
+
+
+  return {
+
+    isBreakout,
+
+    score,
+
+    label:
+      isBreakout
+        ? "🚀 確認突破"
+        : score >= 60
+          ? "🟡 接近突破"
+          : "⚪ 尚未突破",
+
+    reasons
+
+  };
+
+}
+
+
+/* =========================================================
+   80. 準備突破模型
+========================================================= */
+
+function readyBreakoutModel(
+  stock,
+  technical
+){
+
+  if(!technical){
+
+    return {
+
+      isReady:false,
+
+      score:0,
+
+      label:"資料不足",
+
+      reasons:[]
+
+    };
+
+  }
+
+
+  const price =
+    num(
+      technical.price
+    );
+
+  const high20 =
+    num(
+      technical.high20
+    );
+
+  const ma5 =
+    num(
+      technical.ma5
+    );
+
+  const ma20 =
+    num(
+      technical.ma20
+    );
+
+  const volume =
+    volumeSignal(
+      technical
+    );
+
+
+  const reasons=[];
+
+  let score=0;
+
+
+  /*
+   * 距離20日高很近
+   */
+
+  if(
+    price !== null &&
+    high20 !== null
+  ){
+
+    const distance =
+      (
+        high20 -
+        price
+      ) /
+      high20 *
+      100;
+
+
+    if(
+      distance <= 1
+    ){
+
+      score += 35;
+
+      reasons.push(
+        "距20日高1%內"
+      );
+
+    }
+    else if(
+      distance <= 3
+    ){
+
+      score += 25;
+
+      reasons.push(
+        "距20日高3%內"
+      );
+
+    }
+    else if(
+      distance <= 5
+    ){
+
+      score += 12;
+
+      reasons.push(
+        "距20日高5%內"
+      );
+
+    }
+
+  }
+
+
+  /*
+   * MA5 / MA20
+   */
+
+  if(
+    ma5 !== null &&
+    ma20 !== null &&
+    ma5 >= ma20
+  ){
+
+    score += 20;
+
+    reasons.push(
+      "均線偏多"
+    );
+
+  }
+
+
+  /*
+   * 量能
+   */
+
+  if(
+    volume.ratio !== null &&
+    volume.ratio >= 1.1
+  ){
+
+    score += 20;
+
+    reasons.push(
+      "量能開始增加"
+    );
+
+  }
+
+
+  /*
+   * 當日上漲
+   */
+
+  if(
+    technical.dayChangePct !== null &&
+    technical.dayChangePct > 0
+  ){
+
+    score += 10;
+
+    reasons.push(
+      "當日價格偏強"
+    );
+
+  }
+
+
+  /*
+   * 站上MA5
+   */
+
+  if(
+    price !== null &&
+    ma5 !== null &&
+    price > ma5
+  ){
+
+    score += 15;
+
+    reasons.push(
+      "站上5日線"
+    );
+
+  }0 !== null
   ){
 
     score +=
@@ -9778,7 +10532,7 @@ function scoreTradePlan10(stock){
 
 /* =========================================================
    100 分綜合評分
-   ========================================================= */
+========================================================= */
 function calculateComposite100Score(stock){
 
   const parts = {
@@ -9829,7 +10583,7 @@ function calculateComposite100Score(stock){
 
 /* =========================================================
    套用 V1491 綜合評分
-   ========================================================= */
+========================================================= */
 function applyCompositeScore(stock){
 
   if(!stock) return stock;
@@ -10082,7 +10836,7 @@ function renderTechnicalBlock(stock){
         <b>${ma20 ? ma20.toFixed(2) : "--"}</b>
       </div>
 
-      <div class="tech-box">
+      <divclass="tech-box">
         <span>MA60</span>
         <b>${ma60 ? ma60.toFixed(2) : "--"}</b>
       </div>
@@ -10104,7 +10858,7 @@ function renderTechnicalBlock(stock){
 
 /* =========================================================
    支撐壓力區
-   ========================================================= */
+========================================================= */
 
 function renderSupportResistance(stock){
 
@@ -10168,7 +10922,7 @@ function renderSupportResistance(stock){
 
 /* =========================================================
    交易計畫
-   ========================================================= */
+========================================================= */
 
 function renderTradePlanBlock(stock){
 
@@ -10259,7 +11013,7 @@ function renderTradePlanBlock(stock){
 
 /* =========================================================
    100 分綜合評分區
-   ========================================================= */
+========================================================= */
 
 function renderCompositeScore(stock){
 
@@ -10350,7 +11104,7 @@ function renderCompositeScore(stock){
 
 /* =========================================================
    完整個股卡片
-   ========================================================= */
+========================================================= */
 
 function renderStockCard(stock){
 
@@ -10451,7 +11205,7 @@ function renderStockCard(stock){
 
 /* =========================================================
    搜尋後完整分析
-   ========================================================= */
+========================================================= */
 
 async function analyzeAndRenderStock(stock){
 
@@ -10497,7 +11251,7 @@ async function analyzeAndRenderStock(stock){
 
 /* =========================================================
    搜尋按鈕真正執行分析
-   ========================================================= */
+========================================================= */
 
 async function executeSearch(){
 
@@ -10575,7 +11329,7 @@ async function executeSearch(){
 
 /* =========================================================
    覆蓋搜尋按鈕
-   ========================================================= */
+========================================================= */
 
 const _bindSearchButtonV1491 =
   bindSearchButton;
@@ -10601,7 +11355,7 @@ bindSearchButton = function(){
 
 /* =========================================================
    快速股票按鈕
-   ========================================================= */
+========================================================= */
 
 function openQuickStock(code){
 
@@ -10656,12 +11410,13 @@ function getStockScore(stock){
     calculateComposite100Score(stock);
 
   return Number(result.score || 0);
+
 }
 
 
 /* =========================================================
    熱門候選條件
-   ========================================================= */
+========================================================= */
 
 function filterHotCandidates(stocks){
 
@@ -10714,7 +11469,7 @@ function filterHotCandidates(stocks){
 
 /* =========================================================
    HOT20 排名
-   ========================================================= */
+========================================================= */
 
 function rankHot20(stocks){
 
@@ -10781,7 +11536,7 @@ function rankHot20(stocks){
 
 /* =========================================================
    突破候選
-   ========================================================= */
+========================================================= */
 
 function rankBreakout20(stocks){
 
@@ -10840,7 +11595,7 @@ function rankBreakout20(stocks){
 
 /* =========================================================
    準備突破
-   ========================================================= */
+========================================================= */
 
 function rankReady20(stocks){
 
@@ -10899,7 +11654,7 @@ function rankReady20(stocks){
 
 /* =========================================================
    多頭候選
-   ========================================================= */
+========================================================= */
 
 function rankBullish20(stocks){
 
@@ -10958,12 +11713,11 @@ function rankBullish20(stocks){
 
 /* =========================================================
    股票資料池
-   ========================================================= */
+========================================================= */
 
 async function buildCandidatePool(){
 
-  setSystemMessage(
-    "正在建立動態股票資料池…"
+  setSystemMessage(    "正在建立動態股票資料池…"
   );
 
   try{
@@ -11018,7 +11772,7 @@ async function buildCandidatePool(){
 
 /* =========================================================
    單檔快速分析
-   ========================================================= */
+========================================================= */
 
 async function prepareHotCandidate(stock){
 
@@ -11078,7 +11832,7 @@ async function prepareHotCandidate(stock){
 
 /* =========================================================
    HOT20 主掃描
-   ========================================================= */
+========================================================= */
 
 async function scanHot20(){
 
@@ -11238,7 +11992,7 @@ async function scanHot20(){
 
 /* =========================================================
    HOT20 卡片
-   ========================================================= */
+========================================================= */
 
 function renderHot20(stocks){
 
@@ -11404,7 +12158,7 @@ function renderHot20(stocks){
 
 /* =========================================================
    HOT20 Panel
-   ========================================================= */
+========================================================= */
 
 function renderHot20Panel(stocks){
 
@@ -11430,7 +12184,7 @@ function renderHot20Panel(stocks){
 
 /* =========================================================
    動態掃描三大排行榜
-   ========================================================= */
+========================================================= */
 
 async function scanDynamicList(type){
 
@@ -11514,7 +12268,7 @@ async function scanDynamicList(type){
 
 /* =========================================================
    掃描結果 UI
-   ========================================================= */
+========================================================= */
 
 function renderScanResult(stocks,type){
 
@@ -11680,7 +12434,7 @@ function renderScanResult(stocks,type){
 
 /* =========================================================
    原始30掃描
-   ========================================================= */
+========================================================= */
 
 async function scanOriginal30(){
 
@@ -11762,7 +12516,7 @@ async function scanOriginal30(){
 
 /* =========================================================
    統一掃描入口
-   ========================================================= */
+========================================================= */
 
 async function runScan(type){
 
@@ -11805,7 +12559,7 @@ async function runScan(type){
 
 /* =========================================================
    掃描按鈕
-   ========================================================= */
+========================================================= */
 
 function bindScanButtons(){
 
@@ -11919,7 +12673,7 @@ function bindScanButtons(){
 
 /* =========================================================
    刷新按鈕
-   ========================================================= */
+========================================================= */
 
 async function refreshCurrent(){
 
@@ -11944,8 +12698,7 @@ async function refreshCurrent(){
   try{
 
     const fresh =
-      await loadStockData(
-        stock
+      await loadStockData(stock
       );
 
     const result =
@@ -12055,7 +12808,7 @@ function bindQuickStockButtons(){
 
 /* =========================================================
    自動更新目前股票
-   ========================================================= */
+========================================================= */
 
 function startAutoRefresh(){
 
@@ -12112,7 +12865,7 @@ function startAutoRefresh(){
 
 /* =========================================================
    防止重複掃描
-   ========================================================= */
+========================================================= */
 
 async function runSafeScan(type){
 
@@ -12145,7 +12898,7 @@ async function runSafeScan(type){
 
 /* =========================================================
    將 runScan 改成安全版本
-   ========================================================= */
+========================================================= */
 
 const _runScanV1491 =
   runScan;
@@ -12204,7 +12957,7 @@ async function runSafeScanInternal(type){
 
 /* =========================================================
    API 錯誤 fallback
-   ========================================================= */
+========================================================= */
 
 function showApiFallback(){
 
@@ -12232,7 +12985,7 @@ function showApiFallback(){
 
 /* =========================================================
    首次載入市場狀態
-   ========================================================= */
+========================================================= */
 
 async function initMarket(){
 
@@ -12289,674 +13042,7 @@ async function initMarket(){
 
 /* =========================================================
    搜尋＋按鈕＋刷新統一初始化
-   ========================================================= */
-
-function bindAllControls(){
-
-  try{
-    bindSearch();
-  }catch(error){
-    console.warn(
-      "bindSearch:",
-      error
-    );
-  }
-
-  try{
-    bindScanButtons();
-  }catch(error){
-    console.warn(
-      "bindScanButtons:",
-      error
-    );
-  }
-
-  try{
-    bindRefreshButton();
-  }catch(error){
-    console.warn(
-      "bindRefreshButton:",
-      error
-    );
-  }
-
-  try{
-    bindQuickStockButtons();
-  }catch(error){
-    console.warn(
-      "bindQuickStockButtons:",
-      error
-    );
-  }
-
-}
-
-
-/* =========================================================
-/* =========================================================
-   第 10 段：V1491 操作控制中心
-   - 原始30
-   - HOT20
-   - 突破20
-   - 準備突破20
-   - 多頭20
-   - 手動刷新
-   - 自動刷新
-   ========================================================= */
-
-
-/* =========================================================
-   原始30掃描
-   ========================================================= */
-
-async function scanOriginal30(){
-
-  setSystemMessage(
-    "🔍 正在掃描原始30檔…"
-  );
-
-  const market =
-    await getMarketToday();
-
-  if(!Array.isArray(market) || !market.length){
-
-    setSystemMessage(
-      "目前無法取得市場資料"
-    );
-
-    return [];
-  }
-
-  const original =
-    market.filter(stock =>
-      isOriginal30(stock.code)
-    );
-
-  const results = [];
-
-  const batchSize = 5;
-
-  for(
-    let i = 0;
-    i < original.length;
-    i += batchSize
-  ){
-
-    const batch =
-      original.slice(
-        i,
-        i + batchSize
-      );
-
-    const rows =
-      await Promise.all(
-        batch.map(
-          stock =>
-            prepareHotCandidate(stock)
-        )
-      );
-
-    rows
-      .filter(Boolean)
-      .forEach(
-        stock =>
-          results.push(stock)
-      );
-
-  }
-
-  results.sort(
-    (a,b) =>
-      getStockScore(b) -
-      getStockScore(a)
-  );
-
-  STATE.original30 =
-    results;
-
-  renderScanResult(
-    results,
-    "original30"
-  );
-
-  setSystemMessage(
-    `原始30掃描完成｜${results.length} 檔`
-  );
-
-  return results;
-}
-
-
-/* =========================================================
-   統一掃描入口
-   ========================================================= */
-
-async function runScan(type){
-
-  switch(type){
-
-    case "original30":
-      return await scanOriginal30();
-
-    case "hot20":
-      return await scanHot20();
-
-    case "breakout":
-      return await scanDynamicList(
-        "breakout"
-      );
-
-    case "ready":
-      return await scanDynamicList(
-        "ready"
-      );
-
-    case "bullish":
-      return await scanDynamicList(
-        "bullish"
-      );
-
-    default:
-
-      console.warn(
-        "Unknown scan type:",
-        type
-      );
-
-      return [];
-
-  }
-
-}
-
-
-/* =========================================================
-   掃描按鈕
-   ========================================================= */
-
-function bindScanButtons(){
-
-  const original30Btn =
-    document.getElementById(
-      "original30Btn"
-    );
-
-  const hot20Btn =
-    document.getElementById(
-      "hot20Btn"
-    );
-
-  const breakoutBtn =
-    document.getElementById(
-      "breakoutBtn"
-    );
-
-  const readyBtn =
-    document.getElementById(
-      "readyBtn"
-    );
-
-  const bullishBtn =
-    document.getElementById(
-      "bullishBtn"
-    );
-
-
-  if(original30Btn){
-
-    original30Btn.onclick =
-      async function(event){
-
-        event.preventDefault();
-
-        await runScan(
-          "original30"
-        );
-
-      };
-
-  }
-
-
-  if(hot20Btn){
-
-    hot20Btn.onclick =
-      async function(event){
-
-        event.preventDefault();
-
-        await runScan(
-          "hot20"
-        );
-
-      };
-
-  }
-
-
-  if(breakoutBtn){
-
-    breakoutBtn.onclick =
-      async function(event){
-
-        event.preventDefault();
-
-        await runScan(
-          "breakout"
-        );
-
-      };
-
-  }
-
-
-  if(readyBtn){
-
-    readyBtn.onclick =
-      async function(event){
-
-        event.preventDefault();
-
-        await runScan(
-          "ready"
-        );
-
-      };
-
-  }
-
-
-  if(bullishBtn){
-
-    bullishBtn.onclick =
-      async function(event){
-
-        event.preventDefault();
-
-        await runScan(
-          "bullish"
-        );
-
-      };
-
-  }
-
-}
-
-
-/* =========================================================
-   刷新按鈕
-   ========================================================= */
-
-async function refreshCurrent(){
-
-  const stock =
-    STATE.currentStock ||
-    current;
-
-  if(!stock){
-
-    setSystemMessage(
-      "請先搜尋一檔股票"
-    );
-
-    return null;
-
-  }
-
-  setSystemMessage(
-    `🔄 正在更新 ${stock.code}…`
-  );
-
-  try{
-
-    const fresh =
-      await loadStockData(
-        stock
-      );
-
-    const result =
-      await buildStockAnalysis(
-        fresh || stock
-      );
-
-    applyCompositeScore(
-      result
-    );
-
-    STATE.currentStock =
-      result;
-
-    current =
-      result;
-
-    renderStockCard(
-      result
-    );
-
-    setSystemMessage(
-      `${result.code} 更新完成`
-    );
-
-    return result;
-
-  }catch(error){
-
-    console.error(
-      "refreshCurrent:",
-      error
-    );
-
-    setSystemMessage(
-      `更新失敗：${
-        error.message || "未知錯誤"
-      }`
-    );
-
-    return null;
-
-  }
-
-}
-
-
-/* =========================================================
-   刷新按鈕綁定
-   ========================================================= */
-
-function bindRefreshButton(){
-
-  const btn =
-    document.getElementById(
-      "refreshBtn"
-    );
-
-  if(!btn){
-    return;
-  }
-
-  btn.onclick =
-    async function(event){
-
-      event.preventDefault();
-
-      await refreshCurrent();
-
-    };
-
-}
-
-
-/* =========================================================
-   快速按鈕重新綁定
-   ========================================================= */
-
-function bindQuickStockButtons(){
-
-  document
-    .querySelectorAll(
-      "[data-stock-code]"
-    )
-    .forEach(button => {
-
-      button.onclick =
-        async function(event){
-
-          event.preventDefault();
-
-          const code =
-            this.dataset.stockCode;
-
-          if(code){
-            openQuickStock(
-              code
-            );
-          }
-
-        };
-
-    });
-
-}
-
-
-/* =========================================================
-   自動更新目前股票
-   ========================================================= */
-
-function startAutoRefresh(){
-
-  if(STATE.autoRefreshTimer){
-
-    clearInterval(
-      STATE.autoRefreshTimer
-    );
-
-  }
-
-  STATE.autoRefreshTimer =
-    setInterval(
-      async function(){
-
-        /*
-         * 沒有目前股票時不刷新
-         */
-        if(
-          !STATE.currentStock &&
-          !current
-        ){
-          return;
-        }
-
-        /*
-         * 避免使用者正在掃描時重複打 API
-         */
-        if(
-          STATE.scanning
-        ){
-          return;
-        }
-
-        try{
-
-          await refreshCurrent();
-
-        }catch(error){
-
-          console.warn(
-            "auto refresh:",
-            error
-          );
-
-        }
-
-      },
-      10000
-    );
-
-}
-
-
-/* =========================================================
-   防止重複掃描
-   ========================================================= */
-
-async function runSafeScan(type){
-
-  if(STATE.scanning){
-
-    setSystemMessage(
-      "⏳ 目前正在掃描，請稍候…"
-    );
-
-    return [];
-
-  }
-
-  STATE.scanning = true;
-
-  try{
-
-    return await runScan(
-      type
-    );
-
-  }finally{
-
-    STATE.scanning = false;
-
-  }
-
-}
-
-
-/* =========================================================
-   將 runScan 改成安全版本
-   ========================================================= */
-
-const _runScanV1491 =
-  runScan;
-
-runScan = async function(type){
-
-  return await runSafeScanInternal(
-    type
-  );
-
-};
-
-async function runSafeScanInternal(type){
-
-  if(STATE.scanning){
-
-    setSystemMessage(
-      "⏳ 目前正在掃描，請稍候…"
-    );
-
-    return [];
-
-  }
-
-  STATE.scanning = true;
-
-  try{
-
-    return await _runScanV1491(
-      type
-    );
-
-  }catch(error){
-
-    console.error(
-      "runScan:",
-      error
-    );
-
-    setSystemMessage(
-      `掃描失敗：${
-        error.message || "未知錯誤"
-      }`
-    );
-
-    return [];
-
-  }finally{
-
-    STATE.scanning = false;
-
-  }
-
-}
-
-
-/* =========================================================
-   API 錯誤 fallback
-   ========================================================= */
-
-function showApiFallback(){
-
-  const message =
-    document.getElementById(
-      "systemMessage"
-    );
-
-  if(!message){
-    return;
-  }
-
-  message.innerHTML = `
-    <div class="api-warning">
-      ⚠️ 即時資料 API 暫時無法連線
-      <br>
-      <small>
-        請稍候重新整理，或直接輸入股票代號查詢。
-      </small>
-    </div>
-  `;
-
-}
-
-
-/* =========================================================
-   首次載入市場狀態
-   ========================================================= */
-
-async function initMarket(){
-
-  try{
-
-    setMarketStatus(
-      "市場資料載入中…"
-    );
-
-    const market =
-      await getMarketToday();
-
-    if(
-      Array.isArray(market) &&
-      market.length
-    ){
-
-      STATE.market =
-        market;
-
-      setMarketStatus(
-        `市場資料 ${market.length} 檔`
-      );
-
-      return market;
-
-    }
-
-    setMarketStatus(
-      "市場資料暫不可用"
-    );
-
-    return [];
-
-  }catch(error){
-
-    console.warn(
-      "initMarket:",
-      error
-    );
-
-    setMarketStatus(
-      "API 連線異常"
-    );
-
-    showApiFallback();
-
-    return [];
-
-  }
-
-}
-
-
-/* =========================================================
-   搜尋＋按鈕＋刷新統一初始化
-   ========================================================= */
+========================================================= */
 
 function bindAllControls(){
 
@@ -13013,7 +13099,7 @@ function bindAllControls(){
 
 /* =========================================================
    V1491 自我檢查
-   ========================================================= */
+========================================================= */
 
 function v1491SelfCheck(){
 
@@ -13031,6 +13117,894 @@ function v1491SelfCheck(){
 
   checks.original30 =
     !!document.getElementById(
+      "original30Btn"
+    );
+
+  checks.hot20 =
+    !!document.getElementById(
+      "hot20Btn"
+    );
+
+  checks.breakout =
+    !!document.getElementById(
+      "breakoutBtn"
+    );
+
+  checks.ready =
+    !!document.getElementById(
+      "readyBtn"
+    );
+
+  checks.bullish =
+    !!document.getElementById(
+      "bullishBtn"
+    );
+
+  checks.refresh =
+    !!document.getElementById(
+      "refreshBtn"
+    );
+
+  checks.stockCard =
+    !!document.getElementById(
+      "stockCard"
+    );
+
+  checks.hot20List =
+    !!document.getElementById(
+      "hot20List"
+    );
+
+  checks.scanResult =
+    !!document.getElementById(
+      "scanResult"
+    );
+
+  const missing =
+    Object.entries(
+      checks
+    )
+    .filter(
+      ([key,value]) =>
+        !value
+    )
+    .map(
+      ([key]) =>
+        key
+    );
+
+  if(
+    missing.length
+  ){
+
+    console.warn(
+      "V1491 UI missing:",
+      missing
+    );
+
+    return false;
+
+  }
+
+  console.log(
+    "V1491 self check OK",
+    checks
+  );
+
+  return true;
+
+}
+
+
+/* =========================================================
+   初始化一次
+========================================================= */
+
+let V1491_BOOTED =
+  false;
+
+
+/* =========================================================
+   啟動
+========================================================= */
+
+async function bootV1491(){
+
+  if(V1491_BOOTED){
+
+    console.warn(
+      "V1491 已初始化，略過重複啟動"
+    );
+
+    return;
+
+  }
+
+  V1491_BOOTED =
+    true;
+
+  console.log(
+    "🚀 V1491 啟動"
+  );
+
+
+  /*
+   * 先綁定所有控制
+   */
+
+  bindAllControls();
+
+
+  /*
+   * 搜尋按鈕額外保險
+   */
+
+  try{
+
+    bindSearchButton();
+
+  }catch(error){
+
+    console.warn(
+      "bindSearchButton:",
+      error
+    );
+
+  }
+
+
+  /*
+   * 快速股票按鈕
+   */
+
+  try{
+
+    bindQuickStockButtons();
+
+  }catch(error){
+
+    console.warn(
+      "bindQuickStockButtons:",
+      error
+    );
+
+  }
+
+
+  /*
+   * 自我檢查
+   */
+
+  v1491SelfCheck();
+
+
+  /*
+   * 市場資料
+   */
+
+  await initMarket();
+
+
+  /*
+   * 啟動自動更新
+   */
+
+  startAutoRefresh();
+
+
+  /*
+   * 初始化訊息
+   */
+
+  setSystemMessage(
+    "V1491 已啟動｜可搜尋股票或開始選股"
+  );
+
+
+  console.log(
+    "✅ V1491 啟動完成"
+  );
+
+}
+
+
+/* =========================================================
+   DOM Ready
+========================================================= */
+
+if(
+  document.readyState ===
+  "loading"
+){
+
+  document.addEventListener(
+    "DOMContentLoaded",
+    bootV1491,
+    {
+      once:true
+    }
+  );
+
+}else{
+
+  bootV1491();
+
+}
+
+
+/* =========================================================
+   全域除錯入口
+========================================================= */
+
+window.V1491 =
+  {
+
+    version:
+      "V1491",
+
+    state:
+      STATE,
+
+    current:
+      () =>
+        STATE.currentStock ||
+        current,
+
+    search:
+      executeSearch,
+
+    scan:
+      runScan,
+
+    refresh:
+      refreshCurrent,
+
+    hot20:
+      scanHot20,
+
+    selfCheck:
+      v1491SelfCheck
+
+  };
+
+
+/* =========================================================
+   第 12 段：V1491 穩定性補強
+   - API Timeout
+   - Fetch 錯誤保護
+   - 數字格式相容
+   - 股票代號相容
+   - 防止單一股票錯誤造成整批停止
+========================================================= */
+
+
+/* =========================================================
+   API Timeout
+========================================================= */
+
+async function fetchWithTimeout(
+  url,
+  options = {},
+  timeout = 10000
+){
+
+  const controller =
+    new AbortController();
+
+  const timer =
+    setTimeout(
+      () =>
+        controller.abort(),
+      timeout
+    );
+
+  try{
+
+    const response =
+      await fetch(
+        url,
+        {
+          ...options,
+          signal:
+            controller.signal
+        }
+      );
+
+    return response;
+
+  }finally{
+
+    clearTimeout(
+      timer
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   安全 JSON Fetch
+========================================================= */
+
+async function safeFetchJSONV12(
+  url,
+  options = {},
+  timeout = 10000
+){
+
+  try{
+
+    const response =
+      await fetchWithTimeout(
+        url,
+        options,
+        timeout
+      );
+
+    if(
+      !response.ok
+    ){
+
+      throw new Error(
+        `HTTP ${response.status}`
+      );
+
+    }
+
+    return await response.json();
+
+  }catch(error){
+
+    console.warn(
+      "safeFetchJSONV12:",
+      url,
+      error
+    );
+
+    return null;
+
+  }
+
+}
+
+
+/* =========================================================
+   安全數字
+========================================================= */
+
+function safeNumber(value){
+
+  if(
+    value === null ||
+    value === undefined ||
+    value === ""
+  ){
+
+    return null;
+
+  }
+
+  const n =
+    Number(
+      String(value)
+        .replace(/,/g,"")
+        .replace(/%/g,"")
+        .trim()
+    );
+
+  return Number.isFinite(n)
+    ? n
+    : null;
+
+}
+
+
+/* =========================================================
+   股票代號標準化
+========================================================= */
+
+function normalizeStockCodeV12(
+  code
+){
+
+  if(
+    code === null ||
+    code === undefined
+  ){
+
+    return "";
+
+  }
+
+  return String(code)
+    .trim()
+    .replace(
+      /^TWSE:/i,
+      ""
+    )
+    .replace(
+      /^TPEX:/i,
+      ""
+    )
+    .replace(
+      /^TW:/i,
+      ""
+    )
+    .replace(
+      /\.TW$/i,
+      ""
+    );
+
+}
+
+
+/* =========================================================
+   ETF 判斷
+========================================================= */
+
+function isETFCodeV12(
+  code
+){
+
+  const c =
+    normalizeStockCodeV12(
+      code
+    );
+
+  return (
+    /^\d{4}[A-Z]?$/.test(c) &&
+    (
+      c.startsWith("00") ||
+      [
+        "00878",
+        "0050",
+        "0056",
+        "006208",
+        "00631L",
+        "00632R",
+        "00685L",
+        "00919",
+        "00981A"
+      ].includes(c)
+    )
+  );
+
+}
+
+
+/* =========================================================
+   股票名稱相容
+========================================================= */
+
+function resolveStockName(
+  stock
+){
+
+  if(!stock){
+    return "";
+  }
+
+  return (
+    stock.name ||
+    stock.stockName ||
+    stock.n ||
+    stock.Name ||
+    getAlias(
+      normalizeStockCodeV12(
+        stock.code ||
+        stock.stockCode
+      )
+    ) ||
+    normalizeStockCodeV12(
+      stock.code ||
+      stock.stockCode
+    )
+  );
+
+}
+
+
+/* =========================================================
+   市場資料標準化
+========================================================= */
+
+function normalizeMarketStockV12(
+  raw
+){
+
+  if(!raw){
+    return null;
+  }
+
+  const code =
+    normalizeStockCodeV12(
+      raw.code ||
+      raw.stock_id ||
+      raw.stockId ||
+      raw.c ||
+      raw.Code ||
+      raw.StockID
+    );
+
+  if(!code){
+    return null;
+  }
+
+  const price =
+    safeNumber(
+      raw.price ??
+      raw.close ??
+      raw.ClosingPrice ??
+      raw.Close
+    );
+
+  const changePct =
+    safeNumber(
+      raw.changePct ??
+      raw.change ??
+      raw.ChangePercent ??
+      raw.Change
+    );
+
+  const volume =
+    safeNumber(
+      raw.volume ??
+      raw.Volume ??
+      raw.TradingVolume
+    );
+
+  return {
+
+    ...raw,
+
+    code,
+
+    name:
+      resolveStockName({
+        ...raw,
+        code
+      }),
+
+    price,
+
+    close:
+      price,
+
+    dayChangePct:
+      changePct,
+
+    changePct,
+
+    volume
+
+  };
+
+}
+
+
+/* =========================================================
+   清理市場資料
+========================================================= */
+
+function cleanMarketDataV12(
+  market
+){
+
+  if(
+    !Array.isArray(market)
+  ){
+
+    return [];
+
+  }
+
+  return market
+    .map(
+      normalizeMarketStockV12
+    )
+    .filter(
+      Boolean
+    );
+
+}
+
+
+/* =========================================================
+   安全建立股票資料
+========================================================= */
+
+function safeCreateStockBaseV12(
+  raw
+){
+
+  try{
+
+    const normalized =
+      normalizeMarketStockV12(
+        raw
+      );
+
+    if(!normalized){
+      return null;
+    }
+
+    return createStockBase(
+      normalized
+    );
+
+  }catch(error){
+
+    console.warn(
+      "safeCreateStockBaseV12:",
+      error
+    );
+
+    return null;
+
+  }
+
+}
+
+
+/* =========================================================
+   安全分析股票
+========================================================= */
+
+async function safeAnalyzeStockV12(
+  stock
+){
+
+  if(!stock){
+    return null;
+  }
+
+  try{
+
+    return await buildStockAnalysis(
+      stock
+    );
+
+  }catch(error){
+
+    console.warn(
+      "safeAnalyzeStockV12:",
+      stock?.code,
+      error
+    );
+
+    return null;
+
+  }
+
+}
+
+
+/* =========================================================
+   覆蓋 prepareHotCandidate
+========================================================= */
+
+const _prepareHotCandidateV12 =
+  prepareHotCandidate;
+
+prepareHotCandidate =
+  async function(stock){
+
+    try{
+
+      const base =
+        safeCreateStockBaseV12(
+          stock
+        );
+
+      if(!base){
+        return null;
+      }
+
+      const result =
+        await safeAnalyzeStockV12(
+          base
+        );
+
+      if(!result){
+        return null;
+      }
+
+      applyCompositeScore(
+        result
+      );
+
+      return result;
+
+    }catch(error){
+
+      console.warn(
+        "prepareHotCandidateV12:",
+        error
+      );
+
+      return null;
+
+    }
+
+  };
+
+
+/* =========================================================
+   防止重複股票
+========================================================= */
+
+function uniqueStocksV12(
+  stocks
+){
+
+  const map =
+    new Map();
+
+  if(
+    !Array.isArray(stocks)
+  ){
+
+    return [];
+
+  }
+
+  for(
+    const stock of stocks
+  ){
+
+    const code =
+      normalizeStockCodeV12(
+        stock?.code
+      );
+
+    if(
+      !code ||
+      map.has(code)
+    ){
+
+      continue;
+
+    }
+
+    map.set(
+      code,
+      stock
+    );
+
+  }
+
+  return [
+    ...map.values()
+  ];
+
+}
+
+
+/* =========================================================
+   覆蓋原始30掃描
+========================================================= */
+
+const _scanOriginal30V12 =
+  scanOriginal30;
+
+scanOriginal30 =
+  async function(){
+
+    try{
+
+      const result =
+        await _scanOriginal30V12();
+
+      return uniqueStocksV12(
+        result
+      );
+
+    }catch(error){
+
+      console.warn(
+        "scanOriginal30V12:",
+        error
+      );
+
+      return [];
+
+    }
+
+  };
+
+
+/* =========================================================
+   覆蓋 HOT20 掃描
+========================================================= */
+
+const _scanHot20V12 =
+  scanHot20;
+
+scanHot20 =
+  async function(){
+
+    try{
+
+      const result =
+        await _scanHot20V12();
+
+      return uniqueStocksV12(
+        result
+      );
+
+    }catch(error){
+
+      console.warn(
+        "scanHot20V12:",
+        error
+      );
+
+      return [];
+
+    }
+
+  };
+
+
+/* =========================================================
+   全域錯誤保護
+========================================================= */
+
+window.addEventListener(
+  "error",
+  function(event){
+
+    console.warn(
+      "V1491 Global Error:",
+      event.error ||
+      event.message
+    );
+
+  }
+);
+
+
+window.addEventListener(
+  "unhandledrejection",
+  function(event){
+
+    console.warn(
+      "V1491 Promise Error:",
+      event.reason
+    );
+
+  }
+);
+
+
+/* =========================================================
+   V1491 功能狀態
+========================================================= */
+
+STATE.features = {
+
+  search:true,
+
+  original30:true,
+
+  hot20:true,
+
+  breakout20:true,
+
+  ready20:true,
+
+  bullish20:true,
+
+  institution:true,
+
+  composite100:true,
+
+  autoRefresh:true,
+
+  apiFallback:true
+
+};ument.getElementById(
       "original30Btn"
     );
 
@@ -13324,73 +14298,6 @@ function bootV1491(){
 }
 
 
-/* =========================================================
-   全域除錯入口
-   ========================================================= */
-
-window.V1491 = {
-
-  version:
-    V1491_VERSION,
-
-  build:
-    V1491_BUILD,
-
-  state:
-    STATE,
-
-  search:
-    executeSearch,
-
-  refresh:
-    refreshCurrent,
-
-  scan:
-    runScan,
-
-  hot20:
-    scanHot20,
-
-  original30:
-    scanOriginal30,
-
-  breakout:
-    () =>
-      runScan("breakout"),
-
-  ready:
-    () =>
-      runScan("ready"),
-
-  bullish:
-    () =>
-      runScan("bullish"),
-
-  selfCheck:
-    v1491SelfCheck,
-
-  getStock:
-    getCurrentStock
-
-};
-
-
-/* =========================================================
-   啟動
-   ========================================================= */
-
-bootV1491();
-
-
-/* =========================================================
-
-/* =========================================================
-   關閉 JavaScript
-   ========================================================= */
-</script>
-
-</body>
-</html>
 /* =========================================================
    第 12 段：V1491 穩定性補強
    - API Timeout
@@ -14153,3 +15060,71 @@ STATE.features = {
 /* =========================================================
    第 12 段結束
    ========================================================= */
+
+/* =========================================================
+   全域除錯入口
+   ========================================================= */
+
+window.V1491 = {
+
+  version:
+    V1491_VERSION,
+
+  build:
+    V1491_BUILD,
+
+  state:
+    STATE,
+
+  search:
+    executeSearch,
+
+  refresh:
+    refreshCurrent,
+
+  scan:
+    runScan,
+
+  hot20:
+    scanHot20,
+
+  original30:
+    scanOriginal30,
+
+  breakout:
+    () =>
+      runScan("breakout"),
+
+  ready:
+    () =>
+      runScan("ready"),
+
+  bullish:
+    () =>
+      runScan("bullish"),
+
+  selfCheck:
+    v1491SelfCheck,
+
+  getStock:
+    getCurrentStock
+
+};
+
+
+/* =========================================================
+   啟動
+   ========================================================= */
+
+bootV1491();
+
+
+/* =========================================================
+
+/* =========================================================
+   關閉 JavaScript
+   ========================================================= */
+</script>
+
+</body>
+</html>
