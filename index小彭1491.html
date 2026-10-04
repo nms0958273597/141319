@@ -2365,22 +2365,41 @@ async function safeFetchJSON(
   url,
   options={}
 ){
-  const response =
-    await fetch(
-      url,
-      {
-        ...options,
-        cache:"no-store"
-      }
+  const controller =
+    new AbortController();
+
+  const timeout =
+    setTimeout(
+      () => controller.abort(),
+      8000
     );
 
-  if(!response.ok){
-    throw new Error(
-      `HTTP ${response.status}`
+  try{
+
+    const response =
+      await fetch(
+        url,
+        {
+          ...options,
+          cache:"no-store",
+          signal:controller.signal
+        }
+      );
+
+    if(!response.ok){
+      throw new Error(
+        `HTTP ${response.status}`
+      );
+    }
+
+    return await response.json();
+
+  }finally{
+
+    clearTimeout(
+      timeout
     );
   }
-
-  return await response.json();
 }
 
 
@@ -2623,6 +2642,150 @@ async function getTPExAll(){
 ========================================================= */
 
 async function getMarketToday(){
+
+  const now =
+    Date.now();
+
+  if(
+    STATE.cache.market &&
+    now - STATE.cache.marketTime < 60000
+  ){
+
+    setMarketLoadStatus(
+      100,
+      STATE.cache.market.length,
+      STATE.cache.market.length,
+      `資料完成｜${STATE.cache.market.length} 檔`
+    );
+
+    return STATE.cache.market;
+  }
+
+  setMarketLoadStatus(
+    0,
+    0,
+    0,
+    "讀取中… 0%｜0 檔"
+  );
+
+  const twseJob =
+    getTWSEAll()
+      .then(
+        data => {
+
+          const list =
+            Array.isArray(data)
+              ? data
+              : [];
+
+          setMarketLoadStatus(
+            50,
+            list.length,
+            0,
+            `讀取中… 50%｜${list.length} 檔`
+          );
+
+          return list;
+        }
+      )
+      .catch(
+        error => {
+
+          console.warn(
+            "TWSE:",
+            error
+          );
+
+          return [];
+        }
+      );
+
+  const tpexJob =
+    getTPExAll()
+      .then(
+        data => {
+
+          const list =
+            Array.isArray(data)
+              ? data
+              : [];
+
+          setMarketLoadStatus(
+            90,
+            list.length,
+            0,
+            `讀取中… 90%｜${list.length} 檔`
+          );
+
+          return list;
+        }
+      )
+      .catch(
+        error => {
+
+          console.warn(
+            "TPEx:",
+            error
+          );
+
+          return [];
+        }
+      );
+
+  const [
+    twse,
+    tpex
+  ] =
+    await Promise.all([
+      twseJob,
+      tpexJob
+    ]);
+
+  const all =
+    [
+      ...twse,
+      ...tpex
+    ];
+
+  const map =
+    new Map();
+
+  for(
+    const stock of all
+  ){
+
+    if(stock?.code){
+
+      map.set(
+        stock.code,
+        stock
+      );
+    }
+  }
+
+  STATE.cache.market =
+    [
+      ...map.values()
+    ];
+
+  STATE.cache.marketTime =
+    now;
+
+  STATE.marketStocks =
+    STATE.cache.market;
+
+  STATE.stocks =
+    STATE.cache.market;
+
+  setMarketLoadStatus(
+    100,
+    STATE.stocks.length,
+    STATE.stocks.length,
+    `資料完成｜${STATE.stocks.length} 檔`
+  );
+
+  return STATE.cache.market;
+}
 
   const now =
     Date.now();
@@ -5464,8 +5627,132 @@ function updateMarketStatus(){
 /* =========================================================
    V1491｜載入市場
 ========================================================= */
+function setMarketLoadStatus(
+  percent,
+  count=0,
+  total=0,
+  textOverride=""
+){
 
+  const status =
+    document.getElementById(
+      "marketStatus"
+    );
+
+  const update =
+    document.getElementById(
+      "lastUpdate"
+    );
+
+  const pct =
+    Math.max(
+      0,
+      Math.min(
+        100,
+        Math.round(
+          Number(percent) || 0
+        )
+      )
+    );
+
+  if(status){
+
+    status.textContent =
+      textOverride ||
+      `讀取中… ${pct}%｜${Number(count)||0} 檔`;
+
+    status.className =
+      pct >= 100
+        ? "status ok"
+        : "status";
+  }
+
+  if(update){
+
+    update.textContent =
+      total
+        ? `${Number(count)||0} / ${Number(total)||0} 檔`
+        : "";
+  }
+}
 async function initializeMarket(){
+
+  setMarketLoadStatus(
+    0,
+    0,
+    0,
+    "讀取中… 0%｜0 檔"
+  );
+
+  setScanStatus(
+    "正在取得市場資料…"
+  );
+
+  try{
+
+    const stocks =
+      await getMarketToday();
+
+    updateMarketStatus();
+
+    if(
+      Array.isArray(stocks) &&
+      stocks.length > 0
+    ){
+
+      setMarketLoadStatus(
+        100,
+        stocks.length,
+        stocks.length,
+        `資料完成｜${stocks.length} 檔`
+      );
+
+      setScanStatus(
+        `市場資料已準備｜${stocks.length} 檔`,
+        "ok"
+      );
+
+    }else{
+
+      setMarketLoadStatus(
+        100,
+        0,
+        0,
+        "資料載入失敗｜0 檔"
+      );
+
+      setScanStatus(
+        "市場資料載入失敗",
+        "error"
+      );
+    }
+
+    return stocks;
+
+  }catch(error){
+
+    console.error(
+      "initializeMarket:",
+      error
+    );
+
+    updateMarketStatus();
+
+    setMarketLoadStatus(
+      100,
+      0,
+      0,
+      "資料載入失敗｜0 檔"
+    );
+
+    setScanStatus(
+      "市場資料載入失敗",
+      "error"
+    );
+
+    return [];
+  }
+}
 
   setScanStatus(
     "正在取得市場資料…"
