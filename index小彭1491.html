@@ -2787,55 +2787,7 @@ async function getMarketToday(){
   return STATE.cache.market;
 }
 
-  const now =
-    Date.now();
 
-  if(
-    STATE.cache.market &&
-    now - STATE.cache.marketTime < 60000
-  ){
-    return STATE.cache.market;
-  }
-
-  const result =
-    await Promise.allSettled([
-      getTWSEAll(),
-      getTPExAll()
-    ]);
-
-  const twse =
-    result[0].status === "fulfilled"
-      ? result[0].value
-      : [];
-
-  const tpex =
-    result[1].status === "fulfilled"
-      ? result[1].value
-      : [];
-
-  const all =
-    [...twse,...tpex];
-
-  const map =
-    new Map();
-
-  for(const stock of all){
-    if(stock?.code){
-      map.set(
-        stock.code,
-        stock
-      );
-    }
-  }
-
-  STATE.cache.market = [
-    ...map.values()
-  ];
-
-  STATE.cache.marketTime = now;
-
-  STATE.marketStocks =
-    STATE.cache.market;
 
   STATE.stocks =
     STATE.cache.market;
