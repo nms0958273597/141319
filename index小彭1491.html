@@ -2786,23 +2786,13 @@ async function getMarketToday(){
 
   return STATE.cache.market;
 }
-
-
-
-  STATE.stocks =
-    STATE.cache.market;
-
-  return STATE.cache.market;
-}
 /* =========================================================
    V1491｜股票搜尋
 ========================================================= */
-
 function findStock(
   keyword,
   market=STATE.market.all
 ){
-
   const q =
     normalizeSearch(keyword);
 
