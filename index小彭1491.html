@@ -3046,7 +3046,43 @@ function showToast(message){
       },
       2600
     );
+}  return null;
 }
+
+
+/* =========================================================
+   V1491｜搜尋資料初始化
+========================================================= */
+
+async function ensureSearchData(){
+
+  if(
+    Array.isArray(STATE.stocks) &&
+    STATE.stocks.length > 0
+  ){
+    return STATE.stocks;
+  }
+
+  const data =
+    await getMarketToday();
+
+  STATE.stocks =
+    Array.isArray(data)
+      ? data
+      : [];
+
+  STATE.marketStocks =
+    STATE.stocks;
+
+  return STATE.stocks;
+}
+
+
+/* =========================================================
+   V1491｜搜尋事件綁定
+========================================================= */
+
+function bindSearch(){
 
 
 /* =========================================================
