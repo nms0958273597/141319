@@ -4761,7 +4761,323 @@ async function scan(type){
 
 
 /* =========================================================
-   選股結果
+ /* =========================================================
+   V1491｜原始30／熱門20 修正版
+   ★ 不修改原始 scan
+   ★ 不抓歷史K線
+   ★ 直接使用市場行情排序
+   ★ 原始30最多30檔
+   ★ 熱門20最多20檔
+========================================================= */
+
+if(!window.__V1491_OLD_SCAN__){
+
+  window.__V1491_OLD_SCAN__=scan;
+
+  scan=async function(type){
+
+    /*
+      原始30／熱門20：
+      不再經過 buildScan()
+      避免歷史K線失敗造成股票被淘汰。
+    */
+
+    if(
+      type!=="original30" &&
+      type!=="hot20"
+    ){
+
+      return window.__V1491_OLD_SCAN__(type);
+
+    }
+
+
+    if(
+      STATE.scan.running
+    ){
+
+      return toast(
+        "目前正在執行選股"
+      );
+
+    }
+
+
+    STATE.scan.running=true;
+
+
+    const btn=
+      document.querySelector(
+        `[data-scan="${type}"]`
+      );
+
+
+    if(btn){
+
+      btn.disabled=true;
+
+      btn.dataset.old=
+        btn.innerHTML;
+
+      btn.innerHTML=
+        "分析中…";
+
+    }
+
+
+    $$(".scan-btn")
+      .forEach(
+        x=>x.disabled=true
+      );
+
+
+    try{
+
+      await loadMarket();
+
+
+      const universe=
+        STATE.market.stocks
+          .filter(
+            s=>
+              validCode(s.code)&&
+              Number.isFinite(s.price)&&
+              s.price>0
+          )
+          .slice(
+            0,
+            100
+          );
+
+
+      $("scanStatus").textContent=
+        `市場行情排序中… ${universe.length} 檔`;
+
+
+      /*
+        建立不需要歷史K線的結果格式
+      */
+
+      const data=
+        universe.map(
+          stock=>({
+
+            stock,
+
+            technical:{
+              price:stock.price
+            },
+
+            signal:{
+              score:0
+            }
+
+          })
+        );
+
+
+      let r=[];
+
+
+      /* =====================================================
+         原始30
+         以漲跌＋成交量作基礎排序
+      ===================================================== */
+
+      if(
+        type==="original30"
+      ){
+
+        r=
+          data
+            .sort(
+              (a,b)=>{
+
+                const av=
+                  (
+                    Number.isFinite(
+                      a.stock.change
+                    )
+                      ? a.stock.change
+                      : 0
+                  )*8+
+                  Math.min(
+                    25,
+                    Math.log10(
+                      Math.max(
+                        1,
+                        Number.isFinite(
+                          a.stock.volume
+                        )
+                          ? a.stock.volume
+                          : 0
+                      )
+                    )-5
+                  )*8;
+
+
+                const bv=
+                  (
+                    Number.isFinite(
+                      b.stock.change
+                    )
+                      ? b.stock.change
+                      : 0
+                  )*8+
+                  Math.min(
+                    25,
+                    Math.log10(
+                      Math.max(
+                        1,
+                        Number.isFinite(
+                          b.stock.volume
+                        )
+                          ? b.stock.volume
+                          : 0
+                      )
+                    )-5
+                  )*8;
+
+
+                return bv-av;
+
+              }
+            )
+            .slice(
+              0,
+              30
+            );
+
+      }
+
+
+      /* =====================================================
+         熱門20
+         以漲幅＋成交量排序
+      ===================================================== */
+
+      if(
+        type==="hot20"
+      ){
+
+        r=
+          data
+            .sort(
+              (a,b)=>{
+
+                const av=
+                  (
+                    Number.isFinite(
+                      a.stock.change
+                    )
+                      ? a.stock.change
+                      : 0
+                  )+
+                  (
+                    Number.isFinite(
+                      a.stock.volume
+                    )
+                      ? a.stock.volume
+                      : 0
+                  )/1000000;
+
+
+                const bv=
+                  (
+                    Number.isFinite(
+                      b.stock.change
+                    )
+                      ? b.stock.change
+                      : 0
+                  )+
+                  (
+                    Number.isFinite(
+                      b.stock.volume
+                    )
+                      ? b.stock.volume
+                      : 0
+                  )/1000000;
+
+
+                return bv-av;
+
+              }
+            )
+            .slice(
+              0,
+              20
+            );
+
+      }
+
+
+      STATE.scan={
+        running:false,
+        results:r,
+        type
+      };
+
+
+      renderResults(r);
+
+
+      $("scanStatus").textContent=
+        `完成｜${r.length} 檔｜市場行情直接排序`;
+
+
+      toast(
+        `完成｜找到 ${r.length} 檔`
+      );
+
+
+      return r;
+
+
+    }catch(e){
+
+      STATE.scan.running=false;
+
+
+      $("scanStatus").textContent=
+        "選股失敗｜請稍後重試";
+
+
+      toast(
+        e.message||
+        "選股失敗"
+      );
+
+
+      return [];
+
+
+    }finally{
+
+      $$(".scan-btn")
+        .forEach(
+          x=>x.disabled=false
+        );
+
+
+      if(btn){
+
+        btn.innerHTML=
+          btn.dataset.old||
+          btn.innerHTML;
+
+      }
+
+    }
+
+  };
+
+}
+
+
+/* =========================================================
+   V1491 修正結束
+========================================================= */
+  選股結果
 ========================================================= */
 
 function renderResults(r){
