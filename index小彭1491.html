@@ -5704,11 +5704,39 @@ async function initializeMarket(){
         0,
         "資料載入失敗｜0 檔"
       );
-  
+
+      setScanStatus(
+        "市場資料載入失敗",
+        "error"
+      );
+    }
+
+    return stocks;
+
+  }catch(error){
+
+    console.error(
+      "initializeMarket:",
+      error
+    );
+
+    updateMarketStatus();
+
+    setMarketLoadStatus(
+      100,
+      0,
+      0,
+      "資料載入失敗｜0 檔"
+    );
+
+    setScanStatus(
+      "市場資料載入失敗",
+      "error"
+    );
+
+    return [];
   }
-);
-
-
+}
 window.addEventListener(
   "unhandledrejection",
   function(event){
