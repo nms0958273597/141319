@@ -8276,19 +8276,17 @@ window.V1491 = {
   scan:
     runScanCore,
 
-  clearCache:
-    function(){
+clearCache:
+  function(){
 
-      clearHistoryCache();
+    clearHistoryCache();
 
-      clearMarketCache();
+    clearMarketCache();
 
-      showToast(
-  "掃描失敗，請稍後再試"
-);
-        "資料快取已清除"
-      );
-    }
+    showToast(
+      "資料快取已清除"
+    );
+  }
 };
 
 
